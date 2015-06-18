@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.bme.hu/aut/gergelyszaz/BGL" 
+       class = "hu.bme.aut.gergelyszaz.bGL.BGLPackage"
+       genModel = "model/generated/BGL.genmodel" /> 
+	
+  </extension>
+
+
+
+</plugin>
