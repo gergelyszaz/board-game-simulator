@@ -1,0 +1,82 @@
+grammar hu.bme.aut.gergelyszaz.BGL with org.eclipse.xtext.common.Terminals
+
+generate bGL "http://www.bme.hu/aut/gergelyszaz/BGL"
+
+Model:
+	'Game' name=ID
+	player=Player & board=Board & (tokens=Tokens)?;
+
+Player:
+	name='Players' playercount=INT
+	('{' (attributes+=Attribute)* '}')?;
+
+Board:
+	name='Board' '{' ((fields+=Field)*) & ((attributes+=Attribute)*) '}';
+
+Tokens:
+	name='Tokens'
+	'{'
+	(tokentypes+=TokenType)*
+	'}';
+
+TokenType:
+	name=ID
+	(variables+=Variable)*
+	('{' (attributes+=Attribute)* '}')?;
+
+Attribute:
+	name=ID ';';
+
+Field:
+	name=ID '(' x=INT ',' y=INT ',' z=INT ')' ':'
+	(neighbours+=[Field])* ';';
+
+Action:
+	(name='Spawn' token=[TokenType]) |
+	(name='Move' field=[Field]) |
+	(name='Roll' from=INT '-' to=INT);
+
+	//Arithmetics
+Variable:
+	name=ID '=' expression=Expression;
+
+Expression:
+	BooleanExpression;
+
+BooleanExpression returns Expression:
+	Comparison
+	(({AndOrExpression.left=current} op=("||" | "&&")) right=Comparison)*;
+
+Comparison returns Expression:
+	Equals
+	(({Comparison.left=current} op=("<")) right=Equals)*;
+
+Equals returns Expression:
+	Addition
+	(({Equals.left=current} op=("==")) right=Addition)*;
+
+Addition returns Expression:
+	Multiplication
+	(({Plus.left=current} op='+' | {Minus.left=current} '-')
+	right=Multiplication)*;
+
+Multiplication returns Expression:
+	Prefixed (({MultiOrDiv.left=current} op=("*" | "/")) right=Prefixed)*;
+
+Prefixed returns Expression:
+	{BooleanNegation} => "!" expression=Atomic | /* right associativity */
+	{ArithmeticSigned} => "-" expression=Atomic | /* right associativity */
+	Atomic;
+
+Atomic returns Expression:
+	'(' Expression ')' |
+	{NumberLiteral} value=INT |
+	{StringLiteral} value=STRING |
+	{BooleanLiteral} value=('true' | 'false') |
+	{VariableReference} ref=[Variable];
+
+	// the types will be used only internally by the type system
+Type:
+	{IntType} 'int' |
+	{StringType} 'string' |
+	{BooleanType} 'boolean';
