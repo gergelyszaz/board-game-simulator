@@ -94,7 +94,7 @@ public interface BGLPackage extends EPackage
   int MODEL__BOARD = 2;
 
   /**
-   * The feature id for the '<em><b>Tokens</b></em>' containment reference.
+   * The feature id for the '<em><b>Tokens</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -103,13 +103,22 @@ public interface BGLPackage extends EPackage
   int MODEL__TOKENS = 3;
 
   /**
+   * The feature id for the '<em><b>Rules</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL__RULES = 4;
+
+  /**
    * The number of structural features of the '<em>Model</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL_FEATURE_COUNT = 4;
+  int MODEL_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.PlayerImpl <em>Player</em>}' class.
@@ -204,14 +213,14 @@ public interface BGLPackage extends EPackage
   int BOARD_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.TokensImpl <em>Tokens</em>}' class.
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.RulesImpl <em>Rules</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.TokensImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getTokens()
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.RulesImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getRules()
    * @generated
    */
-  int TOKENS = 3;
+  int RULES = 3;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -220,35 +229,35 @@ public interface BGLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOKENS__NAME = 0;
+  int RULES__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Tokentypes</b></em>' containment reference list.
+   * The feature id for the '<em><b>Turnrules</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TOKENS__TOKENTYPES = 1;
+  int RULES__TURNRULES = 1;
 
   /**
-   * The number of structural features of the '<em>Tokens</em>' class.
+   * The number of structural features of the '<em>Rules</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TOKENS_FEATURE_COUNT = 2;
+  int RULES_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.TokenTypeImpl <em>Token Type</em>}' class.
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.TurnRulesImpl <em>Turn Rules</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.TokenTypeImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getTokenType()
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.TurnRulesImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getTurnRules()
    * @generated
    */
-  int TOKEN_TYPE = 4;
+  int TURN_RULES = 4;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -257,44 +266,35 @@ public interface BGLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOKEN_TYPE__NAME = 0;
+  int TURN_RULES__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
+   * The feature id for the '<em><b>Actions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TOKEN_TYPE__VARIABLES = 1;
+  int TURN_RULES__ACTIONS = 1;
 
   /**
-   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+   * The number of structural features of the '<em>Turn Rules</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TOKEN_TYPE__ATTRIBUTES = 2;
+  int TURN_RULES_FEATURE_COUNT = 2;
 
   /**
-   * The number of structural features of the '<em>Token Type</em>' class.
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.TokenImpl <em>Token</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOKEN_TYPE_FEATURE_COUNT = 3;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AttributeImpl <em>Attribute</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.AttributeImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAttribute()
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.TokenImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getToken()
    * @generated
    */
-  int ATTRIBUTE = 5;
+  int TOKEN = 5;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -303,16 +303,16 @@ public interface BGLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE__NAME = 0;
+  int TOKEN__NAME = 0;
 
   /**
-   * The number of structural features of the '<em>Attribute</em>' class.
+   * The number of structural features of the '<em>Token</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_FEATURE_COUNT = 1;
+  int TOKEN_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.FieldImpl <em>Field</em>}' class.
@@ -370,13 +370,22 @@ public interface BGLPackage extends EPackage
   int FIELD__NEIGHBOURS = 4;
 
   /**
+   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FIELD__VARIABLES = 5;
+
+  /**
    * The number of structural features of the '<em>Field</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FIELD_FEATURE_COUNT = 5;
+  int FIELD_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl <em>Action</em>}' class.
@@ -407,31 +416,13 @@ public interface BGLPackage extends EPackage
   int ACTION__TOKEN = 1;
 
   /**
-   * The feature id for the '<em><b>Field</b></em>' reference.
+   * The feature id for the '<em><b>Object Of Select</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__FIELD = 2;
-
-  /**
-   * The feature id for the '<em><b>From</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTION__FROM = 3;
-
-  /**
-   * The feature id for the '<em><b>To</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTION__TO = 4;
+  int ACTION__OBJECT_OF_SELECT = 2;
 
   /**
    * The number of structural features of the '<em>Action</em>' class.
@@ -440,7 +431,7 @@ public interface BGLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION_FEATURE_COUNT = 5;
+  int ACTION_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.VariableImpl <em>Variable</em>}' class.
@@ -462,13 +453,13 @@ public interface BGLPackage extends EPackage
   int VARIABLE__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE__EXPRESSION = 1;
+  int VARIABLE__VALUE = 1;
 
   /**
    * The number of structural features of the '<em>Variable</em>' class.
@@ -480,525 +471,41 @@ public interface BGLPackage extends EPackage
   int VARIABLE_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ExpressionImpl <em>Expression</em>}' class.
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ReferenceImpl <em>Reference</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.ExpressionImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getExpression()
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.ReferenceImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getReference()
    * @generated
    */
-  int EXPRESSION = 9;
+  int REFERENCE = 9;
 
   /**
-   * The number of structural features of the '<em>Expression</em>' class.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPRESSION_FEATURE_COUNT = 0;
+  int REFERENCE__NAME = 0;
 
   /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.TypeImpl <em>Type</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.TypeImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getType()
-   * @generated
-   */
-  int TYPE = 10;
-
-  /**
-   * The number of structural features of the '<em>Type</em>' class.
+   * The feature id for the '<em><b>Value</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TYPE_FEATURE_COUNT = 0;
+  int REFERENCE__VALUE = 1;
 
   /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AndOrExpressionImpl <em>And Or Expression</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.AndOrExpressionImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAndOrExpression()
-   * @generated
-   */
-  int AND_OR_EXPRESSION = 11;
-
-  /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * The number of structural features of the '<em>Reference</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AND_OR_EXPRESSION__LEFT = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Op</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AND_OR_EXPRESSION__OP = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AND_OR_EXPRESSION__RIGHT = EXPRESSION_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>And Or Expression</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AND_OR_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ComparisonImpl <em>Comparison</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.ComparisonImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getComparison()
-   * @generated
-   */
-  int COMPARISON = 12;
-
-  /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPARISON__LEFT = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Op</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPARISON__OP = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPARISON__RIGHT = EXPRESSION_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>Comparison</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPARISON_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.EqualsImpl <em>Equals</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.EqualsImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getEquals()
-   * @generated
-   */
-  int EQUALS = 13;
-
-  /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EQUALS__LEFT = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Op</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EQUALS__OP = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EQUALS__RIGHT = EXPRESSION_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>Equals</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EQUALS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.PlusImpl <em>Plus</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.PlusImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getPlus()
-   * @generated
-   */
-  int PLUS = 14;
-
-  /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PLUS__LEFT = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PLUS__RIGHT = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Plus</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PLUS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.MinusImpl <em>Minus</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.MinusImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getMinus()
-   * @generated
-   */
-  int MINUS = 15;
-
-  /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MINUS__LEFT = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MINUS__RIGHT = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Minus</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MINUS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.MultiOrDivImpl <em>Multi Or Div</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.MultiOrDivImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getMultiOrDiv()
-   * @generated
-   */
-  int MULTI_OR_DIV = 16;
-
-  /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MULTI_OR_DIV__LEFT = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Op</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MULTI_OR_DIV__OP = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MULTI_OR_DIV__RIGHT = EXPRESSION_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>Multi Or Div</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MULTI_OR_DIV_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.BooleanNegationImpl <em>Boolean Negation</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BooleanNegationImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getBooleanNegation()
-   * @generated
-   */
-  int BOOLEAN_NEGATION = 17;
-
-  /**
-   * The feature id for the '<em><b>Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BOOLEAN_NEGATION__EXPRESSION = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Boolean Negation</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BOOLEAN_NEGATION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ArithmeticSignedImpl <em>Arithmetic Signed</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.ArithmeticSignedImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getArithmeticSigned()
-   * @generated
-   */
-  int ARITHMETIC_SIGNED = 18;
-
-  /**
-   * The feature id for the '<em><b>Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ARITHMETIC_SIGNED__EXPRESSION = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Arithmetic Signed</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ARITHMETIC_SIGNED_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.NumberLiteralImpl <em>Number Literal</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.NumberLiteralImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getNumberLiteral()
-   * @generated
-   */
-  int NUMBER_LITERAL = 19;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NUMBER_LITERAL__VALUE = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Number Literal</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NUMBER_LITERAL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.StringLiteralImpl <em>String Literal</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.StringLiteralImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getStringLiteral()
-   * @generated
-   */
-  int STRING_LITERAL = 20;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STRING_LITERAL__VALUE = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>String Literal</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STRING_LITERAL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.BooleanLiteralImpl <em>Boolean Literal</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BooleanLiteralImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getBooleanLiteral()
-   * @generated
-   */
-  int BOOLEAN_LITERAL = 21;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BOOLEAN_LITERAL__VALUE = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Boolean Literal</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BOOLEAN_LITERAL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.VariableReferenceImpl <em>Variable Reference</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.VariableReferenceImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getVariableReference()
-   * @generated
-   */
-  int VARIABLE_REFERENCE = 22;
-
-  /**
-   * The feature id for the '<em><b>Ref</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_REFERENCE__REF = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Variable Reference</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.IntTypeImpl <em>Int Type</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.IntTypeImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getIntType()
-   * @generated
-   */
-  int INT_TYPE = 23;
-
-  /**
-   * The number of structural features of the '<em>Int Type</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INT_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.StringTypeImpl <em>String Type</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.StringTypeImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getStringType()
-   * @generated
-   */
-  int STRING_TYPE = 24;
-
-  /**
-   * The number of structural features of the '<em>String Type</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STRING_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.BooleanTypeImpl <em>Boolean Type</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BooleanTypeImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getBooleanType()
-   * @generated
-   */
-  int BOOLEAN_TYPE = 25;
-
-  /**
-   * The number of structural features of the '<em>Boolean Type</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BOOLEAN_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int REFERENCE_FEATURE_COUNT = 2;
 
 
   /**
@@ -1045,15 +552,26 @@ public interface BGLPackage extends EPackage
   EReference getModel_Board();
 
   /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Model#getTokens <em>Tokens</em>}'.
+   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.Model#getTokens <em>Tokens</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Tokens</em>'.
+   * @return the meta object for the containment reference list '<em>Tokens</em>'.
    * @see hu.bme.aut.gergelyszaz.bGL.Model#getTokens()
    * @see #getModel()
    * @generated
    */
   EReference getModel_Tokens();
+
+  /**
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Model#getRules <em>Rules</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Rules</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Model#getRules()
+   * @see #getModel()
+   * @generated
+   */
+  EReference getModel_Rules();
 
   /**
    * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Player <em>Player</em>}'.
@@ -1142,100 +660,89 @@ public interface BGLPackage extends EPackage
   EReference getBoard_Attributes();
 
   /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Tokens <em>Tokens</em>}'.
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Rules <em>Rules</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Tokens</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Tokens
+   * @return the meta object for class '<em>Rules</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Rules
    * @generated
    */
-  EClass getTokens();
+  EClass getRules();
 
   /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Tokens#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Rules#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Tokens#getName()
-   * @see #getTokens()
+   * @see hu.bme.aut.gergelyszaz.bGL.Rules#getName()
+   * @see #getRules()
    * @generated
    */
-  EAttribute getTokens_Name();
+  EAttribute getRules_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.Tokens#getTokentypes <em>Tokentypes</em>}'.
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Rules#getTurnrules <em>Turnrules</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Tokentypes</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Tokens#getTokentypes()
-   * @see #getTokens()
+   * @return the meta object for the containment reference '<em>Turnrules</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Rules#getTurnrules()
+   * @see #getRules()
    * @generated
    */
-  EReference getTokens_Tokentypes();
+  EReference getRules_Turnrules();
 
   /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.TokenType <em>Token Type</em>}'.
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.TurnRules <em>Turn Rules</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Token Type</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.TokenType
+   * @return the meta object for class '<em>Turn Rules</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.TurnRules
    * @generated
    */
-  EClass getTokenType();
+  EClass getTurnRules();
 
   /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.TokenType#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.TokenType#getName()
-   * @see #getTokenType()
-   * @generated
-   */
-  EAttribute getTokenType_Name();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.TokenType#getVariables <em>Variables</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Variables</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.TokenType#getVariables()
-   * @see #getTokenType()
-   * @generated
-   */
-  EReference getTokenType_Variables();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.TokenType#getAttributes <em>Attributes</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Attributes</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.TokenType#getAttributes()
-   * @see #getTokenType()
-   * @generated
-   */
-  EReference getTokenType_Attributes();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Attribute <em>Attribute</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Attribute</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Attribute
-   * @generated
-   */
-  EClass getAttribute();
-
-  /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Attribute#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.TurnRules#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Attribute#getName()
-   * @see #getAttribute()
+   * @see hu.bme.aut.gergelyszaz.bGL.TurnRules#getName()
+   * @see #getTurnRules()
    * @generated
    */
-  EAttribute getAttribute_Name();
+  EAttribute getTurnRules_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.TurnRules#getActions <em>Actions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Actions</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.TurnRules#getActions()
+   * @see #getTurnRules()
+   * @generated
+   */
+  EReference getTurnRules_Actions();
+
+  /**
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Token <em>Token</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Token</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Token
+   * @generated
+   */
+  EClass getToken();
+
+  /**
+   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Token#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Token#getName()
+   * @see #getToken()
+   * @generated
+   */
+  EAttribute getToken_Name();
 
   /**
    * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Field <em>Field</em>}'.
@@ -1303,6 +810,17 @@ public interface BGLPackage extends EPackage
   EReference getField_Neighbours();
 
   /**
+   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.Field#getVariables <em>Variables</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Variables</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Field#getVariables()
+   * @see #getField()
+   * @generated
+   */
+  EReference getField_Variables();
+
+  /**
    * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Action <em>Action</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1335,37 +853,15 @@ public interface BGLPackage extends EPackage
   EReference getAction_Token();
 
   /**
-   * Returns the meta object for the reference '{@link hu.bme.aut.gergelyszaz.bGL.Action#getField <em>Field</em>}'.
+   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Action#getObjectOfSelect <em>Object Of Select</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Field</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Action#getField()
+   * @return the meta object for the attribute '<em>Object Of Select</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Action#getObjectOfSelect()
    * @see #getAction()
    * @generated
    */
-  EReference getAction_Field();
-
-  /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Action#getFrom <em>From</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>From</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Action#getFrom()
-   * @see #getAction()
-   * @generated
-   */
-  EAttribute getAction_From();
-
-  /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Action#getTo <em>To</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>To</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Action#getTo()
-   * @see #getAction()
-   * @generated
-   */
-  EAttribute getAction_To();
+  EAttribute getAction_ObjectOfSelect();
 
   /**
    * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Variable <em>Variable</em>}'.
@@ -1389,427 +885,47 @@ public interface BGLPackage extends EPackage
   EAttribute getVariable_Name();
 
   /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Variable#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Variable#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expression</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Variable#getExpression()
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Variable#getValue()
    * @see #getVariable()
    * @generated
    */
-  EReference getVariable_Expression();
+  EAttribute getVariable_Value();
 
   /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Expression <em>Expression</em>}'.
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Reference <em>Reference</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Expression</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Expression
+   * @return the meta object for class '<em>Reference</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Reference
    * @generated
    */
-  EClass getExpression();
+  EClass getReference();
 
   /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Type <em>Type</em>}'.
+   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Reference#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Type</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Type
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Reference#getName()
+   * @see #getReference()
    * @generated
    */
-  EClass getType();
+  EAttribute getReference_Name();
 
   /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.AndOrExpression <em>And Or Expression</em>}'.
+   * Returns the meta object for the reference '{@link hu.bme.aut.gergelyszaz.bGL.Reference#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>And Or Expression</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.AndOrExpression
+   * @return the meta object for the reference '<em>Value</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Reference#getValue()
+   * @see #getReference()
    * @generated
    */
-  EClass getAndOrExpression();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.AndOrExpression#getLeft <em>Left</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.AndOrExpression#getLeft()
-   * @see #getAndOrExpression()
-   * @generated
-   */
-  EReference getAndOrExpression_Left();
-
-  /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.AndOrExpression#getOp <em>Op</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Op</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.AndOrExpression#getOp()
-   * @see #getAndOrExpression()
-   * @generated
-   */
-  EAttribute getAndOrExpression_Op();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.AndOrExpression#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.AndOrExpression#getRight()
-   * @see #getAndOrExpression()
-   * @generated
-   */
-  EReference getAndOrExpression_Right();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Comparison <em>Comparison</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Comparison</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Comparison
-   * @generated
-   */
-  EClass getComparison();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Comparison#getLeft <em>Left</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Comparison#getLeft()
-   * @see #getComparison()
-   * @generated
-   */
-  EReference getComparison_Left();
-
-  /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Comparison#getOp <em>Op</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Op</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Comparison#getOp()
-   * @see #getComparison()
-   * @generated
-   */
-  EAttribute getComparison_Op();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Comparison#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Comparison#getRight()
-   * @see #getComparison()
-   * @generated
-   */
-  EReference getComparison_Right();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Equals <em>Equals</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Equals</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Equals
-   * @generated
-   */
-  EClass getEquals();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Equals#getLeft <em>Left</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Equals#getLeft()
-   * @see #getEquals()
-   * @generated
-   */
-  EReference getEquals_Left();
-
-  /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Equals#getOp <em>Op</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Op</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Equals#getOp()
-   * @see #getEquals()
-   * @generated
-   */
-  EAttribute getEquals_Op();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Equals#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Equals#getRight()
-   * @see #getEquals()
-   * @generated
-   */
-  EReference getEquals_Right();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Plus <em>Plus</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Plus</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Plus
-   * @generated
-   */
-  EClass getPlus();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Plus#getLeft <em>Left</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Plus#getLeft()
-   * @see #getPlus()
-   * @generated
-   */
-  EReference getPlus_Left();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Plus#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Plus#getRight()
-   * @see #getPlus()
-   * @generated
-   */
-  EReference getPlus_Right();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Minus <em>Minus</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Minus</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Minus
-   * @generated
-   */
-  EClass getMinus();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Minus#getLeft <em>Left</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Minus#getLeft()
-   * @see #getMinus()
-   * @generated
-   */
-  EReference getMinus_Left();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Minus#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Minus#getRight()
-   * @see #getMinus()
-   * @generated
-   */
-  EReference getMinus_Right();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.MultiOrDiv <em>Multi Or Div</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Multi Or Div</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.MultiOrDiv
-   * @generated
-   */
-  EClass getMultiOrDiv();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.MultiOrDiv#getLeft <em>Left</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.MultiOrDiv#getLeft()
-   * @see #getMultiOrDiv()
-   * @generated
-   */
-  EReference getMultiOrDiv_Left();
-
-  /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.MultiOrDiv#getOp <em>Op</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Op</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.MultiOrDiv#getOp()
-   * @see #getMultiOrDiv()
-   * @generated
-   */
-  EAttribute getMultiOrDiv_Op();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.MultiOrDiv#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.MultiOrDiv#getRight()
-   * @see #getMultiOrDiv()
-   * @generated
-   */
-  EReference getMultiOrDiv_Right();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.BooleanNegation <em>Boolean Negation</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Boolean Negation</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.BooleanNegation
-   * @generated
-   */
-  EClass getBooleanNegation();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.BooleanNegation#getExpression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expression</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.BooleanNegation#getExpression()
-   * @see #getBooleanNegation()
-   * @generated
-   */
-  EReference getBooleanNegation_Expression();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.ArithmeticSigned <em>Arithmetic Signed</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Arithmetic Signed</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.ArithmeticSigned
-   * @generated
-   */
-  EClass getArithmeticSigned();
-
-  /**
-   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.ArithmeticSigned#getExpression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expression</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.ArithmeticSigned#getExpression()
-   * @see #getArithmeticSigned()
-   * @generated
-   */
-  EReference getArithmeticSigned_Expression();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.NumberLiteral <em>Number Literal</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Number Literal</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.NumberLiteral
-   * @generated
-   */
-  EClass getNumberLiteral();
-
-  /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.NumberLiteral#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Value</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.NumberLiteral#getValue()
-   * @see #getNumberLiteral()
-   * @generated
-   */
-  EAttribute getNumberLiteral_Value();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.StringLiteral <em>String Literal</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>String Literal</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.StringLiteral
-   * @generated
-   */
-  EClass getStringLiteral();
-
-  /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.StringLiteral#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Value</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.StringLiteral#getValue()
-   * @see #getStringLiteral()
-   * @generated
-   */
-  EAttribute getStringLiteral_Value();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.BooleanLiteral <em>Boolean Literal</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Boolean Literal</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.BooleanLiteral
-   * @generated
-   */
-  EClass getBooleanLiteral();
-
-  /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.BooleanLiteral#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Value</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.BooleanLiteral#getValue()
-   * @see #getBooleanLiteral()
-   * @generated
-   */
-  EAttribute getBooleanLiteral_Value();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.VariableReference <em>Variable Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Variable Reference</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.VariableReference
-   * @generated
-   */
-  EClass getVariableReference();
-
-  /**
-   * Returns the meta object for the reference '{@link hu.bme.aut.gergelyszaz.bGL.VariableReference#getRef <em>Ref</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Ref</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.VariableReference#getRef()
-   * @see #getVariableReference()
-   * @generated
-   */
-  EReference getVariableReference_Ref();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.IntType <em>Int Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Int Type</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.IntType
-   * @generated
-   */
-  EClass getIntType();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.StringType <em>String Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>String Type</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.StringType
-   * @generated
-   */
-  EClass getStringType();
-
-  /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.BooleanType <em>Boolean Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Boolean Type</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.BooleanType
-   * @generated
-   */
-  EClass getBooleanType();
+  EReference getReference_Value();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1869,12 +985,20 @@ public interface BGLPackage extends EPackage
     EReference MODEL__BOARD = eINSTANCE.getModel_Board();
 
     /**
-     * The meta object literal for the '<em><b>Tokens</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Tokens</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference MODEL__TOKENS = eINSTANCE.getModel_Tokens();
+
+    /**
+     * The meta object literal for the '<em><b>Rules</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODEL__RULES = eINSTANCE.getModel_Rules();
 
     /**
      * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.PlayerImpl <em>Player</em>}' class.
@@ -1945,14 +1069,14 @@ public interface BGLPackage extends EPackage
     EReference BOARD__ATTRIBUTES = eINSTANCE.getBoard_Attributes();
 
     /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.TokensImpl <em>Tokens</em>}' class.
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.RulesImpl <em>Rules</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.TokensImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getTokens()
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.RulesImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getRules()
      * @generated
      */
-    EClass TOKENS = eINSTANCE.getTokens();
+    EClass RULES = eINSTANCE.getRules();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1960,59 +1084,25 @@ public interface BGLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute TOKENS__NAME = eINSTANCE.getTokens_Name();
+    EAttribute RULES__NAME = eINSTANCE.getRules_Name();
 
     /**
-     * The meta object literal for the '<em><b>Tokentypes</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Turnrules</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TOKENS__TOKENTYPES = eINSTANCE.getTokens_Tokentypes();
+    EReference RULES__TURNRULES = eINSTANCE.getRules_Turnrules();
 
     /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.TokenTypeImpl <em>Token Type</em>}' class.
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.TurnRulesImpl <em>Turn Rules</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.TokenTypeImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getTokenType()
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.TurnRulesImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getTurnRules()
      * @generated
      */
-    EClass TOKEN_TYPE = eINSTANCE.getTokenType();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TOKEN_TYPE__NAME = eINSTANCE.getTokenType_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference TOKEN_TYPE__VARIABLES = eINSTANCE.getTokenType_Variables();
-
-    /**
-     * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference TOKEN_TYPE__ATTRIBUTES = eINSTANCE.getTokenType_Attributes();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AttributeImpl <em>Attribute</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.AttributeImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAttribute()
-     * @generated
-     */
-    EClass ATTRIBUTE = eINSTANCE.getAttribute();
+    EClass TURN_RULES = eINSTANCE.getTurnRules();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -2020,7 +1110,33 @@ public interface BGLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ATTRIBUTE__NAME = eINSTANCE.getAttribute_Name();
+    EAttribute TURN_RULES__NAME = eINSTANCE.getTurnRules_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TURN_RULES__ACTIONS = eINSTANCE.getTurnRules_Actions();
+
+    /**
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.TokenImpl <em>Token</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.TokenImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getToken()
+     * @generated
+     */
+    EClass TOKEN = eINSTANCE.getToken();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TOKEN__NAME = eINSTANCE.getToken_Name();
 
     /**
      * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.FieldImpl <em>Field</em>}' class.
@@ -2073,6 +1189,14 @@ public interface BGLPackage extends EPackage
     EReference FIELD__NEIGHBOURS = eINSTANCE.getField_Neighbours();
 
     /**
+     * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FIELD__VARIABLES = eINSTANCE.getField_Variables();
+
+    /**
      * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl <em>Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2099,28 +1223,12 @@ public interface BGLPackage extends EPackage
     EReference ACTION__TOKEN = eINSTANCE.getAction_Token();
 
     /**
-     * The meta object literal for the '<em><b>Field</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Object Of Select</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ACTION__FIELD = eINSTANCE.getAction_Field();
-
-    /**
-     * The meta object literal for the '<em><b>From</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ACTION__FROM = eINSTANCE.getAction_From();
-
-    /**
-     * The meta object literal for the '<em><b>To</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ACTION__TO = eINSTANCE.getAction_To();
+    EAttribute ACTION__OBJECT_OF_SELECT = eINSTANCE.getAction_ObjectOfSelect();
 
     /**
      * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.VariableImpl <em>Variable</em>}' class.
@@ -2141,358 +1249,38 @@ public interface BGLPackage extends EPackage
     EAttribute VARIABLE__NAME = eINSTANCE.getVariable_Name();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference VARIABLE__EXPRESSION = eINSTANCE.getVariable_Expression();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ExpressionImpl <em>Expression</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.ExpressionImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getExpression()
-     * @generated
-     */
-    EClass EXPRESSION = eINSTANCE.getExpression();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.TypeImpl <em>Type</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.TypeImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getType()
-     * @generated
-     */
-    EClass TYPE = eINSTANCE.getType();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AndOrExpressionImpl <em>And Or Expression</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.AndOrExpressionImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAndOrExpression()
-     * @generated
-     */
-    EClass AND_OR_EXPRESSION = eINSTANCE.getAndOrExpression();
-
-    /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference AND_OR_EXPRESSION__LEFT = eINSTANCE.getAndOrExpression_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute AND_OR_EXPRESSION__OP = eINSTANCE.getAndOrExpression_Op();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference AND_OR_EXPRESSION__RIGHT = eINSTANCE.getAndOrExpression_Right();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ComparisonImpl <em>Comparison</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.ComparisonImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getComparison()
-     * @generated
-     */
-    EClass COMPARISON = eINSTANCE.getComparison();
-
-    /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference COMPARISON__LEFT = eINSTANCE.getComparison_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute COMPARISON__OP = eINSTANCE.getComparison_Op();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference COMPARISON__RIGHT = eINSTANCE.getComparison_Right();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.EqualsImpl <em>Equals</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.EqualsImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getEquals()
-     * @generated
-     */
-    EClass EQUALS = eINSTANCE.getEquals();
-
-    /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EQUALS__LEFT = eINSTANCE.getEquals_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EQUALS__OP = eINSTANCE.getEquals_Op();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EQUALS__RIGHT = eINSTANCE.getEquals_Right();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.PlusImpl <em>Plus</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.PlusImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getPlus()
-     * @generated
-     */
-    EClass PLUS = eINSTANCE.getPlus();
-
-    /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PLUS__LEFT = eINSTANCE.getPlus_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PLUS__RIGHT = eINSTANCE.getPlus_Right();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.MinusImpl <em>Minus</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.MinusImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getMinus()
-     * @generated
-     */
-    EClass MINUS = eINSTANCE.getMinus();
-
-    /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MINUS__LEFT = eINSTANCE.getMinus_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MINUS__RIGHT = eINSTANCE.getMinus_Right();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.MultiOrDivImpl <em>Multi Or Div</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.MultiOrDivImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getMultiOrDiv()
-     * @generated
-     */
-    EClass MULTI_OR_DIV = eINSTANCE.getMultiOrDiv();
-
-    /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MULTI_OR_DIV__LEFT = eINSTANCE.getMultiOrDiv_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MULTI_OR_DIV__OP = eINSTANCE.getMultiOrDiv_Op();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MULTI_OR_DIV__RIGHT = eINSTANCE.getMultiOrDiv_Right();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.BooleanNegationImpl <em>Boolean Negation</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BooleanNegationImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getBooleanNegation()
-     * @generated
-     */
-    EClass BOOLEAN_NEGATION = eINSTANCE.getBooleanNegation();
-
-    /**
-     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference BOOLEAN_NEGATION__EXPRESSION = eINSTANCE.getBooleanNegation_Expression();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ArithmeticSignedImpl <em>Arithmetic Signed</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.ArithmeticSignedImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getArithmeticSigned()
-     * @generated
-     */
-    EClass ARITHMETIC_SIGNED = eINSTANCE.getArithmeticSigned();
-
-    /**
-     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ARITHMETIC_SIGNED__EXPRESSION = eINSTANCE.getArithmeticSigned_Expression();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.NumberLiteralImpl <em>Number Literal</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.NumberLiteralImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getNumberLiteral()
-     * @generated
-     */
-    EClass NUMBER_LITERAL = eINSTANCE.getNumberLiteral();
-
-    /**
      * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute NUMBER_LITERAL__VALUE = eINSTANCE.getNumberLiteral_Value();
+    EAttribute VARIABLE__VALUE = eINSTANCE.getVariable_Value();
 
     /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.StringLiteralImpl <em>String Literal</em>}' class.
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ReferenceImpl <em>Reference</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.StringLiteralImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getStringLiteral()
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.ReferenceImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getReference()
      * @generated
      */
-    EClass STRING_LITERAL = eINSTANCE.getStringLiteral();
+    EClass REFERENCE = eINSTANCE.getReference();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute STRING_LITERAL__VALUE = eINSTANCE.getStringLiteral_Value();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.BooleanLiteralImpl <em>Boolean Literal</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BooleanLiteralImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getBooleanLiteral()
-     * @generated
-     */
-    EClass BOOLEAN_LITERAL = eINSTANCE.getBooleanLiteral();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute BOOLEAN_LITERAL__VALUE = eINSTANCE.getBooleanLiteral_Value();
+    EAttribute REFERENCE__NAME = eINSTANCE.getReference_Name();
 
     /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.VariableReferenceImpl <em>Variable Reference</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.VariableReferenceImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getVariableReference()
-     * @generated
-     */
-    EClass VARIABLE_REFERENCE = eINSTANCE.getVariableReference();
-
-    /**
-     * The meta object literal for the '<em><b>Ref</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Value</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VARIABLE_REFERENCE__REF = eINSTANCE.getVariableReference_Ref();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.IntTypeImpl <em>Int Type</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.IntTypeImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getIntType()
-     * @generated
-     */
-    EClass INT_TYPE = eINSTANCE.getIntType();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.StringTypeImpl <em>String Type</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.StringTypeImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getStringType()
-     * @generated
-     */
-    EClass STRING_TYPE = eINSTANCE.getStringType();
-
-    /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.BooleanTypeImpl <em>Boolean Type</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BooleanTypeImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getBooleanType()
-     * @generated
-     */
-    EClass BOOLEAN_TYPE = eINSTANCE.getBooleanType();
+    EReference REFERENCE__VALUE = eINSTANCE.getReference_Value();
 
   }
 

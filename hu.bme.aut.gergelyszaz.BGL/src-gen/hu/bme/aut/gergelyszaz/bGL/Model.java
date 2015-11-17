@@ -2,6 +2,8 @@
  */
 package hu.bme.aut.gergelyszaz.bGL;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -11,13 +13,14 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Model#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Model#getPlayer <em>Player</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Model#getBoard <em>Board</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Model#getTokens <em>Tokens</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Model#getRules <em>Rules</em>}</li>
  * </ul>
- * </p>
  *
  * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getModel()
  * @model
@@ -104,29 +107,45 @@ public interface Model extends EObject
   void setBoard(Board value);
 
   /**
-   * Returns the value of the '<em><b>Tokens</b></em>' containment reference.
+   * Returns the value of the '<em><b>Tokens</b></em>' containment reference list.
+   * The list contents are of type {@link hu.bme.aut.gergelyszaz.bGL.Token}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Tokens</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Tokens</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Tokens</em>' containment reference.
-   * @see #setTokens(Tokens)
+   * @return the value of the '<em>Tokens</em>' containment reference list.
    * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getModel_Tokens()
    * @model containment="true"
    * @generated
    */
-  Tokens getTokens();
+  EList<Token> getTokens();
 
   /**
-   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Model#getTokens <em>Tokens</em>}' containment reference.
+   * Returns the value of the '<em><b>Rules</b></em>' containment reference.
    * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Rules</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Tokens</em>' containment reference.
-   * @see #getTokens()
+   * @return the value of the '<em>Rules</em>' containment reference.
+   * @see #setRules(Rules)
+   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getModel_Rules()
+   * @model containment="true"
    * @generated
    */
-  void setTokens(Tokens value);
+  Rules getRules();
+
+  /**
+   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Model#getRules <em>Rules</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Rules</em>' containment reference.
+   * @see #getRules()
+   * @generated
+   */
+  void setRules(Rules value);
 
 } // Model

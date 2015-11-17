@@ -13,12 +13,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Player#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Player#getPlayercount <em>Playercount</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Player#getAttributes <em>Attributes</em>}</li>
  * </ul>
- * </p>
  *
  * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getPlayer()
  * @model
@@ -80,7 +80,7 @@ public interface Player extends EObject
 
   /**
    * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.
-   * The list contents are of type {@link hu.bme.aut.gergelyszaz.bGL.Attribute}.
+   * The list contents are of type {@link hu.bme.aut.gergelyszaz.bGL.Variable}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Attributes</em>' containment reference list isn't clear,
@@ -92,6 +92,6 @@ public interface Player extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<Attribute> getAttributes();
+  EList<Variable> getAttributes();
 
 } // Player

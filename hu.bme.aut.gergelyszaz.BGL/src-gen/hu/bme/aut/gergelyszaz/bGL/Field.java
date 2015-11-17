@@ -13,14 +13,15 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Field#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Field#getX <em>X</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Field#getY <em>Y</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Field#getZ <em>Z</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Field#getNeighbours <em>Neighbours</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Field#getVariables <em>Variables</em>}</li>
  * </ul>
- * </p>
  *
  * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getField()
  * @model
@@ -147,5 +148,21 @@ public interface Field extends EObject
    * @generated
    */
   EList<Field> getNeighbours();
+
+  /**
+   * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
+   * The list contents are of type {@link hu.bme.aut.gergelyszaz.bGL.Variable}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Variables</em>' containment reference list.
+   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getField_Variables()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Variable> getVariables();
 
 } // Field

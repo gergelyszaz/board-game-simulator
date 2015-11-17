@@ -4,8 +4,7 @@ package hu.bme.aut.gergelyszaz.bGL.impl;
 
 import hu.bme.aut.gergelyszaz.bGL.Action;
 import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
-import hu.bme.aut.gergelyszaz.bGL.Field;
-import hu.bme.aut.gergelyszaz.bGL.TokenType;
+import hu.bme.aut.gergelyszaz.bGL.Token;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -21,14 +20,12 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getToken <em>Token</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getField <em>Field</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getFrom <em>From</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getTo <em>To</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getObjectOfSelect <em>Object Of Select</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -62,57 +59,27 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * @generated
    * @ordered
    */
-  protected TokenType token;
+  protected Token token;
 
   /**
-   * The cached value of the '{@link #getField() <em>Field</em>}' reference.
+   * The default value of the '{@link #getObjectOfSelect() <em>Object Of Select</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getField()
+   * @see #getObjectOfSelect()
    * @generated
    * @ordered
    */
-  protected Field field;
+  protected static final String OBJECT_OF_SELECT_EDEFAULT = null;
 
   /**
-   * The default value of the '{@link #getFrom() <em>From</em>}' attribute.
+   * The cached value of the '{@link #getObjectOfSelect() <em>Object Of Select</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFrom()
+   * @see #getObjectOfSelect()
    * @generated
    * @ordered
    */
-  protected static final int FROM_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getFrom() <em>From</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getFrom()
-   * @generated
-   * @ordered
-   */
-  protected int from = FROM_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getTo() <em>To</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTo()
-   * @generated
-   * @ordered
-   */
-  protected static final int TO_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getTo() <em>To</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTo()
-   * @generated
-   * @ordered
-   */
-  protected int to = TO_EDEFAULT;
+  protected String objectOfSelect = OBJECT_OF_SELECT_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -163,12 +130,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public TokenType getToken()
+  public Token getToken()
   {
     if (token != null && token.eIsProxy())
     {
       InternalEObject oldToken = (InternalEObject)token;
-      token = (TokenType)eResolveProxy(oldToken);
+      token = (Token)eResolveProxy(oldToken);
       if (token != oldToken)
       {
         if (eNotificationRequired())
@@ -183,7 +150,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public TokenType basicGetToken()
+  public Token basicGetToken()
   {
     return token;
   }
@@ -193,9 +160,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setToken(TokenType newToken)
+  public void setToken(Token newToken)
   {
-    TokenType oldToken = token;
+    Token oldToken = token;
     token = newToken;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, BGLPackage.ACTION__TOKEN, oldToken, token));
@@ -206,19 +173,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public Field getField()
+  public String getObjectOfSelect()
   {
-    if (field != null && field.eIsProxy())
-    {
-      InternalEObject oldField = (InternalEObject)field;
-      field = (Field)eResolveProxy(oldField);
-      if (field != oldField)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, BGLPackage.ACTION__FIELD, oldField, field));
-      }
-    }
-    return field;
+    return objectOfSelect;
   }
 
   /**
@@ -226,68 +183,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public Field basicGetField()
+  public void setObjectOfSelect(String newObjectOfSelect)
   {
-    return field;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setField(Field newField)
-  {
-    Field oldField = field;
-    field = newField;
+    String oldObjectOfSelect = objectOfSelect;
+    objectOfSelect = newObjectOfSelect;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, BGLPackage.ACTION__FIELD, oldField, field));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public int getFrom()
-  {
-    return from;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setFrom(int newFrom)
-  {
-    int oldFrom = from;
-    from = newFrom;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, BGLPackage.ACTION__FROM, oldFrom, from));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public int getTo()
-  {
-    return to;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTo(int newTo)
-  {
-    int oldTo = to;
-    to = newTo;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, BGLPackage.ACTION__TO, oldTo, to));
+      eNotify(new ENotificationImpl(this, Notification.SET, BGLPackage.ACTION__OBJECT_OF_SELECT, oldObjectOfSelect, objectOfSelect));
   }
 
   /**
@@ -305,13 +206,8 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
       case BGLPackage.ACTION__TOKEN:
         if (resolve) return getToken();
         return basicGetToken();
-      case BGLPackage.ACTION__FIELD:
-        if (resolve) return getField();
-        return basicGetField();
-      case BGLPackage.ACTION__FROM:
-        return getFrom();
-      case BGLPackage.ACTION__TO:
-        return getTo();
+      case BGLPackage.ACTION__OBJECT_OF_SELECT:
+        return getObjectOfSelect();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -330,16 +226,10 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         setName((String)newValue);
         return;
       case BGLPackage.ACTION__TOKEN:
-        setToken((TokenType)newValue);
+        setToken((Token)newValue);
         return;
-      case BGLPackage.ACTION__FIELD:
-        setField((Field)newValue);
-        return;
-      case BGLPackage.ACTION__FROM:
-        setFrom((Integer)newValue);
-        return;
-      case BGLPackage.ACTION__TO:
-        setTo((Integer)newValue);
+      case BGLPackage.ACTION__OBJECT_OF_SELECT:
+        setObjectOfSelect((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -359,16 +249,10 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         setName(NAME_EDEFAULT);
         return;
       case BGLPackage.ACTION__TOKEN:
-        setToken((TokenType)null);
+        setToken((Token)null);
         return;
-      case BGLPackage.ACTION__FIELD:
-        setField((Field)null);
-        return;
-      case BGLPackage.ACTION__FROM:
-        setFrom(FROM_EDEFAULT);
-        return;
-      case BGLPackage.ACTION__TO:
-        setTo(TO_EDEFAULT);
+      case BGLPackage.ACTION__OBJECT_OF_SELECT:
+        setObjectOfSelect(OBJECT_OF_SELECT_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -388,12 +272,8 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case BGLPackage.ACTION__TOKEN:
         return token != null;
-      case BGLPackage.ACTION__FIELD:
-        return field != null;
-      case BGLPackage.ACTION__FROM:
-        return from != FROM_EDEFAULT;
-      case BGLPackage.ACTION__TO:
-        return to != TO_EDEFAULT;
+      case BGLPackage.ACTION__OBJECT_OF_SELECT:
+        return OBJECT_OF_SELECT_EDEFAULT == null ? objectOfSelect != null : !OBJECT_OF_SELECT_EDEFAULT.equals(objectOfSelect);
     }
     return super.eIsSet(featureID);
   }
@@ -411,10 +291,8 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", from: ");
-    result.append(from);
-    result.append(", to: ");
-    result.append(to);
+    result.append(", objectOfSelect: ");
+    result.append(objectOfSelect);
     result.append(')');
     return result.toString();
   }

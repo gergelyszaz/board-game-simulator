@@ -50,31 +50,31 @@ public interface BGLFactory extends EFactory
   Board createBoard();
 
   /**
-   * Returns a new object of class '<em>Tokens</em>'.
+   * Returns a new object of class '<em>Rules</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Tokens</em>'.
+   * @return a new object of class '<em>Rules</em>'.
    * @generated
    */
-  Tokens createTokens();
+  Rules createRules();
 
   /**
-   * Returns a new object of class '<em>Token Type</em>'.
+   * Returns a new object of class '<em>Turn Rules</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Token Type</em>'.
+   * @return a new object of class '<em>Turn Rules</em>'.
    * @generated
    */
-  TokenType createTokenType();
+  TurnRules createTurnRules();
 
   /**
-   * Returns a new object of class '<em>Attribute</em>'.
+   * Returns a new object of class '<em>Token</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute</em>'.
+   * @return a new object of class '<em>Token</em>'.
    * @generated
    */
-  Attribute createAttribute();
+  Token createToken();
 
   /**
    * Returns a new object of class '<em>Field</em>'.
@@ -104,157 +104,13 @@ public interface BGLFactory extends EFactory
   Variable createVariable();
 
   /**
-   * Returns a new object of class '<em>Expression</em>'.
+   * Returns a new object of class '<em>Reference</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Expression</em>'.
+   * @return a new object of class '<em>Reference</em>'.
    * @generated
    */
-  Expression createExpression();
-
-  /**
-   * Returns a new object of class '<em>Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Type</em>'.
-   * @generated
-   */
-  Type createType();
-
-  /**
-   * Returns a new object of class '<em>And Or Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>And Or Expression</em>'.
-   * @generated
-   */
-  AndOrExpression createAndOrExpression();
-
-  /**
-   * Returns a new object of class '<em>Comparison</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Comparison</em>'.
-   * @generated
-   */
-  Comparison createComparison();
-
-  /**
-   * Returns a new object of class '<em>Equals</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Equals</em>'.
-   * @generated
-   */
-  Equals createEquals();
-
-  /**
-   * Returns a new object of class '<em>Plus</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Plus</em>'.
-   * @generated
-   */
-  Plus createPlus();
-
-  /**
-   * Returns a new object of class '<em>Minus</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Minus</em>'.
-   * @generated
-   */
-  Minus createMinus();
-
-  /**
-   * Returns a new object of class '<em>Multi Or Div</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Multi Or Div</em>'.
-   * @generated
-   */
-  MultiOrDiv createMultiOrDiv();
-
-  /**
-   * Returns a new object of class '<em>Boolean Negation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Boolean Negation</em>'.
-   * @generated
-   */
-  BooleanNegation createBooleanNegation();
-
-  /**
-   * Returns a new object of class '<em>Arithmetic Signed</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Arithmetic Signed</em>'.
-   * @generated
-   */
-  ArithmeticSigned createArithmeticSigned();
-
-  /**
-   * Returns a new object of class '<em>Number Literal</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Number Literal</em>'.
-   * @generated
-   */
-  NumberLiteral createNumberLiteral();
-
-  /**
-   * Returns a new object of class '<em>String Literal</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>String Literal</em>'.
-   * @generated
-   */
-  StringLiteral createStringLiteral();
-
-  /**
-   * Returns a new object of class '<em>Boolean Literal</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Boolean Literal</em>'.
-   * @generated
-   */
-  BooleanLiteral createBooleanLiteral();
-
-  /**
-   * Returns a new object of class '<em>Variable Reference</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable Reference</em>'.
-   * @generated
-   */
-  VariableReference createVariableReference();
-
-  /**
-   * Returns a new object of class '<em>Int Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Int Type</em>'.
-   * @generated
-   */
-  IntType createIntType();
-
-  /**
-   * Returns a new object of class '<em>String Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>String Type</em>'.
-   * @generated
-   */
-  StringType createStringType();
-
-  /**
-   * Returns a new object of class '<em>Boolean Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Boolean Type</em>'.
-   * @generated
-   */
-  BooleanType createBooleanType();
+  Reference createReference();
 
   /**
    * Returns the package supported by this factory.

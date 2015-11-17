@@ -3,14 +3,11 @@
 package hu.bme.aut.gergelyszaz.bGL.impl;
 
 import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
-import hu.bme.aut.gergelyszaz.bGL.Expression;
 import hu.bme.aut.gergelyszaz.bGL.Variable;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -21,11 +18,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.VariableImpl#getName <em>Name</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.VariableImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.VariableImpl#getValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -52,14 +49,24 @@ public class VariableImpl extends MinimalEObjectImpl.Container implements Variab
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+   * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpression()
+   * @see #getValue()
    * @generated
    * @ordered
    */
-  protected Expression expression;
+  protected static final int VALUE_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getValue()
+   * @generated
+   * @ordered
+   */
+  protected int value = VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -110,9 +117,9 @@ public class VariableImpl extends MinimalEObjectImpl.Container implements Variab
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpression()
+  public int getValue()
   {
-    return expression;
+    return value;
   }
 
   /**
@@ -120,53 +127,12 @@ public class VariableImpl extends MinimalEObjectImpl.Container implements Variab
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
+  public void setValue(int newValue)
   {
-    Expression oldExpression = expression;
-    expression = newExpression;
+    int oldValue = value;
+    value = newValue;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BGLPackage.VARIABLE__EXPRESSION, oldExpression, newExpression);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setExpression(Expression newExpression)
-  {
-    if (newExpression != expression)
-    {
-      NotificationChain msgs = null;
-      if (expression != null)
-        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BGLPackage.VARIABLE__EXPRESSION, null, msgs);
-      if (newExpression != null)
-        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BGLPackage.VARIABLE__EXPRESSION, null, msgs);
-      msgs = basicSetExpression(newExpression, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, BGLPackage.VARIABLE__EXPRESSION, newExpression, newExpression));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case BGLPackage.VARIABLE__EXPRESSION:
-        return basicSetExpression(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
+      eNotify(new ENotificationImpl(this, Notification.SET, BGLPackage.VARIABLE__VALUE, oldValue, value));
   }
 
   /**
@@ -181,8 +147,8 @@ public class VariableImpl extends MinimalEObjectImpl.Container implements Variab
     {
       case BGLPackage.VARIABLE__NAME:
         return getName();
-      case BGLPackage.VARIABLE__EXPRESSION:
-        return getExpression();
+      case BGLPackage.VARIABLE__VALUE:
+        return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -200,8 +166,8 @@ public class VariableImpl extends MinimalEObjectImpl.Container implements Variab
       case BGLPackage.VARIABLE__NAME:
         setName((String)newValue);
         return;
-      case BGLPackage.VARIABLE__EXPRESSION:
-        setExpression((Expression)newValue);
+      case BGLPackage.VARIABLE__VALUE:
+        setValue((Integer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -220,8 +186,8 @@ public class VariableImpl extends MinimalEObjectImpl.Container implements Variab
       case BGLPackage.VARIABLE__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case BGLPackage.VARIABLE__EXPRESSION:
-        setExpression((Expression)null);
+      case BGLPackage.VARIABLE__VALUE:
+        setValue(VALUE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -239,8 +205,8 @@ public class VariableImpl extends MinimalEObjectImpl.Container implements Variab
     {
       case BGLPackage.VARIABLE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case BGLPackage.VARIABLE__EXPRESSION:
-        return expression != null;
+      case BGLPackage.VARIABLE__VALUE:
+        return value != VALUE_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -258,6 +224,8 @@ public class VariableImpl extends MinimalEObjectImpl.Container implements Variab
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", value: ");
+    result.append(value);
     result.append(')');
     return result.toString();
   }

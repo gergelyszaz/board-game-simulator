@@ -2,10 +2,10 @@
  */
 package hu.bme.aut.gergelyszaz.bGL.impl;
 
-import hu.bme.aut.gergelyszaz.bGL.Attribute;
 import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
 import hu.bme.aut.gergelyszaz.bGL.Board;
 import hu.bme.aut.gergelyszaz.bGL.Field;
+import hu.bme.aut.gergelyszaz.bGL.Variable;
 
 import java.util.Collection;
 
@@ -29,12 +29,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl#getFields <em>Fields</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl#getAttributes <em>Attributes</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -78,7 +78,7 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
    * @generated
    * @ordered
    */
-  protected EList<Attribute> attributes;
+  protected EList<Variable> attributes;
 
   /**
    * <!-- begin-user-doc -->
@@ -143,11 +143,11 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Attribute> getAttributes()
+  public EList<Variable> getAttributes()
   {
     if (attributes == null)
     {
-      attributes = new EObjectContainmentEList<Attribute>(Attribute.class, this, BGLPackage.BOARD__ATTRIBUTES);
+      attributes = new EObjectContainmentEList<Variable>(Variable.class, this, BGLPackage.BOARD__ATTRIBUTES);
     }
     return attributes;
   }
@@ -210,7 +210,7 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
         return;
       case BGLPackage.BOARD__ATTRIBUTES:
         getAttributes().clear();
-        getAttributes().addAll((Collection<? extends Attribute>)newValue);
+        getAttributes().addAll((Collection<? extends Variable>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

@@ -4,19 +4,24 @@ package hu.bme.aut.gergelyszaz.bGL.impl;
 
 import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
 import hu.bme.aut.gergelyszaz.bGL.Field;
+import hu.bme.aut.gergelyszaz.bGL.Variable;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,14 +29,15 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.FieldImpl#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.FieldImpl#getX <em>X</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.FieldImpl#getY <em>Y</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.FieldImpl#getZ <em>Z</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.FieldImpl#getNeighbours <em>Neighbours</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.FieldImpl#getVariables <em>Variables</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -126,6 +132,16 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * @ordered
    */
   protected EList<Field> neighbours;
+
+  /**
+   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVariables()
+   * @generated
+   * @ordered
+   */
+  protected EList<Variable> variables;
 
   /**
    * <!-- begin-user-doc -->
@@ -259,6 +275,36 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Variable> getVariables()
+  {
+    if (variables == null)
+    {
+      variables = new EObjectContainmentEList<Variable>(Variable.class, this, BGLPackage.FIELD__VARIABLES);
+    }
+    return variables;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case BGLPackage.FIELD__VARIABLES:
+        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -274,6 +320,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
         return getZ();
       case BGLPackage.FIELD__NEIGHBOURS:
         return getNeighbours();
+      case BGLPackage.FIELD__VARIABLES:
+        return getVariables();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -305,6 +353,10 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
         getNeighbours().clear();
         getNeighbours().addAll((Collection<? extends Field>)newValue);
         return;
+      case BGLPackage.FIELD__VARIABLES:
+        getVariables().clear();
+        getVariables().addAll((Collection<? extends Variable>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -334,6 +386,9 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
       case BGLPackage.FIELD__NEIGHBOURS:
         getNeighbours().clear();
         return;
+      case BGLPackage.FIELD__VARIABLES:
+        getVariables().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -358,6 +413,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
         return z != Z_EDEFAULT;
       case BGLPackage.FIELD__NEIGHBOURS:
         return neighbours != null && !neighbours.isEmpty();
+      case BGLPackage.FIELD__VARIABLES:
+        return variables != null && !variables.isEmpty();
     }
     return super.eIsSet(featureID);
   }

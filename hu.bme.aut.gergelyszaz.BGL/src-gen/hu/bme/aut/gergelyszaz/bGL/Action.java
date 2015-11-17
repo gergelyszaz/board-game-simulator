@@ -11,14 +11,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getToken <em>Token</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getField <em>Field</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getFrom <em>From</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getTo <em>To</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getObjectOfSelect <em>Object Of Select</em>}</li>
  * </ul>
- * </p>
  *
  * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction()
  * @model
@@ -61,12 +59,12 @@ public interface Action extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Token</em>' reference.
-   * @see #setToken(TokenType)
+   * @see #setToken(Token)
    * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction_Token()
    * @model
    * @generated
    */
-  TokenType getToken();
+  Token getToken();
 
   /**
    * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Action#getToken <em>Token</em>}' reference.
@@ -76,84 +74,32 @@ public interface Action extends EObject
    * @see #getToken()
    * @generated
    */
-  void setToken(TokenType value);
+  void setToken(Token value);
 
   /**
-   * Returns the value of the '<em><b>Field</b></em>' reference.
+   * Returns the value of the '<em><b>Object Of Select</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Field</em>' reference isn't clear,
+   * If the meaning of the '<em>Object Of Select</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Field</em>' reference.
-   * @see #setField(Field)
-   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction_Field()
+   * @return the value of the '<em>Object Of Select</em>' attribute.
+   * @see #setObjectOfSelect(String)
+   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction_ObjectOfSelect()
    * @model
    * @generated
    */
-  Field getField();
+  String getObjectOfSelect();
 
   /**
-   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Action#getField <em>Field</em>}' reference.
+   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Action#getObjectOfSelect <em>Object Of Select</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Field</em>' reference.
-   * @see #getField()
+   * @param value the new value of the '<em>Object Of Select</em>' attribute.
+   * @see #getObjectOfSelect()
    * @generated
    */
-  void setField(Field value);
-
-  /**
-   * Returns the value of the '<em><b>From</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>From</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>From</em>' attribute.
-   * @see #setFrom(int)
-   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction_From()
-   * @model
-   * @generated
-   */
-  int getFrom();
-
-  /**
-   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Action#getFrom <em>From</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>From</em>' attribute.
-   * @see #getFrom()
-   * @generated
-   */
-  void setFrom(int value);
-
-  /**
-   * Returns the value of the '<em><b>To</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>To</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>To</em>' attribute.
-   * @see #setTo(int)
-   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction_To()
-   * @model
-   * @generated
-   */
-  int getTo();
-
-  /**
-   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Action#getTo <em>To</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>To</em>' attribute.
-   * @see #getTo()
-   * @generated
-   */
-  void setTo(int value);
+  void setObjectOfSelect(String value);
 
 } // Action
