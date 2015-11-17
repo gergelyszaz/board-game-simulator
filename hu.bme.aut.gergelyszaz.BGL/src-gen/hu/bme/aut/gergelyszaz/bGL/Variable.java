@@ -11,11 +11,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Variable#getName <em>Name</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Variable#getExpression <em>Expression</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Variable#getValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getVariable()
  * @model
@@ -50,29 +50,29 @@ public interface Variable extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
+   * Returns the value of the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Value</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expression</em>' containment reference.
-   * @see #setExpression(Expression)
-   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getVariable_Expression()
-   * @model containment="true"
+   * @return the value of the '<em>Value</em>' attribute.
+   * @see #setValue(int)
+   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getVariable_Value()
+   * @model
    * @generated
    */
-  Expression getExpression();
+  int getValue();
 
   /**
-   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Variable#getExpression <em>Expression</em>}' containment reference.
+   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Variable#getValue <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expression</em>' containment reference.
-   * @see #getExpression()
+   * @param value the new value of the '<em>Value</em>' attribute.
+   * @see #getValue()
    * @generated
    */
-  void setExpression(Expression value);
+  void setValue(int value);
 
 } // Variable

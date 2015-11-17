@@ -1,25 +1,16 @@
 package hu.bme.aut.gergelyszaz.BGS.core
 
-import java.util.Hashtable
+
+import hu.bme.aut.gergelyszaz.bGL.Field
 
 class Token {
-	String type
-	Node place
-	Hashtable<String, Integer> attributes
+	public String type
+	public Field field=null
+	public Player owner=null
 	
 	new(String t) {
 		type = t
-		place = null
-	}
-	
-	def Init(Hashtable<String, Integer> attr)
-	{
-		attributes=attr
 	}
 
-	def setPlace(Node p) {
-		place = p
-	}
 
-	def getPlace() { place }
 }

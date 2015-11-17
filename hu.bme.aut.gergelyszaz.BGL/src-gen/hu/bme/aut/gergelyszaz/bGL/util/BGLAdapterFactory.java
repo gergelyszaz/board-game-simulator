@@ -90,19 +90,19 @@ public class BGLAdapterFactory extends AdapterFactoryImpl
         return createBoardAdapter();
       }
       @Override
-      public Adapter caseTokens(Tokens object)
+      public Adapter caseRules(Rules object)
       {
-        return createTokensAdapter();
+        return createRulesAdapter();
       }
       @Override
-      public Adapter caseTokenType(TokenType object)
+      public Adapter caseTurnRules(TurnRules object)
       {
-        return createTokenTypeAdapter();
+        return createTurnRulesAdapter();
       }
       @Override
-      public Adapter caseAttribute(Attribute object)
+      public Adapter caseToken(Token object)
       {
-        return createAttributeAdapter();
+        return createTokenAdapter();
       }
       @Override
       public Adapter caseField(Field object)
@@ -120,89 +120,9 @@ public class BGLAdapterFactory extends AdapterFactoryImpl
         return createVariableAdapter();
       }
       @Override
-      public Adapter caseExpression(Expression object)
+      public Adapter caseReference(Reference object)
       {
-        return createExpressionAdapter();
-      }
-      @Override
-      public Adapter caseType(Type object)
-      {
-        return createTypeAdapter();
-      }
-      @Override
-      public Adapter caseAndOrExpression(AndOrExpression object)
-      {
-        return createAndOrExpressionAdapter();
-      }
-      @Override
-      public Adapter caseComparison(Comparison object)
-      {
-        return createComparisonAdapter();
-      }
-      @Override
-      public Adapter caseEquals(Equals object)
-      {
-        return createEqualsAdapter();
-      }
-      @Override
-      public Adapter casePlus(Plus object)
-      {
-        return createPlusAdapter();
-      }
-      @Override
-      public Adapter caseMinus(Minus object)
-      {
-        return createMinusAdapter();
-      }
-      @Override
-      public Adapter caseMultiOrDiv(MultiOrDiv object)
-      {
-        return createMultiOrDivAdapter();
-      }
-      @Override
-      public Adapter caseBooleanNegation(BooleanNegation object)
-      {
-        return createBooleanNegationAdapter();
-      }
-      @Override
-      public Adapter caseArithmeticSigned(ArithmeticSigned object)
-      {
-        return createArithmeticSignedAdapter();
-      }
-      @Override
-      public Adapter caseNumberLiteral(NumberLiteral object)
-      {
-        return createNumberLiteralAdapter();
-      }
-      @Override
-      public Adapter caseStringLiteral(StringLiteral object)
-      {
-        return createStringLiteralAdapter();
-      }
-      @Override
-      public Adapter caseBooleanLiteral(BooleanLiteral object)
-      {
-        return createBooleanLiteralAdapter();
-      }
-      @Override
-      public Adapter caseVariableReference(VariableReference object)
-      {
-        return createVariableReferenceAdapter();
-      }
-      @Override
-      public Adapter caseIntType(IntType object)
-      {
-        return createIntTypeAdapter();
-      }
-      @Override
-      public Adapter caseStringType(StringType object)
-      {
-        return createStringTypeAdapter();
-      }
-      @Override
-      public Adapter caseBooleanType(BooleanType object)
-      {
-        return createBooleanTypeAdapter();
+        return createReferenceAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -272,46 +192,46 @@ public class BGLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Tokens <em>Tokens</em>}'.
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Rules <em>Rules</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.Tokens
+   * @see hu.bme.aut.gergelyszaz.bGL.Rules
    * @generated
    */
-  public Adapter createTokensAdapter()
+  public Adapter createRulesAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.TokenType <em>Token Type</em>}'.
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.TurnRules <em>Turn Rules</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.TokenType
+   * @see hu.bme.aut.gergelyszaz.bGL.TurnRules
    * @generated
    */
-  public Adapter createTokenTypeAdapter()
+  public Adapter createTurnRulesAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Attribute <em>Attribute</em>}'.
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Token <em>Token</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.Attribute
+   * @see hu.bme.aut.gergelyszaz.bGL.Token
    * @generated
    */
-  public Adapter createAttributeAdapter()
+  public Adapter createTokenAdapter()
   {
     return null;
   }
@@ -362,256 +282,16 @@ public class BGLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Expression <em>Expression</em>}'.
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Reference <em>Reference</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.Expression
+   * @see hu.bme.aut.gergelyszaz.bGL.Reference
    * @generated
    */
-  public Adapter createExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Type <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.Type
-   * @generated
-   */
-  public Adapter createTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.AndOrExpression <em>And Or Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.AndOrExpression
-   * @generated
-   */
-  public Adapter createAndOrExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Comparison <em>Comparison</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.Comparison
-   * @generated
-   */
-  public Adapter createComparisonAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Equals <em>Equals</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.Equals
-   * @generated
-   */
-  public Adapter createEqualsAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Plus <em>Plus</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.Plus
-   * @generated
-   */
-  public Adapter createPlusAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Minus <em>Minus</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.Minus
-   * @generated
-   */
-  public Adapter createMinusAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.MultiOrDiv <em>Multi Or Div</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.MultiOrDiv
-   * @generated
-   */
-  public Adapter createMultiOrDivAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.BooleanNegation <em>Boolean Negation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.BooleanNegation
-   * @generated
-   */
-  public Adapter createBooleanNegationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.ArithmeticSigned <em>Arithmetic Signed</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.ArithmeticSigned
-   * @generated
-   */
-  public Adapter createArithmeticSignedAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.NumberLiteral <em>Number Literal</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.NumberLiteral
-   * @generated
-   */
-  public Adapter createNumberLiteralAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.StringLiteral <em>String Literal</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.StringLiteral
-   * @generated
-   */
-  public Adapter createStringLiteralAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.BooleanLiteral <em>Boolean Literal</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.BooleanLiteral
-   * @generated
-   */
-  public Adapter createBooleanLiteralAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.VariableReference <em>Variable Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.VariableReference
-   * @generated
-   */
-  public Adapter createVariableReferenceAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.IntType <em>Int Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.IntType
-   * @generated
-   */
-  public Adapter createIntTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.StringType <em>String Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.StringType
-   * @generated
-   */
-  public Adapter createStringTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.BooleanType <em>Boolean Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.BooleanType
-   * @generated
-   */
-  public Adapter createBooleanTypeAdapter()
+  public Adapter createReferenceAdapter()
   {
     return null;
   }
