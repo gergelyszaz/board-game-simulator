@@ -14,16 +14,34 @@ import javax.swing.JLabel
 class Game{
 	String name
 	List<Player> players=new ArrayList<Player>
-	public Player currentPlayer=null
+	
+	def Player getCurrentPlayer(){	varManager.GetReference("currentPlayer",null) as Player	}
+	def void setCurrentPlayer(Player player){ varManager.Store(null,"currentPlayer",player)}
+	
 	Model model
 	
 	def Field getSelectedField(){	varManager.GetReference("selectedField",null) as Field	}
 	def void setSelectedField(Field field){ varManager.Store(null,"selectedField",field)}
 	
 	def Token getSelectedToken(){	varManager.GetReference("selectedToken",null) as Token	}
-	def void setSelectedToken(Token token){ varManager.Store(null,"selectedToken",token)}  
+	def void setSelectedToken(Token token){ 
+		varManager.Store(null,"selectedToken",token)
+		for(f:model.board.fields){
+			varManager.Store(f,"distanceFromSelectedToken",-1)
+		}
+		token.field.setupDistance(0)
+
+	}
 	
-	public Token selectedToken=null
+	private def void setupDistance(Field field, int distance){
+		val dist=varManager.GetValue("distanceFromSelectedToken",field)
+		if(dist>-1 && dist<=distance) return;
+		varManager.Store(field,"distanceFromSelectedToken", distance)
+		for(f:field.neighbours){
+			f.setupDistance(distance+1)
+		}
+	}  
+	
 	int turnCount=1
 	Action lastAction=null
 	public volatile var waitForInput=false
