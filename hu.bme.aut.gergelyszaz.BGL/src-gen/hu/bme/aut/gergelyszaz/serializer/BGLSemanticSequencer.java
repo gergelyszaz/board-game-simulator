@@ -6,16 +6,22 @@ package hu.bme.aut.gergelyszaz.serializer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import hu.bme.aut.gergelyszaz.bGL.Action;
+import hu.bme.aut.gergelyszaz.bGL.AddtionExp;
+import hu.bme.aut.gergelyszaz.bGL.AndExp;
+import hu.bme.aut.gergelyszaz.bGL.AttributeName;
+import hu.bme.aut.gergelyszaz.bGL.AttributeOrInt;
 import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
 import hu.bme.aut.gergelyszaz.bGL.Board;
+import hu.bme.aut.gergelyszaz.bGL.BooleanExp;
 import hu.bme.aut.gergelyszaz.bGL.Field;
 import hu.bme.aut.gergelyszaz.bGL.Model;
+import hu.bme.aut.gergelyszaz.bGL.MultiplicationExp;
+import hu.bme.aut.gergelyszaz.bGL.OrExp;
 import hu.bme.aut.gergelyszaz.bGL.Player;
-import hu.bme.aut.gergelyszaz.bGL.Reference;
 import hu.bme.aut.gergelyszaz.bGL.Rules;
 import hu.bme.aut.gergelyszaz.bGL.Token;
 import hu.bme.aut.gergelyszaz.bGL.TurnRules;
-import hu.bme.aut.gergelyszaz.bGL.Variable;
+import hu.bme.aut.gergelyszaz.bGL.ValueAssignment;
 import hu.bme.aut.gergelyszaz.services.BGLGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -41,8 +47,23 @@ public class BGLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case BGLPackage.ACTION:
 				sequence_Action(context, (Action) semanticObject); 
 				return; 
+			case BGLPackage.ADDTION_EXP:
+				sequence_AddtionExp(context, (AddtionExp) semanticObject); 
+				return; 
+			case BGLPackage.AND_EXP:
+				sequence_AndExp(context, (AndExp) semanticObject); 
+				return; 
+			case BGLPackage.ATTRIBUTE_NAME:
+				sequence_AttributeName(context, (AttributeName) semanticObject); 
+				return; 
+			case BGLPackage.ATTRIBUTE_OR_INT:
+				sequence_AttributeOrInt(context, (AttributeOrInt) semanticObject); 
+				return; 
 			case BGLPackage.BOARD:
 				sequence_Board(context, (Board) semanticObject); 
+				return; 
+			case BGLPackage.BOOLEAN_EXP:
+				sequence_BooleanExp(context, (BooleanExp) semanticObject); 
 				return; 
 			case BGLPackage.FIELD:
 				sequence_Field(context, (Field) semanticObject); 
@@ -50,11 +71,14 @@ public class BGLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case BGLPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
 				return; 
+			case BGLPackage.MULTIPLICATION_EXP:
+				sequence_MultiplicationExp(context, (MultiplicationExp) semanticObject); 
+				return; 
+			case BGLPackage.OR_EXP:
+				sequence_OrExp(context, (OrExp) semanticObject); 
+				return; 
 			case BGLPackage.PLAYER:
 				sequence_Player(context, (Player) semanticObject); 
-				return; 
-			case BGLPackage.REFERENCE:
-				sequence_Reference(context, (Reference) semanticObject); 
 				return; 
 			case BGLPackage.RULES:
 				sequence_Rules(context, (Rules) semanticObject); 
@@ -65,8 +89,8 @@ public class BGLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case BGLPackage.TURN_RULES:
 				sequence_TurnRules(context, (TurnRules) semanticObject); 
 				return; 
-			case BGLPackage.VARIABLE:
-				sequence_Variable(context, (Variable) semanticObject); 
+			case BGLPackage.VALUE_ASSIGNMENT:
+				sequence_ValueAssignment(context, (ValueAssignment) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -74,7 +98,12 @@ public class BGLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     ((name='Spawn' token=[Token|ID]) | name='Move' | (name='Select' (objectOfSelect='token' | objectOfSelect='field')))
+	 *     (
+	 *         (name='SPAWN' token=[Token|ID]) | 
+	 *         name='MOVE' | 
+	 *         (name='SELECT' (objectOfSelect='TOKEN' | objectOfSelect='FIELD') filter=OrExp) | 
+	 *         assignment=ValueAssignment
+	 *     )
 	 */
 	protected void sequence_Action(EObject context, Action semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -83,7 +112,43 @@ public class BGLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (name='Board' fields+=Field* attributes+=Variable*)
+	 *     (expressions+=MultiplicationExp (operators+='+' | expressions+=MultiplicationExp)*)
+	 */
+	protected void sequence_AddtionExp(EObject context, AddtionExp semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (expressions+=BooleanExp (operators+='AND' expressions+=BooleanExp)*)
+	 */
+	protected void sequence_AndExp(EObject context, AndExp semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ID | (parent=ID child=AttributeName))
+	 */
+	protected void sequence_AttributeName(EObject context, AttributeName semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (attribute=AttributeName | value=INT)
+	 */
+	protected void sequence_AttributeOrInt(EObject context, AttributeOrInt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name='BOARD' fields+=Field*)
 	 */
 	protected void sequence_Board(EObject context, Board semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -93,13 +158,31 @@ public class BGLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	/**
 	 * Constraint:
 	 *     (
-	 *         name=ID 
-	 *         x=INT 
-	 *         y=INT 
-	 *         z=INT 
-	 *         neighbours+=[Field|ID]* 
-	 *         variables+=Variable*
+	 *         (
+	 *             left=AttributeOrInt 
+	 *             (
+	 *                 operator='!==' | 
+	 *                 operator='===' | 
+	 *                 operator='==' | 
+	 *                 operator='!=' | 
+	 *                 operator='>' | 
+	 *                 operator='>=' | 
+	 *                 operator='<' | 
+	 *                 operator='<='
+	 *             ) 
+	 *             right=AttributeOrInt
+	 *         ) | 
+	 *         nestedExp=OrExp
 	 *     )
+	 */
+	protected void sequence_BooleanExp(EObject context, BooleanExp semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ID x=INT y=INT z=INT neighbours+=[Field|ID]*)
 	 */
 	protected void sequence_Field(EObject context, Field semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -117,35 +200,44 @@ public class BGLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (name='Players' playercount=INT attributes+=Variable*)
+	 *     (expressions+=AttributeOrInt (operators+='*' | expressions+=AttributeOrInt)*)
 	 */
-	protected void sequence_Player(EObject context, Player semanticObject) {
+	protected void sequence_MultiplicationExp(EObject context, MultiplicationExp semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (name=ID value=[Variable|ID])
+	 *     (expressions+=AndExp (operators+='OR' expressions+=AndExp)*)
 	 */
-	protected void sequence_Reference(EObject context, Reference semanticObject) {
+	protected void sequence_OrExp(EObject context, OrExp semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name='PLAYERS' playercount=INT)
+	 */
+	protected void sequence_Player(EObject context, Player semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, BGLPackage.Literals.REFERENCE__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BGLPackage.Literals.REFERENCE__NAME));
-			if(transientValues.isValueTransient(semanticObject, BGLPackage.Literals.REFERENCE__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BGLPackage.Literals.REFERENCE__VALUE));
+			if(transientValues.isValueTransient(semanticObject, BGLPackage.Literals.PLAYER__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BGLPackage.Literals.PLAYER__NAME));
+			if(transientValues.isValueTransient(semanticObject, BGLPackage.Literals.PLAYER__PLAYERCOUNT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BGLPackage.Literals.PLAYER__PLAYERCOUNT));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getReferenceAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getReferenceAccess().getValueVariableIDTerminalRuleCall_2_0_1(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getPlayerAccess().getNamePLAYERSKeyword_0_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getPlayerAccess().getPlayercountINTTerminalRuleCall_1_0(), semanticObject.getPlayercount());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (name='Rules' turnrules=TurnRules)
+	 *     (name='RULES' turnrules=TurnRules)
 	 */
 	protected void sequence_Rules(EObject context, Rules semanticObject) {
 		if(errorAcceptor != null) {
@@ -156,7 +248,7 @@ public class BGLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getRulesAccess().getNameRulesKeyword_0_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getRulesAccess().getNameRULESKeyword_0_0(), semanticObject.getName());
 		feeder.accept(grammarAccess.getRulesAccess().getTurnrulesTurnRulesParserRuleCall_2_0(), semanticObject.getTurnrules());
 		feeder.finish();
 	}
@@ -180,7 +272,7 @@ public class BGLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (name='Turn' actions+=Action*)
+	 *     (name='TURN' actions+=Action*)
 	 */
 	protected void sequence_TurnRules(EObject context, TurnRules semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -189,19 +281,19 @@ public class BGLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (name=ID value=INT)
+	 *     (name=AttributeName addition=AddtionExp)
 	 */
-	protected void sequence_Variable(EObject context, Variable semanticObject) {
+	protected void sequence_ValueAssignment(EObject context, ValueAssignment semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, BGLPackage.Literals.VARIABLE__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BGLPackage.Literals.VARIABLE__NAME));
-			if(transientValues.isValueTransient(semanticObject, BGLPackage.Literals.VARIABLE__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BGLPackage.Literals.VARIABLE__VALUE));
+			if(transientValues.isValueTransient(semanticObject, BGLPackage.Literals.VALUE_ASSIGNMENT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BGLPackage.Literals.VALUE_ASSIGNMENT__NAME));
+			if(transientValues.isValueTransient(semanticObject, BGLPackage.Literals.VALUE_ASSIGNMENT__ADDITION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BGLPackage.Literals.VALUE_ASSIGNMENT__ADDITION));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getVariableAccess().getValueINTTerminalRuleCall_2_0(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getValueAssignmentAccess().getNameAttributeNameParserRuleCall_0_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getValueAssignmentAccess().getAdditionAddtionExpParserRuleCall_2_0(), semanticObject.getAddition());
 		feeder.finish();
 	}
 }

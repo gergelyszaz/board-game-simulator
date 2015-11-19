@@ -95,22 +95,76 @@ public interface BGLFactory extends EFactory
   Action createAction();
 
   /**
-   * Returns a new object of class '<em>Variable</em>'.
+   * Returns a new object of class '<em>Or Exp</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable</em>'.
+   * @return a new object of class '<em>Or Exp</em>'.
    * @generated
    */
-  Variable createVariable();
+  OrExp createOrExp();
 
   /**
-   * Returns a new object of class '<em>Reference</em>'.
+   * Returns a new object of class '<em>And Exp</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Reference</em>'.
+   * @return a new object of class '<em>And Exp</em>'.
    * @generated
    */
-  Reference createReference();
+  AndExp createAndExp();
+
+  /**
+   * Returns a new object of class '<em>Boolean Exp</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Boolean Exp</em>'.
+   * @generated
+   */
+  BooleanExp createBooleanExp();
+
+  /**
+   * Returns a new object of class '<em>Attribute Name</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute Name</em>'.
+   * @generated
+   */
+  AttributeName createAttributeName();
+
+  /**
+   * Returns a new object of class '<em>Attribute Or Int</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute Or Int</em>'.
+   * @generated
+   */
+  AttributeOrInt createAttributeOrInt();
+
+  /**
+   * Returns a new object of class '<em>Addtion Exp</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Addtion Exp</em>'.
+   * @generated
+   */
+  AddtionExp createAddtionExp();
+
+  /**
+   * Returns a new object of class '<em>Multiplication Exp</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Multiplication Exp</em>'.
+   * @generated
+   */
+  MultiplicationExp createMultiplicationExp();
+
+  /**
+   * Returns a new object of class '<em>Value Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Value Assignment</em>'.
+   * @generated
+   */
+  ValueAssignment createValueAssignment();
 
   /**
    * Returns the package supported by this factory.

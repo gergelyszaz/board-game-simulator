@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getToken <em>Token</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getObjectOfSelect <em>Object Of Select</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getFilter <em>Filter</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getAssignment <em>Assignment</em>}</li>
  * </ul>
  *
  * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction()
@@ -101,5 +103,57 @@ public interface Action extends EObject
    * @generated
    */
   void setObjectOfSelect(String value);
+
+  /**
+   * Returns the value of the '<em><b>Filter</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Filter</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Filter</em>' containment reference.
+   * @see #setFilter(OrExp)
+   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction_Filter()
+   * @model containment="true"
+   * @generated
+   */
+  OrExp getFilter();
+
+  /**
+   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Action#getFilter <em>Filter</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Filter</em>' containment reference.
+   * @see #getFilter()
+   * @generated
+   */
+  void setFilter(OrExp value);
+
+  /**
+   * Returns the value of the '<em><b>Assignment</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Assignment</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Assignment</em>' containment reference.
+   * @see #setAssignment(ValueAssignment)
+   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction_Assignment()
+   * @model containment="true"
+   * @generated
+   */
+  ValueAssignment getAssignment();
+
+  /**
+   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Action#getAssignment <em>Assignment</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Assignment</em>' containment reference.
+   * @see #getAssignment()
+   * @generated
+   */
+  void setAssignment(ValueAssignment value);
 
 } // Action

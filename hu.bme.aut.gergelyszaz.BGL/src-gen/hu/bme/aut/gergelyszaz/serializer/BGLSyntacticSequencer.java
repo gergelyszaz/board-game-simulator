@@ -11,7 +11,6 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
-import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
@@ -21,16 +20,14 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class BGLSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected BGLGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Board_RightCurlyBracketKeyword_1_1_a;
-	protected AbstractElementAlias match_Board_RightCurlyBracketKeyword_1_1_p;
-	protected AbstractElementAlias match_Player___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__q;
+	protected AbstractElementAlias match_Board_RightCurlyBracketKeyword_1_a;
+	protected AbstractElementAlias match_Board_RightCurlyBracketKeyword_1_p;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (BGLGrammarAccess) access;
-		match_Board_RightCurlyBracketKeyword_1_1_a = new TokenAlias(true, true, grammarAccess.getBoardAccess().getRightCurlyBracketKeyword_1_1());
-		match_Board_RightCurlyBracketKeyword_1_1_p = new TokenAlias(true, false, grammarAccess.getBoardAccess().getRightCurlyBracketKeyword_1_1());
-		match_Player___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getPlayerAccess().getLeftCurlyBracketKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getPlayerAccess().getRightCurlyBracketKeyword_2_2()));
+		match_Board_RightCurlyBracketKeyword_1_a = new TokenAlias(true, true, grammarAccess.getBoardAccess().getRightCurlyBracketKeyword_1());
+		match_Board_RightCurlyBracketKeyword_1_p = new TokenAlias(true, false, grammarAccess.getBoardAccess().getRightCurlyBracketKeyword_1());
 	}
 	
 	@Override
@@ -45,12 +42,10 @@ public class BGLSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_Board_RightCurlyBracketKeyword_1_1_a.equals(syntax))
-				emit_Board_RightCurlyBracketKeyword_1_1_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Board_RightCurlyBracketKeyword_1_1_p.equals(syntax))
-				emit_Board_RightCurlyBracketKeyword_1_1_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Player___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__q.equals(syntax))
-				emit_Player___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if(match_Board_RightCurlyBracketKeyword_1_a.equals(syntax))
+				emit_Board_RightCurlyBracketKeyword_1_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Board_RightCurlyBracketKeyword_1_p.equals(syntax))
+				emit_Board_RightCurlyBracketKeyword_1_p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -60,17 +55,13 @@ public class BGLSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     '}'*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) attributes+=Variable
-	 *     (rule start) (ambiguity) name='Board'
-	 *     attributes+=Variable (ambiguity) attributes+=Variable
+	 *     (rule start) (ambiguity) name='BOARD'
 	 *     fields+=Field (ambiguity) (rule end)
-	 *     fields+=Field (ambiguity) attributes+=Variable
-	 *     fields+=Field (ambiguity) name='Board'
-	 *     name='Board' '{' (ambiguity) (rule end)
-	 *     name='Board' '{' (ambiguity) attributes+=Variable
-	 *     name='Board' '{' (ambiguity) name='Board'
+	 *     fields+=Field (ambiguity) name='BOARD'
+	 *     name='BOARD' '{' (ambiguity) (rule end)
+	 *     name='BOARD' '{' (ambiguity) name='BOARD'
 	 */
-	protected void emit_Board_RightCurlyBracketKeyword_1_1_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Board_RightCurlyBracketKeyword_1_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -80,21 +71,8 @@ public class BGLSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) (rule start)
-	 *     attributes+=Variable (ambiguity) (rule end)
-	 *     attributes+=Variable (ambiguity) name='Board'
 	 */
-	protected void emit_Board_RightCurlyBracketKeyword_1_1_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ('{' '}')?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     playercount=INT (ambiguity) (rule end)
-	 */
-	protected void emit_Player___LeftCurlyBracketKeyword_2_0_RightCurlyBracketKeyword_2_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Board_RightCurlyBracketKeyword_1_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

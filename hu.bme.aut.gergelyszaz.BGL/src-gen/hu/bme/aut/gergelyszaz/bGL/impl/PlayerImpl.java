@@ -4,23 +4,13 @@ package hu.bme.aut.gergelyszaz.bGL.impl;
 
 import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
 import hu.bme.aut.gergelyszaz.bGL.Player;
-import hu.bme.aut.gergelyszaz.bGL.Variable;
-
-import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +22,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.PlayerImpl#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.PlayerImpl#getPlayercount <em>Playercount</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.PlayerImpl#getAttributes <em>Attributes</em>}</li>
  * </ul>
  *
  * @generated
@@ -78,16 +67,6 @@ public class PlayerImpl extends MinimalEObjectImpl.Container implements Player
    * @ordered
    */
   protected int playercount = PLAYERCOUNT_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAttributes()
-   * @generated
-   * @ordered
-   */
-  protected EList<Variable> attributes;
 
   /**
    * <!-- begin-user-doc -->
@@ -161,36 +140,6 @@ public class PlayerImpl extends MinimalEObjectImpl.Container implements Player
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Variable> getAttributes()
-  {
-    if (attributes == null)
-    {
-      attributes = new EObjectContainmentEList<Variable>(Variable.class, this, BGLPackage.PLAYER__ATTRIBUTES);
-    }
-    return attributes;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case BGLPackage.PLAYER__ATTRIBUTES:
-        return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -200,8 +149,6 @@ public class PlayerImpl extends MinimalEObjectImpl.Container implements Player
         return getName();
       case BGLPackage.PLAYER__PLAYERCOUNT:
         return getPlayercount();
-      case BGLPackage.PLAYER__ATTRIBUTES:
-        return getAttributes();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -211,7 +158,6 @@ public class PlayerImpl extends MinimalEObjectImpl.Container implements Player
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -222,10 +168,6 @@ public class PlayerImpl extends MinimalEObjectImpl.Container implements Player
         return;
       case BGLPackage.PLAYER__PLAYERCOUNT:
         setPlayercount((Integer)newValue);
-        return;
-      case BGLPackage.PLAYER__ATTRIBUTES:
-        getAttributes().clear();
-        getAttributes().addAll((Collection<? extends Variable>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -247,9 +189,6 @@ public class PlayerImpl extends MinimalEObjectImpl.Container implements Player
       case BGLPackage.PLAYER__PLAYERCOUNT:
         setPlayercount(PLAYERCOUNT_EDEFAULT);
         return;
-      case BGLPackage.PLAYER__ATTRIBUTES:
-        getAttributes().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -268,8 +207,6 @@ public class PlayerImpl extends MinimalEObjectImpl.Container implements Player
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case BGLPackage.PLAYER__PLAYERCOUNT:
         return playercount != PLAYERCOUNT_EDEFAULT;
-      case BGLPackage.PLAYER__ATTRIBUTES:
-        return attributes != null && !attributes.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -15,18 +15,14 @@ class GameFactory {
 
 		//Board setup 
 		val boardAttributes = new Hashtable<String, Integer>
-		for (a : model.board.attributes) {
-			boardAttributes.put(a.name, 0)
-		}
+		
 
 
 		//Player setup
 		for (var id = 0; id < model.player.playercount; id++) {
 			val player = new Player(id)
 			val playerAttributes = new Hashtable<String, Integer>
-			for (a : model.player.attributes) {
-				boardAttributes.put(a.name, 0)
-			}
+
 			player.Init(playerAttributes)
 			players.add(player)
 		}

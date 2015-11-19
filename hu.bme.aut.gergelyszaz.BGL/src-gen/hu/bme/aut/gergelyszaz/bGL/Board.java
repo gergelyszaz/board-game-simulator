@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Board#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Board#getFields <em>Fields</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Board#getAttributes <em>Attributes</em>}</li>
  * </ul>
  *
  * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getBoard()
@@ -67,21 +66,5 @@ public interface Board extends EObject
    * @generated
    */
   EList<Field> getFields();
-
-  /**
-   * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.
-   * The list contents are of type {@link hu.bme.aut.gergelyszaz.bGL.Variable}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Attributes</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Attributes</em>' containment reference list.
-   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getBoard_Attributes()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Variable> getAttributes();
 
 } // Board

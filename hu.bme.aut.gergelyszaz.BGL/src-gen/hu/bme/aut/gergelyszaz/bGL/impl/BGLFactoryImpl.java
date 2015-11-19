@@ -72,8 +72,14 @@ public class BGLFactoryImpl extends EFactoryImpl implements BGLFactory
       case BGLPackage.TOKEN: return createToken();
       case BGLPackage.FIELD: return createField();
       case BGLPackage.ACTION: return createAction();
-      case BGLPackage.VARIABLE: return createVariable();
-      case BGLPackage.REFERENCE: return createReference();
+      case BGLPackage.OR_EXP: return createOrExp();
+      case BGLPackage.AND_EXP: return createAndExp();
+      case BGLPackage.BOOLEAN_EXP: return createBooleanExp();
+      case BGLPackage.ATTRIBUTE_NAME: return createAttributeName();
+      case BGLPackage.ATTRIBUTE_OR_INT: return createAttributeOrInt();
+      case BGLPackage.ADDTION_EXP: return createAddtionExp();
+      case BGLPackage.MULTIPLICATION_EXP: return createMultiplicationExp();
+      case BGLPackage.VALUE_ASSIGNMENT: return createValueAssignment();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -172,10 +178,10 @@ public class BGLFactoryImpl extends EFactoryImpl implements BGLFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable createVariable()
+  public OrExp createOrExp()
   {
-    VariableImpl variable = new VariableImpl();
-    return variable;
+    OrExpImpl orExp = new OrExpImpl();
+    return orExp;
   }
 
   /**
@@ -183,10 +189,76 @@ public class BGLFactoryImpl extends EFactoryImpl implements BGLFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Reference createReference()
+  public AndExp createAndExp()
   {
-    ReferenceImpl reference = new ReferenceImpl();
-    return reference;
+    AndExpImpl andExp = new AndExpImpl();
+    return andExp;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BooleanExp createBooleanExp()
+  {
+    BooleanExpImpl booleanExp = new BooleanExpImpl();
+    return booleanExp;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AttributeName createAttributeName()
+  {
+    AttributeNameImpl attributeName = new AttributeNameImpl();
+    return attributeName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AttributeOrInt createAttributeOrInt()
+  {
+    AttributeOrIntImpl attributeOrInt = new AttributeOrIntImpl();
+    return attributeOrInt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AddtionExp createAddtionExp()
+  {
+    AddtionExpImpl addtionExp = new AddtionExpImpl();
+    return addtionExp;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MultiplicationExp createMultiplicationExp()
+  {
+    MultiplicationExpImpl multiplicationExp = new MultiplicationExpImpl();
+    return multiplicationExp;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ValueAssignment createValueAssignment()
+  {
+    ValueAssignmentImpl valueAssignment = new ValueAssignmentImpl();
+    return valueAssignment;
   }
 
   /**

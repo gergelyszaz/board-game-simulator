@@ -3,17 +3,23 @@
 package hu.bme.aut.gergelyszaz.bGL.impl;
 
 import hu.bme.aut.gergelyszaz.bGL.Action;
+import hu.bme.aut.gergelyszaz.bGL.AddtionExp;
+import hu.bme.aut.gergelyszaz.bGL.AndExp;
+import hu.bme.aut.gergelyszaz.bGL.AttributeName;
+import hu.bme.aut.gergelyszaz.bGL.AttributeOrInt;
 import hu.bme.aut.gergelyszaz.bGL.BGLFactory;
 import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
 import hu.bme.aut.gergelyszaz.bGL.Board;
+import hu.bme.aut.gergelyszaz.bGL.BooleanExp;
 import hu.bme.aut.gergelyszaz.bGL.Field;
 import hu.bme.aut.gergelyszaz.bGL.Model;
+import hu.bme.aut.gergelyszaz.bGL.MultiplicationExp;
+import hu.bme.aut.gergelyszaz.bGL.OrExp;
 import hu.bme.aut.gergelyszaz.bGL.Player;
-import hu.bme.aut.gergelyszaz.bGL.Reference;
 import hu.bme.aut.gergelyszaz.bGL.Rules;
 import hu.bme.aut.gergelyszaz.bGL.Token;
 import hu.bme.aut.gergelyszaz.bGL.TurnRules;
-import hu.bme.aut.gergelyszaz.bGL.Variable;
+import hu.bme.aut.gergelyszaz.bGL.ValueAssignment;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -91,14 +97,56 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass variableEClass = null;
+  private EClass orExpEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass referenceEClass = null;
+  private EClass andExpEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass booleanExpEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributeNameEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributeOrIntEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass addtionExpEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass multiplicationExpEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass valueAssignmentEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -258,16 +306,6 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPlayer_Attributes()
-  {
-    return (EReference)playerEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getBoard()
   {
     return boardEClass;
@@ -291,16 +329,6 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
   public EReference getBoard_Fields()
   {
     return (EReference)boardEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getBoard_Attributes()
-  {
-    return (EReference)boardEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -448,16 +476,6 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getField_Variables()
-  {
-    return (EReference)fieldEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getAction()
   {
     return actionEClass;
@@ -498,9 +516,9 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getVariable()
+  public EReference getAction_Filter()
   {
-    return variableEClass;
+    return (EReference)actionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -508,9 +526,9 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariable_Name()
+  public EReference getAction_Assignment()
   {
-    return (EAttribute)variableEClass.getEStructuralFeatures().get(0);
+    return (EReference)actionEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -518,9 +536,9 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariable_Value()
+  public EClass getOrExp()
   {
-    return (EAttribute)variableEClass.getEStructuralFeatures().get(1);
+    return orExpEClass;
   }
 
   /**
@@ -528,9 +546,9 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getReference()
+  public EReference getOrExp_Expressions()
   {
-    return referenceEClass;
+    return (EReference)orExpEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -538,9 +556,9 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getReference_Name()
+  public EAttribute getOrExp_Operators()
   {
-    return (EAttribute)referenceEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)orExpEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -548,9 +566,219 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReference_Value()
+  public EClass getAndExp()
   {
-    return (EReference)referenceEClass.getEStructuralFeatures().get(1);
+    return andExpEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAndExp_Expressions()
+  {
+    return (EReference)andExpEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAndExp_Operators()
+  {
+    return (EAttribute)andExpEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBooleanExp()
+  {
+    return booleanExpEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBooleanExp_Left()
+  {
+    return (EReference)booleanExpEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBooleanExp_Operator()
+  {
+    return (EAttribute)booleanExpEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBooleanExp_Right()
+  {
+    return (EReference)booleanExpEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBooleanExp_NestedExp()
+  {
+    return (EReference)booleanExpEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAttributeName()
+  {
+    return attributeNameEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAttributeName_Name()
+  {
+    return (EAttribute)attributeNameEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAttributeName_Parent()
+  {
+    return (EAttribute)attributeNameEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttributeName_Child()
+  {
+    return (EReference)attributeNameEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAttributeOrInt()
+  {
+    return attributeOrIntEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttributeOrInt_Attribute()
+  {
+    return (EReference)attributeOrIntEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAttributeOrInt_Value()
+  {
+    return (EAttribute)attributeOrIntEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAddtionExp()
+  {
+    return addtionExpEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMultiplicationExp()
+  {
+    return multiplicationExpEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMultiplicationExp_Expressions()
+  {
+    return (EReference)multiplicationExpEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMultiplicationExp_Operators()
+  {
+    return (EAttribute)multiplicationExpEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getValueAssignment()
+  {
+    return valueAssignmentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getValueAssignment_Name()
+  {
+    return (EReference)valueAssignmentEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getValueAssignment_Addition()
+  {
+    return (EReference)valueAssignmentEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -593,12 +821,10 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     playerEClass = createEClass(PLAYER);
     createEAttribute(playerEClass, PLAYER__NAME);
     createEAttribute(playerEClass, PLAYER__PLAYERCOUNT);
-    createEReference(playerEClass, PLAYER__ATTRIBUTES);
 
     boardEClass = createEClass(BOARD);
     createEAttribute(boardEClass, BOARD__NAME);
     createEReference(boardEClass, BOARD__FIELDS);
-    createEReference(boardEClass, BOARD__ATTRIBUTES);
 
     rulesEClass = createEClass(RULES);
     createEAttribute(rulesEClass, RULES__NAME);
@@ -617,20 +843,46 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     createEAttribute(fieldEClass, FIELD__Y);
     createEAttribute(fieldEClass, FIELD__Z);
     createEReference(fieldEClass, FIELD__NEIGHBOURS);
-    createEReference(fieldEClass, FIELD__VARIABLES);
 
     actionEClass = createEClass(ACTION);
     createEAttribute(actionEClass, ACTION__NAME);
     createEReference(actionEClass, ACTION__TOKEN);
     createEAttribute(actionEClass, ACTION__OBJECT_OF_SELECT);
+    createEReference(actionEClass, ACTION__FILTER);
+    createEReference(actionEClass, ACTION__ASSIGNMENT);
 
-    variableEClass = createEClass(VARIABLE);
-    createEAttribute(variableEClass, VARIABLE__NAME);
-    createEAttribute(variableEClass, VARIABLE__VALUE);
+    orExpEClass = createEClass(OR_EXP);
+    createEReference(orExpEClass, OR_EXP__EXPRESSIONS);
+    createEAttribute(orExpEClass, OR_EXP__OPERATORS);
 
-    referenceEClass = createEClass(REFERENCE);
-    createEAttribute(referenceEClass, REFERENCE__NAME);
-    createEReference(referenceEClass, REFERENCE__VALUE);
+    andExpEClass = createEClass(AND_EXP);
+    createEReference(andExpEClass, AND_EXP__EXPRESSIONS);
+    createEAttribute(andExpEClass, AND_EXP__OPERATORS);
+
+    booleanExpEClass = createEClass(BOOLEAN_EXP);
+    createEReference(booleanExpEClass, BOOLEAN_EXP__LEFT);
+    createEAttribute(booleanExpEClass, BOOLEAN_EXP__OPERATOR);
+    createEReference(booleanExpEClass, BOOLEAN_EXP__RIGHT);
+    createEReference(booleanExpEClass, BOOLEAN_EXP__NESTED_EXP);
+
+    attributeNameEClass = createEClass(ATTRIBUTE_NAME);
+    createEAttribute(attributeNameEClass, ATTRIBUTE_NAME__NAME);
+    createEAttribute(attributeNameEClass, ATTRIBUTE_NAME__PARENT);
+    createEReference(attributeNameEClass, ATTRIBUTE_NAME__CHILD);
+
+    attributeOrIntEClass = createEClass(ATTRIBUTE_OR_INT);
+    createEReference(attributeOrIntEClass, ATTRIBUTE_OR_INT__ATTRIBUTE);
+    createEAttribute(attributeOrIntEClass, ATTRIBUTE_OR_INT__VALUE);
+
+    addtionExpEClass = createEClass(ADDTION_EXP);
+
+    multiplicationExpEClass = createEClass(MULTIPLICATION_EXP);
+    createEReference(multiplicationExpEClass, MULTIPLICATION_EXP__EXPRESSIONS);
+    createEAttribute(multiplicationExpEClass, MULTIPLICATION_EXP__OPERATORS);
+
+    valueAssignmentEClass = createEClass(VALUE_ASSIGNMENT);
+    createEReference(valueAssignmentEClass, VALUE_ASSIGNMENT__NAME);
+    createEReference(valueAssignmentEClass, VALUE_ASSIGNMENT__ADDITION);
   }
 
   /**
@@ -662,6 +914,7 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    addtionExpEClass.getESuperTypes().add(this.getMultiplicationExp());
 
     // Initialize classes and features; add operations and parameters
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -674,12 +927,10 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     initEClass(playerEClass, Player.class, "Player", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPlayer_Name(), ecorePackage.getEString(), "name", null, 0, 1, Player.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPlayer_Playercount(), ecorePackage.getEInt(), "playercount", null, 0, 1, Player.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPlayer_Attributes(), this.getVariable(), null, "attributes", null, 0, -1, Player.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(boardEClass, Board.class, "Board", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getBoard_Name(), ecorePackage.getEString(), "name", null, 0, 1, Board.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getBoard_Fields(), this.getField(), null, "fields", null, 0, -1, Board.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBoard_Attributes(), this.getVariable(), null, "attributes", null, 0, -1, Board.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(rulesEClass, Rules.class, "Rules", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRules_Name(), ecorePackage.getEString(), "name", null, 0, 1, Rules.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -698,20 +949,46 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     initEAttribute(getField_Y(), ecorePackage.getEInt(), "y", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getField_Z(), ecorePackage.getEInt(), "z", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getField_Neighbours(), this.getField(), null, "neighbours", null, 0, -1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getField_Variables(), this.getVariable(), null, "variables", null, 0, -1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAction_Name(), ecorePackage.getEString(), "name", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAction_Token(), this.getToken(), null, "token", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_ObjectOfSelect(), ecorePackage.getEString(), "objectOfSelect", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAction_Filter(), this.getOrExp(), null, "filter", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAction_Assignment(), this.getValueAssignment(), null, "assignment", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(variableEClass, Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVariable_Name(), ecorePackage.getEString(), "name", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariable_Value(), ecorePackage.getEInt(), "value", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(orExpEClass, OrExp.class, "OrExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getOrExp_Expressions(), this.getAndExp(), null, "expressions", null, 0, -1, OrExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getOrExp_Operators(), ecorePackage.getEString(), "operators", null, 0, -1, OrExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(referenceEClass, Reference.class, "Reference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getReference_Name(), ecorePackage.getEString(), "name", null, 0, 1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getReference_Value(), this.getVariable(), null, "value", null, 0, 1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(andExpEClass, AndExp.class, "AndExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAndExp_Expressions(), this.getBooleanExp(), null, "expressions", null, 0, -1, AndExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAndExp_Operators(), ecorePackage.getEString(), "operators", null, 0, -1, AndExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(booleanExpEClass, BooleanExp.class, "BooleanExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getBooleanExp_Left(), this.getAttributeOrInt(), null, "left", null, 0, 1, BooleanExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBooleanExp_Operator(), ecorePackage.getEString(), "operator", null, 0, 1, BooleanExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBooleanExp_Right(), this.getAttributeOrInt(), null, "right", null, 0, 1, BooleanExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBooleanExp_NestedExp(), this.getOrExp(), null, "nestedExp", null, 0, 1, BooleanExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(attributeNameEClass, AttributeName.class, "AttributeName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAttributeName_Name(), ecorePackage.getEString(), "name", null, 0, 1, AttributeName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAttributeName_Parent(), ecorePackage.getEString(), "parent", null, 0, 1, AttributeName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAttributeName_Child(), this.getAttributeName(), null, "child", null, 0, 1, AttributeName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(attributeOrIntEClass, AttributeOrInt.class, "AttributeOrInt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAttributeOrInt_Attribute(), this.getAttributeName(), null, "attribute", null, 0, 1, AttributeOrInt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAttributeOrInt_Value(), ecorePackage.getEInt(), "value", null, 0, 1, AttributeOrInt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(addtionExpEClass, AddtionExp.class, "AddtionExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(multiplicationExpEClass, MultiplicationExp.class, "MultiplicationExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMultiplicationExp_Expressions(), ecorePackage.getEObject(), null, "expressions", null, 0, -1, MultiplicationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMultiplicationExp_Operators(), ecorePackage.getEString(), "operators", null, 0, -1, MultiplicationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(valueAssignmentEClass, ValueAssignment.class, "ValueAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getValueAssignment_Name(), this.getAttributeName(), null, "name", null, 0, 1, ValueAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getValueAssignment_Addition(), this.getAddtionExp(), null, "addition", null, 0, 1, ValueAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

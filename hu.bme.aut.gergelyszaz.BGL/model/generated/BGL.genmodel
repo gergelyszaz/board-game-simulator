@@ -17,12 +17,10 @@
     <genClasses ecoreClass="BGL.ecore#//Player">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Player/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Player/playercount"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//Player/attributes"/>
     </genClasses>
     <genClasses ecoreClass="BGL.ecore#//Board">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Board/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//Board/fields"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//Board/attributes"/>
     </genClasses>
     <genClasses ecoreClass="BGL.ecore#//Rules">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Rules/name"/>
@@ -41,20 +39,45 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Field/y"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Field/z"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BGL.ecore#//Field/neighbours"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//Field/variables"/>
     </genClasses>
     <genClasses ecoreClass="BGL.ecore#//Action">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Action/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BGL.ecore#//Action/token"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Action/objectOfSelect"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//Action/filter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//Action/assignment"/>
     </genClasses>
-    <genClasses ecoreClass="BGL.ecore#//Variable">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Variable/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Variable/value"/>
+    <genClasses ecoreClass="BGL.ecore#//OrExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//OrExp/expressions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//OrExp/operators"/>
     </genClasses>
-    <genClasses ecoreClass="BGL.ecore#//Reference">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//Reference/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BGL.ecore#//Reference/value"/>
+    <genClasses ecoreClass="BGL.ecore#//AndExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//AndExp/expressions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//AndExp/operators"/>
+    </genClasses>
+    <genClasses ecoreClass="BGL.ecore#//BooleanExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//BooleanExp/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//BooleanExp/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//BooleanExp/right"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//BooleanExp/nestedExp"/>
+    </genClasses>
+    <genClasses ecoreClass="BGL.ecore#//AttributeName">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//AttributeName/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//AttributeName/parent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//AttributeName/child"/>
+    </genClasses>
+    <genClasses ecoreClass="BGL.ecore#//AttributeOrInt">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//AttributeOrInt/attribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//AttributeOrInt/value"/>
+    </genClasses>
+    <genClasses ecoreClass="BGL.ecore#//AddtionExp"/>
+    <genClasses ecoreClass="BGL.ecore#//MultiplicationExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//MultiplicationExp/expressions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BGL.ecore#//MultiplicationExp/operators"/>
+    </genClasses>
+    <genClasses ecoreClass="BGL.ecore#//ValueAssignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//ValueAssignment/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BGL.ecore#//ValueAssignment/addition"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

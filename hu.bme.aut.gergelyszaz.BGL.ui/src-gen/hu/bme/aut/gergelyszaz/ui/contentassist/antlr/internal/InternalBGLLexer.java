@@ -12,25 +12,16 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalBGLLexer extends Lexer {
-    public static final int RULE_STRING=6;
-    public static final int RULE_SL_COMMENT=8;
     public static final int T__19=19;
     public static final int T__15=15;
     public static final int T__16=16;
     public static final int T__17=17;
     public static final int T__18=18;
     public static final int T__11=11;
-    public static final int T__33=33;
     public static final int T__12=12;
     public static final int T__13=13;
     public static final int T__14=14;
-    public static final int EOF=-1;
-    public static final int T__30=30;
-    public static final int T__31=31;
-    public static final int T__32=32;
     public static final int RULE_ID=4;
-    public static final int RULE_WS=9;
-    public static final int RULE_ANY_OTHER=10;
     public static final int T__26=26;
     public static final int T__27=27;
     public static final int T__28=28;
@@ -43,6 +34,26 @@ public class InternalBGLLexer extends Lexer {
     public static final int T__25=25;
     public static final int T__20=20;
     public static final int T__21=21;
+    public static final int RULE_STRING=6;
+    public static final int RULE_SL_COMMENT=8;
+    public static final int T__37=37;
+    public static final int T__38=38;
+    public static final int T__39=39;
+    public static final int T__33=33;
+    public static final int T__34=34;
+    public static final int T__35=35;
+    public static final int T__36=36;
+    public static final int EOF=-1;
+    public static final int T__30=30;
+    public static final int T__31=31;
+    public static final int T__32=32;
+    public static final int RULE_WS=9;
+    public static final int RULE_ANY_OTHER=10;
+    public static final int T__44=44;
+    public static final int T__40=40;
+    public static final int T__41=41;
+    public static final int T__42=42;
+    public static final int T__43=43;
 
     // delegates
     // delegators
@@ -62,10 +73,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__11;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:11:7: ( '||' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:11:9: '||'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:11:7: ( 'TOKEN' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:11:9: 'TOKEN'
             {
-            match("||"); 
+            match("TOKEN"); 
 
 
             }
@@ -83,10 +94,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__12;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:12:7: ( '&&' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:12:9: '&&'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:12:7: ( 'FIELD' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:12:9: 'FIELD'
             {
-            match("&&"); 
+            match("FIELD"); 
 
 
             }
@@ -104,10 +115,11 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__13;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:13:7: ( '*' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:13:9: '*'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:13:7: ( '!==' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:13:9: '!=='
             {
-            match('*'); 
+            match("!=="); 
+
 
             }
 
@@ -124,10 +136,11 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__14;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:14:7: ( '/' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:14:9: '/'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:14:7: ( '===' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:14:9: '==='
             {
-            match('/'); 
+            match("==="); 
+
 
             }
 
@@ -144,10 +157,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:15:7: ( 'true' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:15:9: 'true'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:15:7: ( '==' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:15:9: '=='
             {
-            match("true"); 
+            match("=="); 
 
 
             }
@@ -165,10 +178,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:16:7: ( 'false' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:16:9: 'false'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:16:7: ( '!=' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:16:9: '!='
             {
-            match("false"); 
+            match("!="); 
 
 
             }
@@ -186,11 +199,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:17:7: ( 'Game' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:17:9: 'Game'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:17:7: ( '>' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:17:9: '>'
             {
-            match("Game"); 
-
+            match('>'); 
 
             }
 
@@ -207,10 +219,11 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:18:7: ( '{' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:18:9: '{'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:18:7: ( '>=' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:18:9: '>='
             {
-            match('{'); 
+            match(">="); 
+
 
             }
 
@@ -227,10 +240,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:19:7: ( '}' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:19:9: '}'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:19:7: ( '<' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:19:9: '<'
             {
-            match('}'); 
+            match('<'); 
 
             }
 
@@ -247,10 +260,11 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:20:7: ( ';' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:20:9: ';'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:20:7: ( '<=' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:20:9: '<='
             {
-            match(';'); 
+            match("<="); 
+
 
             }
 
@@ -267,10 +281,11 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:21:7: ( '(' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:21:9: '('
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:21:7: ( 'GAME' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:21:9: 'GAME'
             {
-            match('('); 
+            match("GAME"); 
+
 
             }
 
@@ -287,10 +302,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:22:7: ( ',' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:22:9: ','
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:22:7: ( '{' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:22:9: '{'
             {
-            match(','); 
+            match('{'); 
 
             }
 
@@ -307,10 +322,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:23:7: ( ')' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:23:9: ')'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:23:7: ( '}' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:23:9: '}'
             {
-            match(')'); 
+            match('}'); 
 
             }
 
@@ -327,10 +342,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:24:7: ( ':' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:24:9: ':'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:24:7: ( '(' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:24:9: '('
             {
-            match(':'); 
+            match('('); 
 
             }
 
@@ -347,10 +362,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:25:7: ( '=' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:25:9: '='
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:25:7: ( ',' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:25:9: ','
             {
-            match('='); 
+            match(','); 
 
             }
 
@@ -367,10 +382,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:26:7: ( '+' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:26:9: '+'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:26:7: ( ')' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:26:9: ')'
             {
-            match('+'); 
+            match(')'); 
 
             }
 
@@ -387,10 +402,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:27:7: ( '-' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:27:9: '-'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:27:7: ( ':' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:27:9: ':'
             {
-            match('-'); 
+            match(':'); 
 
             }
 
@@ -407,10 +422,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:28:7: ( '!' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:28:9: '!'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:28:7: ( ';' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:28:9: ';'
             {
-            match('!'); 
+            match(';'); 
 
             }
 
@@ -427,10 +442,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:29:7: ( 'Players' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:29:9: 'Players'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:29:7: ( 'WHERE' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:29:9: 'WHERE'
             {
-            match("Players"); 
+            match("WHERE"); 
 
 
             }
@@ -448,11 +463,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:30:7: ( 'Board' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:30:9: 'Board'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:30:7: ( '.' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:30:9: '.'
             {
-            match("Board"); 
-
+            match('.'); 
 
             }
 
@@ -469,11 +483,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:31:7: ( 'Tokens' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:31:9: 'Tokens'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:31:7: ( '-' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:31:9: '-'
             {
-            match("Tokens"); 
-
+            match('-'); 
 
             }
 
@@ -490,10 +503,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:32:7: ( '<' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:32:9: '<'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:32:7: ( '/' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:32:9: '/'
             {
-            match('<'); 
+            match('/'); 
 
             }
 
@@ -510,11 +523,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:33:7: ( '==' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:33:9: '=='
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:33:7: ( '=' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:33:9: '='
             {
-            match("=="); 
-
+            match('='); 
 
             }
 
@@ -526,15 +538,244 @@ public class InternalBGLLexer extends Lexer {
     }
     // $ANTLR end "T__33"
 
+    // $ANTLR start "T__34"
+    public final void mT__34() throws RecognitionException {
+        try {
+            int _type = T__34;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:34:7: ( 'PLAYERS' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:34:9: 'PLAYERS'
+            {
+            match("PLAYERS"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__34"
+
+    // $ANTLR start "T__35"
+    public final void mT__35() throws RecognitionException {
+        try {
+            int _type = T__35;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:35:7: ( 'BOARD' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:35:9: 'BOARD'
+            {
+            match("BOARD"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__35"
+
+    // $ANTLR start "T__36"
+    public final void mT__36() throws RecognitionException {
+        try {
+            int _type = T__36;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:36:7: ( 'RULES' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:36:9: 'RULES'
+            {
+            match("RULES"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__36"
+
+    // $ANTLR start "T__37"
+    public final void mT__37() throws RecognitionException {
+        try {
+            int _type = T__37;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:37:7: ( 'TURN' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:37:9: 'TURN'
+            {
+            match("TURN"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__37"
+
+    // $ANTLR start "T__38"
+    public final void mT__38() throws RecognitionException {
+        try {
+            int _type = T__38;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:38:7: ( 'SPAWN' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:38:9: 'SPAWN'
+            {
+            match("SPAWN"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__38"
+
+    // $ANTLR start "T__39"
+    public final void mT__39() throws RecognitionException {
+        try {
+            int _type = T__39;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:39:7: ( 'MOVE' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:39:9: 'MOVE'
+            {
+            match("MOVE"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__39"
+
+    // $ANTLR start "T__40"
+    public final void mT__40() throws RecognitionException {
+        try {
+            int _type = T__40;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:40:7: ( 'SELECT' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:40:9: 'SELECT'
+            {
+            match("SELECT"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__40"
+
+    // $ANTLR start "T__41"
+    public final void mT__41() throws RecognitionException {
+        try {
+            int _type = T__41;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:41:7: ( 'OR' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:41:9: 'OR'
+            {
+            match("OR"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__41"
+
+    // $ANTLR start "T__42"
+    public final void mT__42() throws RecognitionException {
+        try {
+            int _type = T__42;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:42:7: ( 'AND' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:42:9: 'AND'
+            {
+            match("AND"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__42"
+
+    // $ANTLR start "T__43"
+    public final void mT__43() throws RecognitionException {
+        try {
+            int _type = T__43;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:43:7: ( '+' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:43:9: '+'
+            {
+            match('+'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__43"
+
+    // $ANTLR start "T__44"
+    public final void mT__44() throws RecognitionException {
+        try {
+            int _type = T__44;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:44:7: ( '*' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:44:9: '*'
+            {
+            match('*'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__44"
+
     // $ANTLR start "RULE_ID"
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4342:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4342:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4010:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4010:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4342:11: ( '^' )?
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4010:11: ( '^' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -543,7 +784,7 @@ public class InternalBGLLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4342:11: '^'
+                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4010:11: '^'
                     {
                     match('^'); 
 
@@ -561,7 +802,7 @@ public class InternalBGLLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4342:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4010:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -610,10 +851,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4344:10: ( ( '0' .. '9' )+ )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4344:12: ( '0' .. '9' )+
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4012:10: ( ( '0' .. '9' )+ )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4012:12: ( '0' .. '9' )+
             {
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4344:12: ( '0' .. '9' )+
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4012:12: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -627,7 +868,7 @@ public class InternalBGLLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4344:13: '0' .. '9'
+            	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4012:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -659,10 +900,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -680,10 +921,10 @@ public class InternalBGLLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop4:
                     do {
                         int alt4=3;
@@ -699,7 +940,7 @@ public class InternalBGLLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:21: '\\\\' .
+                    	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:21: '\\\\' .
                     	    {
                     	    match('\\'); 
                     	    matchAny(); 
@@ -707,7 +948,7 @@ public class InternalBGLLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:28: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:28: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -732,10 +973,10 @@ public class InternalBGLLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -751,7 +992,7 @@ public class InternalBGLLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:54: '\\\\' .
+                    	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:54: '\\\\' .
                     	    {
                     	    match('\\'); 
                     	    matchAny(); 
@@ -759,7 +1000,7 @@ public class InternalBGLLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4346:61: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4014:61: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -802,12 +1043,12 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4348:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4348:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4016:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4016:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4348:24: ( options {greedy=false; } : . )*
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4016:24: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -832,7 +1073,7 @@ public class InternalBGLLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4348:52: .
+            	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4016:52: .
             	    {
             	    matchAny(); 
 
@@ -862,12 +1103,12 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4350:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4350:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4018:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4018:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4350:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4018:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -880,7 +1121,7 @@ public class InternalBGLLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4350:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4018:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -900,7 +1141,7 @@ public class InternalBGLLexer extends Lexer {
                 }
             } while (true);
 
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4350:40: ( ( '\\r' )? '\\n' )?
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4018:40: ( ( '\\r' )? '\\n' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -909,9 +1150,9 @@ public class InternalBGLLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4350:41: ( '\\r' )? '\\n'
+                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4018:41: ( '\\r' )? '\\n'
                     {
-                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4350:41: ( '\\r' )?
+                    // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4018:41: ( '\\r' )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -920,7 +1161,7 @@ public class InternalBGLLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4350:41: '\\r'
+                            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4018:41: '\\r'
                             {
                             match('\r'); 
 
@@ -952,10 +1193,10 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4352:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4352:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4020:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4020:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4352:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4020:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt11=0;
             loop11:
             do {
@@ -1009,8 +1250,8 @@ public class InternalBGLLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4354:16: ( . )
-            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4354:18: .
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4022:16: ( . )
+            // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:4022:18: .
             {
             matchAny(); 
 
@@ -1025,8 +1266,8 @@ public class InternalBGLLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt12=30;
+        // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt12=41;
         alt12 = dfa12.predict(input);
         switch (alt12) {
             case 1 :
@@ -1191,49 +1432,126 @@ public class InternalBGLLexer extends Lexer {
                 }
                 break;
             case 24 :
-                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:148: RULE_ID
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:148: T__34
+                {
+                mT__34(); 
+
+                }
+                break;
+            case 25 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:154: T__35
+                {
+                mT__35(); 
+
+                }
+                break;
+            case 26 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:160: T__36
+                {
+                mT__36(); 
+
+                }
+                break;
+            case 27 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:166: T__37
+                {
+                mT__37(); 
+
+                }
+                break;
+            case 28 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:172: T__38
+                {
+                mT__38(); 
+
+                }
+                break;
+            case 29 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:178: T__39
+                {
+                mT__39(); 
+
+                }
+                break;
+            case 30 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:184: T__40
+                {
+                mT__40(); 
+
+                }
+                break;
+            case 31 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:190: T__41
+                {
+                mT__41(); 
+
+                }
+                break;
+            case 32 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:196: T__42
+                {
+                mT__42(); 
+
+                }
+                break;
+            case 33 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:202: T__43
+                {
+                mT__43(); 
+
+                }
+                break;
+            case 34 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:208: T__44
+                {
+                mT__44(); 
+
+                }
+                break;
+            case 35 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:214: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
-            case 25 :
-                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:156: RULE_INT
+            case 36 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:222: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 26 :
-                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:165: RULE_STRING
+            case 37 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:231: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 27 :
-                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:177: RULE_ML_COMMENT
+            case 38 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:243: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 28 :
-                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:193: RULE_SL_COMMENT
+            case 39 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:259: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 29 :
-                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:209: RULE_WS
+            case 40 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:275: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 30 :
-                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:217: RULE_ANY_OTHER
+            case 41 :
+                // ../hu.bme.aut.gergelyszaz.BGL.ui/src-gen/hu/bme/aut/gergelyszaz/ui/contentassist/antlr/internal/InternalBGL.g:1:283: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -1247,45 +1565,55 @@ public class InternalBGLLexer extends Lexer {
 
     protected DFA12 dfa12 = new DFA12(this);
     static final String DFA12_eotS =
-        "\1\uffff\2\35\1\uffff\1\43\3\45\7\uffff\1\60\3\uffff\3\45\1\uffff"+
-        "\1\35\2\uffff\2\35\10\uffff\1\45\1\uffff\2\45\14\uffff\3\45\4\uffff"+
-        "\6\45\1\107\1\45\1\111\3\45\1\uffff\1\115\1\uffff\1\45\1\117\1\45"+
-        "\1\uffff\1\45\1\uffff\1\122\1\123\2\uffff";
+        "\1\uffff\2\45\1\42\1\51\1\53\1\55\1\45\7\uffff\1\45\2\uffff\1\73"+
+        "\7\45\2\uffff\1\42\2\uffff\2\42\2\uffff\2\45\1\uffff\1\45\1\115"+
+        "\1\117\5\uffff\1\45\7\uffff\1\45\5\uffff\6\45\1\130\1\45\5\uffff"+
+        "\3\45\4\uffff\10\45\1\uffff\1\145\1\45\1\147\1\45\1\151\6\45\1\160"+
+        "\1\uffff\1\161\1\uffff\1\162\1\uffff\1\163\1\45\1\165\1\166\1\167"+
+        "\1\45\4\uffff\1\45\3\uffff\1\172\1\173\2\uffff";
     static final String DFA12_eofS =
-        "\124\uffff";
+        "\174\uffff";
     static final String DFA12_minS =
-        "\1\0\1\174\1\46\1\uffff\1\52\1\162\2\141\7\uffff\1\75\3\uffff\1"+
-        "\154\2\157\1\uffff\1\101\2\uffff\2\0\10\uffff\1\165\1\uffff\1\154"+
-        "\1\155\14\uffff\2\141\1\153\4\uffff\1\145\1\163\1\145\1\171\1\162"+
-        "\1\145\1\60\1\145\1\60\1\145\1\144\1\156\1\uffff\1\60\1\uffff\1"+
-        "\162\1\60\1\163\1\uffff\1\163\1\uffff\2\60\2\uffff";
+        "\1\0\1\117\1\111\4\75\1\101\7\uffff\1\110\2\uffff\1\52\1\114\1"+
+        "\117\1\125\1\105\1\117\1\122\1\116\2\uffff\1\101\2\uffff\2\0\2\uffff"+
+        "\1\113\1\122\1\uffff\1\105\2\75\5\uffff\1\115\7\uffff\1\105\5\uffff"+
+        "\2\101\1\114\1\101\1\114\1\126\1\60\1\104\5\uffff\1\105\1\116\1"+
+        "\114\4\uffff\1\105\1\122\1\131\1\122\1\105\1\127\2\105\1\uffff\1"+
+        "\60\1\116\1\60\1\104\1\60\2\105\1\104\1\123\1\116\1\103\1\60\1\uffff"+
+        "\1\60\1\uffff\1\60\1\uffff\1\60\1\122\3\60\1\124\4\uffff\1\123\3"+
+        "\uffff\2\60\2\uffff";
     static final String DFA12_maxS =
-        "\1\uffff\1\174\1\46\1\uffff\1\57\1\162\2\141\7\uffff\1\75\3\uffff"+
-        "\1\154\2\157\1\uffff\1\172\2\uffff\2\uffff\10\uffff\1\165\1\uffff"+
-        "\1\154\1\155\14\uffff\2\141\1\153\4\uffff\1\145\1\163\1\145\1\171"+
-        "\1\162\1\145\1\172\1\145\1\172\1\145\1\144\1\156\1\uffff\1\172\1"+
-        "\uffff\1\162\1\172\1\163\1\uffff\1\163\1\uffff\2\172\2\uffff";
+        "\1\uffff\1\125\1\111\4\75\1\101\7\uffff\1\110\2\uffff\1\57\1\114"+
+        "\1\117\1\125\1\120\1\117\1\122\1\116\2\uffff\1\172\2\uffff\2\uffff"+
+        "\2\uffff\1\113\1\122\1\uffff\1\105\2\75\5\uffff\1\115\7\uffff\1"+
+        "\105\5\uffff\2\101\1\114\1\101\1\114\1\126\1\172\1\104\5\uffff\1"+
+        "\105\1\116\1\114\4\uffff\1\105\1\122\1\131\1\122\1\105\1\127\2\105"+
+        "\1\uffff\1\172\1\116\1\172\1\104\1\172\2\105\1\104\1\123\1\116\1"+
+        "\103\1\172\1\uffff\1\172\1\uffff\1\172\1\uffff\1\172\1\122\3\172"+
+        "\1\124\4\uffff\1\123\3\uffff\2\172\2\uffff";
     static final String DFA12_acceptS =
-        "\3\uffff\1\3\4\uffff\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\uffff"+
-        "\1\20\1\21\1\22\3\uffff\1\26\1\uffff\1\30\1\31\2\uffff\1\35\1\36"+
-        "\1\1\1\2\1\3\1\33\1\34\1\4\1\uffff\1\30\2\uffff\1\10\1\11\1\12\1"+
-        "\13\1\14\1\15\1\16\1\27\1\17\1\20\1\21\1\22\3\uffff\1\26\1\31\1"+
-        "\32\1\35\14\uffff\1\5\1\uffff\1\7\3\uffff\1\6\1\uffff\1\24\2\uffff"+
-        "\1\25\1\23";
+        "\10\uffff\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\uffff\1\24\1\25"+
+        "\10\uffff\1\41\1\42\1\uffff\1\43\1\44\2\uffff\1\50\1\51\2\uffff"+
+        "\1\43\3\uffff\1\27\1\10\1\7\1\12\1\11\1\uffff\1\14\1\15\1\16\1\17"+
+        "\1\20\1\21\1\22\1\uffff\1\24\1\25\1\46\1\47\1\26\10\uffff\1\41\1"+
+        "\42\1\44\1\45\1\50\3\uffff\1\3\1\6\1\4\1\5\10\uffff\1\37\14\uffff"+
+        "\1\40\1\uffff\1\33\1\uffff\1\13\6\uffff\1\35\1\1\1\2\1\23\1\uffff"+
+        "\1\31\1\32\1\34\2\uffff\1\36\1\30";
     static final String DFA12_specialS =
-        "\1\1\31\uffff\1\2\1\0\70\uffff}>";
+        "\1\2\36\uffff\1\1\1\0\133\uffff}>";
     static final String[] DFA12_transitionS = {
-            "\11\35\2\34\2\35\1\34\22\35\1\34\1\22\1\32\3\35\1\2\1\33\1"+
-            "\13\1\15\1\3\1\20\1\14\1\21\1\35\1\4\12\31\1\16\1\12\1\26\1"+
-            "\17\3\35\1\30\1\24\4\30\1\7\10\30\1\23\3\30\1\25\6\30\3\35\1"+
-            "\27\1\30\1\35\5\30\1\6\15\30\1\5\6\30\1\10\1\1\1\11\uff82\35",
-            "\1\36",
-            "\1\37",
-            "",
-            "\1\41\4\uffff\1\42",
-            "\1\44",
+            "\11\42\2\41\2\42\1\41\22\42\1\41\1\3\1\37\4\42\1\40\1\12\1"+
+            "\14\1\33\1\32\1\13\1\21\1\20\1\22\12\36\1\15\1\16\1\6\1\4\1"+
+            "\5\2\42\1\31\1\24\3\35\1\2\1\7\5\35\1\27\1\35\1\30\1\23\1\35"+
+            "\1\25\1\26\1\1\2\35\1\17\3\35\3\42\1\34\1\35\1\42\32\35\1\10"+
+            "\1\42\1\11\uff82\42",
+            "\1\43\5\uffff\1\44",
             "\1\46",
             "\1\47",
+            "\1\50",
+            "\1\52",
+            "\1\54",
+            "\1\56",
             "",
             "",
             "",
@@ -1293,70 +1621,110 @@ public class InternalBGLLexer extends Lexer {
             "",
             "",
             "",
-            "\1\57",
-            "",
-            "",
-            "",
-            "\1\64",
-            "\1\65",
             "\1\66",
+            "",
+            "",
+            "\1\71\4\uffff\1\72",
+            "\1\74",
+            "\1\75",
+            "\1\76",
+            "\1\100\12\uffff\1\77",
+            "\1\101",
+            "\1\102",
+            "\1\103",
+            "",
             "",
             "\32\45\4\uffff\1\45\1\uffff\32\45",
             "",
             "",
-            "\0\71",
-            "\0\71",
+            "\0\107",
+            "\0\107",
             "",
             "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\73",
-            "",
-            "\1\74",
-            "\1\75",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\76",
-            "\1\77",
-            "\1\100",
-            "",
-            "",
-            "",
-            "",
-            "\1\101",
-            "\1\102",
-            "\1\103",
-            "\1\104",
-            "\1\105",
-            "\1\106",
-            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
-            "\1\110",
-            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "\1\111",
             "\1\112",
+            "",
             "\1\113",
             "\1\114",
-            "",
-            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
-            "",
             "\1\116",
-            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\120",
             "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\121",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\122",
+            "\1\123",
+            "\1\124",
+            "\1\125",
+            "\1\126",
+            "\1\127",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "\1\131",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\132",
+            "\1\133",
+            "\1\134",
+            "",
+            "",
+            "",
+            "",
+            "\1\135",
+            "\1\136",
+            "\1\137",
+            "\1\140",
+            "\1\141",
+            "\1\142",
+            "\1\143",
+            "\1\144",
+            "",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "\1\146",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "\1\150",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "\1\152",
+            "\1\153",
+            "\1\154",
+            "\1\155",
+            "\1\156",
+            "\1\157",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "\1\164",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
+            "\1\170",
+            "",
+            "",
+            "",
+            "",
+            "\1\171",
+            "",
+            "",
             "",
             "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
             "\12\45\7\uffff\32\45\4\uffff\1\45\1\uffff\32\45",
@@ -1394,37 +1762,47 @@ public class InternalBGLLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA12_27 = input.LA(1);
+                        int LA12_32 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA12_27>='\u0000' && LA12_27<='\uFFFF')) ) {s = 57;}
+                        if ( ((LA12_32>='\u0000' && LA12_32<='\uFFFF')) ) {s = 71;}
 
-                        else s = 29;
+                        else s = 34;
 
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
+                        int LA12_31 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA12_31>='\u0000' && LA12_31<='\uFFFF')) ) {s = 71;}
+
+                        else s = 34;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
                         int LA12_0 = input.LA(1);
 
                         s = -1;
-                        if ( (LA12_0=='|') ) {s = 1;}
+                        if ( (LA12_0=='T') ) {s = 1;}
 
-                        else if ( (LA12_0=='&') ) {s = 2;}
+                        else if ( (LA12_0=='F') ) {s = 2;}
 
-                        else if ( (LA12_0=='*') ) {s = 3;}
+                        else if ( (LA12_0=='!') ) {s = 3;}
 
-                        else if ( (LA12_0=='/') ) {s = 4;}
+                        else if ( (LA12_0=='=') ) {s = 4;}
 
-                        else if ( (LA12_0=='t') ) {s = 5;}
+                        else if ( (LA12_0=='>') ) {s = 5;}
 
-                        else if ( (LA12_0=='f') ) {s = 6;}
+                        else if ( (LA12_0=='<') ) {s = 6;}
 
                         else if ( (LA12_0=='G') ) {s = 7;}
 
@@ -1432,55 +1810,55 @@ public class InternalBGLLexer extends Lexer {
 
                         else if ( (LA12_0=='}') ) {s = 9;}
 
-                        else if ( (LA12_0==';') ) {s = 10;}
+                        else if ( (LA12_0=='(') ) {s = 10;}
 
-                        else if ( (LA12_0=='(') ) {s = 11;}
+                        else if ( (LA12_0==',') ) {s = 11;}
 
-                        else if ( (LA12_0==',') ) {s = 12;}
+                        else if ( (LA12_0==')') ) {s = 12;}
 
-                        else if ( (LA12_0==')') ) {s = 13;}
+                        else if ( (LA12_0==':') ) {s = 13;}
 
-                        else if ( (LA12_0==':') ) {s = 14;}
+                        else if ( (LA12_0==';') ) {s = 14;}
 
-                        else if ( (LA12_0=='=') ) {s = 15;}
+                        else if ( (LA12_0=='W') ) {s = 15;}
 
-                        else if ( (LA12_0=='+') ) {s = 16;}
+                        else if ( (LA12_0=='.') ) {s = 16;}
 
                         else if ( (LA12_0=='-') ) {s = 17;}
 
-                        else if ( (LA12_0=='!') ) {s = 18;}
+                        else if ( (LA12_0=='/') ) {s = 18;}
 
                         else if ( (LA12_0=='P') ) {s = 19;}
 
                         else if ( (LA12_0=='B') ) {s = 20;}
 
-                        else if ( (LA12_0=='T') ) {s = 21;}
+                        else if ( (LA12_0=='R') ) {s = 21;}
 
-                        else if ( (LA12_0=='<') ) {s = 22;}
+                        else if ( (LA12_0=='S') ) {s = 22;}
 
-                        else if ( (LA12_0=='^') ) {s = 23;}
+                        else if ( (LA12_0=='M') ) {s = 23;}
 
-                        else if ( (LA12_0=='A'||(LA12_0>='C' && LA12_0<='F')||(LA12_0>='H' && LA12_0<='O')||(LA12_0>='Q' && LA12_0<='S')||(LA12_0>='U' && LA12_0<='Z')||LA12_0=='_'||(LA12_0>='a' && LA12_0<='e')||(LA12_0>='g' && LA12_0<='s')||(LA12_0>='u' && LA12_0<='z')) ) {s = 24;}
+                        else if ( (LA12_0=='O') ) {s = 24;}
 
-                        else if ( ((LA12_0>='0' && LA12_0<='9')) ) {s = 25;}
+                        else if ( (LA12_0=='A') ) {s = 25;}
 
-                        else if ( (LA12_0=='\"') ) {s = 26;}
+                        else if ( (LA12_0=='+') ) {s = 26;}
 
-                        else if ( (LA12_0=='\'') ) {s = 27;}
+                        else if ( (LA12_0=='*') ) {s = 27;}
 
-                        else if ( ((LA12_0>='\t' && LA12_0<='\n')||LA12_0=='\r'||LA12_0==' ') ) {s = 28;}
+                        else if ( (LA12_0=='^') ) {s = 28;}
 
-                        else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\u001F')||(LA12_0>='#' && LA12_0<='%')||LA12_0=='.'||(LA12_0>='>' && LA12_0<='@')||(LA12_0>='[' && LA12_0<=']')||LA12_0=='`'||(LA12_0>='~' && LA12_0<='\uFFFF')) ) {s = 29;}
+                        else if ( ((LA12_0>='C' && LA12_0<='E')||(LA12_0>='H' && LA12_0<='L')||LA12_0=='N'||LA12_0=='Q'||(LA12_0>='U' && LA12_0<='V')||(LA12_0>='X' && LA12_0<='Z')||LA12_0=='_'||(LA12_0>='a' && LA12_0<='z')) ) {s = 29;}
 
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA12_26 = input.LA(1);
+                        else if ( ((LA12_0>='0' && LA12_0<='9')) ) {s = 30;}
 
-                        s = -1;
-                        if ( ((LA12_26>='\u0000' && LA12_26<='\uFFFF')) ) {s = 57;}
+                        else if ( (LA12_0=='\"') ) {s = 31;}
 
-                        else s = 29;
+                        else if ( (LA12_0=='\'') ) {s = 32;}
+
+                        else if ( ((LA12_0>='\t' && LA12_0<='\n')||LA12_0=='\r'||LA12_0==' ') ) {s = 33;}
+
+                        else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\u001F')||(LA12_0>='#' && LA12_0<='&')||(LA12_0>='?' && LA12_0<='@')||(LA12_0>='[' && LA12_0<=']')||LA12_0=='`'||LA12_0=='|'||(LA12_0>='~' && LA12_0<='\uFFFF')) ) {s = 34;}
 
                         if ( s>=0 ) return s;
                         break;
