@@ -16,6 +16,7 @@ import hu.bme.aut.gergelyszaz.bGL.Field
 import hu.bme.aut.gergelyszaz.BGS.core.Token
 import java.util.concurrent.ConcurrentHashMap
 import javax.swing.JLayeredPane
+import hu.bme.aut.gergelyszaz.bGL.OrExp
 
 class BoardPanel extends JLayeredPane implements ActionListener{
 	Game game
@@ -36,9 +37,8 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 			btn.bounds=new Rectangle(field.x*SCALE-32,field.y*SCALE-32,64,64)
 			btn.actionCommand = "fieldPressed"
 			btn.addActionListener(this)
-			add(btn,new Integer(1))
-			
-				
+			add(btn,new Integer(1))	
+			game.varManager.Store(field,"tokenCount",0)
 		}
 		
 		DisableButtons
@@ -90,16 +90,17 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 		}
 	}
 	
-	def EnableButtons(String filter){
-		if(filter=="field"){
+	def EnableButtons(String object, OrExp filter){
+		if(object=="FIELD"){
 			for(b:fieldButtons.keySet){
-				b.enabled = true
-				
+				game.varManager.Store(null,"this",fieldButtons.get(b))
+				b.enabled = game.varManager.Evaluate(filter)
 			}
 		}
-		if(filter=="token"){
+		if(object=="TOKEN"){
 			for(b:tokenButtons.keySet){
-				b.enabled = true
+				game.varManager.Store(null,"this",tokenButtons.get(b))
+				b.enabled = game.varManager.Evaluate(filter)
 			}
 		}
 	}

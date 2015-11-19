@@ -149,22 +149,13 @@ public interface BGLPackage extends EPackage
   int PLAYER__PLAYERCOUNT = 1;
 
   /**
-   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PLAYER__ATTRIBUTES = 2;
-
-  /**
    * The number of structural features of the '<em>Player</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PLAYER_FEATURE_COUNT = 3;
+  int PLAYER_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl <em>Board</em>}' class.
@@ -195,22 +186,13 @@ public interface BGLPackage extends EPackage
   int BOARD__FIELDS = 1;
 
   /**
-   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BOARD__ATTRIBUTES = 2;
-
-  /**
    * The number of structural features of the '<em>Board</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int BOARD_FEATURE_COUNT = 3;
+  int BOARD_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.RulesImpl <em>Rules</em>}' class.
@@ -370,22 +352,13 @@ public interface BGLPackage extends EPackage
   int FIELD__NEIGHBOURS = 4;
 
   /**
-   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FIELD__VARIABLES = 5;
-
-  /**
    * The number of structural features of the '<em>Field</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FIELD_FEATURE_COUNT = 6;
+  int FIELD_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl <em>Action</em>}' class.
@@ -425,23 +398,170 @@ public interface BGLPackage extends EPackage
   int ACTION__OBJECT_OF_SELECT = 2;
 
   /**
+   * The feature id for the '<em><b>Filter</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__FILTER = 3;
+
+  /**
+   * The feature id for the '<em><b>Assignment</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__ASSIGNMENT = 4;
+
+  /**
    * The number of structural features of the '<em>Action</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION_FEATURE_COUNT = 3;
+  int ACTION_FEATURE_COUNT = 5;
 
   /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.VariableImpl <em>Variable</em>}' class.
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.OrExpImpl <em>Or Exp</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.VariableImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getVariable()
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.OrExpImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getOrExp()
    * @generated
    */
-  int VARIABLE = 8;
+  int OR_EXP = 8;
+
+  /**
+   * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR_EXP__EXPRESSIONS = 0;
+
+  /**
+   * The feature id for the '<em><b>Operators</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR_EXP__OPERATORS = 1;
+
+  /**
+   * The number of structural features of the '<em>Or Exp</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR_EXP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AndExpImpl <em>And Exp</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.AndExpImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAndExp()
+   * @generated
+   */
+  int AND_EXP = 9;
+
+  /**
+   * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_EXP__EXPRESSIONS = 0;
+
+  /**
+   * The feature id for the '<em><b>Operators</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_EXP__OPERATORS = 1;
+
+  /**
+   * The number of structural features of the '<em>And Exp</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_EXP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.BooleanExpImpl <em>Boolean Exp</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BooleanExpImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getBooleanExp()
+   * @generated
+   */
+  int BOOLEAN_EXP = 10;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_EXP__LEFT = 0;
+
+  /**
+   * The feature id for the '<em><b>Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_EXP__OPERATOR = 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_EXP__RIGHT = 2;
+
+  /**
+   * The feature id for the '<em><b>Nested Exp</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_EXP__NESTED_EXP = 3;
+
+  /**
+   * The number of structural features of the '<em>Boolean Exp</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_EXP_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AttributeNameImpl <em>Attribute Name</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.AttributeNameImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAttributeName()
+   * @generated
+   */
+  int ATTRIBUTE_NAME = 11;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -450,7 +570,53 @@ public interface BGLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE__NAME = 0;
+  int ATTRIBUTE_NAME__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_NAME__PARENT = 1;
+
+  /**
+   * The feature id for the '<em><b>Child</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_NAME__CHILD = 2;
+
+  /**
+   * The number of structural features of the '<em>Attribute Name</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_NAME_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AttributeOrIntImpl <em>Attribute Or Int</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.AttributeOrIntImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAttributeOrInt()
+   * @generated
+   */
+  int ATTRIBUTE_OR_INT = 12;
+
+  /**
+   * The feature id for the '<em><b>Attribute</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_OR_INT__ATTRIBUTE = 0;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -459,53 +625,127 @@ public interface BGLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE__VALUE = 1;
+  int ATTRIBUTE_OR_INT__VALUE = 1;
 
   /**
-   * The number of structural features of the '<em>Variable</em>' class.
+   * The number of structural features of the '<em>Attribute Or Int</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_FEATURE_COUNT = 2;
+  int ATTRIBUTE_OR_INT_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ReferenceImpl <em>Reference</em>}' class.
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.MultiplicationExpImpl <em>Multiplication Exp</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.ReferenceImpl
-   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getReference()
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.MultiplicationExpImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getMultiplicationExp()
    * @generated
    */
-  int REFERENCE = 9;
+  int MULTIPLICATION_EXP = 14;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REFERENCE__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' reference.
+   * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REFERENCE__VALUE = 1;
+  int MULTIPLICATION_EXP__EXPRESSIONS = 0;
 
   /**
-   * The number of structural features of the '<em>Reference</em>' class.
+   * The feature id for the '<em><b>Operators</b></em>' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REFERENCE_FEATURE_COUNT = 2;
+  int MULTIPLICATION_EXP__OPERATORS = 1;
+
+  /**
+   * The number of structural features of the '<em>Multiplication Exp</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULTIPLICATION_EXP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AddtionExpImpl <em>Addtion Exp</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.AddtionExpImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAddtionExp()
+   * @generated
+   */
+  int ADDTION_EXP = 13;
+
+  /**
+   * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADDTION_EXP__EXPRESSIONS = MULTIPLICATION_EXP__EXPRESSIONS;
+
+  /**
+   * The feature id for the '<em><b>Operators</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADDTION_EXP__OPERATORS = MULTIPLICATION_EXP__OPERATORS;
+
+  /**
+   * The number of structural features of the '<em>Addtion Exp</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADDTION_EXP_FEATURE_COUNT = MULTIPLICATION_EXP_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ValueAssignmentImpl <em>Value Assignment</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.ValueAssignmentImpl
+   * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getValueAssignment()
+   * @generated
+   */
+  int VALUE_ASSIGNMENT = 15;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE_ASSIGNMENT__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Addition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE_ASSIGNMENT__ADDITION = 1;
+
+  /**
+   * The number of structural features of the '<em>Value Assignment</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUE_ASSIGNMENT_FEATURE_COUNT = 2;
 
 
   /**
@@ -606,17 +846,6 @@ public interface BGLPackage extends EPackage
   EAttribute getPlayer_Playercount();
 
   /**
-   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.Player#getAttributes <em>Attributes</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Attributes</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Player#getAttributes()
-   * @see #getPlayer()
-   * @generated
-   */
-  EReference getPlayer_Attributes();
-
-  /**
    * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Board <em>Board</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -647,17 +876,6 @@ public interface BGLPackage extends EPackage
    * @generated
    */
   EReference getBoard_Fields();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.Board#getAttributes <em>Attributes</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Attributes</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Board#getAttributes()
-   * @see #getBoard()
-   * @generated
-   */
-  EReference getBoard_Attributes();
 
   /**
    * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Rules <em>Rules</em>}'.
@@ -810,17 +1028,6 @@ public interface BGLPackage extends EPackage
   EReference getField_Neighbours();
 
   /**
-   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.Field#getVariables <em>Variables</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Variables</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Field#getVariables()
-   * @see #getField()
-   * @generated
-   */
-  EReference getField_Variables();
-
-  /**
    * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Action <em>Action</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -864,68 +1071,293 @@ public interface BGLPackage extends EPackage
   EAttribute getAction_ObjectOfSelect();
 
   /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Variable <em>Variable</em>}'.
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Action#getFilter <em>Filter</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Variable</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Variable
+   * @return the meta object for the containment reference '<em>Filter</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Action#getFilter()
+   * @see #getAction()
    * @generated
    */
-  EClass getVariable();
+  EReference getAction_Filter();
 
   /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Variable#getName <em>Name</em>}'.
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.Action#getAssignment <em>Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Assignment</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.Action#getAssignment()
+   * @see #getAction()
+   * @generated
+   */
+  EReference getAction_Assignment();
+
+  /**
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.OrExp <em>Or Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Or Exp</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.OrExp
+   * @generated
+   */
+  EClass getOrExp();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.OrExp#getExpressions <em>Expressions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Expressions</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.OrExp#getExpressions()
+   * @see #getOrExp()
+   * @generated
+   */
+  EReference getOrExp_Expressions();
+
+  /**
+   * Returns the meta object for the attribute list '{@link hu.bme.aut.gergelyszaz.bGL.OrExp#getOperators <em>Operators</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Operators</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.OrExp#getOperators()
+   * @see #getOrExp()
+   * @generated
+   */
+  EAttribute getOrExp_Operators();
+
+  /**
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.AndExp <em>And Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>And Exp</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.AndExp
+   * @generated
+   */
+  EClass getAndExp();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.AndExp#getExpressions <em>Expressions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Expressions</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.AndExp#getExpressions()
+   * @see #getAndExp()
+   * @generated
+   */
+  EReference getAndExp_Expressions();
+
+  /**
+   * Returns the meta object for the attribute list '{@link hu.bme.aut.gergelyszaz.bGL.AndExp#getOperators <em>Operators</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Operators</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.AndExp#getOperators()
+   * @see #getAndExp()
+   * @generated
+   */
+  EAttribute getAndExp_Operators();
+
+  /**
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.BooleanExp <em>Boolean Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Boolean Exp</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.BooleanExp
+   * @generated
+   */
+  EClass getBooleanExp();
+
+  /**
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.BooleanExp#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.BooleanExp#getLeft()
+   * @see #getBooleanExp()
+   * @generated
+   */
+  EReference getBooleanExp_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.BooleanExp#getOperator <em>Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Operator</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.BooleanExp#getOperator()
+   * @see #getBooleanExp()
+   * @generated
+   */
+  EAttribute getBooleanExp_Operator();
+
+  /**
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.BooleanExp#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.BooleanExp#getRight()
+   * @see #getBooleanExp()
+   * @generated
+   */
+  EReference getBooleanExp_Right();
+
+  /**
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.BooleanExp#getNestedExp <em>Nested Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Nested Exp</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.BooleanExp#getNestedExp()
+   * @see #getBooleanExp()
+   * @generated
+   */
+  EReference getBooleanExp_NestedExp();
+
+  /**
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.AttributeName <em>Attribute Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Attribute Name</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.AttributeName
+   * @generated
+   */
+  EClass getAttributeName();
+
+  /**
+   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.AttributeName#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Variable#getName()
-   * @see #getVariable()
+   * @see hu.bme.aut.gergelyszaz.bGL.AttributeName#getName()
+   * @see #getAttributeName()
    * @generated
    */
-  EAttribute getVariable_Name();
+  EAttribute getAttributeName_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Variable#getValue <em>Value</em>}'.
+   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.AttributeName#getParent <em>Parent</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Parent</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.AttributeName#getParent()
+   * @see #getAttributeName()
+   * @generated
+   */
+  EAttribute getAttributeName_Parent();
+
+  /**
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.AttributeName#getChild <em>Child</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Child</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.AttributeName#getChild()
+   * @see #getAttributeName()
+   * @generated
+   */
+  EReference getAttributeName_Child();
+
+  /**
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.AttributeOrInt <em>Attribute Or Int</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Attribute Or Int</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.AttributeOrInt
+   * @generated
+   */
+  EClass getAttributeOrInt();
+
+  /**
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.AttributeOrInt#getAttribute <em>Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Attribute</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.AttributeOrInt#getAttribute()
+   * @see #getAttributeOrInt()
+   * @generated
+   */
+  EReference getAttributeOrInt_Attribute();
+
+  /**
+   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.AttributeOrInt#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Value</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Variable#getValue()
-   * @see #getVariable()
+   * @see hu.bme.aut.gergelyszaz.bGL.AttributeOrInt#getValue()
+   * @see #getAttributeOrInt()
    * @generated
    */
-  EAttribute getVariable_Value();
+  EAttribute getAttributeOrInt_Value();
 
   /**
-   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.Reference <em>Reference</em>}'.
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.AddtionExp <em>Addtion Exp</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Reference</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Reference
+   * @return the meta object for class '<em>Addtion Exp</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.AddtionExp
    * @generated
    */
-  EClass getReference();
+  EClass getAddtionExp();
 
   /**
-   * Returns the meta object for the attribute '{@link hu.bme.aut.gergelyszaz.bGL.Reference#getName <em>Name</em>}'.
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.MultiplicationExp <em>Multiplication Exp</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Reference#getName()
-   * @see #getReference()
+   * @return the meta object for class '<em>Multiplication Exp</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.MultiplicationExp
    * @generated
    */
-  EAttribute getReference_Name();
+  EClass getMultiplicationExp();
 
   /**
-   * Returns the meta object for the reference '{@link hu.bme.aut.gergelyszaz.bGL.Reference#getValue <em>Value</em>}'.
+   * Returns the meta object for the containment reference list '{@link hu.bme.aut.gergelyszaz.bGL.MultiplicationExp#getExpressions <em>Expressions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Value</em>'.
-   * @see hu.bme.aut.gergelyszaz.bGL.Reference#getValue()
-   * @see #getReference()
+   * @return the meta object for the containment reference list '<em>Expressions</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.MultiplicationExp#getExpressions()
+   * @see #getMultiplicationExp()
    * @generated
    */
-  EReference getReference_Value();
+  EReference getMultiplicationExp_Expressions();
+
+  /**
+   * Returns the meta object for the attribute list '{@link hu.bme.aut.gergelyszaz.bGL.MultiplicationExp#getOperators <em>Operators</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Operators</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.MultiplicationExp#getOperators()
+   * @see #getMultiplicationExp()
+   * @generated
+   */
+  EAttribute getMultiplicationExp_Operators();
+
+  /**
+   * Returns the meta object for class '{@link hu.bme.aut.gergelyszaz.bGL.ValueAssignment <em>Value Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Value Assignment</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.ValueAssignment
+   * @generated
+   */
+  EClass getValueAssignment();
+
+  /**
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.ValueAssignment#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Name</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.ValueAssignment#getName()
+   * @see #getValueAssignment()
+   * @generated
+   */
+  EReference getValueAssignment_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link hu.bme.aut.gergelyszaz.bGL.ValueAssignment#getAddition <em>Addition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Addition</em>'.
+   * @see hu.bme.aut.gergelyszaz.bGL.ValueAssignment#getAddition()
+   * @see #getValueAssignment()
+   * @generated
+   */
+  EReference getValueAssignment_Addition();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1027,14 +1459,6 @@ public interface BGLPackage extends EPackage
     EAttribute PLAYER__PLAYERCOUNT = eINSTANCE.getPlayer_Playercount();
 
     /**
-     * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PLAYER__ATTRIBUTES = eINSTANCE.getPlayer_Attributes();
-
-    /**
      * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl <em>Board</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1059,14 +1483,6 @@ public interface BGLPackage extends EPackage
      * @generated
      */
     EReference BOARD__FIELDS = eINSTANCE.getBoard_Fields();
-
-    /**
-     * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference BOARD__ATTRIBUTES = eINSTANCE.getBoard_Attributes();
 
     /**
      * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.RulesImpl <em>Rules</em>}' class.
@@ -1189,14 +1605,6 @@ public interface BGLPackage extends EPackage
     EReference FIELD__NEIGHBOURS = eINSTANCE.getField_Neighbours();
 
     /**
-     * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference FIELD__VARIABLES = eINSTANCE.getField_Variables();
-
-    /**
      * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl <em>Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1231,14 +1639,124 @@ public interface BGLPackage extends EPackage
     EAttribute ACTION__OBJECT_OF_SELECT = eINSTANCE.getAction_ObjectOfSelect();
 
     /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.VariableImpl <em>Variable</em>}' class.
+     * The meta object literal for the '<em><b>Filter</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.VariableImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getVariable()
      * @generated
      */
-    EClass VARIABLE = eINSTANCE.getVariable();
+    EReference ACTION__FILTER = eINSTANCE.getAction_Filter();
+
+    /**
+     * The meta object literal for the '<em><b>Assignment</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ACTION__ASSIGNMENT = eINSTANCE.getAction_Assignment();
+
+    /**
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.OrExpImpl <em>Or Exp</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.OrExpImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getOrExp()
+     * @generated
+     */
+    EClass OR_EXP = eINSTANCE.getOrExp();
+
+    /**
+     * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference OR_EXP__EXPRESSIONS = eINSTANCE.getOrExp_Expressions();
+
+    /**
+     * The meta object literal for the '<em><b>Operators</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute OR_EXP__OPERATORS = eINSTANCE.getOrExp_Operators();
+
+    /**
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AndExpImpl <em>And Exp</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.AndExpImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAndExp()
+     * @generated
+     */
+    EClass AND_EXP = eINSTANCE.getAndExp();
+
+    /**
+     * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AND_EXP__EXPRESSIONS = eINSTANCE.getAndExp_Expressions();
+
+    /**
+     * The meta object literal for the '<em><b>Operators</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AND_EXP__OPERATORS = eINSTANCE.getAndExp_Operators();
+
+    /**
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.BooleanExpImpl <em>Boolean Exp</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BooleanExpImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getBooleanExp()
+     * @generated
+     */
+    EClass BOOLEAN_EXP = eINSTANCE.getBooleanExp();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference BOOLEAN_EXP__LEFT = eINSTANCE.getBooleanExp_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BOOLEAN_EXP__OPERATOR = eINSTANCE.getBooleanExp_Operator();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference BOOLEAN_EXP__RIGHT = eINSTANCE.getBooleanExp_Right();
+
+    /**
+     * The meta object literal for the '<em><b>Nested Exp</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference BOOLEAN_EXP__NESTED_EXP = eINSTANCE.getBooleanExp_NestedExp();
+
+    /**
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AttributeNameImpl <em>Attribute Name</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.AttributeNameImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAttributeName()
+     * @generated
+     */
+    EClass ATTRIBUTE_NAME = eINSTANCE.getAttributeName();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1246,7 +1764,41 @@ public interface BGLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE__NAME = eINSTANCE.getVariable_Name();
+    EAttribute ATTRIBUTE_NAME__NAME = eINSTANCE.getAttributeName_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Parent</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ATTRIBUTE_NAME__PARENT = eINSTANCE.getAttributeName_Parent();
+
+    /**
+     * The meta object literal for the '<em><b>Child</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTE_NAME__CHILD = eINSTANCE.getAttributeName_Child();
+
+    /**
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AttributeOrIntImpl <em>Attribute Or Int</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.AttributeOrIntImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAttributeOrInt()
+     * @generated
+     */
+    EClass ATTRIBUTE_OR_INT = eINSTANCE.getAttributeOrInt();
+
+    /**
+     * The meta object literal for the '<em><b>Attribute</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTE_OR_INT__ATTRIBUTE = eINSTANCE.getAttributeOrInt_Attribute();
 
     /**
      * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
@@ -1254,33 +1806,69 @@ public interface BGLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE__VALUE = eINSTANCE.getVariable_Value();
+    EAttribute ATTRIBUTE_OR_INT__VALUE = eINSTANCE.getAttributeOrInt_Value();
 
     /**
-     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ReferenceImpl <em>Reference</em>}' class.
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.AddtionExpImpl <em>Addtion Exp</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.ReferenceImpl
-     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getReference()
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.AddtionExpImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getAddtionExp()
      * @generated
      */
-    EClass REFERENCE = eINSTANCE.getReference();
+    EClass ADDTION_EXP = eINSTANCE.getAddtionExp();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.MultiplicationExpImpl <em>Multiplication Exp</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.MultiplicationExpImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getMultiplicationExp()
      * @generated
      */
-    EAttribute REFERENCE__NAME = eINSTANCE.getReference_Name();
+    EClass MULTIPLICATION_EXP = eINSTANCE.getMultiplicationExp();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference REFERENCE__VALUE = eINSTANCE.getReference_Value();
+    EReference MULTIPLICATION_EXP__EXPRESSIONS = eINSTANCE.getMultiplicationExp_Expressions();
+
+    /**
+     * The meta object literal for the '<em><b>Operators</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MULTIPLICATION_EXP__OPERATORS = eINSTANCE.getMultiplicationExp_Operators();
+
+    /**
+     * The meta object literal for the '{@link hu.bme.aut.gergelyszaz.bGL.impl.ValueAssignmentImpl <em>Value Assignment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.ValueAssignmentImpl
+     * @see hu.bme.aut.gergelyszaz.bGL.impl.BGLPackageImpl#getValueAssignment()
+     * @generated
+     */
+    EClass VALUE_ASSIGNMENT = eINSTANCE.getValueAssignment();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VALUE_ASSIGNMENT__NAME = eINSTANCE.getValueAssignment_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Addition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VALUE_ASSIGNMENT__ADDITION = eINSTANCE.getValueAssignment_Addition();
 
   }
 

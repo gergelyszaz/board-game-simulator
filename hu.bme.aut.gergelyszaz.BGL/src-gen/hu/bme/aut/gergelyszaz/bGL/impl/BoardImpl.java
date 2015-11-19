@@ -5,7 +5,6 @@ package hu.bme.aut.gergelyszaz.bGL.impl;
 import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
 import hu.bme.aut.gergelyszaz.bGL.Board;
 import hu.bme.aut.gergelyszaz.bGL.Field;
-import hu.bme.aut.gergelyszaz.bGL.Variable;
 
 import java.util.Collection;
 
@@ -33,7 +32,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl#getFields <em>Fields</em>}</li>
- *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl#getAttributes <em>Attributes</em>}</li>
  * </ul>
  *
  * @generated
@@ -69,16 +67,6 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
    * @ordered
    */
   protected EList<Field> fields;
-
-  /**
-   * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAttributes()
-   * @generated
-   * @ordered
-   */
-  protected EList<Variable> attributes;
 
   /**
    * <!-- begin-user-doc -->
@@ -143,20 +131,6 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Variable> getAttributes()
-  {
-    if (attributes == null)
-    {
-      attributes = new EObjectContainmentEList<Variable>(Variable.class, this, BGLPackage.BOARD__ATTRIBUTES);
-    }
-    return attributes;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -164,8 +138,6 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
     {
       case BGLPackage.BOARD__FIELDS:
         return ((InternalEList<?>)getFields()).basicRemove(otherEnd, msgs);
-      case BGLPackage.BOARD__ATTRIBUTES:
-        return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -184,8 +156,6 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
         return getName();
       case BGLPackage.BOARD__FIELDS:
         return getFields();
-      case BGLPackage.BOARD__ATTRIBUTES:
-        return getAttributes();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -208,10 +178,6 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
         getFields().clear();
         getFields().addAll((Collection<? extends Field>)newValue);
         return;
-      case BGLPackage.BOARD__ATTRIBUTES:
-        getAttributes().clear();
-        getAttributes().addAll((Collection<? extends Variable>)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -232,9 +198,6 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
       case BGLPackage.BOARD__FIELDS:
         getFields().clear();
         return;
-      case BGLPackage.BOARD__ATTRIBUTES:
-        getAttributes().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -253,8 +216,6 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case BGLPackage.BOARD__FIELDS:
         return fields != null && !fields.isEmpty();
-      case BGLPackage.BOARD__ATTRIBUTES:
-        return attributes != null && !attributes.isEmpty();
     }
     return super.eIsSet(featureID);
   }

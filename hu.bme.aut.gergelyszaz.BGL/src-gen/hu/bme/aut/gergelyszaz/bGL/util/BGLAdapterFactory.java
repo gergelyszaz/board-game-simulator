@@ -115,14 +115,44 @@ public class BGLAdapterFactory extends AdapterFactoryImpl
         return createActionAdapter();
       }
       @Override
-      public Adapter caseVariable(Variable object)
+      public Adapter caseOrExp(OrExp object)
       {
-        return createVariableAdapter();
+        return createOrExpAdapter();
       }
       @Override
-      public Adapter caseReference(Reference object)
+      public Adapter caseAndExp(AndExp object)
       {
-        return createReferenceAdapter();
+        return createAndExpAdapter();
+      }
+      @Override
+      public Adapter caseBooleanExp(BooleanExp object)
+      {
+        return createBooleanExpAdapter();
+      }
+      @Override
+      public Adapter caseAttributeName(AttributeName object)
+      {
+        return createAttributeNameAdapter();
+      }
+      @Override
+      public Adapter caseAttributeOrInt(AttributeOrInt object)
+      {
+        return createAttributeOrIntAdapter();
+      }
+      @Override
+      public Adapter caseAddtionExp(AddtionExp object)
+      {
+        return createAddtionExpAdapter();
+      }
+      @Override
+      public Adapter caseMultiplicationExp(MultiplicationExp object)
+      {
+        return createMultiplicationExpAdapter();
+      }
+      @Override
+      public Adapter caseValueAssignment(ValueAssignment object)
+      {
+        return createValueAssignmentAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -267,31 +297,121 @@ public class BGLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Variable <em>Variable</em>}'.
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.OrExp <em>Or Exp</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.Variable
+   * @see hu.bme.aut.gergelyszaz.bGL.OrExp
    * @generated
    */
-  public Adapter createVariableAdapter()
+  public Adapter createOrExpAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Reference <em>Reference</em>}'.
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.AndExp <em>And Exp</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.Reference
+   * @see hu.bme.aut.gergelyszaz.bGL.AndExp
    * @generated
    */
-  public Adapter createReferenceAdapter()
+  public Adapter createAndExpAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.BooleanExp <em>Boolean Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see hu.bme.aut.gergelyszaz.bGL.BooleanExp
+   * @generated
+   */
+  public Adapter createBooleanExpAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.AttributeName <em>Attribute Name</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see hu.bme.aut.gergelyszaz.bGL.AttributeName
+   * @generated
+   */
+  public Adapter createAttributeNameAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.AttributeOrInt <em>Attribute Or Int</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see hu.bme.aut.gergelyszaz.bGL.AttributeOrInt
+   * @generated
+   */
+  public Adapter createAttributeOrIntAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.AddtionExp <em>Addtion Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see hu.bme.aut.gergelyszaz.bGL.AddtionExp
+   * @generated
+   */
+  public Adapter createAddtionExpAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.MultiplicationExp <em>Multiplication Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see hu.bme.aut.gergelyszaz.bGL.MultiplicationExp
+   * @generated
+   */
+  public Adapter createMultiplicationExpAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.ValueAssignment <em>Value Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see hu.bme.aut.gergelyszaz.bGL.ValueAssignment
+   * @generated
+   */
+  public Adapter createValueAssignmentAdapter()
   {
     return null;
   }

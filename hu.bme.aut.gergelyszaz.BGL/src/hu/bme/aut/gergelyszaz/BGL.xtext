@@ -3,56 +3,93 @@ grammar hu.bme.aut.gergelyszaz.BGL with org.eclipse.xtext.common.Terminals
 generate bGL "http://www.bme.hu/aut/gergelyszaz/BGL"
 
 Model:
-	'Game' name=ID
+	'GAME' name=ID
 	 player=Player & board=Board & (tokens+=Token)* & rules=Rules;
 
 Player:
-	name='Players' playercount=INT
-	('{' (attributes+=Variable)* '}')?;
+	name='PLAYERS' playercount=INT
+	//('{' (attributes+=ValueAssignment)* '}')?
+	;
 
 Board:
 	
-	name='Board' '{' ((fields+=Field)*) & ((attributes+=Variable)*) '}'
+	name='BOARD' '{' 
+	((fields+=Field)*) & 
+	//((attributes+=ValueAssignment)*) 
+	'}'
 	
 	;
 	
 Rules:
-	name='Rules' '{' turnrules=TurnRules '}'
+	name='RULES' '{' turnrules=TurnRules '}'
 ;
 
 TurnRules:
-	name='Turn' '{' 
+	name='TURN' '{' 
 		(actions+=Action)*
 		
 	'}'
 ;
 Token returns Token:
-	'Token' name=ID '{' '}'
+	'TOKEN' name=ID '{' '}'
 ;
 
 Field:
 	name=ID '(' x=INT ',' y=INT ',' z=INT ')' ':'
 	(neighbours+=[Field])* 
-	(variables+=Variable)*
+	//(variables+=ValueAssignment)*
 	';';
 
 Action:
 	
-	(name='Spawn' (token=[Token]) )|
-	(name='Move') |
-	(name='Select' objectOfSelect=('token'|'field') )	
+	(name='SPAWN' (token=[Token]) )|
+	(name='MOVE') |
+	(name='SELECT' objectOfSelect=('TOKEN'|'FIELD') 'WHERE' filter=OrExp)	|
+	(assignment=ValueAssignment)
 	
 	;
 
 
 
 
+//Part for writing condition
+OrExp:
+	expressions+=AndExp (operators+='OR' expressions+=AndExp)*
+;
 
-Variable:
-	name=ID '=' value= INT;
+AndExp:
+	expressions+=BooleanExp (operators+='AND' expressions+=BooleanExp)*
+;
 
-Reference:
-	name=ID '=' value=[Variable]
+BooleanExp:
+	(left=AttributeOrInt operator=('!=='|'==='|'=='|'!='|'>'|'>='|'<'|'<=') right=AttributeOrInt)
+	|
+	( '('nestedExp=OrExp')' )
+;
+
+AttributeName:
+	( name=ID|(parent=ID'.'child=AttributeName) )
+;
+
+AttributeOrInt:
+	attribute=AttributeName| value=INT
+;
+
+
+
+//Arithmetic operations and value assignment
+AddtionExp:
+	expressions+=MultiplicationExp (operators+= '+'|'-' expressions+=MultiplicationExp)*
+;
+
+MultiplicationExp:
+	(expressions+=AttributeOrInt (operators+= '*'|'/' expressions+=AttributeOrInt)*)
+	|
+	( '(' AddtionExp ')' )
+;
+
+ValueAssignment:
+	name=AttributeName  '=' addition=AddtionExp
 ;
 
 

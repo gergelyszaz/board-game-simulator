@@ -5,12 +5,28 @@ import hu.bme.aut.gergelyszaz.bGL.Field
 
 class Token {
 	public String type
-	public Field field=null
+	private VariableManager varManager
 	public Player owner=null
+	private Field currentField=null
 	
-	new(String t) {
-		type = t
+	new(VariableManager vm,String t){
+		varManager=vm
+		type=t
 	}
+	
+	def setField(Field field){
+		
+		varManager.Store(currentField,"tokenCount",0)
+		varManager.Store(this,"field",field)
+		varManager.Store(field,"tokenCount",1)
+		currentField=field
+	}
+	
+	def Field getField(){
+		varManager.GetReference("field",this) as Field
+	}
+	
+
 
 
 }

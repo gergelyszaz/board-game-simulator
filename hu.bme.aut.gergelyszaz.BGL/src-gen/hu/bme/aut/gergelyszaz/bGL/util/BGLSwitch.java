@@ -128,17 +128,60 @@ public class BGLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case BGLPackage.VARIABLE:
+      case BGLPackage.OR_EXP:
       {
-        Variable variable = (Variable)theEObject;
-        T result = caseVariable(variable);
+        OrExp orExp = (OrExp)theEObject;
+        T result = caseOrExp(orExp);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case BGLPackage.REFERENCE:
+      case BGLPackage.AND_EXP:
       {
-        Reference reference = (Reference)theEObject;
-        T result = caseReference(reference);
+        AndExp andExp = (AndExp)theEObject;
+        T result = caseAndExp(andExp);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case BGLPackage.BOOLEAN_EXP:
+      {
+        BooleanExp booleanExp = (BooleanExp)theEObject;
+        T result = caseBooleanExp(booleanExp);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case BGLPackage.ATTRIBUTE_NAME:
+      {
+        AttributeName attributeName = (AttributeName)theEObject;
+        T result = caseAttributeName(attributeName);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case BGLPackage.ATTRIBUTE_OR_INT:
+      {
+        AttributeOrInt attributeOrInt = (AttributeOrInt)theEObject;
+        T result = caseAttributeOrInt(attributeOrInt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case BGLPackage.ADDTION_EXP:
+      {
+        AddtionExp addtionExp = (AddtionExp)theEObject;
+        T result = caseAddtionExp(addtionExp);
+        if (result == null) result = caseMultiplicationExp(addtionExp);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case BGLPackage.MULTIPLICATION_EXP:
+      {
+        MultiplicationExp multiplicationExp = (MultiplicationExp)theEObject;
+        T result = caseMultiplicationExp(multiplicationExp);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case BGLPackage.VALUE_ASSIGNMENT:
+      {
+        ValueAssignment valueAssignment = (ValueAssignment)theEObject;
+        T result = caseValueAssignment(valueAssignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -275,33 +318,129 @@ public class BGLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Or Exp</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Or Exp</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseVariable(Variable object)
+  public T caseOrExp(OrExp object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Reference</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>And Exp</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Reference</em>'.
+   * @return the result of interpreting the object as an instance of '<em>And Exp</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseReference(Reference object)
+  public T caseAndExp(AndExp object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Boolean Exp</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Boolean Exp</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBooleanExp(BooleanExp object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute Name</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute Name</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeName(AttributeName object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute Or Int</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute Or Int</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeOrInt(AttributeOrInt object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Addtion Exp</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Addtion Exp</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAddtionExp(AddtionExp object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Multiplication Exp</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Multiplication Exp</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMultiplicationExp(MultiplicationExp object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Value Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Value Assignment</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseValueAssignment(ValueAssignment object)
   {
     return null;
   }
