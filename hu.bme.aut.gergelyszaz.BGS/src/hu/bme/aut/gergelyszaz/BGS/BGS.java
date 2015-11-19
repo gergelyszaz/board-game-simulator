@@ -5,6 +5,10 @@ import hu.bme.aut.gergelyszaz.BGS.core.Game;
 import hu.bme.aut.gergelyszaz.BGS.factory.GameFactory;
 import hu.bme.aut.gergelyszaz.bGL.Model;
 
+import java.io.File;
+
+import javax.swing.JFileChooser;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.resource.XtextResource;
@@ -23,11 +27,20 @@ public class BGS {
 				.getInstance(XtextResourceSet.class);
 		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL,
 				Boolean.TRUE);
-		Resource resource = resourceSet.getResource(URI.createURI(args[0]),
+		
+		JFileChooser fileChooser = new JFileChooser();
+		 int returnValue = fileChooser.showOpenDialog(null);
+	        if (returnValue == JFileChooser.APPROVE_OPTION) {
+	          File selectedFile = fileChooser.getSelectedFile();
+	        
+	          String path="file://"+selectedFile.getAbsolutePath().replace("\\", "//");
+	        System.out.print(path);
+		Resource resource = resourceSet.getResource(URI.createURI(path),
 				true);
 		Model model = (Model) resource.getContents().get(0);
 
 		new GameFactory().CreateGame(model).Run();
+	        }
 	}
 
 }
