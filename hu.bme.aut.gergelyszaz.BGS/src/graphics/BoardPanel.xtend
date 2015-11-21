@@ -29,7 +29,16 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 		super()
 		model=m
 		game=g
+		Init
+	}
+	
+	def Init(){
+		removeAll
+		fieldButtons.clear
+		tokenButtons.clear
 		layout=null
+		
+
 		for(field: model.board.fields)
 		{
 			var btn=new JButton
@@ -47,6 +56,7 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 	
 	def AddToken(Token t){
 		val button=new JButton
+		button.UI = new TokenButtonUI(t)
 		add(button,new Integer(2))
 		button.actionCommand="tokenPressed"
 		button.addActionListener(this)
@@ -100,6 +110,7 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 		
 		remove(butt)
 		tokenButtons.remove(butt)
+		repaint
 		
 	}
 	
@@ -125,6 +136,9 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 		}
 		if(action=="tokenPressed"){
 			game.selectedToken=tokenButtons.get(e.source)
+		}
+		if(action=="Restart"){
+			
 		}
 		DisableButtons
 		game.waitForInput=false

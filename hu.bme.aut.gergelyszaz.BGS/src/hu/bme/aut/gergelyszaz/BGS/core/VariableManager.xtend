@@ -17,7 +17,17 @@ class VariableManager {
 	
 	new()
 	{
-		StoreToObject_Name(null,"null",nullObject)
+		Init()
+	}
+	
+	def void Init()
+	{
+		StoreToObject_Name(null,"null",nullObject)	
+	}
+	
+	def void Clear(){
+		variables.clear
+		references.clear
 	}
 	
 	def boolean Evaluate(OrExp exp){

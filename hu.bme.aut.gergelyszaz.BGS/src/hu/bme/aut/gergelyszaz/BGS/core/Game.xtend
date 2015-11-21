@@ -100,6 +100,8 @@ class Game{
 		frame.visible=true
 		println(name+"     playercount "+players.size) 
 		
+		varManager.StoreToObject_Name(null,"turnCount",turnCount)
+		
 		while(true){ 
 			if(!waitForInput)
 			{
@@ -108,7 +110,11 @@ class Game{
 				ExecuteAction(lastAction=GetNextAction)
 				if(lastAction==model.rules.turnrules.actions.last){
 					currentPlayer=nextPlayer
-					if(currentPlayer==players.get(0))		turnCount++
+					if(currentPlayer==players.get(0))
+					{	
+						turnCount++
+						varManager.StoreToObject_Name(null,"turnCount",turnCount)
+					}
 				}
 			}
 			panel.Refresh
