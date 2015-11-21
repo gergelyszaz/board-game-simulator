@@ -11,8 +11,6 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
-import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
-import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
 import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 
@@ -20,14 +18,10 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class BGLSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected BGLGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Board_RightCurlyBracketKeyword_1_a;
-	protected AbstractElementAlias match_Board_RightCurlyBracketKeyword_1_p;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (BGLGrammarAccess) access;
-		match_Board_RightCurlyBracketKeyword_1_a = new TokenAlias(true, true, grammarAccess.getBoardAccess().getRightCurlyBracketKeyword_1());
-		match_Board_RightCurlyBracketKeyword_1_p = new TokenAlias(true, false, grammarAccess.getBoardAccess().getRightCurlyBracketKeyword_1());
 	}
 	
 	@Override
@@ -42,38 +36,8 @@ public class BGLSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_Board_RightCurlyBracketKeyword_1_a.equals(syntax))
-				emit_Board_RightCurlyBracketKeyword_1_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Board_RightCurlyBracketKeyword_1_p.equals(syntax))
-				emit_Board_RightCurlyBracketKeyword_1_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else acceptNodes(getLastNavigableState(), syntaxNodes);
+			acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
-	/**
-	 * Ambiguous syntax:
-	 *     '}'*
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) name='BOARD'
-	 *     fields+=Field (ambiguity) (rule end)
-	 *     fields+=Field (ambiguity) name='BOARD'
-	 *     name='BOARD' '{' (ambiguity) (rule end)
-	 *     name='BOARD' '{' (ambiguity) name='BOARD'
-	 */
-	protected void emit_Board_RightCurlyBracketKeyword_1_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     '}'+
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) (rule start)
-	 */
-	protected void emit_Board_RightCurlyBracketKeyword_1_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
 }

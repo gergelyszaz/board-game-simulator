@@ -77,9 +77,12 @@ public class BGLFactoryImpl extends EFactoryImpl implements BGLFactory
       case BGLPackage.BOOLEAN_EXP: return createBooleanExp();
       case BGLPackage.ATTRIBUTE_NAME: return createAttributeName();
       case BGLPackage.ATTRIBUTE_OR_INT: return createAttributeOrInt();
-      case BGLPackage.ADDTION_EXP: return createAddtionExp();
+      case BGLPackage.GOTO_CONDITION: return createGotoCondition();
+      case BGLPackage.LABEL: return createLabel();
+      case BGLPackage.ADDITION_EXP: return createAdditionExp();
       case BGLPackage.MULTIPLICATION_EXP: return createMultiplicationExp();
       case BGLPackage.VALUE_ASSIGNMENT: return createValueAssignment();
+      case BGLPackage.SIMPLE_ASSIGNMENT: return createSimpleAssignment();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -233,10 +236,32 @@ public class BGLFactoryImpl extends EFactoryImpl implements BGLFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public AddtionExp createAddtionExp()
+  public GotoCondition createGotoCondition()
   {
-    AddtionExpImpl addtionExp = new AddtionExpImpl();
-    return addtionExp;
+    GotoConditionImpl gotoCondition = new GotoConditionImpl();
+    return gotoCondition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Label createLabel()
+  {
+    LabelImpl label = new LabelImpl();
+    return label;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AdditionExp createAdditionExp()
+  {
+    AdditionExpImpl additionExp = new AdditionExpImpl();
+    return additionExp;
   }
 
   /**
@@ -259,6 +284,17 @@ public class BGLFactoryImpl extends EFactoryImpl implements BGLFactory
   {
     ValueAssignmentImpl valueAssignment = new ValueAssignmentImpl();
     return valueAssignment;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SimpleAssignment createSimpleAssignment()
+  {
+    SimpleAssignmentImpl simpleAssignment = new SimpleAssignmentImpl();
+    return simpleAssignment;
   }
 
   /**

@@ -5,6 +5,7 @@ package hu.bme.aut.gergelyszaz.bGL.impl;
 import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
 import hu.bme.aut.gergelyszaz.bGL.Board;
 import hu.bme.aut.gergelyszaz.bGL.Field;
+import hu.bme.aut.gergelyszaz.bGL.SimpleAssignment;
 
 import java.util.Collection;
 
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl#getName <em>Name</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.BoardImpl#getFields <em>Fields</em>}</li>
  * </ul>
  *
@@ -57,6 +59,16 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVariables()
+   * @generated
+   * @ordered
+   */
+  protected EList<SimpleAssignment> variables;
 
   /**
    * The cached value of the '{@link #getFields() <em>Fields</em>}' containment reference list.
@@ -117,6 +129,20 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<SimpleAssignment> getVariables()
+  {
+    if (variables == null)
+    {
+      variables = new EObjectContainmentEList<SimpleAssignment>(SimpleAssignment.class, this, BGLPackage.BOARD__VARIABLES);
+    }
+    return variables;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Field> getFields()
   {
     if (fields == null)
@@ -136,6 +162,8 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
   {
     switch (featureID)
     {
+      case BGLPackage.BOARD__VARIABLES:
+        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
       case BGLPackage.BOARD__FIELDS:
         return ((InternalEList<?>)getFields()).basicRemove(otherEnd, msgs);
     }
@@ -154,6 +182,8 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
     {
       case BGLPackage.BOARD__NAME:
         return getName();
+      case BGLPackage.BOARD__VARIABLES:
+        return getVariables();
       case BGLPackage.BOARD__FIELDS:
         return getFields();
     }
@@ -173,6 +203,10 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
     {
       case BGLPackage.BOARD__NAME:
         setName((String)newValue);
+        return;
+      case BGLPackage.BOARD__VARIABLES:
+        getVariables().clear();
+        getVariables().addAll((Collection<? extends SimpleAssignment>)newValue);
         return;
       case BGLPackage.BOARD__FIELDS:
         getFields().clear();
@@ -195,6 +229,9 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
       case BGLPackage.BOARD__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case BGLPackage.BOARD__VARIABLES:
+        getVariables().clear();
+        return;
       case BGLPackage.BOARD__FIELDS:
         getFields().clear();
         return;
@@ -214,6 +251,8 @@ public class BoardImpl extends MinimalEObjectImpl.Container implements Board
     {
       case BGLPackage.BOARD__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case BGLPackage.BOARD__VARIABLES:
+        return variables != null && !variables.isEmpty();
       case BGLPackage.BOARD__FIELDS:
         return fields != null && !fields.isEmpty();
     }

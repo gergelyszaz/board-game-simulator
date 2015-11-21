@@ -4,6 +4,8 @@ package hu.bme.aut.gergelyszaz.bGL.impl;
 
 import hu.bme.aut.gergelyszaz.bGL.Action;
 import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
+import hu.bme.aut.gergelyszaz.bGL.GotoCondition;
+import hu.bme.aut.gergelyszaz.bGL.Label;
 import hu.bme.aut.gergelyszaz.bGL.OrExp;
 import hu.bme.aut.gergelyszaz.bGL.Token;
 import hu.bme.aut.gergelyszaz.bGL.ValueAssignment;
@@ -30,6 +32,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getObjectOfSelect <em>Object Of Select</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getFilter <em>Filter</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getAssignment <em>Assignment</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getGotoCondition <em>Goto Condition</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.impl.ActionImpl#getLabel <em>Label</em>}</li>
  * </ul>
  *
  * @generated
@@ -105,6 +109,26 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * @ordered
    */
   protected ValueAssignment assignment;
+
+  /**
+   * The cached value of the '{@link #getGotoCondition() <em>Goto Condition</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGotoCondition()
+   * @generated
+   * @ordered
+   */
+  protected GotoCondition gotoCondition;
+
+  /**
+   * The cached value of the '{@link #getLabel() <em>Label</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLabel()
+   * @generated
+   * @ordered
+   */
+  protected Label label;
 
   /**
    * <!-- begin-user-doc -->
@@ -317,6 +341,102 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  public GotoCondition getGotoCondition()
+  {
+    return gotoCondition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetGotoCondition(GotoCondition newGotoCondition, NotificationChain msgs)
+  {
+    GotoCondition oldGotoCondition = gotoCondition;
+    gotoCondition = newGotoCondition;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BGLPackage.ACTION__GOTO_CONDITION, oldGotoCondition, newGotoCondition);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setGotoCondition(GotoCondition newGotoCondition)
+  {
+    if (newGotoCondition != gotoCondition)
+    {
+      NotificationChain msgs = null;
+      if (gotoCondition != null)
+        msgs = ((InternalEObject)gotoCondition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BGLPackage.ACTION__GOTO_CONDITION, null, msgs);
+      if (newGotoCondition != null)
+        msgs = ((InternalEObject)newGotoCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BGLPackage.ACTION__GOTO_CONDITION, null, msgs);
+      msgs = basicSetGotoCondition(newGotoCondition, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, BGLPackage.ACTION__GOTO_CONDITION, newGotoCondition, newGotoCondition));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Label getLabel()
+  {
+    return label;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetLabel(Label newLabel, NotificationChain msgs)
+  {
+    Label oldLabel = label;
+    label = newLabel;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BGLPackage.ACTION__LABEL, oldLabel, newLabel);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLabel(Label newLabel)
+  {
+    if (newLabel != label)
+    {
+      NotificationChain msgs = null;
+      if (label != null)
+        msgs = ((InternalEObject)label).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BGLPackage.ACTION__LABEL, null, msgs);
+      if (newLabel != null)
+        msgs = ((InternalEObject)newLabel).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BGLPackage.ACTION__LABEL, null, msgs);
+      msgs = basicSetLabel(newLabel, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, BGLPackage.ACTION__LABEL, newLabel, newLabel));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -326,6 +446,10 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return basicSetFilter(null, msgs);
       case BGLPackage.ACTION__ASSIGNMENT:
         return basicSetAssignment(null, msgs);
+      case BGLPackage.ACTION__GOTO_CONDITION:
+        return basicSetGotoCondition(null, msgs);
+      case BGLPackage.ACTION__LABEL:
+        return basicSetLabel(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -351,6 +475,10 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return getFilter();
       case BGLPackage.ACTION__ASSIGNMENT:
         return getAssignment();
+      case BGLPackage.ACTION__GOTO_CONDITION:
+        return getGotoCondition();
+      case BGLPackage.ACTION__LABEL:
+        return getLabel();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -379,6 +507,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return;
       case BGLPackage.ACTION__ASSIGNMENT:
         setAssignment((ValueAssignment)newValue);
+        return;
+      case BGLPackage.ACTION__GOTO_CONDITION:
+        setGotoCondition((GotoCondition)newValue);
+        return;
+      case BGLPackage.ACTION__LABEL:
+        setLabel((Label)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -409,6 +543,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
       case BGLPackage.ACTION__ASSIGNMENT:
         setAssignment((ValueAssignment)null);
         return;
+      case BGLPackage.ACTION__GOTO_CONDITION:
+        setGotoCondition((GotoCondition)null);
+        return;
+      case BGLPackage.ACTION__LABEL:
+        setLabel((Label)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -433,6 +573,10 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         return filter != null;
       case BGLPackage.ACTION__ASSIGNMENT:
         return assignment != null;
+      case BGLPackage.ACTION__GOTO_CONDITION:
+        return gotoCondition != null;
+      case BGLPackage.ACTION__LABEL:
+        return label != null;
     }
     return super.eIsSet(featureID);
   }

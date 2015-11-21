@@ -140,9 +140,19 @@ public class BGLAdapterFactory extends AdapterFactoryImpl
         return createAttributeOrIntAdapter();
       }
       @Override
-      public Adapter caseAddtionExp(AddtionExp object)
+      public Adapter caseGotoCondition(GotoCondition object)
       {
-        return createAddtionExpAdapter();
+        return createGotoConditionAdapter();
+      }
+      @Override
+      public Adapter caseLabel(Label object)
+      {
+        return createLabelAdapter();
+      }
+      @Override
+      public Adapter caseAdditionExp(AdditionExp object)
+      {
+        return createAdditionExpAdapter();
       }
       @Override
       public Adapter caseMultiplicationExp(MultiplicationExp object)
@@ -153,6 +163,11 @@ public class BGLAdapterFactory extends AdapterFactoryImpl
       public Adapter caseValueAssignment(ValueAssignment object)
       {
         return createValueAssignmentAdapter();
+      }
+      @Override
+      public Adapter caseSimpleAssignment(SimpleAssignment object)
+      {
+        return createSimpleAssignmentAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -372,16 +387,46 @@ public class BGLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.AddtionExp <em>Addtion Exp</em>}'.
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.GotoCondition <em>Goto Condition</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see hu.bme.aut.gergelyszaz.bGL.AddtionExp
+   * @see hu.bme.aut.gergelyszaz.bGL.GotoCondition
    * @generated
    */
-  public Adapter createAddtionExpAdapter()
+  public Adapter createGotoConditionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.Label <em>Label</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see hu.bme.aut.gergelyszaz.bGL.Label
+   * @generated
+   */
+  public Adapter createLabelAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.AdditionExp <em>Addition Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see hu.bme.aut.gergelyszaz.bGL.AdditionExp
+   * @generated
+   */
+  public Adapter createAdditionExpAdapter()
   {
     return null;
   }
@@ -412,6 +457,21 @@ public class BGLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createValueAssignmentAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link hu.bme.aut.gergelyszaz.bGL.SimpleAssignment <em>Simple Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see hu.bme.aut.gergelyszaz.bGL.SimpleAssignment
+   * @generated
+   */
+  public Adapter createSimpleAssignmentAdapter()
   {
     return null;
   }
