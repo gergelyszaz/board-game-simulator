@@ -10,24 +10,26 @@ import java.util.ArrayList
 import java.util.List
 import javax.swing.JFrame
 import javax.swing.JLabel
+import java.util.HashMap
 
 class Game{
 	String name
 	List<Player> players=new ArrayList<Player>
+	HashMap<String,Action> labels=new HashMap
 	
 	def Player getCurrentPlayer(){	varManager.GetReference("currentPlayer",null) as Player	}
-	def void setCurrentPlayer(Player player){ varManager.Store(null,"currentPlayer",player)}
+	def void setCurrentPlayer(Player player){ varManager.StoreToObject_Name(null,"currentPlayer",player)}
 	
 	Model model
 	
 	def Field getSelectedField(){	varManager.GetReference("selectedField",null) as Field	}
-	def void setSelectedField(Field field){ varManager.Store(null,"selectedField",field)}
+	def void setSelectedField(Field field){ varManager.StoreToObject_Name(null,"selectedField",field)}
 	
 	def Token getSelectedToken(){	varManager.GetReference("selectedToken",null) as Token	}
 	def void setSelectedToken(Token token){ 
-		varManager.Store(null,"selectedToken",token)
+		varManager.StoreToObject_Name( null,"selectedToken",token)
 		for(f:model.board.fields){
-			varManager.Store(f,"distanceFromSelectedToken",-1)
+			varManager.StoreToObject_Name(f,"distanceFromSelectedToken",-1)
 		}
 		token.field.setupDistance(0)
 
@@ -36,7 +38,7 @@ class Game{
 	private def void setupDistance(Field field, int distance){
 		val dist=varManager.GetValue("distanceFromSelectedToken",field)
 		if(dist>-1 && dist<=distance) return;
-		varManager.Store(field,"distanceFromSelectedToken", distance)
+		varManager.StoreToObject_Name(field,"distanceFromSelectedToken", distance)
 		for(f:field.neighbours){
 			f.setupDistance(distance+1)
 		}
@@ -58,6 +60,21 @@ class Game{
 		players.addAll(p)	
 		model=m
 		currentPlayer=players.get(0)
+		
+		for(f:model.board.fields){
+			varManager.StoreToObject_Name(null,f.name,f)
+		}
+		for(f:model.board.fields){
+			for(v:f.variables){
+				varManager.Store(v,f)
+			}
+		}
+		
+		for(a:model.rules.turnrules.actions){
+			if(a.label!=null) {
+				labels.put(a.label.name, a)
+			}
+		}
 	}
 	
 	private def getNextPlayer() {
@@ -77,7 +94,6 @@ class Game{
 		panel.add(label)
 		frame.defaultCloseOperation=JFrame.EXIT_ON_CLOSE
 		label.bounds=new Rectangle(0,0,900,32)
-		
 		
 		
 		frame.size=new Dimension(900,900)
@@ -123,11 +139,7 @@ class Game{
 	
 	private def ExecuteAction(Action action)
 	{
-		if(action.name==null)
-		{
-			return
-		}
-		else if(action.name=="SELECT"){
+		if(action.name=="SELECT"){
 			waitForInput=true
 			panel.EnableButtons(action.objectOfSelect, action.filter)
 		}
@@ -141,6 +153,30 @@ class Game{
 		}
 		else if(action.name=="MOVE"){
 			selectedToken.field=selectedField
-		}		
+		}else if(action.name=="DESTROY"){
+			selectedToken.Destroy
+			tokens.remove(selectedToken)
+			panel.RemoveToken(selectedToken)
+			
+		}else if(action.assignment!=null){
+			val ref=varManager.GetReference(action.assignment.addition)
+			if(ref!=null){
+				varManager.Store(action.assignment.name,ref)
+			}else{
+				val value=varManager.GetValue(action.assignment.addition)
+				varManager.Store(action.assignment.name,value)
+			}		
+			
+		}else if(action.gotoCondition!=null){
+			if(varManager.Evaluate(action.gotoCondition.condition)){
+				val name=action.gotoCondition.goto.name
+				
+				lastAction=labels.get(name)
+			} else {
+				
+			}
+		} else if(action.label!=null){
+			
+		}
 	}
 }

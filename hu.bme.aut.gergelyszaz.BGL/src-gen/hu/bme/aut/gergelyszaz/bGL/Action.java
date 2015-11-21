@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getObjectOfSelect <em>Object Of Select</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getFilter <em>Filter</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getAssignment <em>Assignment</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getGotoCondition <em>Goto Condition</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Action#getLabel <em>Label</em>}</li>
  * </ul>
  *
  * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction()
@@ -155,5 +157,57 @@ public interface Action extends EObject
    * @generated
    */
   void setAssignment(ValueAssignment value);
+
+  /**
+   * Returns the value of the '<em><b>Goto Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Goto Condition</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Goto Condition</em>' containment reference.
+   * @see #setGotoCondition(GotoCondition)
+   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction_GotoCondition()
+   * @model containment="true"
+   * @generated
+   */
+  GotoCondition getGotoCondition();
+
+  /**
+   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Action#getGotoCondition <em>Goto Condition</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Goto Condition</em>' containment reference.
+   * @see #getGotoCondition()
+   * @generated
+   */
+  void setGotoCondition(GotoCondition value);
+
+  /**
+   * Returns the value of the '<em><b>Label</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Label</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Label</em>' containment reference.
+   * @see #setLabel(Label)
+   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getAction_Label()
+   * @model containment="true"
+   * @generated
+   */
+  Label getLabel();
+
+  /**
+   * Sets the value of the '{@link hu.bme.aut.gergelyszaz.bGL.Action#getLabel <em>Label</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Label</em>' containment reference.
+   * @see #getLabel()
+   * @generated
+   */
+  void setLabel(Label value);
 
 } // Action

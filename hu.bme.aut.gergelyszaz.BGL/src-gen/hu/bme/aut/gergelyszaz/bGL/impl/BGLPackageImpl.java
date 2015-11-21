@@ -3,7 +3,7 @@
 package hu.bme.aut.gergelyszaz.bGL.impl;
 
 import hu.bme.aut.gergelyszaz.bGL.Action;
-import hu.bme.aut.gergelyszaz.bGL.AddtionExp;
+import hu.bme.aut.gergelyszaz.bGL.AdditionExp;
 import hu.bme.aut.gergelyszaz.bGL.AndExp;
 import hu.bme.aut.gergelyszaz.bGL.AttributeName;
 import hu.bme.aut.gergelyszaz.bGL.AttributeOrInt;
@@ -12,11 +12,14 @@ import hu.bme.aut.gergelyszaz.bGL.BGLPackage;
 import hu.bme.aut.gergelyszaz.bGL.Board;
 import hu.bme.aut.gergelyszaz.bGL.BooleanExp;
 import hu.bme.aut.gergelyszaz.bGL.Field;
+import hu.bme.aut.gergelyszaz.bGL.GotoCondition;
+import hu.bme.aut.gergelyszaz.bGL.Label;
 import hu.bme.aut.gergelyszaz.bGL.Model;
 import hu.bme.aut.gergelyszaz.bGL.MultiplicationExp;
 import hu.bme.aut.gergelyszaz.bGL.OrExp;
 import hu.bme.aut.gergelyszaz.bGL.Player;
 import hu.bme.aut.gergelyszaz.bGL.Rules;
+import hu.bme.aut.gergelyszaz.bGL.SimpleAssignment;
 import hu.bme.aut.gergelyszaz.bGL.Token;
 import hu.bme.aut.gergelyszaz.bGL.TurnRules;
 import hu.bme.aut.gergelyszaz.bGL.ValueAssignment;
@@ -132,7 +135,21 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass addtionExpEClass = null;
+  private EClass gotoConditionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass labelEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass additionExpEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -147,6 +164,13 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * @generated
    */
   private EClass valueAssignmentEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass simpleAssignmentEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -306,6 +330,16 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getPlayer_Variables()
+  {
+    return (EReference)playerEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getBoard()
   {
     return boardEClass;
@@ -326,9 +360,19 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getBoard_Fields()
+  public EReference getBoard_Variables()
   {
     return (EReference)boardEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBoard_Fields()
+  {
+    return (EReference)boardEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -416,6 +460,16 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getToken_Variables()
+  {
+    return (EReference)tokenEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getField()
   {
     return fieldEClass;
@@ -476,6 +530,16 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getField_Variables()
+  {
+    return (EReference)fieldEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getAction()
   {
     return actionEClass;
@@ -529,6 +593,26 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
   public EReference getAction_Assignment()
   {
     return (EReference)actionEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAction_GotoCondition()
+  {
+    return (EReference)actionEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAction_Label()
+  {
+    return (EReference)actionEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -606,9 +690,9 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getBooleanExp_Left()
+  public EAttribute getBooleanExp_Not()
   {
-    return (EReference)booleanExpEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)booleanExpEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -616,9 +700,19 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getBooleanExp_Operator()
+  public EReference getBooleanExp_Left()
   {
-    return (EAttribute)booleanExpEClass.getEStructuralFeatures().get(1);
+    return (EReference)booleanExpEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBooleanExp_Name()
+  {
+    return (EAttribute)booleanExpEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -628,7 +722,7 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    */
   public EReference getBooleanExp_Right()
   {
-    return (EReference)booleanExpEClass.getEStructuralFeatures().get(2);
+    return (EReference)booleanExpEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -638,7 +732,7 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    */
   public EReference getBooleanExp_NestedExp()
   {
-    return (EReference)booleanExpEClass.getEStructuralFeatures().get(3);
+    return (EReference)booleanExpEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -716,9 +810,89 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getAddtionExp()
+  public EClass getGotoCondition()
   {
-    return addtionExpEClass;
+    return gotoConditionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGotoCondition_Condition()
+  {
+    return (EReference)gotoConditionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getGotoCondition_Name()
+  {
+    return (EAttribute)gotoConditionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGotoCondition_Goto()
+  {
+    return (EReference)gotoConditionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLabel()
+  {
+    return labelEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLabel_Name()
+  {
+    return (EAttribute)labelEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAdditionExp()
+  {
+    return additionExpEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAdditionExp_Expressions()
+  {
+    return (EReference)additionExpEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAdditionExp_Operators()
+  {
+    return (EAttribute)additionExpEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -756,6 +930,16 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getMultiplicationExp_NestedExp()
+  {
+    return (EReference)multiplicationExpEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getValueAssignment()
   {
     return valueAssignmentEClass;
@@ -779,6 +963,36 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
   public EReference getValueAssignment_Addition()
   {
     return (EReference)valueAssignmentEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSimpleAssignment()
+  {
+    return simpleAssignmentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSimpleAssignment_Name()
+  {
+    return (EAttribute)simpleAssignmentEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSimpleAssignment_Attribute()
+  {
+    return (EReference)simpleAssignmentEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -821,9 +1035,11 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     playerEClass = createEClass(PLAYER);
     createEAttribute(playerEClass, PLAYER__NAME);
     createEAttribute(playerEClass, PLAYER__PLAYERCOUNT);
+    createEReference(playerEClass, PLAYER__VARIABLES);
 
     boardEClass = createEClass(BOARD);
     createEAttribute(boardEClass, BOARD__NAME);
+    createEReference(boardEClass, BOARD__VARIABLES);
     createEReference(boardEClass, BOARD__FIELDS);
 
     rulesEClass = createEClass(RULES);
@@ -836,6 +1052,7 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
 
     tokenEClass = createEClass(TOKEN);
     createEAttribute(tokenEClass, TOKEN__NAME);
+    createEReference(tokenEClass, TOKEN__VARIABLES);
 
     fieldEClass = createEClass(FIELD);
     createEAttribute(fieldEClass, FIELD__NAME);
@@ -843,6 +1060,7 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     createEAttribute(fieldEClass, FIELD__Y);
     createEAttribute(fieldEClass, FIELD__Z);
     createEReference(fieldEClass, FIELD__NEIGHBOURS);
+    createEReference(fieldEClass, FIELD__VARIABLES);
 
     actionEClass = createEClass(ACTION);
     createEAttribute(actionEClass, ACTION__NAME);
@@ -850,6 +1068,8 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     createEAttribute(actionEClass, ACTION__OBJECT_OF_SELECT);
     createEReference(actionEClass, ACTION__FILTER);
     createEReference(actionEClass, ACTION__ASSIGNMENT);
+    createEReference(actionEClass, ACTION__GOTO_CONDITION);
+    createEReference(actionEClass, ACTION__LABEL);
 
     orExpEClass = createEClass(OR_EXP);
     createEReference(orExpEClass, OR_EXP__EXPRESSIONS);
@@ -860,8 +1080,9 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     createEAttribute(andExpEClass, AND_EXP__OPERATORS);
 
     booleanExpEClass = createEClass(BOOLEAN_EXP);
+    createEAttribute(booleanExpEClass, BOOLEAN_EXP__NOT);
     createEReference(booleanExpEClass, BOOLEAN_EXP__LEFT);
-    createEAttribute(booleanExpEClass, BOOLEAN_EXP__OPERATOR);
+    createEAttribute(booleanExpEClass, BOOLEAN_EXP__NAME);
     createEReference(booleanExpEClass, BOOLEAN_EXP__RIGHT);
     createEReference(booleanExpEClass, BOOLEAN_EXP__NESTED_EXP);
 
@@ -874,15 +1095,30 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     createEReference(attributeOrIntEClass, ATTRIBUTE_OR_INT__ATTRIBUTE);
     createEAttribute(attributeOrIntEClass, ATTRIBUTE_OR_INT__VALUE);
 
-    addtionExpEClass = createEClass(ADDTION_EXP);
+    gotoConditionEClass = createEClass(GOTO_CONDITION);
+    createEReference(gotoConditionEClass, GOTO_CONDITION__CONDITION);
+    createEAttribute(gotoConditionEClass, GOTO_CONDITION__NAME);
+    createEReference(gotoConditionEClass, GOTO_CONDITION__GOTO);
+
+    labelEClass = createEClass(LABEL);
+    createEAttribute(labelEClass, LABEL__NAME);
+
+    additionExpEClass = createEClass(ADDITION_EXP);
+    createEReference(additionExpEClass, ADDITION_EXP__EXPRESSIONS);
+    createEAttribute(additionExpEClass, ADDITION_EXP__OPERATORS);
 
     multiplicationExpEClass = createEClass(MULTIPLICATION_EXP);
     createEReference(multiplicationExpEClass, MULTIPLICATION_EXP__EXPRESSIONS);
     createEAttribute(multiplicationExpEClass, MULTIPLICATION_EXP__OPERATORS);
+    createEReference(multiplicationExpEClass, MULTIPLICATION_EXP__NESTED_EXP);
 
     valueAssignmentEClass = createEClass(VALUE_ASSIGNMENT);
     createEReference(valueAssignmentEClass, VALUE_ASSIGNMENT__NAME);
     createEReference(valueAssignmentEClass, VALUE_ASSIGNMENT__ADDITION);
+
+    simpleAssignmentEClass = createEClass(SIMPLE_ASSIGNMENT);
+    createEAttribute(simpleAssignmentEClass, SIMPLE_ASSIGNMENT__NAME);
+    createEReference(simpleAssignmentEClass, SIMPLE_ASSIGNMENT__ATTRIBUTE);
   }
 
   /**
@@ -914,7 +1150,6 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    addtionExpEClass.getESuperTypes().add(this.getMultiplicationExp());
 
     // Initialize classes and features; add operations and parameters
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -927,9 +1162,11 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     initEClass(playerEClass, Player.class, "Player", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPlayer_Name(), ecorePackage.getEString(), "name", null, 0, 1, Player.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPlayer_Playercount(), ecorePackage.getEInt(), "playercount", null, 0, 1, Player.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPlayer_Variables(), this.getSimpleAssignment(), null, "variables", null, 0, -1, Player.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(boardEClass, Board.class, "Board", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getBoard_Name(), ecorePackage.getEString(), "name", null, 0, 1, Board.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBoard_Variables(), this.getSimpleAssignment(), null, "variables", null, 0, -1, Board.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getBoard_Fields(), this.getField(), null, "fields", null, 0, -1, Board.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(rulesEClass, Rules.class, "Rules", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -942,6 +1179,7 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
 
     initEClass(tokenEClass, Token.class, "Token", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getToken_Name(), ecorePackage.getEString(), "name", null, 0, 1, Token.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getToken_Variables(), this.getSimpleAssignment(), null, "variables", null, 0, -1, Token.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getField_Name(), ecorePackage.getEString(), "name", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -949,6 +1187,7 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     initEAttribute(getField_Y(), ecorePackage.getEInt(), "y", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getField_Z(), ecorePackage.getEInt(), "z", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getField_Neighbours(), this.getField(), null, "neighbours", null, 0, -1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getField_Variables(), this.getSimpleAssignment(), null, "variables", null, 0, -1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAction_Name(), ecorePackage.getEString(), "name", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -956,6 +1195,8 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     initEAttribute(getAction_ObjectOfSelect(), ecorePackage.getEString(), "objectOfSelect", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAction_Filter(), this.getOrExp(), null, "filter", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAction_Assignment(), this.getValueAssignment(), null, "assignment", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAction_GotoCondition(), this.getGotoCondition(), null, "gotoCondition", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAction_Label(), this.getLabel(), null, "label", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(orExpEClass, OrExp.class, "OrExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getOrExp_Expressions(), this.getAndExp(), null, "expressions", null, 0, -1, OrExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -966,8 +1207,9 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     initEAttribute(getAndExp_Operators(), ecorePackage.getEString(), "operators", null, 0, -1, AndExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(booleanExpEClass, BooleanExp.class, "BooleanExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBooleanExp_Not(), ecorePackage.getEString(), "not", null, 0, 1, BooleanExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getBooleanExp_Left(), this.getAttributeOrInt(), null, "left", null, 0, 1, BooleanExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBooleanExp_Operator(), ecorePackage.getEString(), "operator", null, 0, 1, BooleanExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBooleanExp_Name(), ecorePackage.getEString(), "name", null, 0, 1, BooleanExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getBooleanExp_Right(), this.getAttributeOrInt(), null, "right", null, 0, 1, BooleanExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getBooleanExp_NestedExp(), this.getOrExp(), null, "nestedExp", null, 0, 1, BooleanExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -980,15 +1222,30 @@ public class BGLPackageImpl extends EPackageImpl implements BGLPackage
     initEReference(getAttributeOrInt_Attribute(), this.getAttributeName(), null, "attribute", null, 0, 1, AttributeOrInt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAttributeOrInt_Value(), ecorePackage.getEInt(), "value", null, 0, 1, AttributeOrInt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(addtionExpEClass, AddtionExp.class, "AddtionExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(gotoConditionEClass, GotoCondition.class, "GotoCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getGotoCondition_Condition(), this.getOrExp(), null, "condition", null, 0, 1, GotoCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGotoCondition_Name(), ecorePackage.getEString(), "name", null, 0, 1, GotoCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGotoCondition_Goto(), this.getLabel(), null, "goto", null, 0, 1, GotoCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLabel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(additionExpEClass, AdditionExp.class, "AdditionExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAdditionExp_Expressions(), this.getMultiplicationExp(), null, "expressions", null, 0, -1, AdditionExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAdditionExp_Operators(), ecorePackage.getEString(), "operators", null, 0, -1, AdditionExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(multiplicationExpEClass, MultiplicationExp.class, "MultiplicationExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMultiplicationExp_Expressions(), ecorePackage.getEObject(), null, "expressions", null, 0, -1, MultiplicationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMultiplicationExp_Expressions(), this.getAttributeOrInt(), null, "expressions", null, 0, -1, MultiplicationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMultiplicationExp_Operators(), ecorePackage.getEString(), "operators", null, 0, -1, MultiplicationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMultiplicationExp_NestedExp(), this.getAdditionExp(), null, "nestedExp", null, 0, 1, MultiplicationExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(valueAssignmentEClass, ValueAssignment.class, "ValueAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getValueAssignment_Name(), this.getAttributeName(), null, "name", null, 0, 1, ValueAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getValueAssignment_Addition(), this.getAddtionExp(), null, "addition", null, 0, 1, ValueAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getValueAssignment_Addition(), this.getAdditionExp(), null, "addition", null, 0, 1, ValueAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(simpleAssignmentEClass, SimpleAssignment.class, "SimpleAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSimpleAssignment_Name(), ecorePackage.getEString(), "name", null, 0, 1, SimpleAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSimpleAssignment_Attribute(), this.getAttributeOrInt(), null, "attribute", null, 0, 1, SimpleAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

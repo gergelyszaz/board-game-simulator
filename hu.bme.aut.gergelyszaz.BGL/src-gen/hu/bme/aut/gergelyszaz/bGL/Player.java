@@ -2,6 +2,8 @@
  */
 package hu.bme.aut.gergelyszaz.bGL;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -15,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Player#getName <em>Name</em>}</li>
  *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Player#getPlayercount <em>Playercount</em>}</li>
+ *   <li>{@link hu.bme.aut.gergelyszaz.bGL.Player#getVariables <em>Variables</em>}</li>
  * </ul>
  *
  * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getPlayer()
@@ -74,5 +77,21 @@ public interface Player extends EObject
    * @generated
    */
   void setPlayercount(int value);
+
+  /**
+   * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
+   * The list contents are of type {@link hu.bme.aut.gergelyszaz.bGL.SimpleAssignment}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Variables</em>' containment reference list.
+   * @see hu.bme.aut.gergelyszaz.bGL.BGLPackage#getPlayer_Variables()
+   * @model containment="true"
+   * @generated
+   */
+  EList<SimpleAssignment> getVariables();
 
 } // Player

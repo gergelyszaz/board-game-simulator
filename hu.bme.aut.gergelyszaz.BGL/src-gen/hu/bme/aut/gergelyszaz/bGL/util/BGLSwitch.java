@@ -163,11 +163,24 @@ public class BGLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case BGLPackage.ADDTION_EXP:
+      case BGLPackage.GOTO_CONDITION:
       {
-        AddtionExp addtionExp = (AddtionExp)theEObject;
-        T result = caseAddtionExp(addtionExp);
-        if (result == null) result = caseMultiplicationExp(addtionExp);
+        GotoCondition gotoCondition = (GotoCondition)theEObject;
+        T result = caseGotoCondition(gotoCondition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case BGLPackage.LABEL:
+      {
+        Label label = (Label)theEObject;
+        T result = caseLabel(label);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case BGLPackage.ADDITION_EXP:
+      {
+        AdditionExp additionExp = (AdditionExp)theEObject;
+        T result = caseAdditionExp(additionExp);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -182,6 +195,13 @@ public class BGLSwitch<T> extends Switch<T>
       {
         ValueAssignment valueAssignment = (ValueAssignment)theEObject;
         T result = caseValueAssignment(valueAssignment);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case BGLPackage.SIMPLE_ASSIGNMENT:
+      {
+        SimpleAssignment simpleAssignment = (SimpleAssignment)theEObject;
+        T result = caseSimpleAssignment(simpleAssignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -398,17 +418,49 @@ public class BGLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Addtion Exp</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Goto Condition</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Addtion Exp</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Goto Condition</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAddtionExp(AddtionExp object)
+  public T caseGotoCondition(GotoCondition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Label</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Label</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLabel(Label object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Addition Exp</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Addition Exp</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAdditionExp(AdditionExp object)
   {
     return null;
   }
@@ -441,6 +493,22 @@ public class BGLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseValueAssignment(ValueAssignment object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Simple Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Simple Assignment</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSimpleAssignment(SimpleAssignment object)
   {
     return null;
   }

@@ -15,9 +15,9 @@ class Token {
 	
 	def setField(Field field){
 		
-		varManager.Store(currentField,"tokenCount",0)
-		varManager.Store(this,"field",field)
-		varManager.Store(field,"tokenCount",1)
+		varManager.StoreToObject_Name(currentField,"tokenCount",0)
+		varManager.StoreToObject_Name(this,"field",field)
+		varManager.StoreToObject_Name(field,"tokenCount",1)
 		currentField=field
 	}
 	
@@ -28,12 +28,16 @@ class Token {
 	
 	def setOwner(Player player){
 		
-		varManager.Store(this,"owner",player)
+		varManager.StoreToObject_Name(this,"owner",player)
 		currentField=field
 	}
 	
 	def Player getOwner(){
 		varManager.GetReference("owner",this) as Player
+	}
+	
+	def Destroy() {
+		field=null
 	}
 
 

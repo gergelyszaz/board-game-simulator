@@ -8,14 +8,14 @@ Model:
 
 Player:
 	name='PLAYERS' playercount=INT
-	//('{' (attributes+=ValueAssignment)* '}')?
+	'{'(variables+=SimpleAssignment)*'}'
 	;
 
 Board:
 	
-	name='BOARD' '{' 
-	((fields+=Field)*) & 
-	//((attributes+=ValueAssignment)*) 
+	name='BOARD' '{'
+	 (variables+=SimpleAssignment)*
+	(fields+=Field)* 
 	'}'
 	
 	;
@@ -31,21 +31,23 @@ TurnRules:
 	'}'
 ;
 Token returns Token:
-	'TOKEN' name=ID '{' '}'
+	'TOKEN' name=ID '{' (variables+=SimpleAssignment)* '}'
 ;
 
 Field:
-	name=ID '(' x=INT ',' y=INT ',' z=INT ')' ':'
+	name=ID '(' x=INT ',' y=INT ',' z=INT ')' '{'
 	(neighbours+=[Field])* 
-	//(variables+=ValueAssignment)*
-	';';
+	(variables+=SimpleAssignment)*
+	'}';
 
 Action:
 	
 	(name='SPAWN' (token=[Token]) )|
-	(name='MOVE') |
+	(name='MOVE') | (name='DESTROY') |
 	(name='SELECT' objectOfSelect=('TOKEN'|'FIELD') 'WHERE' filter=OrExp)	|
-	(assignment=ValueAssignment)
+	(assignment=ValueAssignment) |
+	(gotoCondition=GotoCondition) |
+	(label=Label)
 	
 	;
 
@@ -62,7 +64,8 @@ AndExp:
 ;
 
 BooleanExp:
-	(left=AttributeOrInt operator=('!=='|'==='|'=='|'!='|'>'|'>='|'<'|'<=') right=AttributeOrInt)
+	(not='NOT')?
+	(left=AttributeOrInt name=('!=='|'==='|'=='|'!='|'>'|'>='|'<'|'<=') right=AttributeOrInt)
 	|
 	( '('nestedExp=OrExp')' )
 ;
@@ -75,22 +78,35 @@ AttributeOrInt:
 	attribute=AttributeName| value=INT
 ;
 
+GotoCondition:
+	'IF' condition=OrExp name='GOTO' goto=[Label]
+;
+
+Label:
+	'LABEL' name=ID 
+;
+
 
 
 //Arithmetic operations and value assignment
-AddtionExp:
-	expressions+=MultiplicationExp (operators+= '+'|'-' expressions+=MultiplicationExp)*
+AdditionExp:
+	expressions+=MultiplicationExp (operators+= ('+'|'-') expressions+=MultiplicationExp)*
 ;
 
 MultiplicationExp:
-	(expressions+=AttributeOrInt (operators+= '*'|'/' expressions+=AttributeOrInt)*)
+	(expressions+=AttributeOrInt (operators+= ('*'|'/') expressions+=AttributeOrInt)*)
 	|
-	( '(' AddtionExp ')' )
+	( '(' nestedExp=AdditionExp ')' )
 ;
 
 ValueAssignment:
-	name=AttributeName  '=' addition=AddtionExp
+	name=AttributeName  '=' addition=AdditionExp 
 ;
+
+SimpleAssignment:
+	name=ID '=' attribute=AttributeOrInt
+;
+
 
 
 

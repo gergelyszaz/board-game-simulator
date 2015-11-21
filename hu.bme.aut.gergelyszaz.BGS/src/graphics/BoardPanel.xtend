@@ -38,7 +38,7 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 			btn.actionCommand = "fieldPressed"
 			btn.addActionListener(this)
 			add(btn,new Integer(1))	
-			game.varManager.Store(field,"tokenCount",0)
+			game.varManager.StoreToObject_Name(field,"tokenCount",0)
 		}
 		
 		DisableButtons
@@ -90,16 +90,29 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 		}
 	}
 	
+	def RemoveToken(Token t){
+		var JButton butt=null
+		for(b:tokenButtons.entrySet){
+			if(b.value==t)
+			butt=b.key
+			
+		}
+		
+		remove(butt)
+		tokenButtons.remove(butt)
+		
+	}
+	
 	def EnableButtons(String object, OrExp filter){
 		if(object=="FIELD"){
 			for(b:fieldButtons.keySet){
-				game.varManager.Store(null,"this",fieldButtons.get(b))
+				game.varManager.StoreToObject_Name(null,"this",fieldButtons.get(b))
 				b.enabled = game.varManager.Evaluate(filter)
 			}
 		}
 		if(object=="TOKEN"){
 			for(b:tokenButtons.keySet){
-				game.varManager.Store(null,"this",tokenButtons.get(b))
+				game.varManager.StoreToObject_Name(null,"this",tokenButtons.get(b))
 				b.enabled = game.varManager.Evaluate(filter)
 			}
 		}

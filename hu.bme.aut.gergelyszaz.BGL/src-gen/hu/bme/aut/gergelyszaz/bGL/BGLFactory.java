@@ -140,13 +140,31 @@ public interface BGLFactory extends EFactory
   AttributeOrInt createAttributeOrInt();
 
   /**
-   * Returns a new object of class '<em>Addtion Exp</em>'.
+   * Returns a new object of class '<em>Goto Condition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Addtion Exp</em>'.
+   * @return a new object of class '<em>Goto Condition</em>'.
    * @generated
    */
-  AddtionExp createAddtionExp();
+  GotoCondition createGotoCondition();
+
+  /**
+   * Returns a new object of class '<em>Label</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Label</em>'.
+   * @generated
+   */
+  Label createLabel();
+
+  /**
+   * Returns a new object of class '<em>Addition Exp</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Addition Exp</em>'.
+   * @generated
+   */
+  AdditionExp createAdditionExp();
 
   /**
    * Returns a new object of class '<em>Multiplication Exp</em>'.
@@ -165,6 +183,15 @@ public interface BGLFactory extends EFactory
    * @generated
    */
   ValueAssignment createValueAssignment();
+
+  /**
+   * Returns a new object of class '<em>Simple Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Simple Assignment</em>'.
+   * @generated
+   */
+  SimpleAssignment createSimpleAssignment();
 
   /**
    * Returns the package supported by this factory.
