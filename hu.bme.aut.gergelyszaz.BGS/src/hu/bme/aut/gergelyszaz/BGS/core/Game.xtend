@@ -7,15 +7,19 @@ import hu.bme.aut.gergelyszaz.bGL.Model
 import java.awt.Dimension
 import java.awt.Rectangle
 import java.util.ArrayList
+import java.util.HashMap
 import java.util.List
 import javax.swing.JFrame
 import javax.swing.JLabel
-import java.util.HashMap
+import hu.bme.aut.gergelyszaz.bGL.PlayerSetup
+import java.util.Collection
+import java.util.Random
 
 class Game{
 	String name
 	List<Player> players=new ArrayList<Player>
 	HashMap<String,Action> labels=new HashMap
+	
 	
 	def Player getCurrentPlayer(){	varManager.GetReference("currentPlayer",null) as Player	}
 	def void setCurrentPlayer(Player player){ varManager.StoreToObject_Name(null,"currentPlayer",player)}
@@ -70,7 +74,7 @@ class Game{
 			}
 		}
 		
-		for(a:model.rules.turnrules.actions){
+		for(a:model.rules){
 			if(a.label!=null) {
 				labels.put(a.label.name, a)
 			}
@@ -102,13 +106,27 @@ class Game{
 		
 		varManager.StoreToObject_Name(null,"turnCount",turnCount)
 		
+		for(PlayerSetup player:model.player.playerSetups){
+			currentPlayer=players.get(player.id)
+			while(lastAction!=player.setupRules.last){
+				ExecuteAction(lastAction=GetNextAction(player.setupRules))
+			}
+		}
+		
 		while(true){ 
 			if(!waitForInput)
 			{
 				label.text="Turn: "+turnCount;
 				
-				ExecuteAction(lastAction=GetNextAction)
-				if(lastAction==model.rules.turnrules.actions.last){
+				ExecuteAction(lastAction=GetNextAction(model.rules))
+				if(lastAction==model.rules.last){
+					if(model.winCondition!=null&&varManager.Evaluate(model.winCondition)){
+						//TODO win
+					}
+					if(model.loseCondition!=null&&varManager.Evaluate(model.loseCondition)){
+						//TODO lose
+					}
+					
 					currentPlayer=nextPlayer
 					if(currentPlayer==players.get(0))
 					{	
@@ -125,10 +143,8 @@ class Game{
 	
 
 	
-	private def GetNextAction()
+	private def GetNextAction(Collection<Action> actions)
 	{
-		val actions=model.rules.turnrules.actions
-
 		if(lastAction==null||lastAction== actions.last){
 			return actions.get(0)
 		} 
@@ -163,6 +179,16 @@ class Game{
 			selectedToken.Destroy
 			tokens.remove(selectedToken)
 			panel.RemoveToken(selectedToken)
+		}else if (action.name=="ROLL"){
+			
+			val r=new Random
+			var result=0
+			for(var i=1;i<action.numberOfDice+1;i++){
+				var rollresult=r.nextInt(action.to)+action.from
+				result+=rollresult
+				varManager.StoreToObject_Name(null,"rollResult"+i,rollresult)	
+			}
+			varManager.StoreToObject_Name(null,"rollResult",result)
 			
 		}else if(action.assignment!=null){
 			val ref=varManager.GetReference(action.assignment.addition)
