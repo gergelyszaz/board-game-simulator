@@ -3,8 +3,6 @@
 	<name>hu.bme.aut.gergelyszaz.BGS</name>
 	<comment></comment>
 	<projects>
-		<project>hu.bme.aut.gergelyszaz.BGL</project>
-		<project>hu.bme.aut.gergelyszaz.BGL.sdk</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
