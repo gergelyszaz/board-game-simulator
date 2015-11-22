@@ -211,4 +211,9 @@ class Game{
 			
 		}
 	}
+	
+	def Restart()
+	{
+		
+	}
 }

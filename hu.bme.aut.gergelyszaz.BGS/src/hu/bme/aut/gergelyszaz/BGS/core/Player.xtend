@@ -1,13 +1,11 @@
 package hu.bme.aut.gergelyszaz.BGS.core
 
-import java.util.Hashtable
 import java.awt.Color
 import java.util.Random
 
 class Player {
 	int ID
-	Color color;
-	Hashtable<String, Integer> attributes
+	Color color
 
 	new(int id) {
 		ID = id
@@ -16,9 +14,5 @@ class Player {
 	}
 	
 	def getColor(){color}
-
-	def Init(Hashtable<String, Integer> hashtable) {
-		attributes = hashtable
-	}
 
 }
