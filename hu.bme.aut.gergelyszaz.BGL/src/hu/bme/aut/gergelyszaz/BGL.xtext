@@ -4,12 +4,28 @@ generate bGL "http://www.bme.hu/aut/gergelyszaz/BGL"
 
 Model:
 	'GAME' name=ID
-	 player=Player & board=Board & (tokens+=Token)* & rules=Rules;
+	 player=Player 
+	 board=Board 
+	 (tokens+=Token)* 
+	 'RULES' '{' (rules+=Action)* '}'
+	 ('WIN CONDITION' '{' (winCondition=OrExp) '}')?
+	 ('LOSE CONDITION' '{' (loseCondition=OrExp) '}')?
+;
 
 Player:
 	name='PLAYERS' playercount=INT
-	'{'(variables+=SimpleAssignment)*'}'
+	'{'
+		(variables+=SimpleAssignment)*
+		(playerSetups+=PlayerSetup)*	
+	'}'
 	;
+	
+PlayerSetup:
+	name='PLAYER' id=INT 
+	'{'
+	(setupRules+=Action)*
+	'}'
+;
 
 Board:
 	
@@ -20,16 +36,8 @@ Board:
 	
 	;
 	
-Rules:
-	name='RULES' '{' turnrules=TurnRules '}'
-;
 
-TurnRules:
-	name='TURN' '{' 
-		(actions+=Action)*
-		
-	'}'
-;
+
 Token returns Token:
 	'TOKEN' name=ID '{' (variables+=SimpleAssignment)* '}'
 ;
@@ -43,8 +51,9 @@ Field:
 Action:
 	
 	(name='SPAWN' (token=[Token]) )|
-	(name='MOVE') | (name='DESTROY') |
+	(name='MOVE') | (name='DESTROY') | (name='WIN') | (name='LOSE') |
 	(name='SELECT' objectOfSelect=('TOKEN'|'FIELD') 'WHERE' filter=OrExp)	|
+	(name='ROLL' numberOfDice=INT  from=INT '-' to=INT) |
 	(assignment=ValueAssignment) |
 	(gotoCondition=GotoCondition) |
 	(label=Label)

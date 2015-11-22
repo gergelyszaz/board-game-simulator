@@ -37,9 +37,6 @@ TOKEN T1{}
 
 RULES
 {
-	
-	TURN
-	{
 		IF turnCount>4 GOTO PHASE_2
 		
 		SELECT FIELD WHERE this.tokenCount != 1
@@ -82,8 +79,6 @@ RULES
 		
 		
 		LABEL END_TURN
-		
-	}
 }
 
 

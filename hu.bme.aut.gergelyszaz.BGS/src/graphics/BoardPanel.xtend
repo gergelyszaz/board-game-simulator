@@ -1,22 +1,19 @@
 package graphics
 
+import hu.bme.aut.gergelyszaz.BGS.core.Game
+import hu.bme.aut.gergelyszaz.BGS.core.Token
+import hu.bme.aut.gergelyszaz.bGL.Field
 import hu.bme.aut.gergelyszaz.bGL.Model
+import hu.bme.aut.gergelyszaz.bGL.OrExp
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.Rectangle
-import java.awt.geom.Line2D
-import javax.swing.JButton
-import javax.swing.JPanel
-import javax.swing.JLabel
-import java.awt.event.ActionListener
 import java.awt.event.ActionEvent
-import hu.bme.aut.gergelyszaz.BGS.core.Game
-import java.util.Hashtable
-import hu.bme.aut.gergelyszaz.bGL.Field
-import hu.bme.aut.gergelyszaz.BGS.core.Token
+import java.awt.event.ActionListener
+import java.awt.geom.Line2D
 import java.util.concurrent.ConcurrentHashMap
+import javax.swing.JButton
 import javax.swing.JLayeredPane
-import hu.bme.aut.gergelyszaz.bGL.OrExp
 
 class BoardPanel extends JLayeredPane implements ActionListener{
 	Game game
