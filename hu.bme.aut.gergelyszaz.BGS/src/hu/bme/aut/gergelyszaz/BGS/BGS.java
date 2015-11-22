@@ -1,10 +1,5 @@
 package hu.bme.aut.gergelyszaz.BGS;
 
-import hu.bme.aut.gergelyszaz.BGLStandaloneSetup;
-import hu.bme.aut.gergelyszaz.BGS.core.Game;
-import hu.bme.aut.gergelyszaz.BGS.factory.GameFactory;
-import hu.bme.aut.gergelyszaz.bGL.Model;
-
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -15,6 +10,10 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
+
+import hu.bme.aut.gergelyszaz.BGLStandaloneSetup;
+import hu.bme.aut.gergelyszaz.BGS.factory.GameFactory;
+import hu.bme.aut.gergelyszaz.bGL.Model;
 
 public class BGS {
 
