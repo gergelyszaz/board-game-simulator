@@ -15,10 +15,11 @@ import hu.bme.aut.gergelyszaz.bGL.PlayerSetup
 import java.util.Collection
 import java.util.Random
 
-class Game{
+class Game implements IController{
 	String name
 	List<Player> players=new ArrayList<Player>
 	HashMap<String,Action> labels=new HashMap
+	IView view=null
 	
 	
 	def Player getCurrentPlayer(){	varManager.GetReference("currentPlayer",null) as Player	}
@@ -27,10 +28,10 @@ class Game{
 	Model model
 	
 	def Field getSelectedField(){	varManager.GetReference("selectedField",null) as Field	}
-	def void setSelectedField(Field field){ varManager.StoreToObject_Name(null,"selectedField",field)}
+	override setSelectedField(Field field){ varManager.StoreToObject_Name(null,"selectedField",field)}
 	
 	def Token getSelectedToken(){	varManager.GetReference("selectedToken",null) as Token	}
-	def void setSelectedToken(Token token){ 
+	override setSelectedToken(Token token){ 
 		varManager.StoreToObject_Name( null,"selectedToken",token)
 		for(f:model.board.fields){
 			varManager.StoreToObject_Name(f,"distanceFromSelectedToken",-1)
@@ -52,11 +53,10 @@ class Game{
 	Action lastAction=null
 	public volatile var waitForInput=false
 	
-	JLabel label=null
 	val tokens=new ArrayList<Token>
-	BoardPanel panel=null
 	
-	public val varManager=new VariableManager
+	var varManager=new VariableManager
+	override getVarManager(){	return varManager	}
 	
 	def Init(String n, List<Player> p, Model m)
 	{
@@ -90,20 +90,7 @@ class Game{
 	
 	
 	def Run()
-	{
-		val frame=new JFrame
-		panel=new BoardPanel(this,model)
-		frame.add(panel)
-		label=new JLabel
-		panel.add(label)
-		frame.defaultCloseOperation=JFrame.EXIT_ON_CLOSE
-		label.bounds=new Rectangle(0,0,900,32)
-		
-		
-		frame.size=new Dimension(900,900)
-		frame.visible=true
-		println(name+"     playercount "+players.size) 
-		
+	{		
 		varManager.StoreToObject_Name(null,"turnCount",turnCount)
 		
 		for(PlayerSetup player:model.player.playerSetups){
@@ -116,7 +103,6 @@ class Game{
 		while(true){ 
 			if(!waitForInput)
 			{
-				label.text="Turn: "+turnCount;
 				
 				ExecuteAction(lastAction=GetNextAction(model.rules))
 				if(lastAction==model.rules.last){
@@ -135,7 +121,7 @@ class Game{
 					}
 				}
 			}
-			panel.Refresh
+			view.Refresh
 			Thread.yield	
 		}
 	}
@@ -163,14 +149,29 @@ class Game{
 	{
 		if(action.name=="SELECT"){
 			waitForInput=true
-			panel.EnableButtons(action.objectOfSelect, action.filter)
+			if(action.objectOfSelect=='TOKEN'){
+				val List<Token> activetokens=new ArrayList<Token>
+				for(t:tokens){
+					varManager.StoreToObject_Name(null,"this",t)
+					if(varManager.Evaluate(action.filter)) activetokens.add(t)
+				}
+				view.EnableTokens(activetokens)
+			} else if(action.objectOfSelect=='FIELD')
+			{
+				val List<Field> activefields=new ArrayList<Field>
+				for(f:model.board.fields){
+					varManager.StoreToObject_Name(null,"this",f)
+					if(varManager.Evaluate(action.filter)) activefields.add(f)
+				}
+				view.EnableFields(activefields)
+			}
 		}
 		else if(action.name=="SPAWN"){
 			val token=new Token(varManager,action.token.name)
 			token.field=selectedField
 			tokens.add(token)
 			token.owner=currentPlayer
-			panel.AddToken(token)
+			view.AddToken(token)
 				
 		}
 		else if(action.name=="MOVE"){
@@ -178,7 +179,7 @@ class Game{
 		}else if(action.name=="DESTROY"){
 			selectedToken.Destroy
 			tokens.remove(selectedToken)
-			panel.RemoveToken(selectedToken)
+			view.RemoveToken(selectedToken)
 		}else if (action.name=="ROLL"){
 			
 			val r=new Random
@@ -212,8 +213,18 @@ class Game{
 		}
 	}
 	
-	def Restart()
+	override Restart()
 	{
+		varManager=new VariableManager
+	}
+	
+	override setView(IView v) {
+		view=v
 		
 	}
+	
+	override setWaitForInput(boolean b) {
+		waitForInput=b
+	}
+		
 }
