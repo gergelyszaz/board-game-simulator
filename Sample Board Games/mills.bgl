@@ -1,13 +1,13 @@
-GAME Malom
+GAME Mills
 
 PLAYERS 2 {
 	tokensPlaced=0
 	tokenCount=0
 	PLAYER 1{
-		this.maxTokenCount=3
+		this.maxTokenCount=9
 	}
 	PLAYER 2{
-		this.maxTokenCount=5
+		this.maxTokenCount=9
 	}
 }
 
