@@ -14,19 +14,19 @@ import java.awt.geom.Line2D
 import java.util.concurrent.ConcurrentHashMap
 import javax.swing.JButton
 import javax.swing.JLayeredPane
+import hu.bme.aut.gergelyszaz.BGS.core.IController
+import hu.bme.aut.gergelyszaz.BGS.core.IView
+import java.util.List
 
-class BoardPanel extends JLayeredPane implements ActionListener{
-	Game game
+class BoardPanel extends JLayeredPane implements ActionListener, IView{
+	IController controller
 	Model model;
 	val fieldButtons=new ConcurrentHashMap<JButton,Field>
 	val tokenButtons=new ConcurrentHashMap<JButton,Token>
 	val SCALE=100
 	
-	new(Game g, Model m) {
+	new() {
 		super()
-		model=m
-		game=g
-		Init
 	}
 	
 	def Init(){
@@ -34,6 +34,11 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 		fieldButtons.clear
 		tokenButtons.clear
 		layout=null
+		
+		val restartButton=new JButton("Restart")
+		restartButton.addActionListener(this)
+		add(restartButton)
+		restartButton.bounds=new Rectangle(0,0,64,32)
 		
 
 		for(field: model.board.fields)
@@ -44,14 +49,14 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 			btn.actionCommand = "fieldPressed"
 			btn.addActionListener(this)
 			add(btn,new Integer(1))	
-			game.varManager.StoreToObject_Name(field,"tokenCount",0)
+			controller.varManager.StoreToObject_Name(field,"tokenCount",0)
 		}
 		
 		DisableButtons
 	}
 	
 	
-	def AddToken(Token t){
+	override AddToken(Token t){
 		val button=new JButton
 		button.UI = new TokenButtonUI(t)
 		add(button,new Integer(2))
@@ -61,7 +66,7 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 		tokenButtons.put(button,t)
 	}
 	
-	def Refresh()
+	override Refresh()
 	{
 		for(entry: tokenButtons.entrySet){
 			val field=entry.value.field
@@ -97,7 +102,7 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 		}
 	}
 	
-	def RemoveToken(Token t){
+	override RemoveToken(Token t){
 		var JButton butt=null
 		for(b:tokenButtons.entrySet){
 			if(b.value==t)
@@ -111,35 +116,45 @@ class BoardPanel extends JLayeredPane implements ActionListener{
 		
 	}
 	
-	def EnableButtons(String object, OrExp filter){
-		if(object=="FIELD"){
-			for(b:fieldButtons.keySet){
-				game.varManager.StoreToObject_Name(null,"this",fieldButtons.get(b))
-				b.enabled = game.varManager.Evaluate(filter)
-			}
-		}
-		if(object=="TOKEN"){
-			for(b:tokenButtons.keySet){
-				game.varManager.StoreToObject_Name(null,"this",tokenButtons.get(b))
-				b.enabled = game.varManager.Evaluate(filter)
-			}
-		}
-	}
+
+	
 	
 	override actionPerformed(ActionEvent e) {
 		val action=e.actionCommand
 		if(action=="fieldPressed"){
-			game.selectedField=fieldButtons.get(e.source)
+			controller.selectedField=fieldButtons.get(e.source)
 		}
 		if(action=="tokenPressed"){
-			game.selectedToken=tokenButtons.get(e.source)
+			controller.selectedToken=tokenButtons.get(e.source)
 		}
 		if(action=="Restart"){
-			
+			controller.Restart
 		}
 		DisableButtons
-		game.waitForInput=false
+		controller.waitForInput=false
 	
+	}
+	
+	override SetController(IController controller) {
+		this.controller=controller
+	}
+	
+	override SetModel(Model model) {
+		this.model=model
+		Init
+	}
+	
+	override EnableFields(List<Field> fields) {
+		for(b:fieldButtons.entrySet){
+			if(fields.contains(b.value)){	b.key.enabled=true	}
+		}
+		
+	}
+	
+	override EnableTokens(List<Token> tokens) {
+		for(b:tokenButtons.entrySet){
+			if(tokens.contains(b.value)){	b.key.enabled=true	}
+		}
 	}
 	
 
