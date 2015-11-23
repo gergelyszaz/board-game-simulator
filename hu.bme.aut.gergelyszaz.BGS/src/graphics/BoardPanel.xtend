@@ -1,29 +1,28 @@
 package graphics
 
-import hu.bme.aut.gergelyszaz.BGS.core.Game
+import hu.bme.aut.gergelyszaz.BGS.core.IController
+import hu.bme.aut.gergelyszaz.BGS.core.IView
 import hu.bme.aut.gergelyszaz.BGS.core.Token
 import hu.bme.aut.gergelyszaz.bGL.Field
 import hu.bme.aut.gergelyszaz.bGL.Model
-import hu.bme.aut.gergelyszaz.bGL.OrExp
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.Rectangle
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.awt.geom.Line2D
+import java.util.List
 import java.util.concurrent.ConcurrentHashMap
 import javax.swing.JButton
 import javax.swing.JLayeredPane
-import hu.bme.aut.gergelyszaz.BGS.core.IController
-import hu.bme.aut.gergelyszaz.BGS.core.IView
-import java.util.List
 
 class BoardPanel extends JLayeredPane implements ActionListener, IView{
 	IController controller
 	Model model;
-	val fieldButtons=new ConcurrentHashMap<JButton,Field>
-	val tokenButtons=new ConcurrentHashMap<JButton,Token>
+	val buttons=new ConcurrentHashMap<JButton,Object>
 	val SCALE=100
+	
+	val tokenButtons=new ConcurrentHashMap<JButton,Token>
 	
 	new() {
 		super()
@@ -31,20 +30,15 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView{
 	
 	def Init(){
 		removeAll
-		fieldButtons.clear
-		tokenButtons.clear
+		buttons.clear
 		layout=null
 		
-		val restartButton=new JButton("Restart")
-		restartButton.addActionListener(this)
-		add(restartButton)
-		restartButton.bounds=new Rectangle(0,0,64,32)
 		
 
 		for(field: model.board.fields)
 		{
 			var btn=new JButton
-			fieldButtons.put(btn,field)
+			buttons.put(btn,field)
 			btn.bounds=new Rectangle(field.x*SCALE-32,field.y*SCALE-32,64,64)
 			btn.actionCommand = "fieldPressed"
 			btn.addActionListener(this)
@@ -63,6 +57,7 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView{
 		button.actionCommand="tokenPressed"
 		button.addActionListener(this)
 		button.enabled = false
+		buttons.put(button,t)
 		tokenButtons.put(button,t)
 	}
 	
@@ -93,19 +88,15 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView{
 	}
 	
 	def DisableButtons(){
-		for(b:fieldButtons.keySet){
-			b.enabled = false
-		
-		}
-		for(b:tokenButtons.keySet){
+		for(b:buttons.keySet){
 			b.enabled = false
 		}
 	}
 	
-	override RemoveToken(Token t){
+	override RemoveButton(Object o){
 		var JButton butt=null
-		for(b:tokenButtons.entrySet){
-			if(b.value==t)
+		for(b:buttons.entrySet){
+			if(b.value==o)
 			butt=b.key
 			
 		}
@@ -122,10 +113,10 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView{
 	override actionPerformed(ActionEvent e) {
 		val action=e.actionCommand
 		if(action=="fieldPressed"){
-			controller.selectedField=fieldButtons.get(e.source)
+			controller.selectedField=buttons.get(e.source) as Field
 		}
 		if(action=="tokenPressed"){
-			controller.selectedToken=tokenButtons.get(e.source)
+			controller.selectedToken=buttons.get(e.source) as Token
 		}
 		if(action=="Restart"){
 			controller.Restart
@@ -144,17 +135,11 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView{
 		Init
 	}
 	
-	override EnableFields(List<Field> fields) {
-		for(b:fieldButtons.entrySet){
-			if(fields.contains(b.value)){	b.key.enabled=true	}
+	override EnableButtons(List<Object> objects) {
+		for(b:buttons.entrySet){
+			if(objects.contains(b.value)){	b.key.enabled=true	}
 		}
 		
-	}
-	
-	override EnableTokens(List<Token> tokens) {
-		for(b:tokenButtons.entrySet){
-			if(tokens.contains(b.value)){	b.key.enabled=true	}
-		}
 	}
 	
 

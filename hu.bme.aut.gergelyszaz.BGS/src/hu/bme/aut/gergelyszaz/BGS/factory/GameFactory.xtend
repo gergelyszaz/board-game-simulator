@@ -15,7 +15,7 @@ class GameFactory {
 		
 		//Player setup
 		for (var id = 0; id < model.player.playercount; id++) {
-			val player = new Player(id)
+			val player = new Player(id+1)
 			players.add(player)
 		}
 

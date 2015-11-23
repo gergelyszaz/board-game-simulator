@@ -4,27 +4,14 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="xtend-gen"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="D:/eclipse/plugins/org.eclipse.emf.mwe.utils_1.3.11.v201508030321.jar" sourcepath="D:/eclipse/plugins/org.eclipse.emf.mwe.utils_1.3.11.v201508030321.jar">
+	<classpathentry kind="lib" path="G:/Gergo/eclipse/plugins/org.eclipse.emf.mwe.utils_1.3.11.v201508030321.jar" sourcepath="D:/eclipse/plugins/org.eclipse.emf.mwe.utils_1.3.11.v201508030321.jar">
 		<accessrules>
 			<accessrule kind="accessible" pattern="org/eclipse/emf/mwe/utils/*"/>
 			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
 		</accessrules>
 	</classpathentry>
 	<classpathentry kind="src" path="/hu.bme.aut.gergelyszaz.BGL"/>
-	<classpathentry kind="lib" path="D:/eclipse/plugins/com.google.inject_3.0.0.v201312141243.jar" sourcepath="D:/eclipse/plugins/com.google.inject.source_3.0.0.v201312141243.jar">
-		<accessrules>
-			<accessrule kind="accessible" pattern="com/google/inject/*"/>
-			<accessrule kind="accessible" pattern="com/google/inject/binder/*"/>
-			<accessrule kind="discouraged" pattern="com/google/inject/internal/*"/>
-			<accessrule kind="discouraged" pattern="com/google/inject/internal/util/*"/>
-			<accessrule kind="accessible" pattern="com/google/inject/matcher/*"/>
-			<accessrule kind="accessible" pattern="com/google/inject/name/*"/>
-			<accessrule kind="accessible" pattern="com/google/inject/spi/*"/>
-			<accessrule kind="accessible" pattern="com/google/inject/util/*"/>
-			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
-		</accessrules>
-	</classpathentry>
-	<classpathentry kind="lib" path="D:/eclipse/plugins/org.eclipse.xtext_2.8.4.v201508050135.jar" sourcepath="D:/eclipse/plugins/org.eclipse.xtext.source_2.8.4.v201508050135.jar">
+	<classpathentry kind="lib" path="G:/Gergo/eclipse/plugins/org.eclipse.xtext_2.8.4.v201508050135.jar" sourcepath="D:/eclipse/plugins/org.eclipse.xtext.source_2.8.4.v201508050135.jar">
 		<accessrules>
 			<accessrule kind="accessible" pattern="org/eclipse/xtext/*"/>
 			<accessrule kind="accessible" pattern="org/eclipse/xtext/common/*"/>
@@ -101,8 +88,8 @@
 			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/eclipse/plugins/org.eclipse.emf.ecore_2.11.1.v20150805-0538.jar" sourcepath="D:/eclipse/plugins/org.eclipse.emf.ecore.source_2.11.1.v20150805-0538.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse/plugins/org.eclipse.emf.common_2.11.0.v20150805-0538.jar" sourcepath="D:/eclipse/plugins/org.eclipse.emf.common.source_2.11.0.v20150805-0538.jar">
+	<classpathentry kind="lib" path="G:/Gergo/eclipse/plugins/org.eclipse.emf.ecore_2.11.1.v20150805-0538.jar" sourcepath="D:/eclipse/plugins/org.eclipse.emf.ecore.source_2.11.1.v20150805-0538.jar"/>
+	<classpathentry kind="lib" path="G:/Gergo/eclipse/plugins/org.eclipse.emf.common_2.11.0.v20150805-0538.jar" sourcepath="D:/eclipse/plugins/org.eclipse.emf.common.source_2.11.0.v20150805-0538.jar">
 		<accessrules>
 			<accessrule kind="accessible" pattern="org/eclipse/emf/common/*"/>
 			<accessrule kind="accessible" pattern="org/eclipse/emf/common/archive/*"/>
@@ -113,7 +100,7 @@
 			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64_3.104.1.v20150825-0743.jar" sourcepath="D:/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64.source_3.104.1.v20150825-0743.jar">
+	<classpathentry kind="lib" path="G:/Gergo/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64_3.104.1.v20150825-0743.jar" sourcepath="D:/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64.source_3.104.1.v20150825-0743.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/D:/eclipse/plugins/org.eclipse.platform.doc.isv_4.5.1.v20150903-1352.jar!/reference/api"/>
 		</attributes>
@@ -143,5 +130,6 @@
 			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
 		</accessrules>
 	</classpathentry>
+	<classpathentry kind="lib" path="G:/Gergo/eclipse/plugins/com.google.inject_3.0.0.v201312141243.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

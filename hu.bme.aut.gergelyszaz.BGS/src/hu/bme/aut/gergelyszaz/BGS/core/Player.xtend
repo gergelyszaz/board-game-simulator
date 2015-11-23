@@ -14,5 +14,9 @@ class Player {
 	}
 	
 	def getColor(){color}
+	
+	def int getId() {
+		return ID
+	}
 
 }
