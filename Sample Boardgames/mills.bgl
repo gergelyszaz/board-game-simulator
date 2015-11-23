@@ -1,7 +1,14 @@
 GAME Malom
 
 PLAYERS 2 {
-	
+	tokensPlaced=0
+	tokenCount=0
+	PLAYER 1{
+		this.maxTokenCount=3
+	}
+	PLAYER 2{
+		this.maxTokenCount=5
+	}
 }
 
 
@@ -37,36 +44,15 @@ TOKEN T1{}
 
 RULES
 {
-		IF turnCount>4 GOTO PHASE_2
+		IF currentPlayer.tokensPlaced>=currentPlayer.maxTokenCount GOTO PHASE_2
 		
 		SELECT FIELD WHERE this.tokenCount != 1
 		selectedField.owner=currentPlayer
 		SPAWN T1
-		currentPlayer.tokenCount=turnCount
+		currentPlayer.tokensPlaced=currentPlayer.tokensPlaced+1
+		currentPlayer.tokenCount=currentPlayer.tokenCount+1
 		
-		
-		LABEL MALOM_CHECK
-		IF selectedField.h1.owner!==selectedField.owner OR selectedField.h2.owner!==selectedField.owner OR selectedField.owner===selectedField GOTO label1
-		
-		SELECT TOKEN WHERE this.owner!==currentPlayer	AND (this.field.v1.owner!==this.field.owner OR this.field.v2.owner!==this.field.owner)
-														AND (this.field.h1.owner!==this.field.owner OR this.field.h2.owner!==this.field.owner)
-		selectedToken.field.owner=selectedField
-		selectedToken.owner.tokenCount=selectedToken.owner.tokenCount-1
-		DESTROY
-		
-		
-		LABEL label1
-		
-		IF selectedField.v1.owner!==selectedField.owner OR selectedField.v2.owner!==selectedField.owner OR selectedField.owner===selectedField GOTO END_TURN
-		
-		SELECT TOKEN WHERE this.owner!==currentPlayer	AND (this.field.v1.owner!==this.field.owner OR this.field.v2.owner!==this.field.owner)
-														AND (this.field.h1.owner!==this.field.owner OR this.field.h2.owner!==this.field.owner)
-		selectedToken.field.owner=selectedField
-		selectedToken.owner.tokenCount=selectedToken.owner.tokenCount-1
-		DESTROY
-		
-		
-		IF 1==1 GOTO END_TURN
+		IF 1==1 GOTO MALOM_CHECK
 		
 		LABEL PHASE_2
 		SELECT TOKEN WHERE this.owner===currentPlayer
@@ -75,12 +61,26 @@ RULES
 		selectedField.owner=currentPlayer
 		MOVE
 		
-		IF 1==1 GOTO MALOM_CHECK
+		LABEL MALOM_CHECK
+		IF selectedField.h1.owner!==selectedField.owner OR selectedField.h2.owner!==selectedField.owner OR selectedField.owner===selectedField GOTO MALOM_CHECK2
 		
+		SELECT TOKEN WHERE this.owner!==currentPlayer	AND (this.field.v1.owner!==this.field.owner OR this.field.v2.owner!==this.field.owner) AND (this.field.h1.owner!==this.field.owner OR this.field.h2.owner!==this.field.owner)
+		selectedToken.field.owner=selectedField
+		selectedToken.owner.tokenCount=selectedToken.owner.tokenCount-1
+		DESTROY
+		
+		LABEL MALOM_CHECK2
+		IF selectedField.v1.owner!==selectedField.owner OR selectedField.v2.owner!==selectedField.owner OR selectedField.owner===selectedField GOTO END_TURN
+		
+		SELECT TOKEN WHERE this.owner!==currentPlayer	AND (this.field.v1.owner!==this.field.owner OR this.field.v2.owner!==this.field.owner) AND (this.field.h1.owner!==this.field.owner OR this.field.h2.owner!==this.field.owner)
+		selectedToken.field.owner=selectedField
+		selectedToken.owner.tokenCount=selectedToken.owner.tokenCount-1
+		DESTROY		
 		
 		LABEL END_TURN
 }
 
-
-
+WIN CONDITION{
+	selectedToken.owner!==currentPlayer AND selectedToken.owner.tokensPlaced>=selectedToken.owner.maxTokenCount AND selectedToken.owner.tokenCount<3 
+}
 

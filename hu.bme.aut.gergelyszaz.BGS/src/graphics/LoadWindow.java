@@ -129,8 +129,8 @@ public class LoadWindow {
 						
 
 							String path = "file://" + pathField.getText().replace("\\", "//");
-							System.out.print(path);
 							Resource resource = resourceSet.getResource(URI.createURI(path), true);
+							
 							Model model = (Model) resource.getContents().get(0);
 
 							Game g = new GameFactory().CreateGame(model);
