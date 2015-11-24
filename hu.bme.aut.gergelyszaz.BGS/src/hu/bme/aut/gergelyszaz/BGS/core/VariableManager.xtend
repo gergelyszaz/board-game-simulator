@@ -11,9 +11,24 @@ import hu.bme.aut.gergelyszaz.bGL.MultiplicationExp
 import hu.bme.aut.gergelyszaz.bGL.SimpleAssignment
 
 class VariableManager {
+	public static val String THIS="this"
+	public static val String CURRENTPLAYER="currentPlayer"
+	public static val String OWNER="owner"
+	public static val String TURNCOUNT="turnCount"
+	public static val String NULL="null"
+	public static val String TOKENCOUNT="tokenCount"
+	public static val String FIELD="field"
+	public static val String ROLLRESULT="rollResult"
+	public static val String SELECTEDFIELD="selectedField"
+	public static val String SELECTEDTOKEN="selectedToken"
+	public static val String DISTANCE_FROM_SELECTED_TOKEN="distanceFromSelectedToken"
+	
 	private HashMap<Object,HashMap<String,Integer>> variables=new HashMap
 	private HashMap<Object,HashMap<String,Object>> references=new HashMap
 	private Object nullObject=new Object
+	
+	private def PutLowerCased(HashMap<String,Integer> map, String key, Integer value){	return map.put(key.toLowerCase,value) }
+	private def PutLowerCased(HashMap<String,Object> map, String key, Object value){	return map.put(key.toLowerCase,value) }
 	
 	new()
 	{
@@ -83,10 +98,10 @@ class VariableManager {
 	 */
 	private def Integer GetValue(AttributeName att, Object obj){
 		if(att.parent==null){
-			val ret=variables.get(obj)?.get(att.name)
+			val ret=variables.get(obj)?.get(att.name.toLowerCase)
 			return ret
 		} else{	
-			val parent=references.get(obj).get(att.parent)
+			val parent=references.get(obj).get(att.parent.toLowerCase)
 			return att.child.GetValue(parent)
 		}
 		
@@ -106,9 +121,9 @@ class VariableManager {
 	 */
 	private def Object GetReference(AttributeName att, Object obj){
 		if(att.parent==null){
-			return references.get(obj)?.get(att.name)
+			return references.get(obj)?.get(att.name.toLowerCase)
 		} else{	
-			return att.child.GetReference(references.get(obj)?.get(att.parent))
+			return att.child.GetReference(references.get(obj)?.get(att.parent.toLowerCase))
 		}
 	}
 	
@@ -136,10 +151,10 @@ class VariableManager {
 			references.put(obj, new HashMap)
 		}
 		if(att.parent==null){
-			references.get(obj).put(att.name,ref)
+			references.get(obj).PutLowerCased(att.name,ref)
 		} else{
-			if(!references.get(obj).containsKey(att.parent)) throw new IllegalAccessException("Reference "+att.parent+" does not exist!")
-			att.child.StoreReference(references.get(obj).get(att.parent),ref)
+			if(!references.get(obj).containsKey(att.parent.toLowerCase)) throw new IllegalAccessException("Reference "+att.parent.toLowerCase+" does not exist!")
+			att.child.StoreReference(references.get(obj).get(att.parent.toLowerCase),ref)
 		}
 	}
 	
@@ -151,11 +166,11 @@ class VariableManager {
 			if(!variables.containsKey(obj)){
 				variables.put(obj, new HashMap)
 			}
-			variables.get(obj).put(att.name,value)
+			variables.get(obj).PutLowerCased(att.name,value)
 		} else{
 			if(!references.containsKey(obj)) 					throw new IllegalAccessException("Reference "+obj+" does not exist!")
-			if(!references.get(obj).containsKey(att.parent)) 	throw new IllegalAccessException("Reference "+att.parent+" does not exist!")
-			att.child.StoreValue(references.get(obj).get(att.parent),value)
+			if(!references.get(obj).containsKey(att.parent.toLowerCase)) 	throw new IllegalAccessException("Reference "+att.parent.toLowerCase+" does not exist!")
+			att.child.StoreValue(references.get(obj).get(att.parent.toLowerCase),value)
 		}
 	}
 	
@@ -164,7 +179,7 @@ class VariableManager {
 	 */
 	def StoreToObject_Name(Object obj, String name, int value){
 		if(!variables.containsKey(obj)) variables.put(obj, new HashMap)
-		variables.get(obj).put(name,value)
+		variables.get(obj).PutLowerCased(name,value)
 	}
 	
 	/**
@@ -172,13 +187,14 @@ class VariableManager {
 	 */
 	def StoreToObject_Name(Object obj, String name, Object ref){
 		if(!references.containsKey(obj)) references.put(obj, new HashMap)
-		references.get(obj).put(name,ref)
+		references.get(obj).PutLowerCased(name,ref)
 	}
 
 	/**
 	 * return the obj.name value
 	 */
-	def int GetValue(String name,Object obj){
+	def int GetValue(String n,Object obj){
+		val name=n.toLowerCase
 		if(!variables.containsKey(obj) || !variables.get(obj).containsKey(name)) throw new IllegalAccessException
 		variables.get(obj).get(name).intValue
 	}
@@ -186,9 +202,10 @@ class VariableManager {
 	/**
 	 * returns the obj.name reference
 	 */
-	def Object GetReference(String name, Object obj){
-		if(!references.containsKey(obj) || !references.get(obj).containsKey(name)) throw new IllegalAccessException
-		references.get(obj).get(name)
+	def Object GetReference(String n, Object obj){
+		val name=n.toLowerCase
+		if(!references.containsKey(obj) || !references.get(obj).containsKey(name.toLowerCase)) throw new IllegalAccessException
+		references.get(obj).get(name.toLowerCase)
 	}
 	
 	/**

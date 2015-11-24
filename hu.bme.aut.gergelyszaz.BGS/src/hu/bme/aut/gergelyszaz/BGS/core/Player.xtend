@@ -9,7 +9,7 @@ class Player {
 
 	new(int id) {
 		ID = id
-		val r=new Random(id)
+		val r=new Random(id+360)
 		color=new Color(r.nextFloat,r.nextFloat,r.nextFloat)
 	}
 	

@@ -17,5 +17,7 @@ public interface IController {
 	
 	public abstract void setView(IView v);
 	
+	public abstract Object getLock();
+	
 	
 }
