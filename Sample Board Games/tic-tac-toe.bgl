@@ -15,7 +15,7 @@ TOKEN token{}
 RULES {
 		SELECT FIELD WHERE this.tokenCount<1
 		SPAWN token
-		selectedField.owner=currentPlayer
+		selectedField.OWNER=currentPlayer
 } 
 WIN CONDITION{
 	( F11.owner===F12.owner AND F12.owner===F13.owner AND F13.owner===currentPlayer ) OR
