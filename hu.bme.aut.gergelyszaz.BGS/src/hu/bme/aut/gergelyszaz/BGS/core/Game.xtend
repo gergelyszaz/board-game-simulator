@@ -14,6 +14,7 @@ import javax.swing.JOptionPane
 
 class Game implements IController {
 	String name
+	Object lock=new Object
 	List<Player> players = new ArrayList<Player>
 	HashMap<String, Action> labels = new HashMap
 	IView view = null
@@ -22,33 +23,34 @@ class Game implements IController {
 	LinkedList<Action> actionHistory = new LinkedList
 	val tokens = new ArrayList<Token>
 	var varManager = new VariableManager
+	boolean gameEnded = false
 	public volatile var waitForInput = false
 
-	def Player getCurrentPlayer() { varManager.GetReference("currentPlayer", null) as Player }
+	def Player getCurrentPlayer() { varManager.GetReference(VariableManager.CURRENTPLAYER, null) as Player }
 
-	def void setCurrentPlayer(Player player) { varManager.StoreToObject_Name(null, "currentPlayer", player) }
+	def void setCurrentPlayer(Player player) { varManager.StoreToObject_Name(null, VariableManager.CURRENTPLAYER, player) }
 
 	Model model
 
-	def Field getSelectedField() { varManager.GetReference("selectedField", null) as Field }
+	def Field getSelectedField() { varManager.GetReference(VariableManager.SELECTEDFIELD, null) as Field }
 
-	override setSelectedField(Field field) { varManager.StoreToObject_Name(null, "selectedField", field) }
+	override setSelectedField(Field field) { varManager.StoreToObject_Name(null, VariableManager.SELECTEDFIELD, field) }
 
-	def Token getSelectedToken() { varManager.GetReference("selectedToken", null) as Token }
+	def Token getSelectedToken() { varManager.GetReference(VariableManager.SELECTEDTOKEN, null) as Token }
 
 	override setSelectedToken(Token token) {
-		varManager.StoreToObject_Name(null, "selectedToken", token)
+		varManager.StoreToObject_Name(null, VariableManager.SELECTEDTOKEN, token)
 		for (f : model.board.fields) {
-			varManager.StoreToObject_Name(f, "distanceFromSelectedToken", -1)
+			varManager.StoreToObject_Name(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, -1)
 		}
 		token.field.setupDistance(0)
 
 	}
 
 	private def void setupDistance(Field field, int distance) {
-		val dist = varManager.GetValue("distanceFromSelectedToken", field)
+		val dist = varManager.GetValue(VariableManager.DISTANCE_FROM_SELECTED_TOKEN, field)
 		if(dist > -1 && dist <= distance) return;
-		varManager.StoreToObject_Name(field, "distanceFromSelectedToken", distance)
+		varManager.StoreToObject_Name(field, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, distance)
 		for (f : field.neighbours) {
 			f.setupDistance(distance + 1)
 		}
@@ -86,27 +88,26 @@ class Game implements IController {
 	}
 
 	def Run() {
-		varManager.StoreToObject_Name(null, "turnCount", turnCount)
-		
-		
+		varManager.StoreToObject_Name(null, VariableManager.TURNCOUNT, turnCount)
 
 		for (PlayerSetup setup : model.player.playerSetups) {
-			if(setup.id<1||setup.id>players.size) throw new IllegalAccessException("Invalid player id: Player " + setup.id)
-			currentPlayer = players.get(setup.id-1)
-			varManager.StoreToObject_Name(null, "this", currentPlayer)
-			for(s: model.player.variables){
-				varManager.Store(s,currentPlayer)
+			if (setup.id < 1 || setup.id > players.size)
+				throw new IllegalAccessException("Invalid player id: Player " + setup.id)
+			currentPlayer = players.get(setup.id - 1)
+			varManager.StoreToObject_Name(null, VariableManager.THIS, currentPlayer)
+			for (s : model.player.variables) {
+				varManager.Store(s, currentPlayer)
 			}
-			
+
 			ExecuteAction(currentAction = GetNextAction(setup.setupRules))
 			while (currentAction != setup.setupRules.last) {
 				ExecuteAction(currentAction = GetNextAction(setup.setupRules))
 			}
-			varManager.StoreToObject_Name(null, "this", null)
-			currentAction=null
+			varManager.StoreToObject_Name(null, VariableManager.THIS, null)
+			currentAction = null
 		}
 
-		while (true) {
+		while (!gameEnded) {
 			if (!waitForInput) {
 				actionHistory.push(currentAction = GetNextAction(model.rules))
 				ExecuteAction(currentAction)
@@ -118,11 +119,18 @@ class Game implements IController {
 						Lose
 					}
 
-					currentPlayer = nextPlayer
-					if (currentPlayer == players.get(0)) {
-						turnCount++
-						varManager.StoreToObject_Name(null, "turnCount", turnCount)
+					if (!gameEnded) {
+						currentPlayer = nextPlayer
+						if (currentPlayer == players.get(0)) {
+							turnCount++
+							varManager.StoreToObject_Name(null, VariableManager.TURNCOUNT, turnCount)
+						}
 					}
+				}
+			} else {
+				synchronized(lock)
+				{
+					lock.wait
 				}
 			}
 			view.Refresh
@@ -155,21 +163,21 @@ class Game implements IController {
 						selectedToken = t
 						var possibilities = 0
 						for (f : model.board.fields) {
-							varManager.StoreToObject_Name(null, "this", f)
+							varManager.StoreToObject_Name(null, VariableManager.THIS, f)
 							if(varManager.Evaluate(nextAction.filter)) possibilities++
 						}
 						if (possibilities > 0) {
-							varManager.StoreToObject_Name(null, "this", t)
+							varManager.StoreToObject_Name(null, VariableManager.THIS, t)
 							if(varManager.Evaluate(action.filter)) activebuttons.add(t)
 						}
 					} else {
-						varManager.StoreToObject_Name(null, "this", t)
+						varManager.StoreToObject_Name(null, VariableManager.THIS, t)
 						if(varManager.Evaluate(action.filter)) activebuttons.add(t)
 					}
 				}
 			} else if (action.objectOfSelect == 'FIELD') {
 				for (f : model.board.fields) {
-					varManager.StoreToObject_Name(null, "this", f)
+					varManager.StoreToObject_Name(null, VariableManager.THIS, f)
 					if(varManager.Evaluate(action.filter)) activebuttons.add(f)
 				}
 			}
@@ -211,9 +219,9 @@ class Game implements IController {
 			for (var i = 1; i < action.numberOfDice + 1; i++) {
 				var rollresult = r.nextInt(action.to) + action.from
 				result += rollresult
-				varManager.StoreToObject_Name(null, "rollResult" + i, rollresult)
+				varManager.StoreToObject_Name(null, VariableManager.ROLLRESULT + i, rollresult)
 			}
-			varManager.StoreToObject_Name(null, "rollResult", result)
+			varManager.StoreToObject_Name(null, VariableManager.ROLLRESULT, result)
 
 		} else if (action.assignment != null) {
 			val ref = varManager.GetReference(action.assignment.addition)
@@ -245,17 +253,23 @@ class Game implements IController {
 	}
 
 	private def Lose() {
+		gameEnded=true
 		JOptionPane.showMessageDialog(null, "Player " + currentPlayer.id + " loses!", "Warning",
 			JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private def Win() {
+		gameEnded=true
 		JOptionPane.showMessageDialog(null, "Player " + currentPlayer.id + " wins!", "Warning",
 			JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	override setWaitForInput(boolean b) {
 		waitForInput = b
+	}
+	
+	override getLock() {
+		return lock
 	}
 
 }
