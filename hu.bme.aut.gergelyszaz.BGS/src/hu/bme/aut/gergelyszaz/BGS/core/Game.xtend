@@ -87,28 +87,8 @@ class Game implements IController {
 		return players.get(0)
 	}
 
-	def Run() {
-		varManager.StoreToObject_Name(null, VariableManager.TURNCOUNT, turnCount)
-
-		for (PlayerSetup setup : model.player.playerSetups) {
-			if (setup.id < 1 || setup.id > players.size)
-				throw new IllegalAccessException("Invalid player id: Player " + setup.id)
-			currentPlayer = players.get(setup.id - 1)
-			varManager.StoreToObject_Name(null, VariableManager.THIS, currentPlayer)
-			for (s : model.player.variables) {
-				varManager.Store(s, currentPlayer)
-			}
-
-			ExecuteAction(currentAction = GetNextAction(setup.setupRules))
-			while (currentAction != setup.setupRules.last) {
-				ExecuteAction(currentAction = GetNextAction(setup.setupRules))
-			}
-			varManager.StoreToObject_Name(null, VariableManager.THIS, null)
-			currentAction = null
-		}
-
-		while (!gameEnded) {
-			if (!waitForInput) {
+	def Step(){
+	if (!waitForInput) {
 				actionHistory.push(currentAction = GetNextAction(model.rules))
 				ExecuteAction(currentAction)
 				if (currentAction == model.rules.last) {
@@ -134,6 +114,33 @@ class Game implements IController {
 				}
 			}
 			view.Refresh
+	}
+	
+	def Start(){
+		varManager.StoreToObject_Name(null, VariableManager.TURNCOUNT, turnCount)
+
+		for (PlayerSetup setup : model.player.playerSetups) {
+			if (setup.id < 1 || setup.id > players.size)
+				throw new IllegalAccessException("Invalid player id: Player " + setup.id)
+			currentPlayer = players.get(setup.id - 1)
+			varManager.StoreToObject_Name(null, VariableManager.THIS, currentPlayer)
+			for (s : model.player.variables) {
+				varManager.Store(s, currentPlayer)
+			}
+
+			ExecuteAction(currentAction = GetNextAction(setup.setupRules))
+			while (currentAction != setup.setupRules.last) {
+				ExecuteAction(currentAction = GetNextAction(setup.setupRules))
+			}
+			varManager.StoreToObject_Name(null, VariableManager.THIS, null)
+			currentAction = null
+		}
+	}
+	
+	def Run() {
+		Start
+		while (!gameEnded) {
+			Step
 			Thread.yield
 		}
 	}
