@@ -5,7 +5,7 @@ import hu.bme.aut.gergelyszaz.BGS.core.Game
 import hu.bme.aut.gergelyszaz.BGS.core.Player
 import hu.bme.aut.gergelyszaz.bGL.Model
 import java.util.ArrayList
-import java.util.Hashtable
+
 
 
 class GameFactory {
