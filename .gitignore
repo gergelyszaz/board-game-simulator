@@ -1,2 +1,6 @@
 /hu.bme.aut.gergelyszaz.BGL.tests/
 /hu.bme.aut.gergelyszaz.BGL.ui/
+*/target/
+*/bin/
+*/src-gen/
+*/xtend-gen/
