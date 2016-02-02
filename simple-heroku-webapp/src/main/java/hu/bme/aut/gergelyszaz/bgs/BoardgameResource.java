@@ -22,4 +22,12 @@ public class BoardgameResource {
     public String getIt() {
         return "Hello WOrld!";
     }
+    
+    static int i=0;
+    @GET
+    @Path("increment")
+    @Produces(MediaType.TEXT_PLAIN)
+    public int getItWait() {
+    	return i++;
+    }
 }
