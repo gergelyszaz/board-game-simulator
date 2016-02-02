@@ -1,7 +1,11 @@
-package hu.bme.aut.gergelyszaz;
+package hu.bme.aut.gergelyszaz.BGS.core;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.emf.common.util.URI;
@@ -11,6 +15,7 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
 
+import hu.bme.aut.gergelyszaz.BGLStandaloneSetup;
 import hu.bme.aut.gergelyszaz.bGL.Model;
 
 public class ModelManager {
@@ -25,9 +30,10 @@ public class ModelManager {
 		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
 		
 		try {
-			configFile.load(ModelManager.class.getClassLoader().getResourceAsStream("games.properties"));
+			InputStream input=new FileInputStream("games.properties");
+			configFile.load(input);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 	
@@ -35,24 +41,38 @@ public class ModelManager {
 	{
 		for(Object k:configFile.values())
 		{
-			LoadModel((String)k);
+			System.out.println((String)k);
+			try{
+				LoadModel((String)k);
+			} catch(Exception e){
+				System.err.println(e.getMessage());
+			}
 		}
 	}
-
-	public void LoadModel(String input)
+	
+	public List<String> AvailableModels()
 	{
-		String path = "file://" + input.replace("\\", "//");
+		List<String> availabelModels=new ArrayList<String>();
+		for(Model m:models.values()){
+			availabelModels.add(m.getName());
+		}
+		return availabelModels;
+	}
+
+	public void LoadModel(String input) throws Exception
+	{
+		String path = /*"platform://" +*/ input.replace("\\", "//");
 		Resource resource = resourceSet.getResource(URI.createURI(path), true);
 		
 		Model model = (Model) resource.getContents().get(0);
-		if(models.contains(model.getName())) throw new RuntimeException("Language with this name already loaded.");
+		if(models.contains(model.getName())) throw new Exception("Language with this name already loaded.");
 		models.put(model.getName(),model);
 	}
 	
-	public Model Get(String name)
+	public Model Get(String name) throws Exception
 	{
 		Model m=models.get(name);
-		if(m==null) throw new RuntimeException("Game "+name+" not found!");
+		if(m==null) throw new Exception("Game "+name+" not found!");
 		return models.get(name);
 		
 	}

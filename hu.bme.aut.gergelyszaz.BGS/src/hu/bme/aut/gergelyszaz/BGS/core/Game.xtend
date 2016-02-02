@@ -57,6 +57,19 @@ class Game implements IController {
 	}
 
 	override getVarManager() { return varManager }
+	
+	def boolean Join(String clientID){
+		for(p:players){
+			if(!p.IsConnected){
+				p.id = clientID
+				return true
+			}
+		}
+		return false
+	}
+	def boolean IsFull(){
+		return players.forall[IsConnected]
+	}
 
 	def Init(String n, List<Player> p, Model m) {
 		name = n
