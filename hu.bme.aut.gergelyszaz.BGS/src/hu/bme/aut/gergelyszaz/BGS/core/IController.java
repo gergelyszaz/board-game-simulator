@@ -1,17 +1,12 @@
 package hu.bme.aut.gergelyszaz.BGS.core;
 
-import hu.bme.aut.gergelyszaz.bGL.Field;
-import hu.bme.aut.gergelyszaz.BGS.core.Token;
+import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 
 public interface IController {
 
-	public abstract VariableManager getVarManager();
+	public abstract boolean setSelectedField(String fieldID);
 
-	public abstract void setSelectedField(Field field);
-
-	public abstract void setSelectedToken(Token token);
-
-	public abstract void Restart();
+	public abstract boolean setSelectedToken(String tokenID);
 
 	public abstract boolean setWaitForInput(boolean b);
 	
@@ -19,5 +14,6 @@ public interface IController {
 	
 	public abstract Object getLock();
 	
+	public abstract GameState getCurrentState(String playerID);
 	
 }
