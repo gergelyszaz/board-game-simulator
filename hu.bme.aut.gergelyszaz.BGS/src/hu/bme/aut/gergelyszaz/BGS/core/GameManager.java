@@ -3,8 +3,11 @@ package hu.bme.aut.gergelyszaz.BGS.core;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.UUID;
+
 import hu.bme.aut.gergelyszaz.BGS.core.Game;
 import hu.bme.aut.gergelyszaz.BGS.factory.GameFactory;
+import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 
 
 public class GameManager {
@@ -14,9 +17,16 @@ public class GameManager {
 	public Hashtable<String, Game> playerConnections=new Hashtable<String, Game>();
 	public List<Game> runningGames=new ArrayList<Game>();
 	
-	public GameManager()
+	private GameManager()
 	{
 		Initialize();
+	}
+	
+	private static GameManager gm=null;
+	public static GameManager getInstance(){
+		
+		if(gm==null) gm=new GameManager();
+		return gm;
 	}
 	
 	public void Initialize(){
@@ -27,6 +37,7 @@ public class GameManager {
 	
 	
 	public void JoinGame(String clientID, String gameName) throws Exception{
+		if(playerConnections.contains(clientID)) return;
 		if(availableGames.get(gameName)==null){
 			availableGames.put(gameName, gf.CreateGame(mm.Get(gameName)));
 		}
@@ -38,6 +49,12 @@ public class GameManager {
 			runningGames.add(g);
 		}
 		
+	}
+	
+	public GameState getCurrentState(String clientID){
+		Game g=playerConnections.get(clientID);
+		g.SaveCurrentState();
+		return g.getCurrentState(clientID);
 	}
 	
 	

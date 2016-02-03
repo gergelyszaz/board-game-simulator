@@ -2,11 +2,17 @@ package hu.bme.aut.gergelyszaz.BGS.core
 
 import java.awt.Color
 import java.util.Random
+import java.util.Stack
+import hu.bme.aut.gergelyszaz.BGS.state.GameState
 
 class Player {
 	String ID
 	Color color
-	
+	Stack<GameState> gameStates=new Stack
+
+	def getGameStates(){
+		return gameStates
+	}
 
 	new(int id) {
 		ID = null
