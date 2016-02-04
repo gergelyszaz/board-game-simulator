@@ -32,35 +32,35 @@ class Game implements IController {
 	boolean gameEnded = false
 	public volatile var waitForInput = false
 
-	def Player getCurrentPlayer() { varManager.GetReference(VariableManager.CURRENTPLAYER, null) as Player }
+	private def Player getCurrentPlayer() { varManager.GetReference(VariableManager.CURRENTPLAYER, null) as Player }
 
-	def void setCurrentPlayer(Player player) {
+	private def void setCurrentPlayer(Player player) {
 		varManager.StoreToObject_Name(null, VariableManager.CURRENTPLAYER, player)
 	}
 
-	def getFields() {
+	private def getFields() {
 		return model.board.fields
 	}
 
-	def Field getSelectedField() { varManager.GetReference(VariableManager.SELECTEDFIELD, null) as Field }
+	private def Field getSelectedField() { varManager.GetReference(VariableManager.SELECTEDFIELD, null) as Field }
 
 	override setSelectedField(int fieldID) {
 		if(!activebuttons.contains(fieldID)) return false
 		val f = model.board.fields.findFirst[it.hashCode == fieldID]
 		if(f == null) return false
 		varManager.StoreToObject_Name(null, VariableManager.SELECTEDFIELD, f)
-		waitForInput=false
+		waitForInput = false
 		return true
 	}
 
-	def Token getSelectedToken() { varManager.GetReference(VariableManager.SELECTEDTOKEN, null) as Token }
+	private def Token getSelectedToken() { varManager.GetReference(VariableManager.SELECTEDTOKEN, null) as Token }
 
 	override setSelectedToken(int tokenID) {
 		if(!activebuttons.contains(tokenID)) return false
 		val t = tokens.findFirst[it.hashCode == tokenID]
 		if(t == null) return false
 		selectedToken = t
-		waitForInput=false
+		waitForInput = false
 		return true
 	}
 
@@ -129,7 +129,7 @@ class Game implements IController {
 	}
 
 	def Step() {
-		if(waitForInput) return;
+		if(waitForInput || gameEnded) return;
 		actionHistory.push(currentAction = GetNextAction(model.rules))
 		ExecuteAction(currentAction)
 		if (currentAction == model.rules.last) {
@@ -173,7 +173,11 @@ class Game implements IController {
 		SaveCurrentState
 	}
 
-	def Run() {
+	def IsFinished() {
+		return gameEnded
+	}
+
+	def run() {
 		Start
 		while (!gameEnded) {
 			Step
@@ -304,7 +308,7 @@ class Game implements IController {
 		return gs
 	}
 
-	def SaveCurrentState() {
+	private def SaveCurrentState() {
 		val plist = new ArrayList<String>
 		for (p : players) {
 			plist.add(p.id)
@@ -334,9 +338,15 @@ class Game implements IController {
 		if (!gameStates.empty()) {
 			i = gameStates.peek.version + 1
 		}
-		val state = new GameState(this.model.name, i, turnCount, currentPlayer.id, plist, flist, tlist, activebuttons.toList)
+		val state = new GameState(this.model.name, i, turnCount, currentPlayer.id, plist, flist, tlist,
+			activebuttons.toList)
 		gameStates.push(state)
 
+	}
+
+	override setSelected(int ID) {
+		return ((selectedField = ID) || (selectedToken = ID))
+		
 	}
 
 }
