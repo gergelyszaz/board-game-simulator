@@ -8,6 +8,8 @@ public interface IController {
 
 	public abstract boolean setSelectedToken(int tokenID);
 	
+	public abstract boolean setSelected(int ID);
+	
 	public abstract void AddView(IView v);
 	
 	public abstract GameState getCurrentState(String playerID);

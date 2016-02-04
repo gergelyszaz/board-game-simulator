@@ -35,13 +35,13 @@ public class BGSServer implements IView{
  
     
     @OnMessage
-    public String onMessage(String message, Session session) {
-    	final JSONObject obj = new JSONObject(message);
-    	String action=obj.getString("action");
+    public String onMessage(String input, Session session) {
+    	final JSONObject message = new JSONObject(input);
+    	String action=message.getString("action");
     	JSONObject ret=new JSONObject();
         switch (action) {
         case "join":
-        	String gameName=obj.getString("gameName");
+        	String gameName=message.getString("parameter");
         	try {
         		logger.info(session.getId());
         		IController c=gm.JoinGame(session.getId(),gameName);
@@ -68,6 +68,12 @@ public class BGSServer implements IView{
         	}
         	ret.put("models", games);
         	return ret.toString();
+        case "select":
+        	int selected=Integer.parseInt(message.getString("parameter"));
+        	c=(IController)session.getUserProperties().get("game");
+        	c.setSelected(selected);
+        	return ret.toString();
+        	
         case "quit":
             logger.info("Quitting the game");
             try {
