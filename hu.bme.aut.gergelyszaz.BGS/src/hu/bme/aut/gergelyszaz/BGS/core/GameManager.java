@@ -3,7 +3,6 @@ package hu.bme.aut.gergelyszaz.BGS.core;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.UUID;
 
 import hu.bme.aut.gergelyszaz.BGS.core.Game;
 import hu.bme.aut.gergelyszaz.BGS.factory.GameFactory;
@@ -36,8 +35,8 @@ public class GameManager {
 	
 	
 	
-	public void JoinGame(String clientID, String gameName) throws Exception{
-		if(playerConnections.contains(clientID)) return;
+	public IController JoinGame(String clientID, String gameName) throws Exception{
+		if(playerConnections.contains(clientID)) return playerConnections.get(clientID);
 		if(availableGames.get(gameName)==null){
 			availableGames.put(gameName, gf.CreateGame(mm.Get(gameName)));
 		}
@@ -48,7 +47,7 @@ public class GameManager {
 			availableGames.remove(gameName);
 			runningGames.add(g);
 		}
-		
+		return g;
 	}
 	
 	public GameState getCurrentState(String clientID){
@@ -57,5 +56,14 @@ public class GameManager {
 		return g.getCurrentState(clientID);
 	}
 	
+	public void Run()
+	{
+		while(true){
+			for(Game g:runningGames){
+				g.Step();
+			}
+			Thread.yield();
+		}
+	}
 	
 }

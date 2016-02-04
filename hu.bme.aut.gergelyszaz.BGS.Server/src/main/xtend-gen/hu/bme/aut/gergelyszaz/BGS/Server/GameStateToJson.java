@@ -1,4 +1,4 @@
-package hu.bme.aut.gergelyszaz.BGS.Server;
+package hu.bme.aut.gergelyszaz.BGS.server;
 
 import hu.bme.aut.gergelyszaz.BGS.state.FieldState;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
@@ -8,23 +8,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 @SuppressWarnings("all")
-public class GameToJsonSerializer {
+public class GameStateToJson {
   public static JSONObject JSONify(final GameState state) {
     final JSONObject ret = new JSONObject();
     String _name = state.getName();
     ret.put("name", _name);
     int _turncount = state.getTurncount();
-    ret.put("turncount", _turncount);
-    final JSONArray players = new JSONArray();
+    ret.put("turnCount", _turncount);
     List<String> _players = state.getPlayers();
-    for (final String p : _players) {
-      {
-        final JSONObject player = new JSONObject();
-        player.put("ID", p);
-        players.put(player);
-      }
-    }
-    ret.put("players", players);
+    ret.put("players", _players);
     final JSONArray fields = new JSONArray();
     List<FieldState> _fields = state.getFields();
     for (final FieldState f : _fields) {
@@ -34,7 +26,7 @@ public class GameToJsonSerializer {
         field.put("x", f.x);
         field.put("y", f.y);
         field.put("z", f.z);
-        field.put("neighbours", state);
+        field.put("neighbors", f.neighbours);
         fields.put(field);
       }
     }
@@ -51,6 +43,8 @@ public class GameToJsonSerializer {
       }
     }
     ret.put("tokens", tokens);
+    List<Integer> _selectables = state.getSelectables();
+    ret.put("selectables", _selectables);
     return ret;
   }
 }

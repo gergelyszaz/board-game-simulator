@@ -4,15 +4,11 @@ import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 
 public interface IController {
 
-	public abstract boolean setSelectedField(String fieldID);
+	public abstract boolean setSelectedField(int fieldID);
 
-	public abstract boolean setSelectedToken(String tokenID);
-
-	public abstract boolean setWaitForInput(boolean b);
+	public abstract boolean setSelectedToken(int tokenID);
 	
-	public abstract void setView(IView v);
-	
-	public abstract Object getLock();
+	public abstract void AddView(IView v);
 	
 	public abstract GameState getCurrentState(String playerID);
 	
