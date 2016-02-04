@@ -231,6 +231,7 @@ class Game implements IController {
 
 			SaveCurrentState
 			views.forEach[Refresh]
+			
 			if (activebuttons.empty) {
 				// TODO step back
 				Lose
@@ -345,8 +346,8 @@ class Game implements IController {
 	}
 
 	override setSelected(int ID) {
-		return ((selectedField = ID) || (selectedToken = ID))
-		
+		return ( (selectedField = ID) || (selectedToken = ID))
+
 	}
 
 }

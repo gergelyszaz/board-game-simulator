@@ -8,6 +8,7 @@ class GameStateToJson {
 	static def JSONObject JSONify(GameState state){
 		val ret=new JSONObject
 		ret.put("name",state.name)
+		ret.put("version",state.version)
 		ret.put("turnCount",state.turncount)
 		ret.put("players",state.players)
 		val fields=new JSONArray
