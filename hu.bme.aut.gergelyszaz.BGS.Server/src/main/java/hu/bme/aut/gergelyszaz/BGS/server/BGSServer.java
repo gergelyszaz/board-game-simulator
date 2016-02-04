@@ -24,12 +24,19 @@ import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 @ServerEndpoint(value = "/game")
 public class BGSServer implements IView{
  
+	private static final String GAMESTATEVERSION="gameStateVersion";
+	private static final String GAME="game";
+	private static final String PARAMETER="parameter";
+	private static final String ACTION="action";
+	
 	@Inject
 	private GameManager gm=GameManager.getInstance();
     private Logger logger = Logger.getLogger(this.getClass().getName());
+    private Session session;
  
     @OnOpen
     public void onOpen(Session session) {
+    	this.session=session;
     	logger.info("Connected ... " + session.getId());
     }
  
@@ -37,26 +44,24 @@ public class BGSServer implements IView{
     @OnMessage
     public String onMessage(String input, Session session) {
     	final JSONObject message = new JSONObject(input);
-    	String action=message.getString("action");
+    	String action=message.getString(ACTION);
     	JSONObject ret=new JSONObject();
         switch (action) {
         case "join":
-        	String gameName=message.getString("parameter");
+        	String gameName=message.getString(PARAMETER);
         	try {
         		logger.info(session.getId());
         		IController c=gm.JoinGame(session.getId(),gameName);
         		c.AddView(this);
-        		session.getUserProperties().put("game", c);
+        		session.getUserProperties().put(GAME, c);
+        		session.getUserProperties().put(GAMESTATEVERSION, -1);
         		return ret.put("status", "Joined").toString();
 			} catch (Exception e) {
 				logger.info(e.getMessage());
 				return ret.put("error", e.getMessage()).toString();
 			}
         case "update":
-        	//TODO error if there is no game yet
-        	IController c=(IController)session.getUserProperties().get("game");
-        	GameState gs=c.getCurrentState(session.getId());
-        	return GameStateToJson.JSONify(gs).toString();
+        	return Update(session);
         case "info":
         	ret.put("runningGames", gm.runningGames.size());
         	JSONArray games = new JSONArray();
@@ -69,8 +74,8 @@ public class BGSServer implements IView{
         	ret.put("models", games);
         	return ret.toString();
         case "select":
-        	int selected=Integer.parseInt(message.getString("parameter"));
-        	c=(IController)session.getUserProperties().get("game");
+        	int selected=Integer.parseInt(message.getString(PARAMETER));
+        	IController c=(IController)session.getUserProperties().get(GAME);
         	c.setSelected(selected);
         	return ret.toString();
         	
@@ -97,10 +102,18 @@ public class BGSServer implements IView{
 		
 	}
 
+	private String Update(Session session)
+	{
+		//TODO error if there is no game yet
+    	IController c=(IController)session.getUserProperties().get(GAME);
+    	GameState gs=c.getCurrentState(session.getId());
+    	return GameStateToJson.JSONify(gs).toString();
+	}
 
 	@Override
 	public void Refresh() {
-		// TODO Auto-generated method stub
+		logger.info("refresh");
+		session.getAsyncRemote().sendText(Update(session));
 		
 	}
  

@@ -13,6 +13,8 @@ public class GameStateToJson {
     final JSONObject ret = new JSONObject();
     String _name = state.getName();
     ret.put("name", _name);
+    int _version = state.getVersion();
+    ret.put("version", _version);
     int _turncount = state.getTurncount();
     ret.put("turnCount", _turncount);
     List<String> _players = state.getPlayers();
