@@ -1,5 +1,8 @@
 package hu.bme.aut.gergelyszaz.BGS.core
 
+import hu.bme.aut.gergelyszaz.BGS.state.FieldState
+import hu.bme.aut.gergelyszaz.BGS.state.GameState
+import hu.bme.aut.gergelyszaz.BGS.state.TokenState
 import hu.bme.aut.gergelyszaz.bGL.Action
 import hu.bme.aut.gergelyszaz.bGL.Field
 import hu.bme.aut.gergelyszaz.bGL.Model
@@ -7,25 +10,24 @@ import hu.bme.aut.gergelyszaz.bGL.PlayerSetup
 import java.util.ArrayList
 import java.util.Collection
 import java.util.HashMap
+import java.util.HashSet
 import java.util.LinkedList
 import java.util.List
 import java.util.Random
-import javax.swing.JOptionPane
-import hu.bme.aut.gergelyszaz.BGS.state.FieldState
-import hu.bme.aut.gergelyszaz.BGS.state.TokenState
-import hu.bme.aut.gergelyszaz.BGS.state.GameState
+import java.util.Set
+import java.util.Stack
 
 class Game implements IController {
+	Model model
 	String name
-	Object lock = new Object
 	List<Player> players = new ArrayList<Player>
 	HashMap<String, Action> labels = new HashMap
-	IView view = null
+	Set<IView> views = new HashSet
 	int turnCount = 1
 	Action currentAction = null
 	LinkedList<Action> actionHistory = new LinkedList
 	val tokens = new ArrayList<Token>
-	val fields = new ArrayList<Field>
+	private Stack<GameState> gameStates = new Stack
 	var varManager = new VariableManager
 	boolean gameEnded = false
 	public volatile var waitForInput = false
@@ -36,23 +38,29 @@ class Game implements IController {
 		varManager.StoreToObject_Name(null, VariableManager.CURRENTPLAYER, player)
 	}
 
-	Model model
+	def getFields() {
+		return model.board.fields
+	}
 
 	def Field getSelectedField() { varManager.GetReference(VariableManager.SELECTEDFIELD, null) as Field }
 
-	override setSelectedField(String fieldID) {
-		val f = model.board.fields.findFirst[toString.equals(fieldID)]
+	override setSelectedField(int fieldID) {
+		if(!activebuttons.contains(fieldID)) return false
+		val f = model.board.fields.findFirst[it.hashCode == fieldID]
 		if(f == null) return false
 		varManager.StoreToObject_Name(null, VariableManager.SELECTEDFIELD, f)
+		waitForInput=false
 		return true
 	}
 
 	def Token getSelectedToken() { varManager.GetReference(VariableManager.SELECTEDTOKEN, null) as Token }
 
-	override setSelectedToken(String tokenID) {
-		val t = tokens.findFirst[toString().equals(tokenID)]
+	override setSelectedToken(int tokenID) {
+		if(!activebuttons.contains(tokenID)) return false
+		val t = tokens.findFirst[it.hashCode == tokenID]
 		if(t == null) return false
 		selectedToken = t
+		waitForInput=false
 		return true
 	}
 
@@ -77,6 +85,7 @@ class Game implements IController {
 		for (p : players) {
 			if (!p.IsConnected) {
 				p.id = clientID
+				SaveCurrentState
 				return true
 			}
 		}
@@ -120,31 +129,26 @@ class Game implements IController {
 	}
 
 	def Step() {
-		if (!waitForInput) {
-			actionHistory.push(currentAction = GetNextAction(model.rules))
-			ExecuteAction(currentAction)
-			if (currentAction == model.rules.last) {
-				if (model.winCondition != null && varManager.Evaluate(model.winCondition)) {
-					Win
-				}
-				if (model.loseCondition != null && varManager.Evaluate(model.loseCondition)) {
-					Lose
-				}
-
-				if (!gameEnded) {
-					currentPlayer = nextPlayer
-					if (currentPlayer == players.get(0)) {
-						turnCount++
-						varManager.StoreToObject_Name(null, VariableManager.TURNCOUNT, turnCount)
-					}
-				}
+		if(waitForInput) return;
+		actionHistory.push(currentAction = GetNextAction(model.rules))
+		ExecuteAction(currentAction)
+		if (currentAction == model.rules.last) {
+			if (model.winCondition != null && varManager.Evaluate(model.winCondition)) {
+				Win
 			}
-		} else {
-			synchronized (lock) {
-				lock.wait
+			if (model.loseCondition != null && varManager.Evaluate(model.loseCondition)) {
+				Lose
+			}
+
+			if (!gameEnded) {
+				currentPlayer = nextPlayer
+				if (currentPlayer == players.get(0)) {
+					turnCount++
+					varManager.StoreToObject_Name(null, VariableManager.TURNCOUNT, turnCount)
+				}
 			}
 		}
-		view.Refresh
+
 	}
 
 	def Start() {
@@ -189,17 +193,17 @@ class Game implements IController {
 		}
 	}
 
+	private Set<Integer> activebuttons = new HashSet<Integer>
+
 	private def ExecuteAction(Action action) {
+		activebuttons.clear
 		if (action.name == "SELECT") {
 			waitForInput = true
-			val List<Object> activebuttons = new ArrayList<Object>
 			if (action.objectOfSelect == 'TOKEN') {
-
 				val nextAction = GetNextAction(model.rules)
-
 				for (t : tokens) {
 					if (nextAction.name == "SELECT" && nextAction.objectOfSelect == "FIELD") {
-						selectedToken = t.toString
+						selectedToken = t
 						var possibilities = 0
 						for (f : model.board.fields) {
 							varManager.StoreToObject_Name(null, VariableManager.THIS, f)
@@ -207,26 +211,24 @@ class Game implements IController {
 						}
 						if (possibilities > 0) {
 							varManager.StoreToObject_Name(null, VariableManager.THIS, t)
-							if(varManager.Evaluate(action.filter)) activebuttons.add(t)
+							if(varManager.Evaluate(action.filter)) activebuttons.add(t.hashCode)
 						}
 					} else {
 						varManager.StoreToObject_Name(null, VariableManager.THIS, t)
-						if(varManager.Evaluate(action.filter)) activebuttons.add(t)
+						if(varManager.Evaluate(action.filter)) activebuttons.add(t.hashCode)
 					}
 				}
 			} else if (action.objectOfSelect == 'FIELD') {
 				for (f : model.board.fields) {
 					varManager.StoreToObject_Name(null, VariableManager.THIS, f)
-					if(varManager.Evaluate(action.filter)) activebuttons.add(f)
+					if(varManager.Evaluate(action.filter)) activebuttons.add(f.hashCode)
 				}
 			}
 
 			SaveCurrentState
-			if (!activebuttons.empty) {
-				view.EnableButtons(activebuttons)
-			} else {
+			views.forEach[Refresh]
+			if (activebuttons.empty) {
 				// TODO step back
-				JOptionPane.showMessageDialog(null, "No moves available", "Warning", JOptionPane.INFORMATION_MESSAGE);
 				Lose
 				waitForInput = false
 				println(actionHistory.pop)
@@ -239,7 +241,6 @@ class Game implements IController {
 			token.field = selectedField
 			tokens.add(token)
 			token.owner = currentPlayer
-			view.AddToken(token)
 
 		} else if (action.name == "MOVE") {
 			selectedToken.field = selectedField
@@ -247,7 +248,6 @@ class Game implements IController {
 		} else if (action.name == "DESTROY") {
 			selectedToken.Destroy
 			tokens.remove(selectedToken)
-			view.RemoveButton(selectedToken)
 
 		} else if (action.name == "WIN") {
 			Win
@@ -284,35 +284,24 @@ class Game implements IController {
 		}
 	}
 
-	override setView(IView v) {
-		view = v
-
+	override AddView(IView v) {
+		views.add(v)
 	}
 
 	private def Lose() {
 		gameEnded = true
-		JOptionPane.showMessageDialog(null, "Player " + currentPlayer.id + " loses!", "Warning",
-			JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private def Win() {
 		gameEnded = true
-		JOptionPane.showMessageDialog(null, "Player " + currentPlayer.id + " wins!", "Warning",
-			JOptionPane.INFORMATION_MESSAGE);
-	}
-
-	override setWaitForInput(boolean b) {
-		waitForInput = b
-	}
-
-	override getLock() {
-		return lock
 	}
 
 	override getCurrentState(String playerID) {
 		var p = players.findFirst[it.id == playerID]
-		if(p == null) return null
-		return p.gameStates.peek
+		var gs = gameStates.peek
+		if (p.id != gs.currentplayer)
+			gs = gs.publicState
+		return gs
 	}
 
 	def SaveCurrentState() {
@@ -334,21 +323,20 @@ class Game implements IController {
 		}
 		val tlist = new ArrayList<TokenState>
 		for (t : tokens) {
-			val ts=new TokenState
-			ts.id=t.hashCode
-			ts.field=t.field.hashCode
-			ts.owner=t.owner.id
+			val ts = new TokenState
+			ts.id = t.hashCode
+			ts.field = t.field.hashCode
+			ts.owner = t.owner.id
 			tlist.add(ts)
 		}
-		for (p : players) {
-			var i = 0 as int
-			if (!p.gameStates.empty()) {
-				i = p.gameStates.peek.version + 1
-			}
-			// TODO return selectable stuff
-			val state = new GameState(this.model.name, i, turnCount, plist, flist, tlist, null)
-			p.gameStates.push(state)
+
+		var i = 0 as int
+		if (!gameStates.empty()) {
+			i = gameStates.peek.version + 1
 		}
+		val state = new GameState(this.model.name, i, turnCount, currentPlayer.id, plist, flist, tlist, activebuttons.toList)
+		gameStates.push(state)
+
 	}
 
 }

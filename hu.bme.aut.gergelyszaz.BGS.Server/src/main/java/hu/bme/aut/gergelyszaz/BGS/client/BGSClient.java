@@ -45,7 +45,7 @@ public class BGSClient {
             String userInput = bufferRead.readLine();
             JSONObject obj=new JSONObject();
             obj.put("action", userInput);
-            obj.put("game", "Mills");
+            obj.put("gameName", "Mills");
             return obj.toString();
         } catch (IOException e) {
             throw new RuntimeException(e);

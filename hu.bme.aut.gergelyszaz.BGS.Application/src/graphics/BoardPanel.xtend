@@ -11,12 +11,12 @@ import java.awt.Rectangle
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.awt.geom.Line2D
-import java.util.List
 import java.util.concurrent.ConcurrentHashMap
 import javax.swing.JButton
 import javax.swing.JLayeredPane
 import java.awt.event.ComponentListener
 import java.awt.event.ComponentEvent
+import java.util.Set
 
 class BoardPanel extends JLayeredPane implements ActionListener, IView, ComponentListener {
 	IController controller
@@ -49,7 +49,7 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView, Componen
 
 			var btn = new JButton
 			buttons.put(btn, field)
-			fieldButtons.put(btn,field)
+			fieldButtons.put(btn, field)
 			btn.UI = new FieldButtonUI(field)
 			btn.opaque = false
 			btn.contentAreaFilled = false
@@ -59,13 +59,13 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView, Componen
 			btn.actionCommand = "fieldPressed"
 			btn.addActionListener(this)
 			add(btn, new Integer(1))
-			
+
 		}
 
 		DisableButtons
 	}
 
-	override AddToken(Token t) {
+	def AddToken(Integer t) {
 		val button = new JButton
 		button.opaque = false
 		button.contentAreaFilled = false
@@ -79,18 +79,25 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView, Componen
 		tokenButtons.put(button, t)
 	}
 
-	override Refresh() {
-		SCALE = this.width / (maxX - minX+2)
+	def Rescale() {
+		SCALE = this.width / (maxX - minX + 2)
 		for (entry : tokenButtons.entrySet) {
 			val field = entry.value.field
-			entry.key.bounds = new Rectangle((field.x-minX+1) * SCALE - SCALE / 3, (field.y-minY+1) * SCALE - SCALE / 3, SCALE * 2 / 3,
-				SCALE * 2 / 3)
+			entry.key.bounds = new Rectangle((field.x - minX + 1) * SCALE - SCALE / 3,
+				(field.y - minY + 1) * SCALE - SCALE / 3, SCALE * 2 / 3, SCALE * 2 / 3)
 		}
 		for (entry : fieldButtons.entrySet) {
 			val field = entry.value
-			entry.key.bounds = new Rectangle((field.x-minX+1) * SCALE - SCALE / 3, (field.y-minY+1) * SCALE - SCALE / 3, SCALE * 2 / 3,
-				SCALE * 2 / 3)
+			entry.key.bounds = new Rectangle((field.x - minX + 1) * SCALE - SCALE / 3,
+				(field.y - minY + 1) * SCALE - SCALE / 3, SCALE * 2 / 3, SCALE * 2 / 3)
 		}
+	}
+
+	override Refresh() {
+		
+
+		Rescale
+		repaint
 	}
 
 	override paint(Graphics g) {
@@ -99,7 +106,8 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView, Componen
 
 		for (field : model.board.fields) {
 			for (n : field.neighbours) {
-				var line = new Line2D.Float((field.x-minX+1) * SCALE, (field.y-minY+1) * SCALE, n.x * SCALE, n.y * SCALE)
+				var line = new Line2D.Float((field.x - minX + 1) * SCALE, (field.y - minY + 1) * SCALE, n.x * SCALE,
+					n.y * SCALE)
 				g2.draw(line)
 
 			}
@@ -114,7 +122,7 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView, Componen
 		}
 	}
 
-	override RemoveButton(Object o) {
+	def RemoveButton(Object o) {
 		var JButton butt = null
 		for (b : buttons.entrySet) {
 			if (b.value == o)
@@ -128,29 +136,25 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView, Componen
 	override actionPerformed(ActionEvent e) {
 		val action = e.actionCommand
 		if (action == "fieldPressed") {
-			controller.selectedField = buttons.get(e.source).toString
+			controller.selectedField = buttons.get(e.source).hashCode
 		}
 		if (action == "tokenPressed") {
-			controller.selectedToken = buttons.get(e.source).toString
+			controller.selectedToken = buttons.get(e.source).hashCode
 		}
 		DisableButtons
 		controller.waitForInput = false
-
-		synchronized (controller.lock) {
-			controller.lock.notifyAll
-		}
 	}
 
 	override SetController(IController controller) {
 		this.controller = controller
 	}
 
-	override SetModel(Model model) {
+	def SetModel(Model model) {
 		this.model = model
 		Init
 	}
 
-	override EnableButtons(List<Object> objects) {
+	def EnableButtons(Set<Integer> objects) {
 		for (b : buttons.entrySet) {
 			if (objects.contains(b.value)) {
 				b.key.enabled = true
@@ -166,7 +170,7 @@ class BoardPanel extends JLayeredPane implements ActionListener, IView, Componen
 	}
 
 	override componentResized(ComponentEvent e) {
-		Refresh
+		Rescale
 	}
 
 	override componentShown(ComponentEvent e) {

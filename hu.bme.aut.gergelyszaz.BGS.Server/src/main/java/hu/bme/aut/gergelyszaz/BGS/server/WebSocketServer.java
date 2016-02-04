@@ -1,4 +1,4 @@
-package hu.bme.aut.gergelyszaz.BGS.Server;
+package hu.bme.aut.gergelyszaz.BGS.server;
  
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

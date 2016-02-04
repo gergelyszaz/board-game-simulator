@@ -1,21 +1,15 @@
-package hu.bme.aut.gergelyszaz.BGS.Server
+package hu.bme.aut.gergelyszaz.BGS.server
 
 import hu.bme.aut.gergelyszaz.BGS.state.GameState
 import org.json.JSONArray
 import org.json.JSONObject
 
-class GameToJsonSerializer {
+class GameStateToJson {
 	static def JSONObject JSONify(GameState state){
 		val ret=new JSONObject
 		ret.put("name",state.name)
-		ret.put("turncount",state.turncount)
-		val players=new JSONArray
-		for(p:state.players){
-			val player=new JSONObject
-			player.put("ID",p)
-			players.put(player)
-		}
-		ret.put("players",players)
+		ret.put("turnCount",state.turncount)
+		ret.put("players",state.players)
 		val fields=new JSONArray
 		for(f:state.fields){
 			val field=new JSONObject
@@ -23,7 +17,7 @@ class GameToJsonSerializer {
 			field.put("x",f.x)
 			field.put("y",f.y)
 			field.put("z",f.z)
-			field.put("neighbours",state)
+			field.put("neighbors",f.neighbours)
 			fields.put(field)
 		}
 		ret.put("fields",fields)
@@ -36,6 +30,7 @@ class GameToJsonSerializer {
 			tokens.put(token)
 		} 
 		ret.put("tokens",tokens)
+		ret.put("selectables",state.selectables)
 		return ret
 	}
 }
