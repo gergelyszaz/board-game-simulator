@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.shekhar</groupId>
-	<artifactId>wordgame</artifactId>
+	<groupId>hu.bme.aut.gergelyszaz.BGS</groupId>
+	<artifactId>Server</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>wordgame</name>
@@ -38,6 +38,11 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20151123</version>
+		</dependency>
+		<dependency>
+			<groupId>hu.bme.aut.gergelyszaz.BGS</groupId>
+			<artifactId>hu.bme.aut.gergelyszaz.BGS</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

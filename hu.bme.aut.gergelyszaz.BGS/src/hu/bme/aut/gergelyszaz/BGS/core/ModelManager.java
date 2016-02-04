@@ -1,12 +1,8 @@
 package hu.bme.aut.gergelyszaz.BGS.core;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Properties;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -20,7 +16,7 @@ import hu.bme.aut.gergelyszaz.bGL.Model;
 
 public class ModelManager {
 	private static XtextResourceSet resourceSet;
-	private static Properties configFile = new Properties();
+	
 	private Hashtable<String, Model> models=new Hashtable<String, Model>();
 
 	public void Initialize() {
@@ -28,26 +24,6 @@ public class ModelManager {
 		Injector injector = new BGLStandaloneSetup().createInjectorAndDoEMFRegistration();
 		resourceSet = injector.getInstance(XtextResourceSet.class);
 		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-		
-		try {
-			InputStream input=new FileInputStream("games.properties");
-			configFile.load(input);
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-		}
-	}
-	
-	public void LoadAllModels()
-	{
-		for(Object k:configFile.values())
-		{
-			System.out.println((String)k);
-			try{
-				LoadModel((String)k);
-			} catch(Exception e){
-				System.err.println(e.getMessage());
-			}
-		}
 	}
 	
 	public List<String> AvailableModels()
