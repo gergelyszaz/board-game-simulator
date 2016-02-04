@@ -24,19 +24,14 @@ public class GameManager implements Runnable{
 		
 		if(gm==null) {
 			gm=new GameManager();
-			gm.Initialize();
+			gm.mm.Initialize();
 			new Thread(gm).start();;
 		}
 		
 		return gm;
 	}
 	
-	public void Initialize(){
-		mm.Initialize();
-		mm.LoadAllModels();
-		
-	}
-	
+
 	
 	
 	public IController JoinGame(String clientID, String gameName) throws Exception{

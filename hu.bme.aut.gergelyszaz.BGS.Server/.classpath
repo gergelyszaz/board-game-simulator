@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src/main/xtend-gen"/>
 	<classpathentry kind="con" path="org.eclipse.xtend.XTEND_CONTAINER"/>
 	<classpathentry kind="src" output="target/classes" path="src/main/java">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" output="target/classes" path="src/main/xtend-gen">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
@@ -29,8 +24,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/hu.bme.aut.gergelyszaz.BGS"/>
-	<classpathentry kind="lib" path="D:/Program Files/Eclipse/eclipse/plugins/javax.inject_1.0.0.v20091030.jar" sourcepath="D:/Program Files/Eclipse/eclipse/plugins/javax.inject.source_1.0.0.v20091030.jar">
+	<classpathentry kind="lib" path="D:/Program Files/eclipse/eclipse/plugins/javax.inject_1.0.0.v20091030.jar" sourcepath="D:/Program Files/Eclipse/eclipse/plugins/javax.inject.source_1.0.0.v20091030.jar">
 		<accessrules>
 			<accessrule kind="accessible" pattern="javax/inject/*"/>
 			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
