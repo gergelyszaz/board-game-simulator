@@ -113,7 +113,11 @@ public class BGSServer implements IView{
 	@Override
 	public void Refresh() {
 		logger.info("refresh");
-		session.getAsyncRemote().sendText(Update(session));
+		try {
+			session.getBasicRemote().sendText(Update(session));
+		} catch (IOException e) {
+			logger.info(e.getMessage());
+		}
 		
 	}
  
