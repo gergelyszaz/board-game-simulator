@@ -29,7 +29,8 @@ public class BGSClient {
 		logger.info("Connected ... " + session.getId());
 		try {
 			JSONObject obj = new JSONObject();
-			obj.put("action", "start");
+			obj.put("action", "join");
+			obj.put("parameter", "Mills");
 
 			session.getBasicRemote().sendText(obj.toString());
 		} catch (IOException e) {
@@ -39,19 +40,20 @@ public class BGSClient {
 
 	@OnMessage
 	public String onMessage(String message, Session session) {
-		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-		try {
+		//BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+		//try {
 			logger.info("Received: " + message);
-			String[] input = bufferRead.readLine().split("\\|", 2);
 			JSONObject obj = new JSONObject();
+			/*String[] input = bufferRead.readLine().split("\\|", 2);
+			
 			obj.put("action", input[0]);
 			if (input.length > 1)
 				obj.put("parameter", input[1]);
-			logger.info("Sending: "+obj.toString());
+			logger.info("Sending: "+obj.toString());*/
 			return obj.toString();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		//} catch (IOException e) {
+		//	throw new RuntimeException(e);
+		//}
 	}
 
 	private static CountDownLatch latch;
