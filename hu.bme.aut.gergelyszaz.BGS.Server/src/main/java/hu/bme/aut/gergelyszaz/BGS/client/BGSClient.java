@@ -1,10 +1,7 @@
 package hu.bme.aut.gergelyszaz.BGS.client;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
 
@@ -23,37 +20,35 @@ import org.json.JSONObject;
 public class BGSClient {
 
 	private Logger logger = Logger.getLogger(this.getClass().getName());
+	private Session session = null;
+	private IMessageReciever messageReciever = null;
+
+	public void setMessageReciever(IMessageReciever a) {
+		messageReciever = a;
+	}
+
+	public void SendMessage(JSONObject obj) {
+		try {
+			latch.await();
+			session.getBasicRemote().sendText(obj.toString());
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (InterruptedException e) {
+			
+		}
+	}
 
 	@OnOpen
 	public void onOpen(Session session) {
 		logger.info("Connected ... " + session.getId());
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("action", "join");
-			obj.put("parameter", "Mills");
-
-			session.getBasicRemote().sendText(obj.toString());
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	@OnMessage
 	public String onMessage(String message, Session session) {
-		//BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-		//try {
-			logger.info("Received: " + message);
-			JSONObject obj = new JSONObject();
-			/*String[] input = bufferRead.readLine().split("\\|", 2);
-			
-			obj.put("action", input[0]);
-			if (input.length > 1)
-				obj.put("parameter", input[1]);
-			logger.info("Sending: "+obj.toString());*/
-			return obj.toString();
-		//} catch (IOException e) {
-		//	throw new RuntimeException(e);
-		//}
+		logger.info("Received: " + message);
+		JSONObject obj = new JSONObject(message);
+		messageReciever.RecieveMessage(obj);
+		return "";
 	}
 
 	private static CountDownLatch latch;
@@ -61,18 +56,18 @@ public class BGSClient {
 	@OnClose
 	public void onClose(Session session, CloseReason closeReason) {
 		logger.info(String.format("Session %s close because of %s", session.getId(), closeReason));
-		latch.countDown();
+		
 	}
 
-	public static void main(String[] args) {
+	public void Connect(URI uri) {
+		ClientManager client = ClientManager.createClient();
 		latch = new CountDownLatch(1);
 
-		ClientManager client = ClientManager.createClient();
 		try {
-			client.connectToServer(BGSClient.class, new URI("ws://localhost:8025/websockets/game"));
-			latch.await();
+			session=client.connectToServer(BGSClient.class, uri);
+			latch.countDown();
 
-		} catch (DeploymentException | URISyntaxException | InterruptedException e) {
+		} catch (DeploymentException e) {
 			throw new RuntimeException(e);
 		}
 	}
