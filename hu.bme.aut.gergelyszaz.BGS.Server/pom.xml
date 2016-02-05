@@ -40,6 +40,11 @@
 			<version>20151123</version>
 		</dependency>
 		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+		<dependency>
 			<groupId>hu.bme.aut.gergelyszaz.BGS</groupId>
 			<artifactId>hu.bme.aut.gergelyszaz.BGS</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

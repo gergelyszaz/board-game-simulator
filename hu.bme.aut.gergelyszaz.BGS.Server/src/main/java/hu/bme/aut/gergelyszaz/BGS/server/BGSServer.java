@@ -15,7 +15,9 @@ import javax.websocket.server.ServerEndpoint;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import hu.bme.aut.gergelyszaz.BGS.server.GameStateToJson;
+import com.google.gson.Gson;
+
+//import hu.bme.aut.gergelyszaz.BGS.server.GameStateToJson;
 import hu.bme.aut.gergelyszaz.BGS.core.GameManager;
 import hu.bme.aut.gergelyszaz.BGS.core.IController;
 import hu.bme.aut.gergelyszaz.BGS.core.IView;
@@ -43,6 +45,7 @@ public class BGSServer implements IView{
     
     @OnMessage
     public String onMessage(String input, Session session) {
+    	logger.info(input);
     	final JSONObject message = new JSONObject(input);
     	String action=message.getString(ACTION);
     	JSONObject ret=new JSONObject();
@@ -60,8 +63,10 @@ public class BGSServer implements IView{
 				logger.info(e.getMessage());
 				return ret.put("error", e.getMessage()).toString();
 			}
+        	
         case "update":
         	return Update(session);
+        	
         case "info":
         	ret.put("runningGames", gm.runningGames.size());
         	JSONArray games = new JSONArray();
@@ -73,6 +78,7 @@ public class BGSServer implements IView{
         	}
         	ret.put("models", games);
         	return ret.toString();
+        	
         case "select":
         	int selected=Integer.parseInt(message.getString(PARAMETER));
         	IController c=(IController)session.getUserProperties().get(GAME);
@@ -106,8 +112,11 @@ public class BGSServer implements IView{
 	{
 		//TODO error if there is no game yet
     	IController c=(IController)session.getUserProperties().get(GAME);
+    	Gson gson=new Gson();
+    	
     	GameState gs=c.getCurrentState(session.getId());
-    	return GameStateToJson.JSONify(gs).toString();
+    	
+    	return gson.toJson(gs);//GameStateToJson.JSONify(gs).toString();
 	}
 
 	@Override
