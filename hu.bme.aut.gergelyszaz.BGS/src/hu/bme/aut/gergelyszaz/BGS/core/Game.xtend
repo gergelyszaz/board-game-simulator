@@ -44,7 +44,7 @@ class Game implements IController {
 
 	private def Field getSelectedField() { varManager.GetReference(VariableManager.SELECTEDFIELD, null) as Field }
 
-	override setSelectedField(int fieldID) {
+	private def setSelectedField(int fieldID) {
 		if(!activebuttons.contains(fieldID)) return false
 		val f = model.board.fields.findFirst[it.hashCode == fieldID]
 		if(f == null) return false
@@ -55,7 +55,7 @@ class Game implements IController {
 
 	private def Token getSelectedToken() { varManager.GetReference(VariableManager.SELECTEDTOKEN, null) as Token }
 
-	override setSelectedToken(int tokenID) {
+	private def setSelectedToken(int tokenID) {
 		if(!activebuttons.contains(tokenID)) return false
 		val t = tokens.findFirst[it.hashCode == tokenID]
 		if(t == null) return false
@@ -345,7 +345,9 @@ class Game implements IController {
 
 	}
 
-	override setSelected(int ID) {
+	override setSelected(String playerID, int ID) {
+		if(playerID!=currentPlayer.id) return false
+		println("selected: "+ID)
 		return ( (selectedField = ID) || (selectedToken = ID))
 
 	}
