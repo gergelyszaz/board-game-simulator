@@ -83,8 +83,9 @@ public class LoadWindow {
 		pathField = new JTextField();
 		pathField.setColumns(20);
 		panel.add(pathField);
+		pathField.setText("ws://localhost:8025/websockets/game");
 		pathField.setHorizontalAlignment(SwingConstants.LEFT);
-
+/*
 		JButton selectButton = new JButton("Select");
 		selectButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -102,13 +103,27 @@ public class LoadWindow {
 		});
 		selectButton.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(selectButton);
-
+*/
 		JPanel panel_1 = new JPanel();
 		frmBoardgameSimulator.getContentPane().add(panel_1);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 
-		JButton startButton = new JButton("Start");
-		startButton.addMouseListener(new MouseAdapter() {
+		JButton connectButton = new JButton("Connect");
+		JButton startButton=new JButton("Start");
+		startButton.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new Thread() {
+					@Override
+					public void run() {
+						super.run();
+						client.SendMessage(new JSONObject().put("action", "join").put("parameter", "Mills"));
+					}
+				};
+			}
+		
+		});
+		connectButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				new Thread() {
@@ -123,16 +138,15 @@ public class LoadWindow {
 						frame.setSize(new Dimension(500, 500));
 						
 						panel.SetClient(client);
-						client.setMessageReciever(panel);						
-						client.Connect("ws://localhost:8025/websockets/game");
+						client.Connect(pathField.getText(),panel);
 						client.SendMessage(new JSONObject().put("action", "join").put("parameter", "Mills"));
 					};
 
 				}.start();
 			}
 		});
-		startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel_1.add(startButton);
+		connectButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_1.add(connectButton);
 
 		Component verticalStrut = Box.createVerticalStrut(8);
 		panel_1.add(verticalStrut);

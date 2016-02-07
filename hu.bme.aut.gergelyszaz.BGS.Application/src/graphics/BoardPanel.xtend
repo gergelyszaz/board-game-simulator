@@ -35,11 +35,13 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 	val tokens = new Hashtable<Integer, TokenState>
 	val fields = new Hashtable<Integer, FieldState>
 	val colorManager=new ColorManager() 
-	private JLabel turncount=new JLabel("");
+	private JLabel turncountLabel=new JLabel("");
 
 	new() {
 		super()
 		states.add(new GameState("", 0, 0, "", new ArrayList, new ArrayList, new ArrayList, new ArrayList))
+		add(turncountLabel)
+		turncountLabel.bounds=new Rectangle(0,0,100,100)
 	}
 
 	BGSClient client;
@@ -50,6 +52,8 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 
 	def AddGameState(GameState gs) {
 		states.push(gs)
+		
+		turncountLabel.text="Turn: "+gs.turncount
 
 		if (buttons.empty) {
 			for (field : states.peek.fields) {
@@ -152,6 +156,7 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 		Rescale
 		var g2 = g as Graphics2D;
 
+		g2.clearRect(0,0,width,height)
 		for (field : states.peek.fields) {
 			for (ne : field.neighbours) {
 				val n = fields.get(ne)
