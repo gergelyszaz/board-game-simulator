@@ -2,6 +2,8 @@ package hu.bme.aut.gergelyszaz.BGS.client;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
 
@@ -22,6 +24,7 @@ public class BGSClient {
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 	private Session session = null;
 	private IMessageReciever messageReciever = null;
+	private static ConcurrentHashMap<String, IMessageReciever> recievers=new ConcurrentHashMap<String, IMessageReciever>();
 
 	public void setMessageReciever(IMessageReciever a) {
 		messageReciever = a;
@@ -30,11 +33,12 @@ public class BGSClient {
 	public void SendMessage(JSONObject obj) {
 		try {
 			latch.await();
+			logger.info("Sending: "+obj.toString());
 			session.getBasicRemote().sendText(obj.toString());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} catch (InterruptedException e) {
-			
+
 		}
 	}
 
@@ -47,8 +51,8 @@ public class BGSClient {
 	public String onMessage(String message, Session session) {
 		logger.info("Received: " + message);
 		JSONObject obj = new JSONObject(message);
-		messageReciever.RecieveMessage(obj);
-		return "";
+		recievers.get(session.getId()).RecieveMessage(obj);
+		return "got message";
 	}
 
 	private static CountDownLatch latch;
@@ -56,18 +60,23 @@ public class BGSClient {
 	@OnClose
 	public void onClose(Session session, CloseReason closeReason) {
 		logger.info(String.format("Session %s close because of %s", session.getId(), closeReason));
-		
+
 	}
 
-	public void Connect(URI uri) {
-		ClientManager client = ClientManager.createClient();
-		latch = new CountDownLatch(1);
+	public void Connect(String address) {
 
 		try {
-			session=client.connectToServer(BGSClient.class, uri);
+			URI uri;
+
+			uri = new URI(address);
+
+			ClientManager client = ClientManager.createClient();
+			latch = new CountDownLatch(1);
+			session = client.connectToServer(BGSClient.class, uri);
+			recievers.put(session.getId(), messageReciever);
 			latch.countDown();
 
-		} catch (DeploymentException e) {
+		} catch (DeploymentException | URISyntaxException e) {
 			throw new RuntimeException(e);
 		}
 	}

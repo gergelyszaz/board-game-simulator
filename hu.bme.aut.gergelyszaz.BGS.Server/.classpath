@@ -24,7 +24,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Program Files/eclipse/eclipse/plugins/javax.inject_1.0.0.v20091030.jar" sourcepath="D:/Program Files/Eclipse/eclipse/plugins/javax.inject.source_1.0.0.v20091030.jar">
+	<classpathentry kind="lib" path="D:/Program Files/Eclipse/eclipse/plugins/javax.inject_1.0.0.v20091030.jar" sourcepath="D:/Program Files/Eclipse/eclipse/plugins/javax.inject.source_1.0.0.v20091030.jar">
 		<accessrules>
 			<accessrule kind="accessible" pattern="javax/inject/*"/>
 			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>

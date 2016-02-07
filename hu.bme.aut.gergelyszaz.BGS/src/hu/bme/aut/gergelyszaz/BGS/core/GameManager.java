@@ -58,7 +58,8 @@ public class GameManager implements Runnable{
 	public void run()
 	{
 		while(true){
-			List<Game> rg=runningGames;
+			List<Game> rg=new ArrayList<>();
+					rg.addAll(runningGames);
 			for(Game g:rg){
 				g.Step();
 				if(g.IsFinished()) runningGames.remove(g);
