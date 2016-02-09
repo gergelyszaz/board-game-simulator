@@ -1,11 +1,12 @@
 package hu.bme.aut.gergelyszaz.BGS.state;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameState {
 
-	public GameState(String name, int version, int turncount, String currentplayer, List<String> players,
-			List<FieldState> fields, List<TokenState> tokens, List<Integer> selectables) {
+	public GameState(String name, int version, int turncount, int currentplayer, List<PlayerState> players,
+			List<FieldState> fields, List<TokenState> tokens, List<Integer> selectables, List<Integer> winners,List<Integer> losers) {
 		super();
 		this.name = name;
 		this.version = version;
@@ -15,6 +16,8 @@ public class GameState {
 		this.fields = fields;
 		this.tokens = tokens;
 		this.selectables = selectables;
+		this.winners=winners;
+		this.losers=losers;
 	}
 
 	public String getName() {
@@ -29,7 +32,7 @@ public class GameState {
 		return turncount;
 	}
 
-	public List<String> getPlayers() {
+	public List<PlayerState> getPlayers() {
 		return players;
 	}
 
@@ -44,22 +47,31 @@ public class GameState {
 	public List<Integer> getSelectables() {
 		return selectables;
 	}
+	
+	public List<Integer> getWinners(){
+		return winners;
+	}
+	public List<Integer> getLosers(){
+		return losers;
+	}
 
 	final int version;
 	final int turncount;
-	final List<String> players;
+	final List<PlayerState> players;
 	final List<FieldState> fields;
 	final List<TokenState> tokens;
 	final List<Integer> selectables;
 	final String name;
-	final String currentplayer;
+	final int currentplayer;
+	final List<Integer> winners;
+	final List<Integer> losers;
 
-	public String getCurrentplayer() {
+	public int getCurrentplayer() {
 		return currentplayer;
 	}
 
 	public GameState getPublicState() {
-		return new GameState(name, version, turncount, currentplayer, players, fields, tokens, null);
+		return new GameState(name, version, turncount, currentplayer, players, fields, tokens, new ArrayList(),winners,losers);
 	}
 
 }

@@ -1,8 +1,8 @@
-package hu.bme.aut.gergelyszaz.BGS.state
+package hu.bme.aut.gergelyszaz.BGS.state;
 
 public class TokenState {
 	public int id;
 	public int field;
-	public String owner;
+	public int owner;
 
 }

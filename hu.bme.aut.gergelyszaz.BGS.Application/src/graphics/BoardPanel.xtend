@@ -21,6 +21,7 @@ import javax.swing.JButton
 import javax.swing.JLabel
 import javax.swing.JLayeredPane
 import org.json.JSONObject
+import javax.swing.SwingUtilities
 
 class BoardPanel extends JLayeredPane implements ActionListener, IMessageReciever {
 	val states = new Stack<GameState>
@@ -34,14 +35,16 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 	var maxY = Integer.MIN_VALUE
 	val tokens = new Hashtable<Integer, TokenState>
 	val fields = new Hashtable<Integer, FieldState>
-	val colorManager=new ColorManager() 
-	private JLabel turncountLabel=new JLabel("");
+	val colorManager = new ColorManager()
+	private JLabel turncountLabel = new JLabel("");
 
 	new() {
 		super()
-		states.add(new GameState("", 0, 0, "", new ArrayList, new ArrayList, new ArrayList, new ArrayList))
+		states.add(
+			new GameState("", 0, 0, -1, new ArrayList, new ArrayList, new ArrayList, new ArrayList, new ArrayList,
+				new ArrayList))
 		add(turncountLabel)
-		turncountLabel.bounds=new Rectangle(0,0,100,100)
+		turncountLabel.bounds = new Rectangle(0, 0, 100, 100)
 	}
 
 	BGSClient client;
@@ -52,8 +55,8 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 
 	def AddGameState(GameState gs) {
 		states.push(gs)
-		
-		turncountLabel.text="Turn: "+gs.turncount
+
+		turncountLabel.text = "Turn: " + gs.turncount
 
 		if (buttons.empty) {
 			for (field : states.peek.fields) {
@@ -93,16 +96,15 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 		}
 		for (n : newtokens) {
 			AddToken(tokens.get(n))
-			buttons.get(n).enabled=false
+			buttons.get(n).enabled = false
 		}
 
 		for (f : gs.fields) {
 			fields.put(f.id, f)
 		}
-		
-		for(s:gs.selectables)
-		{
-			buttons.get(s).enabled=true
+
+		for (s : gs.selectables) {
+			buttons.get(s).enabled = true
 			enabledButtons.add(buttons.get(s))
 		}
 	}
@@ -112,8 +114,7 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 		buttons.clear
 		layout = null
 
-		//addComponentListener(this)
-
+	// addComponentListener(this)
 	}
 
 	private def AddToken(TokenState t) {
@@ -121,28 +122,29 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 		button.opaque = false
 		button.contentAreaFilled = false
 		button.borderPainted = false
-		button.UI = new TokenButtonUI(colorManager,t)
+		button.UI = new TokenButtonUI(colorManager, t)
 		add(button, new Integer(2))
 		button.actionCommand = "tokenPressed"
 		button.addActionListener(this)
 		buttons.put(t.id, button)
-		buttons2.put(button,t.id)
+		buttons2.put(button, t.id)
 		tokens.put(t.id, t)
 	}
 
 	def Rescale() {
+
 		for (field : states.peek.fields) {
 			if(minX > field.x) minX = field.x
 			if(maxX < field.x) maxX = field.x
 			if(minY > field.y) minY = field.y
 			if(maxY < field.y) maxY = field.y
 		}
-		SCALE = Math.min(this.width,this.height) / (maxX - minX + 2)
+		SCALE = Math.min(this.width, this.height) / (maxX - minX + 2)
 		for (field : states.peek.fields) {
 			buttons.get(field.id).bounds = new Rectangle((field.x - minX + 1) * SCALE - SCALE / 3,
 				(field.y - minY + 1) * SCALE - SCALE / 3, SCALE * 2 / 3, SCALE * 2 / 3)
 
-			for (token : states.peek.tokens) {
+			for (token : tokens.values) {
 				if (field.id == token.field)
 					buttons.get(token.id).bounds = new Rectangle((field.x - minX + 1) * SCALE - SCALE / 3,
 						(field.y - minY + 1) * SCALE - SCALE / 3, SCALE * 2 / 3, SCALE * 2 / 3)
@@ -152,11 +154,11 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 	}
 
 	override paint(Graphics g) {
-
+		if(states.size == 0) return;
 		Rescale
 		var g2 = g as Graphics2D;
 
-		g2.clearRect(0,0,width,height)
+		g2.clearRect(0, 0, width, height)
 		for (field : states.peek.fields) {
 			for (ne : field.neighbours) {
 				val n = fields.get(ne)
@@ -183,23 +185,22 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 	override actionPerformed(ActionEvent e) {
 		val action = e.actionCommand
 		if (action == "fieldPressed" || action == "tokenPressed") {
-			// controller.selectedField = buttons.get(e.source).hashCode
 			client.SendMessage((new JSONObject().put("action", "select").put("parameter", buttons2.get(e.source))))
 		}
 		DisableButtons
 	}
 
-
-
-	
-
 	override RecieveMessage(JSONObject obj) {
 		println(obj.toString)
 		val gson = new Gson
-		if(obj.getString("name")==null) return;
+		if(obj.getString("name") == null) return;
 		val state = gson.fromJson(obj.toString, GameState)
-		AddGameState(state)
-		revalidate
+		SwingUtilities.invokeLater(new Runnable() {
+		override run() {
+				AddGameState(state)
+			}
+		})
+		//revalidate
 		repaint
 	}
 
