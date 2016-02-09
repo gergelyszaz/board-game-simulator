@@ -16,21 +16,22 @@ import java.util.List
 import java.util.Random
 import java.util.Set
 import java.util.Stack
+import hu.bme.aut.gergelyszaz.BGS.state.PlayerState
 
 class Game implements IController {
 	Model model
 	String name
-	List<Player> players = new ArrayList<Player>
-	HashMap<String, Action> labels = new HashMap
-	Set<IView> views = new HashSet
+	val players = new ArrayList<Player>
+	val labels = new HashMap<String, Action>
+	val views = new HashSet<IView>
 	int turnCount = 1
 	Action currentAction = null
-	LinkedList<Action> actionHistory = new LinkedList
+	val actionHistory = new LinkedList<Action>
 	val tokens = new ArrayList<Token>
-	private Stack<GameState> gameStates = new Stack
-	var varManager = new VariableManager
+	val gameStates = new Stack<GameState>
+	val varManager = new VariableManager
 	boolean gameEnded = false
-	public volatile var waitForInput = false
+	volatile var waitForInput = false
 
 	private def Player getCurrentPlayer() { varManager.GetReference(VariableManager.CURRENTPLAYER, null) as Player }
 
@@ -199,6 +200,10 @@ class Game implements IController {
 
 	private Set<Integer> activebuttons = new HashSet<Integer>
 
+	List<Integer> losers=new ArrayList
+
+	List<Integer> winners=new ArrayList
+
 	private def ExecuteAction(Action action) {
 		activebuttons.clear
 		if (action.name == "SELECT") {
@@ -231,14 +236,11 @@ class Game implements IController {
 
 			SaveCurrentState
 			views.forEach[Refresh]
-			
+
 			if (activebuttons.empty) {
-				// TODO step back
+				// TODO step back?
 				Lose
 				waitForInput = false
-				println(actionHistory.pop)
-				println(actionHistory.pop)
-				println(currentAction = actionHistory.peek)
 			}
 
 		} else if (action.name == "SPAWN") {
@@ -294,25 +296,38 @@ class Game implements IController {
 	}
 
 	private def Lose() {
+		losers.add(currentPlayer.hashCode)
+		// TODO think about it: does the game end, or only the player is removed from game
+		SaveCurrentState
+		views.forEach[Refresh]
 		gameEnded = true
 	}
 
 	private def Win() {
+		winners.add(currentPlayer.hashCode)
+		// TODO think about it: does the game end, or only the player is removed from game
+		SaveCurrentState
+		views.forEach[Refresh]
 		gameEnded = true
 	}
 
-	override getCurrentState(String playerID) {
-		var p = players.findFirst[it.id == playerID]
-		var gs = gameStates.peek
-		if (p.id != gs.currentplayer)
+	override getCurrentState(String playerID) {		
+		val gamestate = gameStates.peek
+		var gs=gamestate
+		var p = players.findFirst[it.hashCode == gamestate.currentplayer]
+		if (p.id != playerID){			
 			gs = gs.publicState
+			}
 		return gs
 	}
 
 	private def SaveCurrentState() {
-		val plist = new ArrayList<String>
+		val plist = new ArrayList<PlayerState>
 		for (p : players) {
-			plist.add(p.id)
+			val ps=new PlayerState
+			ps.id=p.hashCode
+			ps.name=p.name
+			plist.add(ps)
 		}
 		val flist = new ArrayList<FieldState>
 		for (f : fields) {
@@ -331,7 +346,7 @@ class Game implements IController {
 			val ts = new TokenState
 			ts.id = t.hashCode
 			ts.field = t.field.hashCode
-			ts.owner = t.owner.id
+			ts.owner = t.owner.hashCode
 			tlist.add(ts)
 		}
 
@@ -339,15 +354,14 @@ class Game implements IController {
 		if (!gameStates.empty()) {
 			i = gameStates.peek.version + 1
 		}
-		val state = new GameState(this.model.name, i, turnCount, currentPlayer.id, plist, flist, tlist,
-			activebuttons.toList)
+		val state = new GameState(this.model.name, i, turnCount, currentPlayer.hashCode, plist, flist, tlist,
+			activebuttons.toList, winners, losers)
 		gameStates.push(state)
 
 	}
 
 	override setSelected(String playerID, int ID) {
-		if(playerID!=currentPlayer.id) return false
-		println("selected: "+ID)
+		if(playerID != currentPlayer.id) return false
 		return ( (selectedField = ID) || (selectedToken = ID))
 
 	}

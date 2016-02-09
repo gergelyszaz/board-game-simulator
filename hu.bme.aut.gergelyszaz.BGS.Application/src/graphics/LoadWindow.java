@@ -16,9 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.json.JSONObject;
 
@@ -117,7 +115,7 @@ public class LoadWindow {
 					@Override
 					public void run() {
 						super.run();
-						client.SendMessage(new JSONObject().put("action", "join").put("parameter", "Mills"));
+						//client.SendMessage(new JSONObject().put("action", "join").put("parameter", "Mills"));
 					}
 				};
 			}
@@ -137,8 +135,10 @@ public class LoadWindow {
 						frame.setVisible(true);
 						frame.setSize(new Dimension(500, 500));
 						
-						panel.SetClient(client);
+						BGSClient client;
+						panel.SetClient(client=new BGSClient());
 						client.Connect(pathField.getText(),panel);
+						client.SendMessage(new JSONObject().put("action", "join").put("parameter", "Mills"));
 						client.SendMessage(new JSONObject().put("action", "join").put("parameter", "Mills"));
 					};
 
@@ -152,5 +152,4 @@ public class LoadWindow {
 		panel_1.add(verticalStrut);
 	}
 
-	BGSClient client = new BGSClient();
 }

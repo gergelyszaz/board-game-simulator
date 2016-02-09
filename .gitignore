@@ -4,3 +4,5 @@
 */bin/
 */src-gen/
 */xtend-gen/
+*.BGS*/.classpath
+*.BGS*/.project
