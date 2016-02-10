@@ -6,3 +6,5 @@
 */xtend-gen/
 *.BGS*/.classpath
 *.BGS*/.project
+*/.idea/
+*/*.iml

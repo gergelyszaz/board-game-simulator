@@ -1,15 +1,13 @@
 package hu.bme.aut.gergelyszaz.BGS.server;
 
+import hu.bme.aut.gergelyszaz.BGS.manager.GameManager;
+import org.glassfish.tyrus.server.Server;
+
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
-
-import org.glassfish.tyrus.server.Server;
-
-import hu.bme.aut.gergelyszaz.BGS.manager.GameManager;
 
 public class WebSocketServer {
 
@@ -22,7 +20,8 @@ public class WebSocketServer {
 	public static void runServer() {
 		
 		try {
-			InputStream input = new FileInputStream("games.properties");
+			InputStream input = WebSocketServer.class.getResourceAsStream("/config/games.properties");
+			//new FileInputStream("games.properties");
 			configFile.load(input);
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
@@ -48,9 +47,5 @@ public class WebSocketServer {
 		} finally {
 			server.stop();
 		}
-	}
-
-	public static void LoadAllModels() {
-		
 	}
 }

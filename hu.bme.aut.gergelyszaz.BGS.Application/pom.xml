@@ -20,6 +20,23 @@
       </resource>
     </resources>
     <plugins>
+	<plugin>
+  <groupId>org.eclipse.xtend</groupId>
+  <artifactId>xtend-maven-plugin</artifactId>
+  <version>2.9.0</version>
+  <executions>
+    <execution>
+      <goals>
+        <goal>compile</goal>
+        <goal>testCompile</goal>
+      </goals>
+      <configuration>
+        <outputDirectory>${project.build.directory}/xtend-gen/main</outputDirectory>
+        <testOutputDirectory>${project.build.directory}/xtend-gen/test</testOutputDirectory>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.3</version>
@@ -31,6 +48,11 @@
     </plugins>
   </build>
   <dependencies>
+  <dependency>
+  <groupId>org.eclipse.xtend</groupId>
+  <artifactId>org.eclipse.xtend.lib</artifactId>
+  <version>2.9.0</version>
+</dependency>
   	<dependency>
   		<groupId>hu.bme.aut.gergelyszaz.BGS</groupId>
   		<artifactId>hu.bme.aut.gergelyszaz.BGS.Server</artifactId>
