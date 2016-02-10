@@ -1,18 +1,16 @@
 package hu.bme.aut.gergelyszaz.BGS.manager;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
+import com.google.inject.Injector;
+import hu.bme.aut.gergelyszaz.BGLStandaloneSetup;
+import hu.bme.aut.gergelyszaz.bGL.Model;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
-import com.google.inject.Injector;
-
-import hu.bme.aut.gergelyszaz.BGLStandaloneSetup;
-import hu.bme.aut.gergelyszaz.bGL.Model;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 public class ModelManager {
 	private static XtextResourceSet resourceSet;
@@ -38,6 +36,7 @@ public class ModelManager {
 	public void LoadModel(String input) throws Exception
 	{
 		String path = /*"platform://" +*/ input.replace("\\", "//");
+		System.out.println(path=ModelManager.class.getResource(path).toString());
 		Resource resource = resourceSet.getResource(URI.createURI(path), true);
 		
 		Model model = (Model) resource.getContents().get(0);

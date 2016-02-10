@@ -1,26 +1,18 @@
 package hu.bme.aut.gergelyszaz.BGS.server;
 
-import java.io.IOException;
-import java.util.logging.Logger;
-
-import javax.inject.Inject;
-import javax.websocket.CloseReason;
-import javax.websocket.CloseReason.CloseCodes;
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.google.gson.Gson;
-
 import hu.bme.aut.gergelyszaz.BGS.core.IController;
 import hu.bme.aut.gergelyszaz.BGS.core.IView;
 import hu.bme.aut.gergelyszaz.BGS.manager.GameManager;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.websocket.*;
+import javax.websocket.CloseReason.CloseCodes;
+import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 @ServerEndpoint(value = "/game")
 public class BGSServer implements IView {
@@ -31,7 +23,6 @@ public class BGSServer implements IView {
 	private static final String ACTION = "action";
 	private static final String STATUS = "status";
 
-	@Inject
 	private GameManager gm = GameManager.getInstance();
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 	private Session session;
