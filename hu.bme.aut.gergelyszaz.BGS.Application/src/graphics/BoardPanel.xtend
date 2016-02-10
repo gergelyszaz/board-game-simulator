@@ -198,10 +198,11 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 		SwingUtilities.invokeLater(new Runnable() {
 		override run() {
 				AddGameState(state)
+				repaint
 			}
 		})
 		//revalidate
-		repaint
+		
 	}
 
 }

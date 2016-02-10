@@ -17,10 +17,9 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 
-//import hu.bme.aut.gergelyszaz.BGS.server.GameStateToJson;
-import hu.bme.aut.gergelyszaz.BGS.core.GameManager;
 import hu.bme.aut.gergelyszaz.BGS.core.IController;
 import hu.bme.aut.gergelyszaz.BGS.core.IView;
+import hu.bme.aut.gergelyszaz.BGS.manager.GameManager;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 
 @ServerEndpoint(value = "/game")
@@ -67,14 +66,14 @@ public class BGSServer implements IView {
 			return Update(session);
 
 		case "info":
-			ret.put("runningGames", gm.runningGames.size());
+			ret.put("running", gm.runningGames.size());
 			JSONArray games = new JSONArray();
-			ret.put("availableGames", gm.availableGames.size());
-			ret.put("playerConnections", gm.playerConnections.size());
+			ret.put("waiting", gm.availableGames.size());
+			ret.put("connections", gm.playerConnections.size());
 			for (String g : gm.mm.AvailableModels()) {
 				games.put(new JSONObject().put("name", g));
 			}
-			ret.put("models", games);
+			ret.put("games", games);
 			return ret.toString();
 
 		case "select":

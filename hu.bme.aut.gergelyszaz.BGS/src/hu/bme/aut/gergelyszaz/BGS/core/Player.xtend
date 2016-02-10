@@ -1,36 +1,40 @@
 package hu.bme.aut.gergelyszaz.BGS.core
 
 import java.awt.Color
-import java.util.Random
+import hu.bme.aut.gergelyszaz.BGS.manager.IDGenerator.GGID
 
-class Player {
-	String ID
+class Player implements GGID {
+	String sessionID
 	Color color
 	String userName
+	int uniqueID
 
 	new(int id) {
-		ID = null
-		val r = new Random(id + 360)
-		color = new Color(r.nextFloat, r.nextFloat, r.nextFloat)
-		userName="Player "+id
+		sessionID = null
+		uniqueID=id		
+		userName="Player"
 	}
 
 	def getColor() { color }
 
-	def String getId() {
-		return ID
+	def String getSessionID() {
+		return sessionID
 	}
 
 	def String getName() {
 		userName
 	}
 
-	def void setId(String id) {
-		ID = id
+	def void setSessionID(String id) {
+		sessionID = id
 	}
 
 	def boolean IsConnected() {
-		return ID != null
+		return sessionID != null
+	}
+	
+	override getUniqueID() {
+		return uniqueID
 	}
 
 }

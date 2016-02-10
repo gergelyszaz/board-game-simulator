@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import org.glassfish.tyrus.server.Server;
 
-import hu.bme.aut.gergelyszaz.BGS.core.GameManager;
+import hu.bme.aut.gergelyszaz.BGS.manager.GameManager;
 
 public class WebSocketServer {
 

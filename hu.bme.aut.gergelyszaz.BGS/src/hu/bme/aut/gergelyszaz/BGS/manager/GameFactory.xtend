@@ -1,4 +1,4 @@
-package hu.bme.aut.gergelyszaz.BGS.factory
+package hu.bme.aut.gergelyszaz.BGS.manager
 
 import hu.bme.aut.gergelyszaz.BGS.core.Game
 
