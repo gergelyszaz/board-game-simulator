@@ -1,10 +1,12 @@
-package hu.bme.aut.gergelyszaz.BGS.core;
+package hu.bme.aut.gergelyszaz.BGS.manager;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import hu.bme.aut.gergelyszaz.BGS.factory.GameFactory;
+import hu.bme.aut.gergelyszaz.BGS.core.Game;
+import hu.bme.aut.gergelyszaz.BGS.core.IController;
+
 
 
 public class GameManager implements Runnable{
@@ -51,7 +53,6 @@ public class GameManager implements Runnable{
 		}
 		return g;
 	}
-	
 	
 	
 	@Override

@@ -85,7 +85,7 @@ class Game implements IController {
 	def boolean Join(String clientID) {
 		for (p : players) {
 			if (!p.IsConnected) {
-				p.id = clientID
+				p.sessionID = clientID
 				SaveCurrentState
 				return true
 			}
@@ -315,7 +315,7 @@ class Game implements IController {
 		val gamestate = gameStates.peek
 		var gs=gamestate
 		var p = players.findFirst[it.hashCode == gamestate.currentplayer]
-		if (p.id != playerID){			
+		if (p.getSessionID != playerID){			
 			gs = gs.publicState
 			}
 		return gs
@@ -361,7 +361,7 @@ class Game implements IController {
 	}
 
 	override setSelected(String playerID, int ID) {
-		if(playerID != currentPlayer.id) return false
+		if(playerID != currentPlayer.sessionID) return false
 		return ( (selectedField = ID) || (selectedToken = ID))
 
 	}

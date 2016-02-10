@@ -1,4 +1,4 @@
-package hu.bme.aut.gergelyszaz.BGS.core;
+package hu.bme.aut.gergelyszaz.BGS.manager;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
