@@ -1,7 +1,8 @@
-package hu.bme.aut.gergelyszaz.BGS.core
+package hu.bme.aut.gergelyszaz.BGS.core.model
 
 
 import hu.bme.aut.gergelyszaz.bGL.Field
+import hu.bme.aut.gergelyszaz.BGS.core.VariableManager
 
 class Token {
 	public String type
