@@ -7,4 +7,6 @@
 *.BGS*/.classpath
 *.BGS*/.project
 */.idea/
-*/*.iml
+*.iml
+out/
+*.idea
