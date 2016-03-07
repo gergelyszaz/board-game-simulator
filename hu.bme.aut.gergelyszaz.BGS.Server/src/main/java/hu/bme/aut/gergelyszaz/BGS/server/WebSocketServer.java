@@ -14,10 +14,10 @@ public class WebSocketServer {
 	private static Properties configFile = new Properties();
 
 	public static void main(String[] args) {
-		runServer();
+		runServer("localhost",8025,"/websockets");
 	}
 
-	public static void runServer() {
+	public static void runServer(String hostName, int port, String rootpath) {
 		
 		try {
 			InputStream input = WebSocketServer.class.getResourceAsStream("/config/games.properties");
@@ -35,7 +35,7 @@ public class WebSocketServer {
 			}
 		}
 		
-		Server server = new Server("localhost", 8025, "/websockets", BGSServer.class);
+		Server server = new Server(hostName, port, "/"+rootpath, BGSServer.class);
 		
 		try {
 			server.start();

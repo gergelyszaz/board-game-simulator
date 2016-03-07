@@ -1,6 +1,7 @@
 package graphics;
 
 import hu.bme.aut.gergelyszaz.BGS.client.BGSClient;
+import hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -9,7 +10,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static javax.swing.JFrame.*;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 public class LoadWindow {
 
@@ -94,6 +95,25 @@ public class LoadWindow {
 		panel.add(pathField);
 		pathField.setText("ws://localhost:8025/websockets/game");
 		pathField.setHorizontalAlignment(SwingConstants.LEFT);
+
+		JButton serverButton = new JButton("Start server");
+		panel.add(serverButton);
+		serverButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new Thread() {
+					@Override
+					public void run() {
+						String path=pathField.getText().replaceFirst("ws://","");
+						String[] params=path.split(":");
+						String[] p2=params[1].split("/");
+						WebSocketServer.runServer(params[0],Integer.parseInt(p2[0]),p2[1]);
+					}
+				}.start();
+			}
+
+		});
+		serverButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		JButton btnconnectButton = new JButton("Connect");
 		panel.add(btnconnectButton);
