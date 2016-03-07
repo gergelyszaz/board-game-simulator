@@ -5,7 +5,7 @@
 	<artifactId>hu.bme.aut.gergelyszaz.BGS.Server</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0</version>
-	<name>wordgame</name>
+	<name>hu.bme.aut.gergelyszaz.BGS.Server</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>

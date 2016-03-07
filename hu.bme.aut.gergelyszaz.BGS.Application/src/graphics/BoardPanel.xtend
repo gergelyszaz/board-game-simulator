@@ -202,7 +202,7 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 			}
 		})
 		//revalidate
-		
+
 	}
 
 }
