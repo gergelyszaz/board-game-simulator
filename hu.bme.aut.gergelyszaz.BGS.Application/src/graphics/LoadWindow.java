@@ -137,16 +137,16 @@ public class LoadWindow {
                         client.Connect(pathField.getText(), obj -> {
                             JSONArray games = obj.getJSONArray("games");
 
-                            DefaultListModel<String> model = new DefaultListModel<>();
+							DefaultListModel<String> model = new DefaultListModel<>();
 
-                            for (Object o : games) {
-                                String e = ((JSONObject) o).getString("name");
-                                model.addElement(e);
-                            }
-                            SwingUtilities.invokeLater(() -> {
-                                list.setModel(model);
-                                list.setSelectedIndex(0);
-                            });
+							for (Object o : games) {
+								String e = ((JSONObject) o).getString("name");
+								model.addElement(e);
+							}
+							SwingUtilities.invokeLater(() -> {
+								list.setModel(model);
+								list.setSelectedIndex(0);
+							});
 
                         });
                         client.SendMessage(new JSONObject().put("action", "info"));
