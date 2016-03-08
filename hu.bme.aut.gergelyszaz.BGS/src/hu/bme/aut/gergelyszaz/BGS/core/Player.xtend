@@ -1,9 +1,9 @@
 package hu.bme.aut.gergelyszaz.BGS.core
 
 import java.awt.Color
-import hu.bme.aut.gergelyszaz.BGS.manager.IDGenerator.GGID
 
-class Player implements GGID {
+
+class Player {
 	String sessionID
 	Color color
 	String userName
@@ -31,10 +31,6 @@ class Player implements GGID {
 
 	def boolean IsConnected() {
 		return sessionID != null
-	}
-	
-	override getUniqueID() {
-		return uniqueID
 	}
 
 }

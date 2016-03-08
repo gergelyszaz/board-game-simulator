@@ -9,8 +9,9 @@ import java.util.HashMap
 import hu.bme.aut.gergelyszaz.bGL.AdditionExp
 import hu.bme.aut.gergelyszaz.bGL.MultiplicationExp
 import hu.bme.aut.gergelyszaz.bGL.SimpleAssignment
+import hu.bme.aut.gergelyszaz.BGS.core.identify.IDManager
 
-class VariableManager {
+class VariableManager{
 	public static val String THIS="this"
 	public static val String CURRENTPLAYER="currentPlayer"
 	public static val String OWNER="owner"
@@ -263,8 +264,6 @@ class VariableManager {
 			parent.StoreToObject_Name(sa.name,value)
 		}
 	}
-	
-	
 	
 
 }
