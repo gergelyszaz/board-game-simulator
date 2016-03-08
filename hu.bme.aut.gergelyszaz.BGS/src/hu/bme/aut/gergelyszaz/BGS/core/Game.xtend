@@ -17,6 +17,7 @@ import java.util.Random
 import java.util.Set
 import java.util.Stack
 import hu.bme.aut.gergelyszaz.BGS.state.PlayerState
+import hu.bme.aut.gergelyszaz.BGS.manager.IDManager
 
 class Game implements IController {
 	Model model
@@ -33,6 +34,8 @@ class Game implements IController {
 	boolean gameEnded = false
 	volatile var waitForInput = false
 
+	IDManager IDs=new IDManager
+
 	private def Player getCurrentPlayer() { varManager.GetReference(VariableManager.CURRENTPLAYER, null) as Player }
 
 	private def void setCurrentPlayer(Player player) {
@@ -47,7 +50,7 @@ class Game implements IController {
 
 	private def setSelectedField(int fieldID) {
 		if(!activebuttons.contains(fieldID)) return false
-		val f = model.board.fields.findFirst[it.hashCode == fieldID]
+		val f = model.board.fields.findFirst[IDs.getID(it) == fieldID]
 		if(f == null) return false
 		varManager.StoreToObject_Name(null, VariableManager.SELECTEDFIELD, f)
 		waitForInput = false
@@ -58,7 +61,7 @@ class Game implements IController {
 
 	private def setSelectedToken(int tokenID) {
 		if(!activebuttons.contains(tokenID)) return false
-		val t = tokens.findFirst[it.hashCode == tokenID]
+		val t = tokens.findFirst[IDs.getID(it)== tokenID]
 		if(t == null) return false
 		selectedToken = t
 		waitForInput = false
@@ -220,17 +223,17 @@ class Game implements IController {
 						}
 						if (possibilities > 0) {
 							varManager.StoreToObject_Name(null, VariableManager.THIS, t)
-							if(varManager.Evaluate(action.filter)) activebuttons.add(t.hashCode)
+							if(varManager.Evaluate(action.filter)) activebuttons.add(IDs.getID(t))
 						}
 					} else {
 						varManager.StoreToObject_Name(null, VariableManager.THIS, t)
-						if(varManager.Evaluate(action.filter)) activebuttons.add(t.hashCode)
+						if(varManager.Evaluate(action.filter)) activebuttons.add(IDs.getID(t))
 					}
 				}
 			} else if (action.objectOfSelect == 'FIELD') {
 				for (f : model.board.fields) {
 					varManager.StoreToObject_Name(null, VariableManager.THIS, f)
-					if(varManager.Evaluate(action.filter)) activebuttons.add(f.hashCode)
+					if(varManager.Evaluate(action.filter)) activebuttons.add(IDs.getID(f))
 				}
 			}
 
@@ -296,7 +299,7 @@ class Game implements IController {
 	}
 
 	private def Lose() {
-		losers.add(currentPlayer.hashCode)
+		losers.add(IDs.getID(currentPlayer))
 		// TODO think about it: does the game end, or only the player is removed from game
 		SaveCurrentState
 		views.forEach[Refresh]
@@ -304,7 +307,7 @@ class Game implements IController {
 	}
 
 	private def Win() {
-		winners.add(currentPlayer.hashCode)
+		winners.add(IDs.getID(currentPlayer))
 		// TODO think about it: does the game end, or only the player is removed from game
 		SaveCurrentState
 		views.forEach[Refresh]
@@ -314,7 +317,7 @@ class Game implements IController {
 	override getCurrentState(String playerID) {		
 		val gamestate = gameStates.peek
 		var gs=gamestate
-		var p = players.findFirst[it.hashCode == gamestate.currentplayer]
+		var p = players.findFirst[IDs.getID(it)== gamestate.currentplayer]
 		if (p.getSessionID != playerID){			
 			gs = gs.publicState
 			}
@@ -325,28 +328,28 @@ class Game implements IController {
 		val plist = new ArrayList<PlayerState>
 		for (p : players) {
 			val ps=new PlayerState
-			ps.id=p.hashCode
+			ps.id=IDs.getID(p)
 			ps.name=p.name
 			plist.add(ps)
 		}
 		val flist = new ArrayList<FieldState>
 		for (f : fields) {
 			val fs = new FieldState
-			fs.id = f.hashCode
+			fs.id = IDs.getID(f)
 			fs.x = f.x;
 			fs.y = f.y;
 			fs.z = f.z;
 			for (n : f.neighbours) {
-				fs.neighbours.add(n.hashCode)
+				fs.neighbours.add(IDs.getID(n))
 			}
 			flist.add(fs)
 		}
 		val tlist = new ArrayList<TokenState>
 		for (t : tokens) {
 			val ts = new TokenState
-			ts.id = t.hashCode
-			ts.field = t.field.hashCode
-			ts.owner = t.owner.hashCode
+			ts.id = IDs.getID(t)
+			ts.field = IDs.getID(t.field)
+			ts.owner = IDs.getID(t.owner)
 			tlist.add(ts)
 		}
 
@@ -354,7 +357,7 @@ class Game implements IController {
 		if (!gameStates.empty()) {
 			i = gameStates.peek.version + 1
 		}
-		val state = new GameState(this.model.name, i, turnCount, currentPlayer.hashCode, plist, flist, tlist,
+		val state = new GameState(this.model.name, i, turnCount, IDs.getID(currentPlayer), plist, flist, tlist,
 			activebuttons.toList, winners, losers)
 		gameStates.push(state)
 
