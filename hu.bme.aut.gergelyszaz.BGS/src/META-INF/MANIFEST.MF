@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Class-Path: osgi-3.10.0-v20140606-1445.jar icu4j-52.1.jar tyrus-contai
+ ner-grizzly-1.1.jar org.eclipse.emf.mwe.utils-1.3.11.jar org.eclipse.
+ emf.ecore-2.11.1-v20150805-0538.jar grizzly-framework-2.3.3.jar org.e
+ clipse.emf.codegen-2.11.0-v20150806-0404.jar BGL.jar contenttype-3.4.
+ 200-v20140207-1251.jar javax.inject-1.jar app-1.3.200-v20130910-1609.
+ jar asm-commons-5.0.1.jar gson-1.7.1.jar asm-tree-5.0.1.jar guava-14.
+ 0.1.jar org.eclipse.emf.mwe.core-1.3.11.jar org.eclipse.jdt.core-3.10
+ .0.v20140604-1726.jar preferences-3.5.200-v20140224-1527.jar guava-17
+ .0.jar org.eclipse.xtext.xbase.lib-2.9.1.jar org.eclipse.xtend.lib.ma
+ cro-2.9.1.jar org.eclipse.xtend.lib-2.9.1.jar tyrus-websocket-core-1.
+ 1.jar aopalliance-1.0.jar common-3.6.200-v20130402-1505.jar org.eclip
+ se.xtend.lib.macro-2.9.0.jar tyrus-core-1.1.jar registry-3.5.400-v201
+ 40428-1507.jar org.eclipse.xtext-2.8.4.jar antlr-runtime-3.2.jar log4
+ j-1.2.16.jar grizzly-http-2.3.3.jar org.eclipse.emf.ecore.xmi-2.11.1-
+ v20150805-0538.jar org.eclipse.xtend.lib-2.9.0.jar tyrus-spi-1.1.jar 
+ json-20151123.jar org.eclipse.xtext.util-2.8.4.jar commons-logging-1.
+ 2.jar asm-5.0.1.jar org.eclipse.xtext.xbase.lib-2.8.4.jar org.eclipse
+ .emf.common-2.11.0-v20150805-0538.jar guice-3.0.jar javax.websocket-a
+ pi-1.0.jar grizzly-http-server-2.3.3.jar org.eclipse.xtext.common.typ
+ es-2.8.4.jar runtime-3.10.0-v20140318-2214.jar jobs-3.6.0-v20140424-0
+ 053.jar grizzly-rcm-2.3.3.jar tyrus-server-1.1.jar tyrus-client-1.1.j
+ ar
+Main-Class: graphics.LoadWindow
+

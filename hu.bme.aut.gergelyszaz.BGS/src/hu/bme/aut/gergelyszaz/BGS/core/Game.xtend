@@ -18,6 +18,8 @@ import java.util.Set
 import java.util.Stack
 import hu.bme.aut.gergelyszaz.BGS.state.PlayerState
 import hu.bme.aut.gergelyszaz.BGS.manager.IDManager
+import hu.bme.aut.gergelyszaz.BGS.core.model.Player
+
 
 class Game implements IController {
 	Model model

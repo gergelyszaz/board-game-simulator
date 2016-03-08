@@ -1,10 +1,8 @@
 package hu.bme.aut.gergelyszaz.BGS.core.model;
 
-import hu.bme.aut.gergelyszaz.BGS.manager.IDGenerator.GGID;
-
 import java.awt.*;
 
-public class Player implements GGID {
+public class Player {
 	String sessionID;
 	Color color;
 	String userName;
@@ -34,9 +32,5 @@ public class Player implements GGID {
 		return sessionID != null;
 	}
 
-	@Override
-	public int getUniqueID() {
-		return uniqueID;
-	}
 
 }

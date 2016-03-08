@@ -1,6 +1,7 @@
 package hu.bme.aut.gergelyszaz.BGS.core;
 
 
+import hu.bme.aut.gergelyszaz.BGS.core.model.Player;
 import hu.bme.aut.gergelyszaz.bGL.Field;
 
 public class Token {

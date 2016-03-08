@@ -2,7 +2,7 @@ package hu.bme.aut.gergelyszaz.BGS.manager
 
 import hu.bme.aut.gergelyszaz.BGS.core.Game
 
-import hu.bme.aut.gergelyszaz.BGS.core.Player
+import hu.bme.aut.gergelyszaz.BGS.core.model.Player
 import hu.bme.aut.gergelyszaz.bGL.Model
 import java.util.ArrayList
 
