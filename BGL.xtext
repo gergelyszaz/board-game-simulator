@@ -95,8 +95,6 @@ Label:
 	'LABEL' name=ID 
 ;
 
-
-
 //Arithmetic operations and value assignment
 AdditionExp:
 	expressions+=MultiplicationExp (operators+= ('+'|'-') expressions+=MultiplicationExp)*
@@ -115,10 +113,3 @@ ValueAssignment:
 SimpleAssignment:
 	name=ID '=' attribute=AttributeOrInt
 ;
-
-
-
-
-
-
-
