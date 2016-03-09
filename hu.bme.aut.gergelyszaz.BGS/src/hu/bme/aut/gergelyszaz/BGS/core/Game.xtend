@@ -355,7 +355,7 @@ class Game implements IController {
 			tlist.add(ts)
 		}
 
-		var i = 0 as int
+		var i = 0
 		if (!gameStates.empty()) {
 			i = gameStates.peek.version + 1
 		}

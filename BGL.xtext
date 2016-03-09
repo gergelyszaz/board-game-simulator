@@ -7,6 +7,8 @@ Model:
 	 player=Player 
 	 board=Board 
 	 (tokens+=Token)* 
+	 (cards+=Card)*
+	 
 	 'RULES' '{' (rules+=Action)* '}'
 	 ('WIN CONDITION' '{' (winCondition=OrExp) '}')?
 	 ('LOSE CONDITION' '{' (loseCondition=OrExp) '}')?
@@ -16,6 +18,7 @@ Player:
 	name='PLAYERS' playercount=INT
 	'{'
 		(variables+=SimpleAssignment)*
+		(decks+=Deck)*
 		(playerSetups+=PlayerSetup)*	
 	'}'
 	;
@@ -30,10 +33,10 @@ PlayerSetup:
 Board:
 	
 	name='BOARD' '{'
-	 (variables+=SimpleAssignment)*
+	(decks+=Deck)*
+	(variables+=SimpleAssignment)*
 	(fields+=Field)* 
 	'}'
-	
 	;
 	
 
@@ -43,7 +46,7 @@ Token returns Token:
 ;
 
 Field:
-	name=ID '(' x=INT ',' y=INT ',' z=INT ')' '{'
+	('FIELD')? name=ID '(' x=INT ',' y=INT ',' z=INT ')' '{'
 	(neighbours+=[Field])* 
 	(variables+=SimpleAssignment)*
 	'}';
@@ -51,15 +54,34 @@ Field:
 Action:
 	
 	(name='SPAWN' (token=[Token]) )|
-	(name='MOVE') | (name='DESTROY') | (name='WIN') | (name='LOSE') |
-	(name='SELECT' objectOfSelect=('TOKEN'|'FIELD') 'WHERE' filter=OrExp)	|
+	(name='MOVE' objectOfSelect=('TOKEN'|'CARD')?) | (name='DESTROY') | (name='WIN') | (name='LOSE') |
+	(name='SELECT' objectOfSelect=('TOKEN'|'FIELD'|'CARD'|'DECK'|'PLAYER') 'WHERE' filter=OrExp)	|
 	(name='ROLL' numberOfDice=INT  from=INT '-' to=INT) |
 	(assignment=ValueAssignment) |
 	(gotoCondition=GotoCondition) |
-	(label=Label)
+	(label=Label) |
+	(name='SHUFFLE')
 	
 	;
+	
+	
+//Cardgame specific parts
+Card:
+	'CARD' name=ID
+	'{'
+	(variables+=SimpleAssignment)*
+	('ACTION' '{'(actions+=Action)* '}')?
+	('CONDITION' '{' (condition=OrExp)? '}')?
+	'}'
+;
 
+Deck:
+	visibility=('PUBLIC'|'PROTECTED'|'PRIVATE') 'DECK'
+	name=ID
+	'{'
+	(cards+=[Card])*
+	'}'
+;
 
 
 
@@ -95,6 +117,8 @@ Label:
 	'LABEL' name=ID 
 ;
 
+
+
 //Arithmetic operations and value assignment
 AdditionExp:
 	expressions+=MultiplicationExp (operators+= ('+'|'-') expressions+=MultiplicationExp)*
@@ -113,3 +137,10 @@ ValueAssignment:
 SimpleAssignment:
 	name=ID '=' attribute=AttributeOrInt
 ;
+
+
+
+
+
+
+

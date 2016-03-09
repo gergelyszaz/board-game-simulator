@@ -1,0 +1,95 @@
+GAME Uno 
+
+PLAYERS 2 {
+	setup=1
+	PROTECTED DECK hand {}	
+}
+
+BOARD {
+	PRIVATE DECK deck { 
+		c_1_0 c_1_1 c_1_2 c_1_3 c_1_4 c_1_5 c_1_6 c_1_7 c_1_8 c_1_9 
+		c_2_0 c_2_1 c_2_2 c_2_3 c_2_4 c_2_5 c_2_6 c_2_7 c_2_8 c_2_9
+		c_3_0 c_3_1 c_3_2 c_3_3 c_3_4 c_3_5 c_3_6 c_3_7 c_3_8 c_3_9
+		c_4_0 c_4_1 c_4_2 c_4_3 c_4_4 c_4_5 c_4_6 c_4_7 c_4_8 c_4_9
+	}
+	PUBLIC DECK table {}
+	setup=1
+}
+
+CARD c_1_0{	color=1	number=0 }
+CARD c_1_1{	color=1	number=1 }
+CARD c_1_2{	color=1	number=2 }
+CARD c_1_3{	color=1	number=3 }
+CARD c_1_4{	color=1	number=4 }
+CARD c_1_5{	color=1	number=5 }
+CARD c_1_6{	color=1	number=6 }
+CARD c_1_7{	color=1	number=7 }
+CARD c_1_8{	color=1	number=8 }
+CARD c_1_9{	color=1	number=9 }
+
+CARD c_2_0{	color=2	number=0 }
+CARD c_2_1{	color=2	number=1 }
+CARD c_2_2{	color=2	number=2 }
+CARD c_2_3{	color=2	number=3 }
+CARD c_2_4{	color=2	number=4 }
+CARD c_2_5{	color=2	number=5 }
+CARD c_2_6{	color=2	number=6 }
+CARD c_2_7{	color=2	number=7 }
+CARD c_2_8{	color=2	number=8 }
+CARD c_2_9{	color=2	number=9 }
+
+CARD c_3_0{	color=3	number=0 }
+CARD c_3_1{	color=3	number=1 }
+CARD c_3_2{	color=3	number=2 }
+CARD c_3_3{	color=3	number=3 }
+CARD c_3_4{	color=3	number=4 }
+CARD c_3_5{	color=3	number=5 }
+CARD c_3_6{	color=3	number=6 }
+CARD c_3_7{	color=3	number=7 }
+CARD c_3_8{	color=3	number=8 }
+CARD c_3_9{	color=3	number=9 }
+
+CARD c_4_0{	color=4	number=0 }
+CARD c_4_1{	color=4	number=1 }
+CARD c_4_2{	color=4	number=2 }
+CARD c_4_3{	color=4	number=3 }
+CARD c_4_4{	color=4	number=4 }
+CARD c_4_5{	color=4	number=5 }
+CARD c_4_6{	color=4	number=6 }
+CARD c_4_7{	color=4	number=7 }
+CARD c_4_8{	color=4	number=8 }
+CARD c_4_9{	color=4	number=9 }
+
+RULES {
+	IF setup==0 GOTO NOTSETUP
+	selectedDeck=currentPlayer.hand
+	
+	selectedCard=deck.top	MOVE CARD
+	selectedCard=deck.top	MOVE CARD
+	selectedCard=deck.top	MOVE CARD
+	selectedCard=deck.top	MOVE CARD
+	selectedCard=deck.top	MOVE CARD
+	
+	setup=0
+	IF 1==1 GOTO END
+	LABEL NOTSETUP
+	
+	SELECT CARD WHERE (this.deck === currentPlayer.hand AND
+					( this.color==table.top.color OR this.number==table.top.number))
+					OR this===deck.top
+					
+	IF selectedCard===deck.top GOTO DRAW
+	
+	selectedDeck=deck MOVE CARD
+	
+	IF 1==1 GOTO END
+	
+	LABEL DRAW
+	selectedDeck=hand	MOVE CARD
+	
+	LABEL END
+}
+
+WIN CONDITION{
+	this.hand.count==0
+}
