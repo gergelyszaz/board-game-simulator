@@ -32,7 +32,7 @@ BOARD
 	F51 (3,5,0){F43 F52			h1=F52 h2=F53 v1=F31 v2=F43 owner=F51 }
 	F52 (4,5,0){F51 F53 F62		h1=F51 h2=F53 v1=F62 v2=F72 owner=F52 }
 	F53 (5,5,0){F52 F44			h1=F51 h2=F52 v1=F33 v2=F44 owner=F53 }
-	F61 (2,6,0){F62 F42			h1=F62 h2=F63 v1=F22 v2=F42 owner=F61 }
+	F61 (2,6,0){F62 F42			h1=F62 h2=F63 v1=F21 v2=F42 owner=F61 }
 	F62 (4,6,0){F52 F72 F61 F63	h1=F61 h2=F63 v1=F52 v2=F72 owner=F62 }
 	F63 (6,6,0){F62 F45			h1=F61 h2=F62 v1=F23 v2=F45 owner=F63 }
 	F71 (1,7,0){F41 F72			h1=F72 h2=F73 v1=F11 v2=F41 owner=F71 }

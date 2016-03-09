@@ -17,7 +17,7 @@ public class WebSocketServer {
         runServer("localhost", 8025, "/websockets");
     }
 
-    private static boolean running = false;
+    private static volatile boolean running = false;
 
     public static boolean isRunning() {
         return running;
