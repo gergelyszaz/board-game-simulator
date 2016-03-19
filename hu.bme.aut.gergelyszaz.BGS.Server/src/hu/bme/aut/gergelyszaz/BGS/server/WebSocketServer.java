@@ -50,7 +50,7 @@ public class WebSocketServer {
         try {
             server.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Please press a key to stop the server.");
+            System.out.print("Server is running.");
             running = true;
             while
                     (running) {
