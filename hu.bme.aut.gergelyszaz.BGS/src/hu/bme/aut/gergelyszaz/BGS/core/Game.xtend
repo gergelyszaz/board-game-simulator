@@ -32,11 +32,15 @@ class Game implements IController {
 	val actionHistory = new LinkedList<Action>
 	val tokens = new ArrayList<Token>
 	val gameStates = new Stack<GameState>
-	val varManager = new VariableManager
+	val VariableManager varManager;
 	boolean gameEnded = false
 	volatile var waitForInput = false
 
 	IDManager IDs=new IDManager
+
+	new(VariableManager vm){
+		varManager=vm;
+	}
 
 	private def Player getCurrentPlayer() { varManager.GetReference(VariableManager.CURRENTPLAYER, null) as Player }
 
