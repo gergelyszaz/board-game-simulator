@@ -21,6 +21,11 @@ class VariableManager{
 	public static val String ROLLRESULT="rollResult"
 	public static val String SELECTEDFIELD="selectedField"
 	public static val String SELECTEDTOKEN="selectedToken"
+	public static val String SELECTEDDECK="selectedDeck"
+	public static val String SELECTEDCARD="selectedCard"
+	public static val String SELECTEDPLAYER="selectedPlayer"
+	public static val String TOP="top"
+	public static val String DECK="deck"
 	public static val String DISTANCE_FROM_SELECTED_TOKEN="distanceFromSelectedToken"
 	
 	private HashMap<Object,HashMap<String,Integer>> variables=new HashMap
@@ -29,17 +34,7 @@ class VariableManager{
 	
 	private def PutLowerCased(HashMap<String,Integer> map, String key, Integer value){	return map.put(key.toLowerCase,value) }
 	private def PutLowerCased(HashMap<String,Object> map, String key, Object value){	return map.put(key.toLowerCase,value) }
-	
-	new()
-	{
-		Init()
-	}
-	
-	def void Init()
-	{
-		StoreToObject_Name(null,"null",nullObject)	
-	}
-	
+
 	def void Clear(){
 		variables.clear
 		references.clear
