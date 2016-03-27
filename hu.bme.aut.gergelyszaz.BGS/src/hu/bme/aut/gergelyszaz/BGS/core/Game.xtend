@@ -19,14 +19,16 @@ import java.util.Stack
 import hu.bme.aut.gergelyszaz.BGS.state.PlayerState
 import hu.bme.aut.gergelyszaz.BGS.manager.IDManager
 import hu.bme.aut.gergelyszaz.BGS.core.model.Player
-
+import hu.bme.aut.gergelyszaz.BGS.core.model.Deck
+import hu.bme.aut.gergelyszaz.BGS.core.model.Card
 
 class Game implements IController {
 	Model model
 	String name
-	val players = new ArrayList<Player>
+	List<Player> players;
 	val labels = new HashMap<String, Action>
 	val views = new HashSet<IView>
+	Set<Deck> decks;
 	int turnCount = 1
 	Action currentAction = null
 	val actionHistory = new LinkedList<Action>
@@ -82,6 +84,21 @@ class Game implements IController {
 		t.field.setupDistance(0)
 	}
 
+	private def void setSelectedDeck(Deck d){
+		varManager.StoreToObject_Name(null, VariableManager.SELECTEDDECK, d)
+	}
+
+	private def Deck getSelectedDeck(){
+		return varManager.GetReference(VariableManager.SELECTEDDECK, null) as Deck;
+	}
+
+	private def void setSelectedCard(Card c){
+		varManager.StoreToObject_Name(null, VariableManager.SELECTEDCARD, c)
+	}
+	private def getSelectedCard(){
+		return varManager.GetReference(VariableManager.SELECTEDCARD, null) as Card
+	}
+
 	private def void setupDistance(Field field, int distance) {
 		val dist = varManager.GetValue(VariableManager.DISTANCE_FROM_SELECTED_TOKEN, field)
 		if(dist > -1 && dist <= distance) return;
@@ -106,27 +123,16 @@ class Game implements IController {
 		return players.forall[IsConnected]
 	}
 
-	def Init(String n, List<Player> p, Model m) {
-		name = n
-		players.addAll(p)
-		model = m
-		currentPlayer = players.get(0)
+	def Init(Model m,List<Player> p,Set<Deck> d) {
+		name = m.name;
+		players=p;
+		decks=d;
+		model = m;
 
-		// store all field
-		for (f : model.board.fields) {
-			varManager.StoreToObject_Name(null, f.name, f)
-		}
-		// variables may contain reference to token
-		for (f : model.board.fields) {
-			varManager.StoreToObject_Name(f, "tokenCount", 0)
-			for (v : f.variables) {
-				varManager.Store(v, f)
-			}
-		}
-
+		currentPlayer = players.get(0);
 		for (a : model.rules) {
 			if (a.label != null) {
-				labels.put(a.label.name, a)
+				labels.put(a.label.name, a);
 			}
 		}
 	}
@@ -135,7 +141,7 @@ class Game implements IController {
 		for (var i = 0; i < players.length - 1; i++) {
 			if(currentPlayer == players.get(i)) return players.get(i + 1)
 		}
-		return players.get(0)
+		return players.get(0);
 	}
 
 	def Step() {
@@ -241,6 +247,18 @@ class Game implements IController {
 					varManager.StoreToObject_Name(null, VariableManager.THIS, f)
 					if(varManager.Evaluate(action.filter)) activebuttons.add(IDs.getID(f))
 				}
+			} else if(action.objectOfSelect=='DECK'){
+				for(d:decks){
+					varManager.StoreToObject_Name(null, VariableManager.THIS, d)
+					if(varManager.Evaluate(action.filter)) activebuttons.add(IDs.getID(d))
+				}
+			} else if(action.objectOfSelect=='CARD'){
+				for(d:decks){
+					for(c:d.cards){
+						varManager.StoreToObject_Name(null, VariableManager.THIS, c)
+						if(varManager.Evaluate(action.filter)) activebuttons.add(IDs.getID(c))
+					}
+				}
 			}
 
 			SaveCurrentState
@@ -259,7 +277,12 @@ class Game implements IController {
 			token.owner = currentPlayer
 
 		} else if (action.name == "MOVE") {
-			selectedToken.field = selectedField
+			if(action.objectOfSelect=="CARD"){
+				selectedCard.MoveTo(selectedDeck);
+			}
+			else{
+				selectedToken.field = selectedField;
+			}
 
 		} else if (action.name == "DESTROY") {
 			selectedToken.Destroy

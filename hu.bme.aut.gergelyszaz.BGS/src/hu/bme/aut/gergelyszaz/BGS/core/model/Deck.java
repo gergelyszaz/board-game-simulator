@@ -9,7 +9,7 @@ import java.util.Stack;
  * Created by mad on 2016-03-19.
  */
 public class Deck {
-    private Stack<Card> cards;
+    public Stack<Card> cards;
     VariableManager vm;
     public Deck(VariableManager variableManager, Stack<Card> cards){
         vm=variableManager;
@@ -22,7 +22,6 @@ public class Deck {
     }
 
     private void UpdateTop(){
-        cards.peek();
         vm.StoreToObject_Name(this,"top",cards.peek());
     }
 
@@ -32,5 +31,6 @@ public class Deck {
     }
     public void AddCard(Card card){
         cards.push(card);
+        UpdateTop();
     }
 }

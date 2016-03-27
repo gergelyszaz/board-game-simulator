@@ -9,12 +9,14 @@ import hu.bme.aut.gergelyszaz.BGS.core.VariableManager
 import java.util.Stack
 import hu.bme.aut.gergelyszaz.BGS.core.model.Card
 import hu.bme.aut.gergelyszaz.BGS.core.model.Deck
+import java.util.HashSet
 
 class GameFactory {
 	def CreateGame(Model model) {
 		var vm=new VariableManager
 		val game = new Game(vm)
 		val players = new ArrayList<Player>
+		val decks=new HashSet<Deck>
 		
 		//Player setup
 		for (var id = 0; id < model.player.playercount; id++) {
@@ -22,17 +24,46 @@ class GameFactory {
 			players.add(player)
 		}
 
+		vm.StoreToObject_Name(null, VariableManager.NULL, null);
 
+		//store and fill all decks
+		for(d: model.board.decks){
+			var cards=new Stack<Card>();
+			for(c:d.cards){
+				cards.add(new Card(vm,c));
+			}
+			var deck=new Deck(vm,cards);
+			decks.add(deck);
+			vm.StoreToObject_Name(null, d.name, deck);
+		}
+
+		//store and fill all player decks
 		for(d : model.player.decks){
 			var cards=new Stack<Card>();
 			for(c:d.cards){
 				cards.add(new Card(vm,c));
 			}
 			var deck=new Deck(vm,cards);
+			decks.add(deck);
+			for(p:players){
+				vm.StoreToObject_Name(p, d.name, deck);
+			}
 		}
 
+		// store all field
+		for (f : model.board.fields) {
+			vm.StoreToObject_Name(null, f.name, f)
+			vm.StoreToObject_Name(f, "tokenCount", 0)
+			for (v : f.variables) {
+				vm.Store(v, f)
+			}
+		}
 
-		game.Init(model.name, players, model);
+		game.Init(model, players, decks);
 		return game;
 	}
+
+
 }
+
+

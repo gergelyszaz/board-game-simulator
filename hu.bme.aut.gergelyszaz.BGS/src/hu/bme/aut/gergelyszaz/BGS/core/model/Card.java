@@ -14,7 +14,7 @@ public class Card {
     }
     private Deck deck;
 
-    public void Move(Deck toDeck){
+    public void MoveTo(Deck toDeck){
         deck.RemoveCard(this);
         deck=toDeck;
         vm.StoreToObject_Name(this,"deck",deck);
