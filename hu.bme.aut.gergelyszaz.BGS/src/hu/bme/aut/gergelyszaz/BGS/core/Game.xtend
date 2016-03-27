@@ -21,6 +21,8 @@ import hu.bme.aut.gergelyszaz.BGS.manager.IDManager
 import hu.bme.aut.gergelyszaz.BGS.core.model.Player
 import hu.bme.aut.gergelyszaz.BGS.core.model.Deck
 import hu.bme.aut.gergelyszaz.BGS.core.model.Card
+import hu.bme.aut.gergelyszaz.BGS.state.DeckState
+import hu.bme.aut.gergelyszaz.BGS.state.CardState
 
 class Game implements IController {
 	Model model
@@ -28,7 +30,7 @@ class Game implements IController {
 	List<Player> players;
 	val labels = new HashMap<String, Action>
 	val views = new HashSet<IView>
-	Set<Deck> decks;
+	List<Deck> decks;
 	int turnCount = 1
 	Action currentAction = null
 	val actionHistory = new LinkedList<Action>
@@ -123,7 +125,7 @@ class Game implements IController {
 		return players.forall[IsConnected]
 	}
 
-	def Init(Model m,List<Player> p,Set<Deck> d) {
+	def Init(Model m,List<Player> p,List<Deck> d) {
 		name = m.name;
 		players=p;
 		decks=d;
@@ -361,6 +363,18 @@ class Game implements IController {
 			ps.id=IDs.getID(p)
 			ps.name=p.name
 			plist.add(ps)
+
+			ps.decks=new ArrayList<DeckState>
+			for(d: decks){
+				val ds=new DeckState
+				ps.decks.add(ds)
+				ds.id=IDs.getID(d)
+				for(c:d.cards){
+					val cs=new CardState
+					cs.id=IDs.getID(c)
+					ds.cards.add(cs)
+				}
+			}
 		}
 		val flist = new ArrayList<FieldState>
 		for (f : fields) {
@@ -387,8 +401,20 @@ class Game implements IController {
 		if (!gameStates.empty()) {
 			i = gameStates.peek.version + 1
 		}
+
+		var deckstates=new ArrayList<DeckState>
+		for(d: decks){
+			val ds=new DeckState
+			deckstates.add(ds)
+			ds.id=IDs.getID(d)
+			for(c:d.cards){
+				val cs=new CardState
+				cs.id=IDs.getID(c)
+				ds.cards.add(cs)
+			}
+		}
 		val state = new GameState(this.model.name, i, turnCount, IDs.getID(currentPlayer), plist, flist, tlist,
-			activebuttons.toList, winners, losers)
+			activebuttons.toList, winners, losers, deckstates)
 		gameStates.push(state)
 
 	}
@@ -398,5 +424,7 @@ class Game implements IController {
 		return ( (selectedField = ID) || (selectedToken = ID))
 
 	}
+
+
 
 }

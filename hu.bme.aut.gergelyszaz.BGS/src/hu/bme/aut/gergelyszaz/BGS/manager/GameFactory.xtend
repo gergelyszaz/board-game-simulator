@@ -16,7 +16,7 @@ class GameFactory {
 		var vm=new VariableManager
 		val game = new Game(vm)
 		val players = new ArrayList<Player>
-		val decks=new HashSet<Deck>
+		val decks=new ArrayList<Deck>
 		
 		//Player setup
 		for (var id = 0; id < model.player.playercount; id++) {
@@ -39,14 +39,16 @@ class GameFactory {
 
 		//store and fill all player decks
 		for(d : model.player.decks){
-			var cards=new Stack<Card>();
-			for(c:d.cards){
-				cards.add(new Card(vm,c));
-			}
-			var deck=new Deck(vm,cards);
-			decks.add(deck);
+			//the same cards are in each deck
 			for(p:players){
+				var cards=new Stack<Card>();
+				for(c:d.cards){
+					cards.add(new Card(vm,c));
+				}
+				var deck=new Deck(vm,cards);
+				decks.add(deck);
 				vm.StoreToObject_Name(p, d.name, deck);
+				vm.StoreToObject_Name(deck, VariableManager.OWNER, p);
 			}
 		}
 
