@@ -283,9 +283,10 @@ class Game implements IController {
 			else{
 				selectedToken.field = selectedField;
 			}
-
+		} else if (action.name == "SHUFFLE") {
+			selectedDeck.Shuffle();
 		} else if (action.name == "DESTROY") {
-			selectedToken.Destroy
+			selectedToken.Destroy();
 			tokens.remove(selectedToken)
 
 		} else if (action.name == "WIN") {
