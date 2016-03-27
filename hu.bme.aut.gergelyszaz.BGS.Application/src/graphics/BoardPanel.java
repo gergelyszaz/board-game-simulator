@@ -38,7 +38,7 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
         super();
         states.add(
                 new GameState("", 0, 0, -1, new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(),
-                        new ArrayList()));
+                        new ArrayList(), new ArrayList()));
         add(turncountLabel);
         turncountLabel.setBounds(new Rectangle(0, 0, 100, 100));
     }

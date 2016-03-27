@@ -6,7 +6,7 @@ import java.util.List;
 public class GameState {
 
 	public GameState(String name, int version, int turncount, int currentplayer, List<PlayerState> players,
-			List<FieldState> fields, List<TokenState> tokens, List<Integer> selectables, List<Integer> winners,List<Integer> losers) {
+					 List<FieldState> fields, List<TokenState> tokens, List<Integer> selectables, List<Integer> winners, List<Integer> losers, List<DeckState> decks) {
 		super();
 		this.name = name;
 		this.version = version;
@@ -18,6 +18,7 @@ public class GameState {
 		this.selectables = selectables;
 		this.winners=winners;
 		this.losers=losers;
+		this.decks = decks;
 	}
 
 	public String getName() {
@@ -54,6 +55,7 @@ public class GameState {
 	public List<Integer> getLosers(){
 		return losers;
 	}
+	public List<DeckState> getDecks(){return decks;}
 
 	final int version;
 	final int turncount;
@@ -65,13 +67,14 @@ public class GameState {
 	final int currentplayer;
 	final List<Integer> winners;
 	final List<Integer> losers;
+	final List<DeckState> decks;
 
 	public int getCurrentplayer() {
 		return currentplayer;
 	}
 
 	public GameState getPublicState() {
-		return new GameState(name, version, turncount, currentplayer, players, fields, tokens, new ArrayList(),winners,losers);
+		return new GameState(name, version, turncount, currentplayer, players, fields, tokens, new ArrayList(),winners,losers, decks);
 	}
 
 }
