@@ -55,7 +55,7 @@ public class LoadWindow {
     private void initialize() {
         frmBoardgameSimulator = new JFrame();
         frmBoardgameSimulator.setTitle("Boardgame Simulator");
-        frmBoardgameSimulator.setBounds(100, 100, 400, 201);
+        frmBoardgameSimulator.setMinimumSize(new Dimension( 500, 200));
         frmBoardgameSimulator.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frmBoardgameSimulator.getContentPane()
                 .setLayout(new BoxLayout(frmBoardgameSimulator.getContentPane(), BoxLayout.Y_AXIS));
@@ -68,6 +68,7 @@ public class LoadWindow {
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if(list.getModel().getSize()<1) return;
                 JFrame frame = new JFrame();
                 BoardPanel panel = new BoardPanel();
                 frame.getContentPane().add(panel);
@@ -95,26 +96,30 @@ public class LoadWindow {
         pathField.setText("ws://localhost:8025/websockets/game");
         pathField.setHorizontalAlignment(SwingConstants.LEFT);
 
-        JButton serverButton = new JButton("Start server");
+        JButton serverButton = new JButton("");
+        serverButton.setText("Start server");
         panel.add(serverButton);
         serverButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent arg0) {
                 if (!WebSocketServer.isRunning()) {
+                    serverButton.setText("Stop server");
                     new Thread() {
                         @Override
                         public void run() {
-
                             String path = pathField.getText().replaceFirst("ws://", "");
                             String[] params = path.split(":");
                             String[] p2 = params[1].split("/");
-                            WebSocketServer.runServer(params[0], Integer.parseInt(p2[0]), p2[1]);
-                            serverButton.setText("Stop server");
-
+                            System.out.println(params[0]);
+                            System.out.println(p2[0]);
+                            System.out.println(p2[1]);
+                            WebSocketServer.runServer(params[0], Integer.parseInt(p2[0]), p2[1], "/config/games.properties");
                         }
                     }.start();
-                    serverButton.setText("Stop server");
+
                 } else{
+                    DefaultListModel<String> model = new DefaultListModel<>();
+                    list.setModel(model);
                     WebSocketServer.stopServer();
                     serverButton.setText("Start server");
                 }
@@ -137,16 +142,16 @@ public class LoadWindow {
                         client.Connect(pathField.getText(), obj -> {
                             JSONArray games = obj.getJSONArray("games");
 
-							DefaultListModel<String> model = new DefaultListModel<>();
+                            DefaultListModel<String> model = new DefaultListModel<>();
 
-							for (Object o : games) {
-								String e = ((JSONObject) o).getString("name");
-								model.addElement(e);
-							}
-							SwingUtilities.invokeLater(() -> {
-								list.setModel(model);
-								list.setSelectedIndex(0);
-							});
+                            for (Object o : games) {
+                                String e = ((JSONObject) o).getString("name");
+                                model.addElement(e);
+                            }
+                            SwingUtilities.invokeLater(() -> {
+                                list.setModel(model);
+                                list.setSelectedIndex(0);
+                            });
 
                         });
                         client.SendMessage(new JSONObject().put("action", "info"));
