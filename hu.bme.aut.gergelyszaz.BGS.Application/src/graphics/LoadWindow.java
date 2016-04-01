@@ -70,14 +70,20 @@ public class LoadWindow {
             public void mouseClicked(MouseEvent e) {
                 if(list.getModel().getSize()<1) return;
                 JFrame frame = new JFrame();
-                BoardPanel panel = new BoardPanel();
-                frame.getContentPane().add(panel);
+
+                MessageReciever messageReciever=new MessageReciever();
+                BoardPanel panel = new BoardPanel(messageReciever);
+                messageReciever.addStateReciever(panel);
+                frame.add(panel);
+
+
+                panel.setPreferredSize(new Dimension(100,100));
                 frame.setVisible(true);
                 frame.setSize(new Dimension(500, 500));
 
                 BGSClient client;
-                panel.SetClient(client = new BGSClient());
-                client.Connect(pathField.getText(), panel);
+                messageReciever.setClient(client = new BGSClient());
+                client.Connect(pathField.getText(), messageReciever);
                 client.SendMessage(
                         new JSONObject().put("action", "join").put("parameter", getList().getSelectedValue()));
             }
