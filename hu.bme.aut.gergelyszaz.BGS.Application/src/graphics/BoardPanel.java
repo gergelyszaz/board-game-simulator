@@ -1,26 +1,20 @@
 package graphics;
 
-import com.google.gson.Gson;
-import hu.bme.aut.gergelyszaz.BGS.client.BGSClient;
-import hu.bme.aut.gergelyszaz.BGS.client.IMessageReciever;
 import hu.bme.aut.gergelyszaz.BGS.state.FieldState;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 import hu.bme.aut.gergelyszaz.BGS.state.TokenState;
-import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 
-class BoardPanel extends JLayeredPane implements ActionListener, IMessageReciever {
-    Stack<GameState> states = new Stack<GameState>();
+class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever {
+
     ConcurrentHashMap<Integer, JButton> buttons = new ConcurrentHashMap<Integer, JButton>();
     ConcurrentHashMap<JButton, Integer> buttons2 = new ConcurrentHashMap<JButton, Integer>();
     HashSet<JButton> enabledButtons = new HashSet<JButton>();
@@ -32,30 +26,27 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
     Hashtable<Integer, TokenState> tokens = new Hashtable<Integer, TokenState>();
     Hashtable<Integer, FieldState> fields = new Hashtable<Integer, FieldState>();
     ColorManager colorManager = new ColorManager();
-    private JLabel turncountLabel = new JLabel("");
+    JLabel turncountLabel = new JLabel("");
+    PlayerInfoPanel playerInfoPanel=null;
+    MessageReciever messageReciever;
 
-    public BoardPanel() {
+    public BoardPanel(MessageReciever messageReciever) {
         super();
-        states.add(
-                new GameState("", 0, 0, -1, new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(),
-                        new ArrayList(), new ArrayList()));
+
         add(turncountLabel);
         turncountLabel.setBounds(new Rectangle(0, 0, 100, 100));
+        this.messageReciever=messageReciever;
+        setLayout(null);
     }
 
-    BGSClient client;
 
-    public void SetClient(BGSClient c) {
-        client = c;
-    }
 
-    public void AddGameState(GameState gs) {
-        states.push(gs);
 
+    public void UpdateGameState(GameState gs) {
         turncountLabel.setText("Turn: " + gs.getTurncount());
 
         if (buttons.isEmpty()) {
-            for (FieldState field : states.peek().getFields()) {
+            for (FieldState field : gs.getFields()) {
 
                 JButton btn = new JButton();
                 buttons.put(field.id, btn);
@@ -103,15 +94,10 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
             buttons.get(s).setEnabled(true);
             enabledButtons.add(buttons.get(s));
         }
+
+        repaint();
     }
 
-    public void Init() {
-        removeAll();
-        buttons.clear();
-        setLayout(null);
-
-        // addComponentListener(this)
-    }
 
     private void AddToken(TokenState t) {
         JButton button = new JButton();
@@ -129,14 +115,14 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 
     public void Rescale() {
 
-        for (FieldState field : states.peek().getFields()) {
+        for (FieldState field : messageReciever.getCurrentState().getFields()) {
             if (minX > field.x) minX = field.x;
             if (maxX < field.x) maxX = field.x;
             if (minY > field.y) minY = field.y;
             if (maxY < field.y) maxY = field.y;
         }
         SCALE = Math.min(this.getWidth(), this.getHeight()) / (maxX - minX + 2);
-        for (FieldState field : states.peek().getFields()) {
+        for (FieldState field : messageReciever.getCurrentState().getFields()) {
             buttons.get(field.id).setBounds(new Rectangle((field.x - minX + 1) * SCALE - SCALE / 3,
                     (field.y - minY + 1) * SCALE - SCALE / 3, SCALE * 2 / 3, SCALE * 2 / 3));
 
@@ -151,12 +137,12 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
 
     @Override
     public void paint(Graphics g) {
-        if (states.size() == 0) return;
+        if (messageReciever.IsEmpty()) return;
         Rescale();
         Graphics2D g2 = (Graphics2D) g;
 
         g2.clearRect(0, 0, getWidth(), getHeight());
-        for (FieldState field : states.peek().getFields()) {
+        for (FieldState field : messageReciever.getCurrentState().getFields()) {
             for (Object ne : field.neighbours) {
                 FieldState n = fields.get(ne);
                 if (n != null) {
@@ -183,26 +169,11 @@ class BoardPanel extends JLayeredPane implements ActionListener, IMessageRecieve
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
         if (action == "fieldPressed" || action == "tokenPressed") {
-            client.SendMessage((new JSONObject().put("action", "select").put("parameter", buttons2.get(e.getSource()))));
+            messageReciever.SendSelect(buttons2.get(e.getSource()));
         }
         DisableButtons();
     }
 
-    @Override
-    public void RecieveMessage(JSONObject obj) {
-        System.out.println(obj.toString());
-        Gson gson = new Gson();
-        if (obj.getString("name") == null) return;
-        GameState state = gson.fromJson(obj.toString(), GameState.class);
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                AddGameState(state);
-                repaint();
-            }
-        });
-        //revalidate
 
-    }
 
 }
