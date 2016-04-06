@@ -12,12 +12,19 @@ public class Card {
         vm=variableManager;
         this.cardBase=cardBase;
     }
-    private Deck deck;
+
+    public String getType(){ return cardBase.getName();}
+
+    private Deck deck=null;
+
+    public void SetDeck(Deck deck){
+        this.deck=deck;
+        vm.StoreToObject_Name(this,"deck",deck);
+    }
 
     public void MoveTo(Deck toDeck){
         deck.RemoveCard(this);
-        deck=toDeck;
-        vm.StoreToObject_Name(this,"deck",deck);
+        SetDeck(toDeck);
         toDeck.AddCard(this);
     }
 }

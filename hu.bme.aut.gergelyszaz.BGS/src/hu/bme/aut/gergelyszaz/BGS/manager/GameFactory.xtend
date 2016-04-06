@@ -12,19 +12,24 @@ import hu.bme.aut.gergelyszaz.BGS.core.model.Deck
 import java.util.HashSet
 
 class GameFactory {
+
 	def CreateGame(Model model) {
 		var vm=new VariableManager
 		val game = new Game(vm)
 		val players = new ArrayList<Player>
 		val decks=new ArrayList<Deck>
-		
+
 		//Player setup
 		for (var id = 0; id < model.player.playercount; id++) {
 			val player = new Player(id+1)
 			players.add(player)
 		}
 
+		//Add fields to vm
 		vm.StoreToObject_Name(null, VariableManager.NULL, null);
+		for(f:model.board.fields){
+			vm.StoreToObject_Name(null, f.name, f)
+		}
 
 		//store and fill all decks
 		for(d: model.board.decks){
@@ -32,9 +37,10 @@ class GameFactory {
 			for(c:d.cards){
 				cards.add(new Card(vm,c));
 			}
-			var deck=new Deck(vm,cards);
+			var deck=new Deck(vm,cards,null);
 			decks.add(deck);
 			vm.StoreToObject_Name(null, d.name, deck);
+			vm.StoreToObject_Name(deck, VariableManager.OWNER, null);
 		}
 
 		//store and fill all player decks
@@ -45,16 +51,18 @@ class GameFactory {
 				for(c:d.cards){
 					cards.add(new Card(vm,c));
 				}
-				var deck=new Deck(vm,cards);
+				var deck=new Deck(vm,cards,p);
 				decks.add(deck);
 				vm.StoreToObject_Name(p, d.name, deck);
 				vm.StoreToObject_Name(deck, VariableManager.OWNER, p);
 			}
 		}
 
-		// store all field
+
+		//////Variable assagnments start here
+
+		// store all field variable
 		for (f : model.board.fields) {
-			vm.StoreToObject_Name(null, f.name, f)
 			vm.StoreToObject_Name(f, "tokenCount", 0)
 			for (v : f.variables) {
 				vm.Store(v, f)

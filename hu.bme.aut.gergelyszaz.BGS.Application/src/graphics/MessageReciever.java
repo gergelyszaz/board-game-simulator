@@ -3,6 +3,7 @@ package graphics;
 import com.google.gson.Gson;
 import hu.bme.aut.gergelyszaz.BGS.client.BGSClient;
 import hu.bme.aut.gergelyszaz.BGS.client.IMessageReciever;
+import hu.bme.aut.gergelyszaz.BGS.state.DeckState;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 import org.json.JSONObject;
 
@@ -30,7 +31,7 @@ public class MessageReciever implements IMessageReciever {
     public MessageReciever(){
         states.add(
                 new GameState("", 0, 0, -1, new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(),
-                        new ArrayList()));
+                        new ArrayList(),new ArrayList<DeckState>()));
     }
 
 

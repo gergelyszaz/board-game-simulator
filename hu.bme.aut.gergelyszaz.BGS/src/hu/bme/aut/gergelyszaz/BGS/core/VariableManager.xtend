@@ -26,6 +26,7 @@ class VariableManager{
 	public static val String SELECTEDPLAYER="selectedPlayer"
 	public static val String TOP="top"
 	public static val String DECK="deck"
+	public static val String CARDCOUNT="cardCount"
 	public static val String DISTANCE_FROM_SELECTED_TOKEN="distanceFromSelectedToken"
 	
 	private HashMap<Object,HashMap<String,Integer>> variables=new HashMap

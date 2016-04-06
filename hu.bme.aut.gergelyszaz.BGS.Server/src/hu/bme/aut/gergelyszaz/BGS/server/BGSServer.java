@@ -40,6 +40,7 @@ public class BGSServer implements IView {
 		String action = message.getString(ACTION);
 		JSONObject ret = new JSONObject();
 		switch (action) {
+
 		case "join":
 			String gameName = message.getString(PARAMETER);
 			try {
@@ -49,8 +50,9 @@ public class BGSServer implements IView {
 				session.getUserProperties().put(GAMESTATEVERSION, -1);
 				return ret.put(STATUS, "joined").toString();
 			} catch (Exception e) {
-				logger.info(e.getMessage());
-				return ret.put(STATUS, e.getMessage()).toString();
+				logger.info(e.toString());
+				ret.put("message", e.getMessage().toString());
+				return ret.put(STATUS, "error").toString();
 			}
 
 		case "update":

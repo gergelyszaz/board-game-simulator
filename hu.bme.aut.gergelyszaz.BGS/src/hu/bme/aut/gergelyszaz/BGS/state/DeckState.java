@@ -1,5 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.state;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,6 +8,7 @@ import java.util.List;
  */
 public class DeckState {
     public int id;
-    public List<CardState> cards;
+    public List<CardState> cards=new ArrayList<>();
+    public int owner=-1;
 
 }
