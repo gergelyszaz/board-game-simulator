@@ -1,0 +1,18 @@
+GAME Uno
+PLAYERS 2{
+
+
+}
+BOARD {
+
+}
+TOKEN token{}
+
+RULES {
+		SELECT FIELD WHERE this.tokenCount<1
+		SPAWN token
+		selectedField.OWNER=currentPlayer
+} 
+WIN CONDITION{
+
+}
