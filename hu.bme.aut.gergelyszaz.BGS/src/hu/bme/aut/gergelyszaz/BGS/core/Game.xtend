@@ -222,6 +222,7 @@ class Game implements IController {
 	List<Integer> winners=new ArrayList
 
 	private def ExecuteAction(Action action) {
+		try{
 		activebuttons.clear
 		if (action.name == "SELECT") {
 			waitForInput = true
@@ -324,6 +325,15 @@ class Game implements IController {
 			}
 		} else if (action.label != null) {
 		}
+		}
+		catch(Exception e){
+			System.err.println(e);
+			System.err.println("	at Action: "+action);
+			if(action.assignment!=null) {
+				System.err.println("		"+action.assignment.addition+" could not be resolved.");
+			}
+
+		}
 	}
 
 	override AddView(IView v) {
@@ -346,7 +356,7 @@ class Game implements IController {
 		gameEnded = true
 	}
 
-	override getCurrentState(String playerID) {		
+	override getCurrentState(String playerID) {
 		val gamestate = gameStates.peek
 		var gs=gamestate
 		var p = players.findFirst[IDs.getID(it)== gamestate.currentplayer]
@@ -363,18 +373,6 @@ class Game implements IController {
 			ps.id=IDs.getID(p)
 			ps.name=p.name
 			plist.add(ps)
-
-			ps.decks=new ArrayList<DeckState>
-			for(d: decks){
-				val ds=new DeckState
-				ps.decks.add(ds)
-				ds.id=IDs.getID(d)
-				for(c:d.cards){
-					val cs=new CardState
-					cs.id=IDs.getID(c)
-					ds.cards.add(cs)
-				}
-			}
 		}
 		val flist = new ArrayList<FieldState>
 		for (f : fields) {
@@ -407,9 +405,10 @@ class Game implements IController {
 			val ds=new DeckState
 			deckstates.add(ds)
 			ds.id=IDs.getID(d)
+			if(d.owner!=null) ds.owner=IDs.getID(d.owner)
 			for(c:d.cards){
-				val cs=new CardState
-				cs.id=IDs.getID(c)
+				val cs=new CardState(IDs.getID(c),c.getType());
+
 				ds.cards.add(cs)
 			}
 		}

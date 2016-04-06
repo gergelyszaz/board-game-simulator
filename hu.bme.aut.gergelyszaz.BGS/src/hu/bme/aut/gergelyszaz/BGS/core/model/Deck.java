@@ -10,10 +10,16 @@ import java.util.Stack;
  */
 public class Deck {
     public Stack<Card> cards;
+    public Player owner=null;
     VariableManager vm;
-    public Deck(VariableManager variableManager, Stack<Card> cards){
+    public Deck(VariableManager variableManager, Stack<Card> cards, Player owner){
         vm=variableManager;
         this.cards=cards;
+        this.owner=owner;
+        for(Card c:cards){
+            c.SetDeck(this);
+        }
+        UpdateTop();
     }
 
     public void Shuffle(){
@@ -22,7 +28,9 @@ public class Deck {
     }
 
     private void UpdateTop(){
-        vm.StoreToObject_Name(this,"top",cards.peek());
+        vm.StoreToObject_Name(this,VariableManager.CARDCOUNT,cards.size());
+        if(cards.isEmpty()) return;
+        vm.StoreToObject_Name(this,VariableManager.TOP,cards.peek());
     }
 
     public void RemoveCard(Card card){

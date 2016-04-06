@@ -1,11 +1,11 @@
 package hu.bme.aut.gergelyszaz.BGS.manager;
 
+import hu.bme.aut.gergelyszaz.BGS.core.Game;
+import hu.bme.aut.gergelyszaz.BGS.core.IController;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-
-import hu.bme.aut.gergelyszaz.BGS.core.Game;
-import hu.bme.aut.gergelyszaz.BGS.core.IController;
 
 
 
@@ -27,7 +27,7 @@ public class GameManager implements Runnable{
 		if(gm==null) {
 			gm=new GameManager();
 			gm.mm.Initialize();
-			new Thread(gm).start();;
+			new Thread(gm).start();
 		}
 		
 		return gm;

@@ -5,4 +5,12 @@ package hu.bme.aut.gergelyszaz.BGS.state;
  */
 public class CardState {
     public int id;
+
+    public CardState(int id, String type) {
+        this.id = id;
+        this.type = type;
+    }
+
+    public String type;
+
 }
