@@ -356,14 +356,11 @@ class Game implements IController {
 		gameEnded = true
 	}
 
-	override getCurrentState(String playerID) {
+	override getCurrentState(String sessionID) {
 		val gamestate = gameStates.peek
 		var gs=gamestate
-		var p = players.findFirst[IDs.getID(it)== gamestate.currentplayer]
-		if (p.getSessionID != playerID){			
-			gs = gs.publicState
-			}
-		return gs
+		var p = players.findFirst[it.sessionID==sessionID]
+		return gs.getPublicState(IDs.getID(p));
 	}
 
 	private def SaveCurrentState() {
@@ -403,6 +400,11 @@ class Game implements IController {
 		var deckstates=new ArrayList<DeckState>
 		for(d: decks){
 			val ds=new DeckState
+			switch(d.visibility){
+				case "PUBLIC": ds.visible=2
+				case "PROTECTED": ds.visible=1
+				case "PRIVATE": ds.visible=0
+			}
 			deckstates.add(ds)
 			ds.id=IDs.getID(d)
 			if(d.owner!=null) ds.owner=IDs.getID(d.owner)

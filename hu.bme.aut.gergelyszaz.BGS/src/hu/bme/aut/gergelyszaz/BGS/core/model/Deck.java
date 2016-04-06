@@ -11,14 +11,16 @@ import java.util.Stack;
 public class Deck {
     public Stack<Card> cards;
     public Player owner=null;
+    public String visibility;
     VariableManager vm;
-    public Deck(VariableManager variableManager, Stack<Card> cards, Player owner){
+    public Deck(VariableManager variableManager, Stack<Card> cards, Player owner, String visibility){
         vm=variableManager;
         this.cards=cards;
         this.owner=owner;
         for(Card c:cards){
             c.SetDeck(this);
         }
+        this.visibility=visibility;
         UpdateTop();
     }
 

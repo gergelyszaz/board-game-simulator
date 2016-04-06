@@ -11,6 +11,8 @@ public class CardState {
         this.type = type;
     }
 
+
+
     public String type;
 
 }
