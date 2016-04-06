@@ -37,7 +37,7 @@ class GameFactory {
 			for(c:d.cards){
 				cards.add(new Card(vm,c));
 			}
-			var deck=new Deck(vm,cards,null);
+			var deck=new Deck(vm,cards,null,d.visibility);
 			decks.add(deck);
 			vm.StoreToObject_Name(null, d.name, deck);
 			vm.StoreToObject_Name(deck, VariableManager.OWNER, null);
@@ -51,7 +51,7 @@ class GameFactory {
 				for(c:d.cards){
 					cards.add(new Card(vm,c));
 				}
-				var deck=new Deck(vm,cards,p);
+				var deck=new Deck(vm,cards,p,d.visibility);
 				decks.add(deck);
 				vm.StoreToObject_Name(p, d.name, deck);
 				vm.StoreToObject_Name(deck, VariableManager.OWNER, p);
