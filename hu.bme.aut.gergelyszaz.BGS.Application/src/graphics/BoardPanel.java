@@ -4,13 +4,15 @@ import hu.bme.aut.gergelyszaz.BGS.state.FieldState;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 import hu.bme.aut.gergelyszaz.BGS.state.TokenState;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Line2D;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever {
@@ -19,16 +21,13 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
     ConcurrentHashMap<JButton, Integer> buttons2 = new ConcurrentHashMap<JButton, Integer>();
     HashSet<JButton> enabledButtons = new HashSet<JButton>();
     int SCALE = 100;
-    int minX = Integer.MAX_VALUE;
-    int maxX = Integer.MIN_VALUE;
-    int minY = Integer.MAX_VALUE;
-    int maxY = Integer.MIN_VALUE;
     Hashtable<Integer, TokenState> tokens = new Hashtable<Integer, TokenState>();
     Hashtable<Integer, FieldState> fields = new Hashtable<Integer, FieldState>();
     ColorManager colorManager = new ColorManager();
     JLabel turncountLabel = new JLabel("");
     PlayerInfoPanel playerInfoPanel=null;
     MessageReciever messageReciever;
+    Image boardImage=null;
 
     public BoardPanel(MessageReciever messageReciever) {
         super();
@@ -40,6 +39,15 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
     }
 
 
+    Properties properties;
+    public void setGameProperties(Properties properties){
+        this.properties=properties;
+        try {
+            boardImage= ImageIO.read(BoardPanel.class.getResourceAsStream( properties.getProperty("board")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void UpdateGameState(GameState gs) {
@@ -55,8 +63,11 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
                 btn.setOpaque(false);
                 btn.setContentAreaFilled(false);
                 btn.setBorderPainted(true);
-                btn.setBounds(new Rectangle(field.x * SCALE - SCALE / 3, field.y * SCALE - SCALE / 3, SCALE * 2 / 3,
-                        SCALE * 2 / 3));
+
+                String[] fp=properties.getProperty(field.name).split("\\,");
+
+
+                btn.setBounds(new Rectangle());//field.x * SCALE - SCALE / 3, field.y * SCALE - SCALE / 3, SCALE * 2 / 3,                        SCALE * 2 / 3));
                 btn.setActionCommand("fieldPressed");
                 btn.addActionListener(this);
                 btn.setEnabled(false);
@@ -116,20 +127,21 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
     public void Rescale() {
 
         for (FieldState field : messageReciever.getCurrentState().getFields()) {
-            if (minX > field.x) minX = field.x;
-            if (maxX < field.x) maxX = field.x;
-            if (minY > field.y) minY = field.y;
-            if (maxY < field.y) maxY = field.y;
+            //if (minX > field.x) minX = field.x;
+            //if (maxX < field.x) maxX = field.x;
+            //if (minY > field.y) minY = field.y;
+            //if (maxY < field.y) maxY = field.y;
         }
-        SCALE = Math.min(this.getWidth(), this.getHeight()) / (maxX - minX + 2);
+        SCALE = Math.min(this.getWidth(), this.getHeight());
         for (FieldState field : messageReciever.getCurrentState().getFields()) {
-            buttons.get(field.id).setBounds(new Rectangle((field.x - minX + 1) * SCALE - SCALE / 3,
-                    (field.y - minY + 1) * SCALE - SCALE / 3, SCALE * 2 / 3, SCALE * 2 / 3));
+            String[] fp=properties.getProperty(field.name).split("\\,");
+            int size=SCALE/10;
+            buttons.get(field.id).setBounds(new Rectangle((int)(Float.parseFloat(fp[0]) * SCALE-size/2),(int)( Float.parseFloat(fp[1]) * SCALE-size/2), size, size));
 
             for (TokenState token : tokens.values()) {
                 if (field.id == token.field)
-                    buttons.get(token.id).setBounds(new Rectangle((field.x - minX + 1) * SCALE - SCALE / 3,
-                            (field.y - minY + 1) * SCALE - SCALE / 3, SCALE * 2 / 3, SCALE * 2 / 3));
+
+                    buttons.get(token.id).setBounds(new Rectangle((int)(Float.parseFloat(fp[0]) * SCALE-size/2),(int)( Float.parseFloat(fp[1]) * SCALE-size/2), size, size));
             }
         }
 
@@ -142,13 +154,13 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
         Graphics2D g2 = (Graphics2D) g;
 
         g2.clearRect(0, 0, getWidth(), getHeight());
+        g2.drawImage(boardImage,0,0,SCALE,SCALE,null);
         for (FieldState field : messageReciever.getCurrentState().getFields()) {
             for (Object ne : field.neighbours) {
                 FieldState n = fields.get(ne);
                 if (n != null) {
-                    Line2D line = new Line2D.Float((field.x - minX + 1) * SCALE, (field.y - minY + 1) * SCALE, n.x * SCALE,
-                            n.y * SCALE);
-                    g2.draw(line);
+                    //Line2D line = new Line2D.Float((field.x - minX + 1) * SCALE, (field.y - minY + 1) * SCALE, n.x * SCALE,                            n.y * SCALE);
+                    //g2.draw(line);
 
                 }
 
