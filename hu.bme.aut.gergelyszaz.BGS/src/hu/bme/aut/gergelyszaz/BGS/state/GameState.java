@@ -88,10 +88,10 @@ public class GameState {
         }
 
         List<Integer> publicselectables;
-        if(playerID==currentplayer){
-            publicselectables=selectables;
+        if (playerID == currentplayer) {
+            publicselectables = selectables;
         } else {
-            publicselectables=new ArrayList<>();
+            publicselectables = new ArrayList<>();
         }
 
 

@@ -375,9 +375,7 @@ class Game implements IController {
 		for (f : fields) {
 			val fs = new FieldState
 			fs.id = IDs.getID(f)
-			fs.x = f.x;
-			fs.y = f.y;
-			fs.z = f.z;
+			fs.name=f.name;
 			for (n : f.neighbours) {
 				fs.neighbours.add(IDs.getID(n))
 			}

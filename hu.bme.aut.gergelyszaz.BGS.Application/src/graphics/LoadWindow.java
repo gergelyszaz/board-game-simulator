@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.Properties;
 
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
@@ -75,6 +77,15 @@ public class LoadWindow {
                 BoardPanel panel = new BoardPanel(messageReciever);
                 messageReciever.addStateReciever(panel);
                 frame.add(panel);
+
+                Properties gameprop=new Properties();
+                try {
+                    gameprop.load(WebSocketServer.class.getResourceAsStream("/resources/"+getList().getSelectedValue()+".properties"));
+                    panel.setGameProperties(gameprop);
+                }
+                catch (IOException exception){
+                    return;
+                }
 
 
                 panel.setPreferredSize(new Dimension(100,100));
