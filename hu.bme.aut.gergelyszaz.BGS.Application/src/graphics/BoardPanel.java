@@ -24,16 +24,12 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
     Hashtable<Integer, TokenState> tokens = new Hashtable<Integer, TokenState>();
     Hashtable<Integer, FieldState> fields = new Hashtable<Integer, FieldState>();
     ColorManager colorManager = new ColorManager();
-    JLabel turncountLabel = new JLabel("");
     PlayerInfoPanel playerInfoPanel=null;
     MessageReciever messageReciever;
     Image boardImage=null;
 
     public BoardPanel(MessageReciever messageReciever) {
         super();
-
-        add(turncountLabel);
-        turncountLabel.setBounds(new Rectangle(0, 0, 100, 100));
         this.messageReciever=messageReciever;
         setLayout(null);
     }
@@ -51,8 +47,6 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
 
 
     public void UpdateGameState(GameState gs) {
-        turncountLabel.setText("Turn: " + gs.getTurncount());
-
         if (buttons.isEmpty()) {
             for (FieldState field : gs.getFields()) {
 
@@ -125,13 +119,6 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
     }
 
     public void Rescale() {
-
-        for (FieldState field : messageReciever.getCurrentState().getFields()) {
-            //if (minX > field.x) minX = field.x;
-            //if (maxX < field.x) maxX = field.x;
-            //if (minY > field.y) minY = field.y;
-            //if (maxY < field.y) maxY = field.y;
-        }
         SCALE = Math.min(this.getWidth(), this.getHeight());
         for (FieldState field : messageReciever.getCurrentState().getFields()) {
             String[] fp=properties.getProperty(field.name).split("\\,");
@@ -144,7 +131,6 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
                     buttons.get(token.id).setBounds(new Rectangle((int)(Float.parseFloat(fp[0]) * SCALE-size/2),(int)( Float.parseFloat(fp[1]) * SCALE-size/2), size, size));
             }
         }
-
     }
 
     @Override
