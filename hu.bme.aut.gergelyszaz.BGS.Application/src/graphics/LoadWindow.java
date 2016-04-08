@@ -72,23 +72,34 @@ public class LoadWindow {
             public void mouseClicked(MouseEvent e) {
                 if(list.getModel().getSize()<1) return;
                 JFrame frame = new JFrame();
+                frame.add(new JPanel());
 
                 MessageReciever messageReciever=new MessageReciever();
-                BoardPanel panel = new BoardPanel(messageReciever);
-                messageReciever.addStateReciever(panel);
-                frame.add(panel);
+                BoardPanel boardPanel= new BoardPanel(messageReciever);
+                messageReciever.addStateReciever(boardPanel);
+                frame.add(boardPanel);
+                JPanel panel2=new JPanel();
+                panel2.setLayout(new BorderLayout());
+                frame.add(panel2);
+
+                panel2.add(new PlayerInfoPanel(),BorderLayout.LINE_END);
+                panel2.add(boardPanel,BorderLayout.CENTER);
+                panel2.add(new JPanel(),BorderLayout.PAGE_END);
+
+
+
 
                 Properties gameprop=new Properties();
                 try {
-                    gameprop.load(WebSocketServer.class.getResourceAsStream("/resources/"+getList().getSelectedValue()+".properties"));
-                    panel.setGameProperties(gameprop);
+                    gameprop.load(WebSocketServer.class.getResourceAsStream("/resources/properties/"+getList().getSelectedValue()+".properties"));
+                    boardPanel.setGameProperties(gameprop);
                 }
                 catch (IOException exception){
                     return;
                 }
 
 
-                panel.setPreferredSize(new Dimension(100,100));
+                boardPanel.setPreferredSize(new Dimension(100,100));
                 frame.setVisible(true);
                 frame.setSize(new Dimension(500, 500));
 
