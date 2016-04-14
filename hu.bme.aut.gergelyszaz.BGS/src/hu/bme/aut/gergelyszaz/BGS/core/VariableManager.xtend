@@ -9,6 +9,7 @@ import java.util.HashMap
 import hu.bme.aut.gergelyszaz.bGL.AdditionExp
 import hu.bme.aut.gergelyszaz.bGL.MultiplicationExp
 import hu.bme.aut.gergelyszaz.bGL.SimpleAssignment
+import java.util.IllegalFormatCodePointException
 
 class VariableManager{
 	public static val String THIS="this"
@@ -31,7 +32,6 @@ class VariableManager{
 	
 	private HashMap<Object,HashMap<String,Integer>> variables=new HashMap
 	private HashMap<Object,HashMap<String,Object>> references=new HashMap
-	private Object nullObject=new Object
 	
 	private def PutLowerCased(HashMap<String,Integer> map, String key, Integer value){	return map.put(key.toLowerCase,value) }
 	private def PutLowerCased(HashMap<String,Object> map, String key, Object value){	return map.put(key.toLowerCase,value) }
@@ -60,9 +60,14 @@ class VariableManager{
 		val value2=exp.right.GetValue
 		val ref1=exp.left.GetReference
 		val ref2=exp.right.GetReference
-		
+
+
 		//if the types don't match or is not stored, return false
-		if(value1==null&&ref1==null||value2==null&&ref2==null||value1==null&&value2!=null) return false
+		if(exp.name.length==2&&value1==null&&ref1==null||value2==null&&ref2==null||value1==null&&value2!=null) {
+			//DumpContentToConsole
+			//throw new IllegalAccessException("Value in condition not found: "+exp)
+			return false;
+		}
 		
 		var result=false
 		switch exp.name{
@@ -78,6 +83,16 @@ class VariableManager{
 		}
 		return not!=result
 		
+	}
+
+	private def DumpContentToConsole(){
+		for(p:variables.keySet){
+			println(p+":	"+variables.get(p))
+		}
+		for(p:references.keySet){
+			println(p+":	"+references.get(p))
+		}
+
 	}
 	
 	
