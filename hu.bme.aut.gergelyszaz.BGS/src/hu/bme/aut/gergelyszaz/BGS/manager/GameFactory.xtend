@@ -23,10 +23,18 @@ class GameFactory {
 		for (var id = 0; id < model.player.playercount; id++) {
 			val player = new Player(id+1)
 			players.add(player)
+			for(s:model.player.variables){
+				vm.Store(s,player)
+			}
 		}
 
-		//Add fields to vm
 		vm.StoreToObject_Name(null, VariableManager.NULL, null);
+		for(s:model.board.variables){
+			vm.Store(s,null)
+		}
+
+
+		//Add fields to vm
 		for(f:model.board.fields){
 			vm.StoreToObject_Name(null, f.name, f)
 		}
@@ -35,7 +43,12 @@ class GameFactory {
 		for(d: model.board.decks){
 			var cards=new Stack<Card>();
 			for(c:d.cards){
-				cards.add(new Card(vm,c));
+				var nc=new Card(vm,c)
+				cards.add(nc);
+				for(s:c.variables){
+					vm.Store(s,nc)
+				}
+
 			}
 			var deck=new Deck(vm,cards,null,d.visibility);
 			decks.add(deck);
@@ -50,6 +63,9 @@ class GameFactory {
 				var cards=new Stack<Card>();
 				for(c:d.cards){
 					cards.add(new Card(vm,c));
+					for(s:c.variables){
+						vm.Store(s,c)
+					}
 				}
 				var deck=new Deck(vm,cards,p,d.visibility);
 				decks.add(deck);

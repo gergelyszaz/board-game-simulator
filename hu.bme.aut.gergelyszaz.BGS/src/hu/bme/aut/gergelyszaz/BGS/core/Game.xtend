@@ -59,22 +59,18 @@ class Game implements IController {
 	private def Field getSelectedField() { varManager.GetReference(VariableManager.SELECTEDFIELD, null) as Field }
 
 	private def setSelectedField(int fieldID) {
-		if(!activebuttons.contains(fieldID)) return false
 		val f = model.board.fields.findFirst[IDs.getID(it) == fieldID]
 		if(f == null) return false
 		varManager.StoreToObject_Name(null, VariableManager.SELECTEDFIELD, f)
-		waitForInput = false
 		return true
 	}
 
 	private def Token getSelectedToken() { varManager.GetReference(VariableManager.SELECTEDTOKEN, null) as Token }
 
 	private def setSelectedToken(int tokenID) {
-		if(!activebuttons.contains(tokenID)) return false
 		val t = tokens.findFirst[IDs.getID(it)== tokenID]
 		if(t == null) return false
 		selectedToken = t
-		waitForInput = false
 		return true
 	}
 
@@ -86,6 +82,12 @@ class Game implements IController {
 		t.field.setupDistance(0)
 	}
 
+	private def setSelectedDeck(int deckID) {
+		val t = decks.findFirst[IDs.getID(it)== deckID]
+		if(t == null) return false
+		selectedDeck= t
+		return true
+	}
 	private def void setSelectedDeck(Deck d){
 		varManager.StoreToObject_Name(null, VariableManager.SELECTEDDECK, d)
 	}
@@ -94,6 +96,17 @@ class Game implements IController {
 		return varManager.GetReference(VariableManager.SELECTEDDECK, null) as Deck;
 	}
 
+	private def setSelectedCard(int cID) {
+		var Card cs=null;
+		for(d:decks){
+			for(c:d.cards){
+				if(IDs.getID(c)==cID) cs=c;
+			}
+		}
+		if(cs == null) return false;
+		varManager.StoreToObject_Name(null, VariableManager.SELECTEDFIELD, cs)
+		return true;
+	}
 	private def void setSelectedCard(Card c){
 		varManager.StoreToObject_Name(null, VariableManager.SELECTEDCARD, c)
 	}
@@ -150,13 +163,13 @@ class Game implements IController {
 		if(waitForInput || gameEnded) return;
 		actionHistory.push(currentAction = GetNextAction(model.rules))
 		ExecuteAction(currentAction)
-		if (currentAction == model.rules.last) {
+		if (currentAction == model.rules.last) {/*
 			if (model.winCondition != null && varManager.Evaluate(model.winCondition)) {
 				Win
 			}
 			if (model.loseCondition != null && varManager.Evaluate(model.loseCondition)) {
 				Lose
-			}
+			}*/
 
 			if (!gameEnded) {
 				currentPlayer = nextPlayer
@@ -413,14 +426,17 @@ class Game implements IController {
 			}
 		}
 		val state = new GameState(this.model.name, i, turnCount, IDs.getID(currentPlayer), plist, flist, tlist,
-			activebuttons.toList, winners, losers, deckstates)
+			activebuttons.toList, winners, losers, deckstates,-1)
 		gameStates.push(state)
 
 	}
 
 	override setSelected(String playerID, int ID) {
 		if(playerID != currentPlayer.sessionID) return false
-		return ( (selectedField = ID) || (selectedToken = ID))
+		if(!activebuttons.contains(ID)) return false
+		if((selectedField = ID) || (selectedToken = ID) || (selectedCard=ID) || (selectedDeck=ID)){
+			waitForInput = false
+		}
 
 	}
 

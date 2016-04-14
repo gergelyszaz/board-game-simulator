@@ -82,9 +82,13 @@ public class LoadWindow {
                 panel2.setLayout(new BorderLayout());
                 frame.add(panel2);
 
+                CardPanel cp=new CardPanel();
+                cp.setMessageReciever(messageReciever);
+                messageReciever.addStateReciever(cp);
+
                 panel2.add(new PlayerInfoPanel(),BorderLayout.LINE_END);
                 panel2.add(boardPanel,BorderLayout.CENTER);
-                panel2.add(new JPanel(),BorderLayout.PAGE_END);
+                panel2.add(cp,BorderLayout.PAGE_END);
 
 
 

@@ -79,8 +79,3 @@ RULES
 		
 		LABEL END_TURN
 }
-
-WIN CONDITION{
-	selectedToken.owner!==currentPlayer AND selectedToken.owner.tokensPlaced>=selectedToken.owner.maxTokenCount AND selectedToken.owner.tokenCount<3 
-}
-

@@ -46,7 +46,9 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
     }
 
 
+
     public void UpdateGameState(GameState gs) {
+
         if (buttons.isEmpty()) {
             for (FieldState field : gs.getFields()) {
 
@@ -96,8 +98,11 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
         }
 
         for (Object s : gs.getSelectables()) {
-            buttons.get(s).setEnabled(true);
-            enabledButtons.add(buttons.get(s));
+            JButton b=buttons.get(s);
+            if(b!=null) {
+                b.setEnabled(true);
+                enabledButtons.add(b);
+            }
         }
 
         repaint();

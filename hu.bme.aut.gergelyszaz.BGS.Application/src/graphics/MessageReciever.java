@@ -31,7 +31,7 @@ public class MessageReciever implements IMessageReciever {
     public MessageReciever(){
         states.add(
                 new GameState("", 0, 0, -1, new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(),
-                        new ArrayList(),new ArrayList<DeckState>()));
+                        new ArrayList(),new ArrayList<DeckState>(), -1));
     }
 
 
