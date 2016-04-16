@@ -19,12 +19,6 @@ class VariableManager{
 	public static val String NULL="null"
 	public static val String TOKENCOUNT="tokenCount"
 	public static val String FIELD="field"
-	public static val String ROLLRESULT="rollResult"
-	public static val String SELECTEDFIELD="selectedField"
-	public static val String SELECTEDTOKEN="selectedToken"
-	public static val String SELECTEDDECK="selectedDeck"
-	public static val String SELECTEDCARD="selectedCard"
-	public static val String SELECTEDPLAYER="selectedPlayer"
 	public static val String TOP="top"
 	public static val String DECK="deck"
 	public static val String CARDCOUNT="cardCount"
@@ -125,6 +119,10 @@ class VariableManager{
 	def Object GetReference(AttributeOrInt att){
 		if(att.attribute==null) return null
 		return att.attribute.GetReference(null)	
+	}
+
+	def Object GetReference(AttributeName att){
+		return att.GetReference(null)
 	}
 	
 	/**

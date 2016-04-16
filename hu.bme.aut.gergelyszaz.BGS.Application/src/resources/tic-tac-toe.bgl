@@ -1,23 +1,23 @@
 GAME TicTacToe
 PLAYERS 2{}
 BOARD {
-	F11(1,1,0){}
-	F12(1,2,0){}
-	F13(1,3,0){}
-	F21(2,1,0){}
-	F22(2,2,0){}
-	F23(2,3,0){}
-	F31(3,1,0){}
-	F32(3,2,0){}
-	F33(3,3,0){}
+	F11{}
+	F12{}
+	F13{}
+	F21{}
+	F22{}
+	F23{}
+	F31{}
+	F32{}
+	F33{}
 }
 TOKEN token{}
 RULES {
-		SELECT FIELD WHERE this.tokenCount<1
-		SPAWN token
+		SELECT AS selectedField WHERE ( this.tokenCount<1)
+		SPAWN token AS selectedToken TO selectedField
 		selectedField.OWNER=currentPlayer
-} 
-WIN CONDITION{
+		
+		IF(
 	( F11.owner===F12.owner AND F12.owner===F13.owner AND F13.owner===currentPlayer ) OR
 	( F21.owner===F22.owner AND F22.owner===F23.owner AND F23.owner===currentPlayer ) OR
 	( F31.owner===F32.owner AND F32.owner===F33.owner AND F33.owner===currentPlayer ) OR
@@ -26,4 +26,7 @@ WIN CONDITION{
 	( F13.owner===F23.owner AND F23.owner===F33.owner AND F33.owner===currentPlayer ) OR
 	( F11.owner===F22.owner AND F22.owner===F33.owner AND F33.owner===currentPlayer ) OR
 	( F13.owner===F22.owner AND F22.owner===F31.owner AND F31.owner===currentPlayer )
+	){
+		WIN
+	}
 }
