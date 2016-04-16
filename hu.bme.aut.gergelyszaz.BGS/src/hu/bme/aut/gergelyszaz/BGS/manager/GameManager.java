@@ -6,7 +6,6 @@ import hu.bme.aut.gergelyszaz.BGS.core.IController;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 
 public class GameManager implements Runnable{
@@ -63,8 +62,6 @@ public class GameManager implements Runnable{
 					rg.addAll(runningGames);
 			for(Game g:rg){
 				try {
-
-
 					g.Step();
 					if (g.IsFinished()) runningGames.remove(g);
 				} catch (Exception e){

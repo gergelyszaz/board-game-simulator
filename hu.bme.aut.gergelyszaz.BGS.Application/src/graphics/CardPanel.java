@@ -29,7 +29,7 @@ public class CardPanel extends JPanel implements IStateReciever {
                 client.SendSelect(Integer.parseInt(cardlist.getSelectedValue()));
             }
         } );
-        this.add(cardlist);
+        this.add(new JScrollPane(cardlist));
     }
 
     MessageReciever client;
@@ -58,13 +58,10 @@ public class CardPanel extends JPanel implements IStateReciever {
                 }
         }
 
+        selectableCardsModel.clear();
         if(state.getCurrentplayer()==state.getPlayerID()){
             for(int id:state.getSelectables()) {
-
-
-                if (!selectableCardsModel.contains(id+"")) {
                     selectableCardsModel.addElement(id+"");
-                }
             }
         }
     }

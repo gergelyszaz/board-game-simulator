@@ -9,9 +9,7 @@ Model:
 	 (tokens+=Token)* 
 	 (cards+=Card)*
 	 
-	 'RULES' '{' (rules+=Action)* '}'
-	 ('WIN CONDITION' '{' (winCondition=OrExp) '}')?
-	 ('LOSE CONDITION' '{' (loseCondition=OrExp) '}')?
+	 'RULES' rule=NestedAction
 ;
 
 Player:
@@ -25,9 +23,7 @@ Player:
 	
 PlayerSetup:
 	name='PLAYER' id=INT 
-	'{'
-	(setupRules+=Action)*
-	'}'
+	'SETUP' setupRule=NestedAction
 ;
 
 Board:
@@ -46,23 +42,28 @@ Token returns Token:
 ;
 
 Field:
-	('FIELD')? name=ID '(' x=INT ',' y=INT ',' z=INT ')' '{'
+	('FIELD')? name=ID '{'
 	(neighbours+=[Field])* 
 	(variables+=SimpleAssignment)*
 	'}';
 
 Action:
 	
-	(name='SPAWN' (token=[Token]) )|
-	(name='MOVE' objectOfSelect=('TOKEN'|'CARD')?) | (name='DESTROY') | (name='WIN') | (name='LOSE') |
-	(name='SELECT' objectOfSelect=('TOKEN'|'FIELD'|'CARD'|'DECK'|'PLAYER') 'WHERE' filter=OrExp)	|
-	(name='ROLL' numberOfDice=INT  from=INT '-' to=INT) |
+	(name='SPAWN' (token=[Token]) ('AS' toVar=AttributeName)? 'TO' spawnTo=AttributeName)|
+	(name='MOVE' type=('TOKEN'|'CARD') selected=AttributeName 'TO' moveTo=AttributeName) | 
+	(name='DESTROY' selected=AttributeName) | (name='WIN') | (name='LOSE') |
+	(name='SELECT' 'AS' toVar=AttributeName 'WHERE'  condition=OrExp) |
+	(name='ROLL' numberOfDice=INT  from=INT '-' to=INT 'AS' toVar=AttributeName ) |
 	(assignment=ValueAssignment) |
-	(gotoCondition=GotoCondition) |
-	(label=Label) |
-	(name='SHUFFLE')
+	(name='SHUFFLE' selected=AttributeName)|
+	(name=('IF'|'WHILE') condition=OrExp nestedAction=NestedAction )|
+	(name='END TURN')
 	
 	;
+	
+NestedAction:
+	name='{'  (actions+=Action)+ '}'
+;
 	
 	
 //Cardgame specific parts
@@ -70,8 +71,8 @@ Card:
 	'CARD' name=ID
 	'{'
 	(variables+=SimpleAssignment)*
-	('ACTION' '{'(actions+=Action)* '}')?
-	('CONDITION' '{' (condition=OrExp)? '}')?
+	('ACTION' action=NestedAction)?
+	('CONDITION' '(' (condition=OrExp)? ')')?
 	'}'
 ;
 
@@ -108,16 +109,6 @@ AttributeName:
 AttributeOrInt:
 	attribute=AttributeName| value=INT
 ;
-
-GotoCondition:
-	'IF' condition=OrExp name='GOTO' goto=[Label]
-;
-
-Label:
-	'LABEL' name=ID 
-;
-
-
 
 //Arithmetic operations and value assignment
 AdditionExp:

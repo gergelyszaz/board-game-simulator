@@ -67,10 +67,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>hu.bme.aut.gergelyszaz.BGL</groupId>
-			<artifactId>hu.bme.aut.gergelyszaz.BGL</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/BGL.jar</systemPath>
+			<artifactId>BGL</artifactId>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
