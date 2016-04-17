@@ -272,6 +272,10 @@ class VariableManager{
 			parent.StoreToObject_Name(sa.name,value)
 		}
 	}
-	
+
+	def void Remove(Object ob){
+		variables.remove(ob);
+		references.remove(ob);
+	}
 
 }
