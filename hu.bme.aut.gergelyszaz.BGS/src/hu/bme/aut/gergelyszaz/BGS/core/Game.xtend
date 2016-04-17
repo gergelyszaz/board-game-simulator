@@ -125,11 +125,15 @@ class Game implements IController {
 	}
 */
 	private def void setupDistance(Field field, int distance) {
+
+		//	println(field+": "+distance)
 		val dist = varManager.GetValue(VariableManager.DISTANCE_FROM_SELECTED_TOKEN, field)
-		if(dist > -1 && dist <= distance) return;
+		if((dist > -1 && dist <= distance)) return;
 		varManager.StoreToObject_Name(field, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, distance)
 		for (f : field.neighbours) {
-			f.setupDistance(distance + 1)
+			{
+				f.setupDistance(distance + 1)
+			}
 		}
 	}
 
@@ -180,14 +184,7 @@ class Game implements IController {
 		if(waitForInput || gameEnded) return;
 		currentAction = GetNextAction(model.rule.actions)
 		ExecuteAction(currentAction)
-		if (currentAction == model.rule.actions.last) {/*
-			if (model.winCondition != null && varManager.Evaluate(model.winCondition)) {
-				Win
-			}
-			if (model.loseCondition != null && varManager.Evaluate(model.loseCondition)) {
-				Lose
-			}*/
-
+		if (currentAction == model.rule.actions.last && actionStack.isEmpty) {
 			if (!gameEnded) {
 				currentPlayer = nextPlayer
 				if (currentPlayer == players.get(0)) {
@@ -282,7 +279,10 @@ class Game implements IController {
 			waitForInput = true;
 			for(o:objects) {
 				varManager.StoreToObject_Name(null, VariableManager.THIS, o)
-				if(varManager.Evaluate(action.condition)) activebuttons.add(IDs.get(o))
+				if(varManager.Evaluate(action.condition)) {
+					println(o)
+					activebuttons.add(IDs.get(o))
+				}
 			}
 			if (activebuttons.empty) {
 				Lose
@@ -294,12 +294,15 @@ class Game implements IController {
 
 		} else if (action.name == "SPAWN") {
 			val token = new Token(varManager, action.token.name)
+			for(a:action.token.variables){
+				varManager.Store(a,token)
+			}
+			token.setOwner(currentPlayer)
 			token.field=varManager.GetReference(action.spawnTo) as Field
 			varManager.Store(action.toVar,token)
 			tokens.add(token)
 			objects.add(token)
 
-			token.owner = currentPlayer
 
 		} else if (action.name == "MOVE") {
 			if(action.type=="CARD"){
@@ -440,7 +443,7 @@ class Game implements IController {
 	override setSelected(String playerID, int ID) {
 		if(playerID != currentPlayer.sessionID) return false;
 		if(!activebuttons.contains(ID)) return false;
-		waitForInput = false;
+
 		if(currentAction.name=="SELECT"){
 			val o=IDs.get(ID);
 			varManager.Store( currentAction.toVar,o);
@@ -449,9 +452,13 @@ class Game implements IController {
 				for(f : model.board.fields) {
 					varManager.StoreToObject_Name(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, -1)
 				}
-				(o as Token).field.setupDistance(0)
+				o.field.setupDistance(0)
 			}
 		}
+
+
+		//Probably would be better with synchronization
+		waitForInput = false;
 		return true;
 
 	}
