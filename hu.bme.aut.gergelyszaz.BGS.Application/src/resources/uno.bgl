@@ -71,59 +71,59 @@ CARD c_y_skip{	color=4	number=42 }
 CARD c_y_drawtwo{	color=4	number=666 }
 
 RULES {
-	IF drawnumber>0 GOTO DRAWCARDS
-
-	LABEL SKIPTURN
-	skip=skipturn
-	skipturn=0
-	IF skip==1 GOTO END
+	IF(setup==1){ 
+		setup=0 
+		SHUFFLE deck
+		MOVE CARD deck.top TO table
+	}
+		
+	IF(currentPlayer.setup==1)
+	{
+		currentPlayer.setup=0
+		i=0
+		WHILE(i<5){
+			i=i+1
+			MOVE CARD deck.top TO currentPlayer.hand
+		}
+		END TURN
+	}
 	
-	IF setup==0 GOTO PLAYERSETUP
-	setup=0
-	selectedDeck=deck							SHUFFLE
-	selectedDeck=table	selectedCard=deck.top	MOVE CARD
-
-	LABEL PLAYERSETUP
-	IF currentplayer.setup==0 GOTO NOTSETUP
-	currentplayer.setup=0
+	IF(skipturn==1){
+		skipturn=0
+		END TURN
+	}
 	
-	selectedDeck=currentPlayer.hand
-	selectedCard=deck.top	MOVE CARD
-	selectedCard=deck.top	MOVE CARD
-	selectedCard=deck.top	MOVE CARD
-	selectedCard=deck.top	MOVE CARD
-	selectedCard=deck.top	MOVE CARD
-
-	IF 1==1 GOTO END
+	IF (drawnumber>0) {
+		i=0
+		WHILE(i<drawnumber){
+			i=i+1
+			MOVE CARD deck.top TO currentPlayer.hand
+		}
+		drawnumber=0
+		END TURN
+	}
 	
-	LABEL NOTSETUP
-
-	SELECT CARD WHERE (this.deck === currentPlayer.hand AND
-					( this.color == table.top.color OR this.number==table.top.number))
-					OR this===deck.top
-
-	IF selectedCard!==deck.top GOTO NOTDRAW
-	drawnumber=1 IF 1==1 GOTO DRAWCARDS
-
-	LABEL NOTDRAW
+	SELECT AS selected WHERE this.deck===currentPlayer.hand AND 
+			( this.color==table.top.color OR this.number==table.top.number )
+			OR
+			this===deck
+			
+	IF(selected.deck===currentPlayer.hand){ 
+		MOVE CARD selected TO table
+		IF(selected.number==42){
+			skipturn=1
+		}
+		IF(selected.number==666){
+			drawnumber=2
+		}
+		
+		IF(currentPlayer.hand.cardCount==0){
+			WIN
+		}
+	} 
+	IF(selected===deck){
+		MOVE CARD selected.top TO currentPlayer.hand
+	}
 	
-	selectedDeck=table MOVE CARD
-
-	IF selectedCard.number<=9 GOTO END
-	
-	IF 1==1 GOTO END
-
-
-
-	LABEL DRAWCARDS
-	drawnumber=drawnumber-1
-	selectedCard=deck.top
-	selectedDeck=currentPlayer.hand MOVE CARD
-	IF drawnumber>0 GOTO DRAWCARDS
-	
-	LABEL END
-}
-
-WIN CONDITION{
-	this.hand.count==0
+	END TURN
 }

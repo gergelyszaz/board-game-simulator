@@ -9,7 +9,6 @@ import hu.bme.aut.gergelyszaz.BGS.core.VariableManager
 import java.util.Stack
 import hu.bme.aut.gergelyszaz.BGS.core.model.Card
 import hu.bme.aut.gergelyszaz.BGS.core.model.Deck
-import java.util.HashSet
 
 class GameFactory {
 

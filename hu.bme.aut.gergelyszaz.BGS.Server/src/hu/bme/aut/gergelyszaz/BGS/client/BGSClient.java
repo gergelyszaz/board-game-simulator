@@ -1,22 +1,15 @@
 package hu.bme.aut.gergelyszaz.BGS.client;
 
+import org.glassfish.tyrus.client.ClientManager;
+import org.json.JSONObject;
+
+import javax.websocket.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
-
-import javax.websocket.ClientEndpoint;
-import javax.websocket.CloseReason;
-import javax.websocket.DeploymentException;
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-
-import org.glassfish.tyrus.client.ClientManager;
-import org.json.JSONObject;
 
 @ClientEndpoint
 public class BGSClient {

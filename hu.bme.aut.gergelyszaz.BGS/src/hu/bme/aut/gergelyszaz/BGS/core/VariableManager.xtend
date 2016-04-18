@@ -9,13 +9,11 @@ import java.util.HashMap
 import hu.bme.aut.gergelyszaz.bGL.AdditionExp
 import hu.bme.aut.gergelyszaz.bGL.MultiplicationExp
 import hu.bme.aut.gergelyszaz.bGL.SimpleAssignment
-import java.util.IllegalFormatCodePointException
 
 class VariableManager{
 	public static val String THIS="this"
 	public static val String CURRENTPLAYER="currentPlayer"
 	public static val String OWNER="owner"
-	public static val String TURNCOUNT="turnCount"
 	public static val String NULL="null"
 	public static val String TOKENCOUNT="tokenCount"
 	public static val String FIELD="field"
@@ -105,8 +103,10 @@ class VariableManager{
 		if(att.parent==null){
 			val ret=variables.get(obj)?.get(att.name.toLowerCase)
 			return ret
-		} else{	
-			val parent=references.get(obj).get(att.parent.toLowerCase)
+		} else{
+			val o=references.get(obj)
+			if(o==null) return null
+			val parent=o.get(att.parent.toLowerCase)
 			return att.child.GetValue(parent)
 		}
 		

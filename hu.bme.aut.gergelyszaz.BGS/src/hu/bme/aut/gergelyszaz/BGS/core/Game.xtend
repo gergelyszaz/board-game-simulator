@@ -9,9 +9,7 @@ import hu.bme.aut.gergelyszaz.bGL.Model
 import hu.bme.aut.gergelyszaz.bGL.PlayerSetup
 import java.util.ArrayList
 import java.util.Collection
-import java.util.HashMap
 import java.util.HashSet
-import java.util.LinkedList
 import java.util.List
 import java.util.Random
 import java.util.Set
@@ -21,6 +19,7 @@ import hu.bme.aut.gergelyszaz.BGS.manager.IDManager
 import hu.bme.aut.gergelyszaz.BGS.core.model.Player
 import hu.bme.aut.gergelyszaz.BGS.core.model.Deck
 import hu.bme.aut.gergelyszaz.BGS.core.model.Card
+import hu.bme.aut.gergelyszaz.BGS.core.model.Token
 import hu.bme.aut.gergelyszaz.BGS.state.DeckState
 import hu.bme.aut.gergelyszaz.BGS.state.CardState
 
@@ -35,7 +34,6 @@ class Game implements IController {
 
 	IDManager IDs=new IDManager
 
-	val labels = new HashMap<String, Action>
 	val views = new HashSet<IView>
 	int turnCount = 1
 	Action currentAction = null
@@ -126,7 +124,7 @@ class Game implements IController {
 */
 	private def void setupDistance(Field field, int distance) {
 
-		//	println(field+": "+distance)
+		//	TODO rewrite without and use BFS instead of DFS
 		val dist = varManager.GetValue(VariableManager.DISTANCE_FROM_SELECTED_TOKEN, field)
 		if((dist > -1 && dist <= distance)) return;
 		varManager.StoreToObject_Name(field, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, distance)
@@ -186,19 +184,17 @@ class Game implements IController {
 		ExecuteAction(currentAction)
 		if (currentAction == model.rule.actions.last && actionStack.isEmpty) {
 			if (!gameEnded) {
-				currentPlayer = nextPlayer
-				if (currentPlayer == players.get(0)) {
-					turnCount++
-					varManager.StoreToObject_Name(null, VariableManager.TURNCOUNT, turnCount)
-				}
+				//currentPlayer = nextPlayer
+				//if (currentPlayer == players.get(0)) {
+					//turnCount++
+					//varManager.StoreToObject_Name(null, VariableManager.TURNCOUNT, turnCount)
+				//}
 			}
 		}
 
 	}
 
 	def Start() {
-		varManager.StoreToObject_Name(null, VariableManager.TURNCOUNT, turnCount)
-
 		for (PlayerSetup setup : model.player.playerSetups) {
 			if (setup.id < 1 || setup.id > players.size)
 				throw new IllegalAccessException("Invalid player id: Player " + setup.id)
@@ -280,7 +276,7 @@ class Game implements IController {
 			for(o:objects) {
 				varManager.StoreToObject_Name(null, VariableManager.THIS, o)
 				if(varManager.Evaluate(action.condition)) {
-					println(o)
+					//println(o)
 					activebuttons.add(IDs.get(o))
 				}
 			}
@@ -326,6 +322,10 @@ class Game implements IController {
 			if(varManager.Evaluate(action.condition)) {
 				actionStack.push(action);
 			}
+		} else if(action.name=="END TURN"){
+			actionStack.clear
+			currentPlayer=nextPlayer
+			currentAction=null
 		}
 		else if (action.name == "ROLL") {
 
@@ -430,7 +430,6 @@ class Game implements IController {
 			if(d.owner!=null) ds.owner=IDs.get(d.owner)
 			for(c:d.cards){
 				val cs=new CardState(IDs.get(c),c.getType());
-
 				ds.cards.add(cs)
 			}
 		}
