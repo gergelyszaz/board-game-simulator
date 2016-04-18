@@ -1,32 +1,34 @@
 GAME TicTacToe
 PLAYERS 2{}
 BOARD {
-	F11{}
-	F12{}
-	F13{}
-	F21{}
-	F22{}
-	F23{}
-	F31{}
-	F32{}
-	F33{}
+	F11{tokenCount=0}
+	F12{tokenCount=0}
+	F13{tokenCount=0}
+	F21{tokenCount=0}
+	F22{tokenCount=0}
+	F23{tokenCount=0}
+	F31{tokenCount=0}
+	F32{tokenCount=0}
+	F33{tokenCount=0}
 }
 TOKEN token{}
 RULES {
-		SELECT AS selectedField WHERE ( this.tokenCount<1)
-		SPAWN token AS selectedToken TO selectedField
-		selectedField.OWNER=currentPlayer
-		
-		IF(
-	( F11.owner===F12.owner AND F12.owner===F13.owner AND F13.owner===currentPlayer ) OR
-	( F21.owner===F22.owner AND F22.owner===F23.owner AND F23.owner===currentPlayer ) OR
-	( F31.owner===F32.owner AND F32.owner===F33.owner AND F33.owner===currentPlayer ) OR
-	( F11.owner===F21.owner AND F21.owner===F31.owner AND F31.owner===currentPlayer ) OR
-	( F12.owner===F22.owner AND F22.owner===F32.owner AND F32.owner===currentPlayer ) OR
-	( F13.owner===F23.owner AND F23.owner===F33.owner AND F33.owner===currentPlayer ) OR
-	( F11.owner===F22.owner AND F22.owner===F33.owner AND F33.owner===currentPlayer ) OR
-	( F13.owner===F22.owner AND F22.owner===F31.owner AND F31.owner===currentPlayer )
-	){
-		WIN
-	}
+	SELECT AS selectedField WHERE ( this.tokenCount==0)
+	SPAWN token AS selectedToken TO selectedField
+	selectedField.OWNER=currentPlayer
+	selectedField.tokenCount=1
+	
+	IF(
+		( F11.owner===F12.owner AND F12.owner===F13.owner AND F13.owner===currentPlayer ) OR
+		( F21.owner===F22.owner AND F22.owner===F23.owner AND F23.owner===currentPlayer ) OR
+		( F31.owner===F32.owner AND F32.owner===F33.owner AND F33.owner===currentPlayer ) OR
+		( F11.owner===F21.owner AND F21.owner===F31.owner AND F31.owner===currentPlayer ) OR
+		( F12.owner===F22.owner AND F22.owner===F32.owner AND F32.owner===currentPlayer ) OR
+		( F13.owner===F23.owner AND F23.owner===F33.owner AND F33.owner===currentPlayer ) OR
+		( F11.owner===F22.owner AND F22.owner===F33.owner AND F33.owner===currentPlayer ) OR
+		( F13.owner===F22.owner AND F22.owner===F31.owner AND F31.owner===currentPlayer )
+		){
+			WIN
+		}
+	END TURN
 }
