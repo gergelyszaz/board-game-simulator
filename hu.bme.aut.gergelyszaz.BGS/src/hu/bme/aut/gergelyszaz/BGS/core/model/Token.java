@@ -29,6 +29,8 @@ public class Token {
 	public Player getOwner(){
 		return (Player)varManager.GetReference(varManager.OWNER,this);
 	}
+
+
 	
 	public void Destroy() {
 		setField(null);

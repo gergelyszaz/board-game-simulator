@@ -409,6 +409,7 @@ class Game implements IController {
 			ts.id = IDs.get(t)
 			ts.field = IDs.get(t.field)
 			ts.owner = IDs.get(t.owner)
+			ts.type=t.type;
 			tlist.add(ts)
 		}
 
