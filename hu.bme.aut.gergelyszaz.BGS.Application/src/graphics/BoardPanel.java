@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Properties;
@@ -109,12 +110,28 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
     }
 
 
+    HashMap<String, Image> images=new HashMap<>();
+    public Image getImage(String name){
+        if(!images.containsKey(name)){
+            try {
+                String path= properties.getProperty(name);
+
+                images.put(name,ImageIO.read(BoardPanel.class.getResourceAsStream( path)));
+            } catch (Exception e) {
+                System.err.println("Image "+name+" not found!");
+                images.put(name,null);
+            }
+        }
+        return images.get(name);
+    }
+
     private void AddToken(TokenState t) {
         JButton button = new JButton();
         button.setOpaque(false);
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
-        button.setUI(new TokenButtonUI(colorManager, t));
+
+        button.setUI(new TokenButtonUI(colorManager, t,getImage(t.type)));
         add(button, new Integer(2));
         button.setActionCommand("tokenPressed");
         button.addActionListener(this);
