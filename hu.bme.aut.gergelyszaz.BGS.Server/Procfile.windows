@@ -1,1 +1,1 @@
-web: java -cp target/classes;target/dependency/* hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer
+worker: java -cp target/classes;target/dependency/* hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer
