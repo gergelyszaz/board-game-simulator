@@ -1,6 +1,5 @@
 package hu.bme.aut.gergelyszaz.BGS.server;
 
-import hu.bme.aut.gergelyszaz.BGS.manager.GameManager;
 import org.glassfish.tyrus.server.Server;
 
 import java.io.InputStream;
@@ -35,7 +34,7 @@ public class WebSocketServer {
             configFile.load(input);
             for (Object k : configFile.values()) {
                 System.out.println((String) k);
-                GameManager.getInstance().mm.LoadModel((String) k);
+                GameManagerSingleton.getGameManagerInstance().modelManager.LoadModel((String) k);
             }
             server.start();
         } catch (Exception e) {
@@ -43,6 +42,15 @@ public class WebSocketServer {
             running = false;
         } finally {
             return  running;
+        }
+    }
+
+    public static void main(String[] args){
+        logger.log(Level.INFO, "Starting server");
+        WebSocketServer.runServer("localhost", 8025, "websockets", "/config/games.properties");
+        logger.log(Level.INFO, "Server Started");
+        while(WebSocketServer.isRunning()){
+            Thread.yield();
         }
     }
 }

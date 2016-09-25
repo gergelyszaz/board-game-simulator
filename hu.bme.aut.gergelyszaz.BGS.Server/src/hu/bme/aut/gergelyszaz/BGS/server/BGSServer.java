@@ -23,7 +23,7 @@ public class BGSServer implements IView {
 	private static final String ACTION = "action";
 	private static final String STATUS = "status";
 
-	private GameManager gm = GameManager.getInstance();
+	private GameManager gm = GameManagerSingleton.getGameManagerInstance();
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 	private Session session;
 
@@ -63,7 +63,7 @@ public class BGSServer implements IView {
 			JSONArray games = new JSONArray();
 			ret.put("waiting", gm.availableGames.size());
 			ret.put("connections", gm.playerConnections.size());
-			for (String g : gm.mm.AvailableModels()) {
+			for (String g : gm.modelManager.AvailableModels()) {
 				games.put(new JSONObject().put("name", g));
 			}
 			ret.put("games", games);

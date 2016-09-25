@@ -1,0 +1,147 @@
+GAME Uno
+
+PLAYERS 2 {
+	setup=1
+	PROTECTED DECK hand {}
+}
+
+BOARD {
+	PRIVATE DECK deck {
+		c_r_0 c_r_1 c_r_2 c_r_3 c_r_4 c_r_5 c_r_6 c_r_7 c_r_8 c_r_9 c_r_drawtwo c_r_skip
+		c_g_0 c_g_1 c_g_2 c_g_3 c_g_4 c_g_5 c_g_6 c_g_7 c_g_8 c_g_9 c_g_drawtwo c_g_skip
+		c_b_0 c_b_1 c_b_2 c_b_3 c_b_4 c_b_5 c_b_6 c_b_7 c_b_8 c_b_9 c_b_drawtwo c_b_skip
+		c_y_0 c_y_1 c_y_2 c_y_3 c_y_4 c_y_5 c_y_6 c_y_7 c_y_8 c_y_9 c_y_drawtwo c_y_skip
+		c_r_1 c_r_2 c_r_3 c_r_4 c_r_5 c_r_6 c_r_7 c_r_8 c_r_9 c_r_drawtwo c_r_skip
+        c_g_1 c_g_2 c_g_3 c_g_4 c_g_5 c_g_6 c_g_7 c_g_8 c_g_9 c_g_drawtwo c_g_skip
+        c_b_1 c_b_2 c_b_3 c_b_4 c_b_5 c_b_6 c_b_7 c_b_8 c_b_9 c_b_drawtwo c_b_skip
+        c_y_1 c_y_2 c_y_3 c_y_4 c_y_5 c_y_6 c_y_7 c_y_8 c_y_9 c_y_drawtwo c_y_skip
+        c_u_draw4 c_u_draw4 c_u_draw4 c_u_draw4
+        c_u_select c_u_select c_u_select c_u_select
+	}
+	PUBLIC DECK table {}
+	PUBLIC DECK select_deck { c_r_0 c_g_0 c_b_0 c_y_0 }
+	setup=1
+	skipturn=0
+	drawnumber=0
+}
+
+CARD c_r_0{	color=1	number=0 }
+CARD c_r_1{	color=1	number=1 }
+CARD c_r_2{	color=1	number=2 }
+CARD c_r_3{	color=1	number=3 }
+CARD c_r_4{	color=1	number=4 }
+CARD c_r_5{	color=1	number=5 }
+CARD c_r_6{	color=1	number=6 }
+CARD c_r_7{	color=1	number=7 }
+CARD c_r_8{	color=1	number=8 }
+CARD c_r_9{	color=1	number=9 }
+CARD c_r_skip{	color=1	number=42 }
+CARD c_r_drawtwo{	color=1	number=666 }
+
+CARD c_g_0		{	color=2	number=0 }
+CARD c_g_1		{	color=2	number=1 }
+CARD c_g_2		{	color=2	number=2 }
+CARD c_g_3		{	color=2	number=3 }
+CARD c_g_4		{	color=2	number=4 }
+CARD c_g_5		{	color=2	number=5 }
+CARD c_g_6		{	color=2	number=6 }
+CARD c_g_7		{	color=2	number=7 }
+CARD c_g_8		{	color=2	number=8 }
+CARD c_g_9		{	color=2	number=9 }
+CARD c_g_skip	{	color=2	number=42 }
+CARD c_g_drawtwo{	color=2	number=666}
+
+CARD c_b_0{	color=3	number=0 }
+CARD c_b_1{	color=3	number=1 }
+CARD c_b_2{	color=3	number=2 }
+CARD c_b_3{	color=3	number=3 }
+CARD c_b_4{	color=3	number=4 }
+CARD c_b_5{	color=3	number=5 }
+CARD c_b_6{	color=3	number=6 }
+CARD c_b_7{	color=3	number=7 }
+CARD c_b_8{	color=3	number=8 }
+CARD c_b_9{	color=3	number=9 }
+CARD c_b_skip{	color=3	number=42 }
+CARD c_b_drawtwo{	color=3	number=666 }
+
+CARD c_y_0{	color=4	number=0 }
+CARD c_y_1{	color=4	number=1 }
+CARD c_y_2{	color=4	number=2 }
+CARD c_y_3{	color=4	number=3 }
+CARD c_y_4{	color=4	number=4 }
+CARD c_y_5{	color=4	number=5 }
+CARD c_y_6{	color=4	number=6 }
+CARD c_y_7{	color=4	number=7 }
+CARD c_y_8{	color=4	number=8 }
+CARD c_y_9{	color=4	number=9 }
+CARD c_y_skip{	color=4	number=42 }
+CARD c_y_drawtwo{	color=4	number=666 }
+
+CARD c_u_draw4{ color=0 number=999 }
+CARD c_u_select{ color=0 number=69 }
+
+RULES {
+	IF(setup==1){ 
+		setup=0 
+		SHUFFLE deck
+		MOVE CARD deck.top TO table
+	}
+		
+	IF(currentPlayer.setup==1)
+	{
+		currentPlayer.setup=0
+		i=0
+		WHILE(i<5){
+			i=i+1
+			MOVE CARD deck.top TO currentPlayer.hand
+		}
+		END TURN
+	}
+	
+	IF(skipturn==1){
+		skipturn=0
+		END TURN
+	}
+	
+	IF (drawnumber>0) {
+		i=0
+		WHILE(i<drawnumber){
+			i=i+1
+			MOVE CARD deck.top TO currentPlayer.hand
+		}
+		drawnumber=0
+		END TURN
+	}
+	
+	SELECT AS selected WHERE this.deck===currentPlayer.hand AND 
+			( this.color==table.top.color OR this.number==table.top.number OR this.color==0)
+			OR
+			this===deck
+			
+	IF(selected.deck===currentPlayer.hand){
+		MOVE CARD selected TO table
+		IF(selected.number==42){
+			skipturn=1
+		}
+		IF(selected.number==666){
+			drawnumber=2
+		}
+		IF(selected.number==999){
+        	drawnumber=4
+        }
+
+        IF(selected.color==0){
+            SELECT AS donor WHERE this.deck===select_deck
+            selected.color=donor.color
+        }
+		
+		IF(currentPlayer.hand.cardCount==0){
+			WIN
+		}
+	} 
+	IF(selected===deck){
+		MOVE CARD selected.top TO currentPlayer.hand
+	}
+	
+	END TURN
+}

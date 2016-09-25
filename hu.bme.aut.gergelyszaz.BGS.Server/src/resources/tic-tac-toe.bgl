@@ -1,0 +1,46 @@
+GAME TicTacToe
+PLAYERS 2{}
+BOARD {
+    x=0
+	F11{tokenCount=0}
+	F12{tokenCount=0}
+	F13{tokenCount=0}
+	F21{tokenCount=0}
+	F22{tokenCount=0}
+	F23{tokenCount=0}
+	F31{tokenCount=0}
+	F32{tokenCount=0}
+	F33{tokenCount=0}
+}
+TOKEN X{}
+TOKEN O{}
+RULES {
+	SELECT AS selectedField WHERE ( this.tokenCount==0)
+	IF(x==0){
+	    xplayer=currentPlayer
+	    x=1
+	}
+	IF(currentplayer===xplayer)
+	    SPAWN X AS selectedToken TO selectedField
+	}
+	IF(currentplayer!==xplayer){
+	    SPAWN O AS selectedToken TO selectedField
+	}
+
+	selectedField.OWNER=currentPlayer
+	selectedField.tokenCount=1
+	
+	IF(
+		( F11.owner===F12.owner AND F12.owner===F13.owner AND F13.owner===currentPlayer ) OR
+		( F21.owner===F22.owner AND F22.owner===F23.owner AND F23.owner===currentPlayer ) OR
+		( F31.owner===F32.owner AND F32.owner===F33.owner AND F33.owner===currentPlayer ) OR
+		( F11.owner===F21.owner AND F21.owner===F31.owner AND F31.owner===currentPlayer ) OR
+		( F12.owner===F22.owner AND F22.owner===F32.owner AND F32.owner===currentPlayer ) OR
+		( F13.owner===F23.owner AND F23.owner===F33.owner AND F33.owner===currentPlayer ) OR
+		( F11.owner===F22.owner AND F22.owner===F33.owner AND F33.owner===currentPlayer ) OR
+		( F13.owner===F22.owner AND F22.owner===F31.owner AND F31.owner===currentPlayer )
+		){
+			WIN
+		}
+	END TURN
+}

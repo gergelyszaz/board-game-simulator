@@ -9,38 +9,25 @@ import java.util.List;
 
 
 public class GameManager implements Runnable{
-	GameFactory gf=new GameFactory();
-	public ModelManager mm=new ModelManager();
+	private GameFactory gameFactory ;
+	public ModelManager modelManager ;
 	public Hashtable<String, Game> availableGames=new Hashtable<String, Game>();
 	public Hashtable<String, Game> playerConnections=new Hashtable<String, Game>();
 	public List<Game> runningGames=new ArrayList<Game>();
 	
-	private GameManager()
+	public GameManager(GameFactory gameFactory, ModelManager modelManager)
 	{
-		
+		this.gameFactory=gameFactory;
+		this.modelManager=modelManager;
 	}
-	
-	private static GameManager gm=null;
-	public static GameManager getInstance(){
-		
-		if(gm==null) {
-			gm=new GameManager();
-			gm.mm.Initialize();
-			new Thread(gm).start();
-		}
-		
-		return gm;
-	}
-	
 
-	
 	
 	public IController JoinGame(String clientID, String gameName) throws Exception{
 		if(playerConnections.contains(clientID)) return playerConnections.get(clientID);
 		if(availableGames.get(gameName)==null){
-			availableGames.put(gameName, gf.CreateGame(mm.Get(gameName)));
+			availableGames.put(gameName, gameFactory.CreateGame(modelManager.Get(gameName)));
 		}
-		//TODO what happens if multiple clients try connect at the same time
+		//TODO what happens if multiple clients try connect at the same time?
 		Game g=availableGames.get(gameName);
 		g.Join(clientID);
 		playerConnections.put(clientID, g);
