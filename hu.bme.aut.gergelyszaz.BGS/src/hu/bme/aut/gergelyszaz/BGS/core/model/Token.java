@@ -14,7 +14,7 @@ public class Token {
 	}
 	
 	public void setField(Field field){
-		varManager.StoreToObject_Name(this,varManager.FIELD,field);
+		varManager.StoreToObjectWithName(this,varManager.FIELD,field);
 	}
 	
 	public Field getField(){
@@ -23,7 +23,7 @@ public class Token {
 	
 	
 	public void setOwner(Player player){
-		varManager.StoreToObject_Name(this,varManager.OWNER,player);
+		varManager.StoreToObjectWithName(this,varManager.OWNER,player);
 	}
 	
 	public Player getOwner(){
