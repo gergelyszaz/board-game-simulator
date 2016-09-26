@@ -21,5 +21,4 @@ Class-Path: osgi-3.10.0-v20140606-1445.jar icu4j-52.1.jar tyrus-contai
  es-2.8.4.jar runtime-3.10.0-v20140318-2214.jar jobs-3.6.0-v20140424-0
  053.jar grizzly-rcm-2.3.3.jar tyrus-server-1.1.jar tyrus-client-1.1.j
  ar
-Main-Class: graphics.LoadWindow
 

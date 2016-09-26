@@ -24,15 +24,15 @@ import hu.bme.aut.gergelyszaz.BGS.state.DeckState
 import hu.bme.aut.gergelyszaz.BGS.state.CardState
 
 class Game implements IController {
-	Model model
+	Model gameModel
 	String name
 
 	val gameStates = new Stack<GameState>
-	val VariableManager varManager;
+	val VariableManager variableManager;
 	boolean gameEnded = false
 	volatile var waitForInput = false
 
-	IDManager IDs=new IDManager
+	IDManager IDStore=new IDManager
 
 	val views = new HashSet<IView>
 	int turnCount = 1
@@ -49,96 +49,37 @@ class Game implements IController {
 	Set<Object> objects=new HashSet
 
 
-	new(VariableManager vm){
-		varManager=vm;
+	new(VariableManager variableManager){
+		this.variableManager=variableManager;
 	}
 
-	private def Player getCurrentPlayer() { varManager.GetReference(VariableManager.CURRENTPLAYER, null) as Player }
+	private def Player getCurrentPlayer() { variableManager.GetReference(VariableManager.CURRENTPLAYER, null) as Player }
 
 	private def void setCurrentPlayer(Player player) {
-		varManager.StoreToObject_Name(null, VariableManager.CURRENTPLAYER, player)
+		variableManager.StoreToObjectWithName(null, VariableManager.CURRENTPLAYER, player)
 	}
 
 	private def getFields() {
-		return model.board.fields
+		return gameModel.board.fields
 	}
 
-/*
-	private def Field getSelectedField() { varManager.GetReference(VariableManager.SELECTEDFIELD, null) as Field }
+	private def void setupDistance(Field startingField, int distance) {
 
-	private def setSelectedField(int fieldID) {
-		val f = model.board.fields.findFirst[IDs.getID(it) == fieldID]
-		if(f == null) return false
-		varManager.StoreToObject_Name(null, VariableManager.SELECTEDFIELD, f)
-		return true
-	}
-
-	private def Token getSelectedToken() { varManager.GetReference(VariableManager.SELECTEDTOKEN, null) as Token }
-
-	private def setSelectedToken(int tokenID) {
-		val t = tokens.findFirst[IDs.getID(it)== tokenID]
-		if(t == null) return false
-		selectedToken = t
-		return true
-	}
-
-	private def setSelectedToken(Token t) {
-		varManager.StoreToObject_Name(null, VariableManager.SELECTEDTOKEN, t)
-		for (f : model.board.fields) {
-			varManager.StoreToObject_Name(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, -1)
-		}
-		t.field.setupDistance(0)
-	}
-
-	private def setSelectedDeck(int deckID) {
-		val t = decks.findFirst[IDs.getID(it)== deckID]
-		if(t == null) return false
-		selectedDeck= t
-		return true
-	}
-	private def void setSelectedDeck(Deck d){
-		varManager.StoreToObject_Name(null, VariableManager.SELECTEDDECK, d)
-	}
-
-	private def Deck getSelectedDeck(){
-		return varManager.GetReference(VariableManager.SELECTEDDECK, null) as Deck;
-	}
-
-	private def setSelectedCard(int cID) {
-		var Card cs=null;
-		for(d:decks){
-			for(c:d.cards){
-				if(IDs.getID(c)==cID) cs=c;
-			}
-		}
-		if(cs == null) return false;
-		varManager.StoreToObject_Name(null, VariableManager.SELECTEDFIELD, cs)
-		return true;
-	}
-	private def void setSelectedCard(Card c){
-		varManager.StoreToObject_Name(null, VariableManager.SELECTEDCARD, c)
-	}
-	private def getSelectedCard(){
-		return varManager.GetReference(VariableManager.SELECTEDCARD, null) as Card
-	}
-*/
-	private def void setupDistance(Field field, int distance) {
-
-		//	TODO rewrite without and use BFS instead of DFS
-		val dist = varManager.GetValue(VariableManager.DISTANCE_FROM_SELECTED_TOKEN, field)
+		//	TODO write without recursion and use BFS instead of DFS
+		val dist = variableManager.GetValue(VariableManager.DISTANCE_FROM_SELECTED_TOKEN, startingField)
 		if((dist > -1 && dist <= distance)) return;
-		varManager.StoreToObject_Name(field, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, distance)
-		for (f : field.neighbours) {
+		variableManager.StoreToObjectWithName(startingField, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, distance)
+		for (field : startingField.neighbours) {
 			{
-				f.setupDistance(distance + 1)
+				field.setupDistance(distance + 1)
 			}
 		}
 	}
 
 	def boolean Join(String clientID) {
-		for (p : players) {
-			if (!p.IsConnected) {
-				p.sessionID = clientID
+		for (player : players) {
+			if (!player.IsConnected) {
+				player.sessionID = clientID
 				SaveCurrentState
 				return true
 			}
@@ -150,14 +91,14 @@ class Game implements IController {
 		return players.forall[IsConnected]
 	}
 
-	def Init(Model m,List<Player> p,List<Deck> d) {
-		name = m.name;
-		players=p;
-		decks=d;
-		model = m;
+	def Init(Model gameModel,List<Player> players,List<Deck> decks) {
+		name = gameModel.name;
+		this.players=players;
+		this.decks=decks;
+		this.gameModel = gameModel;
 
 		currentPlayer = players.get(0);
-		for(field:model.board.fields){
+		for(field:gameModel.board.fields){
 			objects.add(field)
 		}
 		for(deck:decks){
@@ -180,28 +121,18 @@ class Game implements IController {
 
 	def Step() {
 		if(waitForInput || gameEnded) return;
-		currentAction = GetNextAction(model.rule.actions)
+		currentAction = GetNextAction(gameModel.rule.actions)
 		ExecuteAction(currentAction)
-		if (currentAction == model.rule.actions.last && actionStack.isEmpty) {
-			if (!gameEnded) {
-				//currentPlayer = nextPlayer
-				//if (currentPlayer == players.get(0)) {
-					//turnCount++
-					//varManager.StoreToObject_Name(null, VariableManager.TURNCOUNT, turnCount)
-				//}
-			}
-		}
-
 	}
 
 	def Start() {
-		for (PlayerSetup setup : model.player.playerSetups) {
+		for (PlayerSetup setup : gameModel.player.playerSetups) {
 			if (setup.id < 1 || setup.id > players.size)
 				throw new IllegalAccessException("Invalid player id: Player " + setup.id)
 			currentPlayer = players.get(setup.id - 1)
-			varManager.StoreToObject_Name(null, VariableManager.THIS, currentPlayer)
-			for (s : model.player.variables) {
-				varManager.Store(s, currentPlayer)
+			variableManager.StoreToObjectWithName(null, VariableManager.THIS, currentPlayer)
+			for (s : gameModel.player.variables) {
+				variableManager.Store(s, currentPlayer)
 			}
 
 			currentAction = GetNextAction(setup.setupRule.actions)
@@ -209,7 +140,7 @@ class Game implements IController {
 			while (currentAction != setup.setupRule.actions.last) {
 				ExecuteAction(currentAction = GetNextAction(setup.setupRule.actions))
 			}
-			varManager.StoreToObject_Name(null, VariableManager.THIS, null)
+			variableManager.StoreToObjectWithName(null, VariableManager.THIS, null)
 			currentAction = null
 		}
 		SaveCurrentState
@@ -239,7 +170,7 @@ class Game implements IController {
 			//Last element of nested action
 			if(currentAction==actionStack.peek.nestedAction.actions.last){
 				//WHILE loop returns first nested element if condition is met
-				if(actionStack.peek.name=="WHILE"&&varManager.Evaluate(actionStack.peek.condition)){
+				if(actionStack.peek.name=="WHILE"&&variableManager.Evaluate(actionStack.peek.condition)){
 					return actionStack.peek.nestedAction.actions.get(0)
 				}
 				//Step out of nested action
@@ -274,44 +205,42 @@ class Game implements IController {
 		if (action.name == "SELECT") {
 			waitForInput = true;
 			for(o:objects) {
-				varManager.StoreToObject_Name(null, VariableManager.THIS, o)
-				if(varManager.Evaluate(action.condition)) {
-					//println(o)
-					activebuttons.add(IDs.get(o))
+				variableManager.StoreToObjectWithName(null, VariableManager.THIS, o)
+				if(variableManager.Evaluate(action.condition)) {
+					activebuttons.add(IDStore.get(o))
 				}
 			}
 			if (activebuttons.empty) {
 				Lose
 				waitForInput = false
 			}
-			//Was in front of "if"
 			SaveCurrentState
 			views.forEach[Refresh]
 
 		} else if (action.name == "SPAWN") {
-			val token = new Token(varManager, action.token.name)
+			val token = new Token(variableManager, action.token.name)
 			for(a:action.token.variables){
-				varManager.Store(a,token)
+				variableManager.Store(a,token)
 			}
 			token.setOwner(currentPlayer)
-			token.field=varManager.GetReference(action.spawnTo) as Field
-			varManager.Store(action.toVar,token)
+			token.field=variableManager.GetReference(action.spawnTo) as Field
+			variableManager.Store(action.toVar,token)
 			tokens.add(token)
 			objects.add(token)
 
 
 		} else if (action.name == "MOVE") {
 			if(action.type=="CARD"){
-				(varManager.GetReference(action.selected) as Card).MoveTo(varManager.GetReference(action.moveTo) as Deck);
+				(variableManager.GetReference(action.selected) as Card).MoveTo(variableManager.GetReference(action.moveTo) as Deck);
 			}
 			else{
-				(varManager.GetReference(action.selected) as Token).field=(varManager.GetReference(action.moveTo) as Field);
+				(variableManager.GetReference(action.selected) as Token).field=(variableManager.GetReference(action.moveTo) as Field);
 			}
 		} else if (action.name == "SHUFFLE") {
-			(varManager.GetReference(action.selected) as Deck).Shuffle();
+			(variableManager.GetReference(action.selected) as Deck).Shuffle();
 		} else if (action.name == "DESTROY") {
 			var Token t;
-			(t=varManager.GetReference(action.selected) as Token).Destroy();
+			(t=variableManager.GetReference(action.selected) as Token).Destroy();
 			tokens.remove(t)
 			objects.remove(t)
 		} else if (action.name == "WIN") {
@@ -319,7 +248,7 @@ class Game implements IController {
 		} else if (action.name == "LOSE") {
 			Lose
 		} else if(action.name=="IF"|| action.name=="WHILE"){
-			if(varManager.Evaluate(action.condition)) {
+			if(variableManager.Evaluate(action.condition)) {
 				actionStack.push(action);
 			}
 		} else if(action.name=="END TURN"){
@@ -336,14 +265,14 @@ class Game implements IController {
 				result += rollresult
 				//varManager.StoreToObject_Name(null, VariableManager.ROLLRESULT + i, rollresult)
 			}
-			varManager.Store(action.toVar,result);
+			variableManager.Store(action.toVar,result);
 		} else if (action.assignment != null) {
-			val ref = varManager.GetReference(action.assignment.addition)
+			val ref = variableManager.GetReference(action.assignment.addition)
 			if (ref != null) {
-				varManager.Store(action.assignment.name, ref)
+				variableManager.Store(action.assignment.name, ref)
 			} else {
-				val value = varManager.GetValue(action.assignment.addition)
-				varManager.Store(action.assignment.name, value)
+				val value = variableManager.GetValue(action.assignment.addition)
+				variableManager.Store(action.assignment.name, value)
 			}
 
 		}
@@ -363,7 +292,7 @@ class Game implements IController {
 	}
 
 	private def Lose() {
-		losers.add(IDs.get(currentPlayer))
+		losers.add(IDStore.get(currentPlayer))
 		// TODO think about it: does the game end, or only the player is removed from game
 		SaveCurrentState
 		views.forEach[Refresh]
@@ -371,7 +300,7 @@ class Game implements IController {
 	}
 
 	private def Win() {
-		winners.add(IDs.get(currentPlayer))
+		winners.add(IDStore.get(currentPlayer))
 		// TODO think about it: does the game end, or only the player is removed from game
 		SaveCurrentState
 		views.forEach[Refresh]
@@ -382,77 +311,77 @@ class Game implements IController {
 		val gamestate = gameStates.peek
 		var gs=gamestate
 		var p = players.findFirst[it.sessionID==sessionID]
-		return gs.getPublicState(IDs.get(p));
+		return gs.getPublicState(IDStore.get(p));
 	}
 
 	private def SaveCurrentState() {
 		val plist = new ArrayList<PlayerState>
 		for (p : players) {
 			val ps=new PlayerState
-			ps.id=IDs.get(p)
+			ps.id=IDStore.get(p)
 			ps.name=p.name
 			plist.add(ps)
 		}
 		val flist = new ArrayList<FieldState>
 		for (f : fields) {
 			val fs = new FieldState
-			fs.id = IDs.get(f)
+			fs.id = IDStore.get(f)
 			fs.name=f.name;
 			for (n : f.neighbours) {
-				fs.neighbours.add(IDs.get(n))
+				fs.neighbours.add(IDStore.get(n))
 			}
 			flist.add(fs)
 		}
 		val tlist = new ArrayList<TokenState>
 		for (t : tokens) {
 			val ts = new TokenState
-			ts.id = IDs.get(t)
-			ts.field = IDs.get(t.field)
-			ts.owner = IDs.get(t.owner)
+			ts.id = IDStore.get(t)
+			ts.field = IDStore.get(t.field)
+			ts.owner = IDStore.get(t.owner)
 			ts.type=t.type;
 			tlist.add(ts)
 		}
 
-		var i = 0
+		var stateVersion = 0
 		if (!gameStates.empty()) {
-			i = gameStates.peek.version + 1
+			stateVersion = gameStates.peek.version + 1
 		}
 
 		var deckstates=new ArrayList<DeckState>
-		for(d: decks){
-			val ds=new DeckState
-			switch(d.visibility){
-				case "PUBLIC": ds.visible=2
-				case "PROTECTED": ds.visible=1
-				case "PRIVATE": ds.visible=0
+		for(deck: decks){
+			val deckState=new DeckState
+			switch(deck.visibility){
+				case "PUBLIC": deckState.visible=2
+				case "PROTECTED": deckState.visible=1
+				case "PRIVATE": deckState.visible=0
 			}
-			deckstates.add(ds)
-			ds.id=IDs.get(d)
-			if(d.owner!=null) ds.owner=IDs.get(d.owner)
-			for(c:d.cards){
-				val cs=new CardState(IDs.get(c),c.getType());
-				ds.cards.add(cs)
+			deckstates.add(deckState)
+			deckState.id=IDStore.get(deck)
+			if(deck.owner!=null) deckState.owner=IDStore.get(deck.owner)
+			for(c:deck.cards){
+				val cs=new CardState(IDStore.get(c),c.getType());
+				deckState.cards.add(cs)
 			}
 		}
-		val state = new GameState(this.model.name, i, turnCount, IDs.get(currentPlayer), plist, flist, tlist,
+		val state = new GameState(this.gameModel.name, stateVersion, turnCount, IDStore.get(currentPlayer), plist, flist, tlist,
 			activebuttons.toList, winners, losers, deckstates,-1)
 		gameStates.push(state)
 
 	}
 
-	override setSelected(String playerID, int ID) {
+	override setSelected(String playerID, int selectedID) {
 		if(playerID != currentPlayer.sessionID) return false;
-		if(!activebuttons.contains(ID)) return false;
+		if(!activebuttons.contains(selectedID)) return false;
 
 		if(currentAction.name=="SELECT"){
-			val o=IDs.get(ID);
-			varManager.Store( currentAction.toVar,o);
+			val object=IDStore.get(selectedID);
+			variableManager.Store( currentAction.toVar,object);
 
-			if(o instanceof Token) {
-				for(f : model.board.fields) {
-					varManager.StoreToObject_Name(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, -1)
+			if(object instanceof Token) {
+				for(f : gameModel.board.fields) {
+					variableManager.StoreToObjectWithName(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, -1)
 				}
-				o.field.setupDistance(0)
+				object.field.setupDistance(0)
 			}
 		}
 

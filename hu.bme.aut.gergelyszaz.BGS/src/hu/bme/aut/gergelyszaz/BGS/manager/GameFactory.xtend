@@ -13,63 +13,61 @@ import hu.bme.aut.gergelyszaz.BGS.core.model.Deck
 class GameFactory {
 
 	def CreateGame(Model model) {
-		var vm=new VariableManager
-		val game = new Game(vm)
+		var variableManager=new VariableManager
+		val game = new Game(variableManager)
 		val players = new ArrayList<Player>
 		val decks=new ArrayList<Deck>
 
 		//Player setup
 		for (var id = 0; id < model.player.playercount; id++) {
-			val player = new Player(id+1)
+			val generatedId=id+1;
+			val player = new Player(generatedId)
 			players.add(player)
-			for(s:model.player.variables){
-				vm.Store(s,player)
+			for(variableModel:model.player.variables){
+				variableManager.Store(variableModel,player)
 			}
 		}
 
-		vm.StoreToObject_Name(null, VariableManager.NULL, null);
-		for(s:model.board.variables){
-			vm.Store(s,null)
+		variableManager.StoreToObjectWithName(null, VariableManager.NULL, null);
+		for(variable:model.board.variables){
+			variableManager.Store(variable,null)
 		}
 
 
-		//Add fields to vm
-		for(f:model.board.fields){
-			vm.StoreToObject_Name(null, f.name, f)
+		for(field:model.board.fields){
+			variableManager.StoreToObjectWithName(null, field.name, field)
 		}
 
-		//store and fill all decks
-		for(d: model.board.decks){
-			var cards=new Stack<Card>();
-			for(c:d.cards){
-				var nc=new Card(vm,c)
-				cards.add(nc);
-				for(s:c.variables){
-					vm.Store(s,nc)
+		for(deckModel: model.board.decks){
+			var cardModels=new Stack<Card>();
+			for(cardModel:deckModel.cards){
+				var card=new Card(variableManager,cardModel)
+				cardModels.add(card);
+				for(variable:cardModel.variables){
+					variableManager.Store(variable,card)
 				}
 
 			}
-			var deck=new Deck(vm,cards,null,d.visibility);
+			var deck=new Deck(variableManager,cardModels,null,deckModel.visibility);
 			decks.add(deck);
-			vm.StoreToObject_Name(null, d.name, deck);
-			vm.StoreToObject_Name(deck, VariableManager.OWNER, null);
+			variableManager.StoreToObjectWithName(null, deckModel.name, deck);
+			variableManager.StoreToObjectWithName(deck, VariableManager.OWNER, null);
 		}
 
-		//store and fill all player decks
-		for(d : model.player.decks){
-			//the same cards are in each deck
-			for(p:players){
+
+		for(deckModel : model.player.decks){
+			for(player:players){
 				var cards=new Stack<Card>();
-				for(c:d.cards){
-					cards.add(new Card(vm,c));
-					for(s:c.variables){
-						vm.Store(s,c)
+				for(cardModel:deckModel.cards){
+					cards.add(new Card(variableManager,cardModel));
+					for(variable:cardModel.variables){
+						variableManager.Store(variable,cardModel)
 					}
 				}
-				var deck=new Deck(vm,cards,p,d.visibility);
+				var deck=new Deck(variableManager,cards,player,deckModel.visibility);
 				decks.add(deck);
-				vm.StoreToObject_Name(p, d.name, deck);
-				vm.StoreToObject_Name(deck, VariableManager.OWNER, p);
+				variableManager.StoreToObjectWithName(player, deckModel.name, deck);
+				variableManager.StoreToObjectWithName(deck, VariableManager.OWNER, player);
 			}
 		}
 
@@ -77,17 +75,16 @@ class GameFactory {
 		//////Variable assagnments start here
 
 		// store all field variable
-		for (f : model.board.fields) {
-			vm.StoreToObject_Name(f, "tokenCount", 0)
-			for (v : f.variables) {
-				vm.Store(v, f)
+		for (fieldModel : model.board.fields) {
+			variableManager.StoreToObjectWithName(fieldModel, "tokenCount", 0)
+			for (v : fieldModel.variables) {
+				variableManager.Store(v, fieldModel)
 			}
 		}
 
 		game.Init(model, players, decks);
 		return game;
 	}
-
 
 }
 

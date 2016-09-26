@@ -186,7 +186,7 @@ class VariableManager{
 	/**
 	 * stores value to obj.name
 	 */
-	def StoreToObject_Name(Object obj, String name, int value){
+	def StoreToObjectWithName(Object obj, String name, int value){
 		if(!variables.containsKey(obj)) variables.put(obj, new HashMap)
 		variables.get(obj).PutLowerCased(name,value)
 	}
@@ -194,7 +194,7 @@ class VariableManager{
 	/**
 	 * stores ref to obj.name
 	 */
-	def StoreToObject_Name(Object obj, String name, Object ref){
+	def StoreToObjectWithName(Object obj, String name, Object ref){
 		if(!references.containsKey(obj)) references.put(obj, new HashMap)
 		references.get(obj).PutLowerCased(name,ref)
 	}
@@ -266,10 +266,10 @@ class VariableManager{
 		if(sa.attribute.attribute!=null){
 			val ref=sa.attribute.GetReference
 			if(ref==null) throw new IllegalAccessException(sa.attribute.attribute.toString)
-			parent.StoreToObject_Name(sa.name,ref)
+			parent.StoreToObjectWithName(sa.name,ref)
 		} else {
 			val value=sa.attribute.value
-			parent.StoreToObject_Name(sa.name,value)
+			parent.StoreToObjectWithName(sa.name,value)
 		}
 	}
 
