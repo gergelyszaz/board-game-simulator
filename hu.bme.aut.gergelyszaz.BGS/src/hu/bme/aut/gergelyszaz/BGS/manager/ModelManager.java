@@ -8,13 +8,15 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
 public class ModelManager {
 	private static XtextResourceSet resourceSet;
-	
+	private int numberOfGames=0;
 	private Hashtable<String, Model> models=new Hashtable<String, Model>();
 
 	public void Initialize() {
@@ -26,19 +28,19 @@ public class ModelManager {
 	
 	public List<String> AvailableModels()
 	{
-		List<String> availabelModels=new ArrayList<String>();
+		List<String> availableModels=new ArrayList<String>();
 		for(Model m:models.values()){
-			availabelModels.add(m.getName());
+			availableModels.add(m.getName());
 		}
-		return availabelModels;
+		return availableModels;
 	}
 
-	public void LoadModel(String input) throws Exception
+	public void LoadModel(String gameString) throws Exception
 	{
-		String path = /*"platform://" +*/ input.replace("\\", "//");
-		System.out.println(path=ModelManager.class.getResource(path).toString());
-		Resource resource = resourceSet.getResource(URI.createURI(path), true);
-		
+		//TODO refactor the resource path to make sense
+		Resource resource = resourceSet.createResource(URI.createURI("dummy:/"+numberOfGames+++".bgl"));
+		InputStream in = new ByteArrayInputStream(gameString.getBytes());
+		resource.load(in, resourceSet.getLoadOptions());
 		Model model = (Model) resource.getContents().get(0);
 		if(models.contains(model.getName())) throw new Exception("Language with this name already loaded.");
 		models.put(model.getName(),model);
@@ -51,4 +53,5 @@ public class ModelManager {
 		return m;
 		
 	}
+
 }

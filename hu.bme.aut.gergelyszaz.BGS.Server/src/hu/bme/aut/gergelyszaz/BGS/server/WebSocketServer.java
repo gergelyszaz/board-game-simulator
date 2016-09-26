@@ -1,8 +1,11 @@
 package hu.bme.aut.gergelyszaz.BGS.server;
 
+import hu.bme.aut.gergelyszaz.BGS.manager.ModelManager;
 import org.glassfish.tyrus.server.Server;
 
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +37,8 @@ public class WebSocketServer {
             configFile.load(input);
             for (Object k : configFile.values()) {
                 System.out.println((String) k);
-                GameManagerSingleton.getGameManagerInstance().modelManager.LoadModel((String) k);
+                String gameString=new String(Files.readAllBytes(Paths.get(ModelManager.class.getResource((String) k).toURI())));
+                GameManagerSingleton.getGameManagerInstance().modelManager.LoadModel(gameString);
             }
             server.start();
         } catch (Exception e) {
