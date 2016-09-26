@@ -19,7 +19,7 @@ public class Card {
 
     public void SetDeck(Deck deck){
         this.deck=deck;
-        vm.StoreToObject_Name(this,"deck",deck);
+        vm.StoreToObjectWithName(this,"deck",deck);
     }
 
     public void MoveTo(Deck toDeck){

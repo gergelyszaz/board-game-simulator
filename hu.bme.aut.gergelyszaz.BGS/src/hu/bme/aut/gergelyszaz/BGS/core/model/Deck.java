@@ -30,9 +30,9 @@ public class Deck {
     }
 
     private void UpdateTop(){
-        vm.StoreToObject_Name(this,VariableManager.CARDCOUNT,cards.size());
+        vm.StoreToObjectWithName(this,VariableManager.CARDCOUNT,cards.size());
         if(cards.isEmpty()) return;
-        vm.StoreToObject_Name(this,VariableManager.TOP,cards.peek());
+        vm.StoreToObjectWithName(this,VariableManager.TOP,cards.peek());
     }
 
     public void RemoveCard(Card card){
