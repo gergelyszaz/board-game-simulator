@@ -10,7 +10,7 @@ Workflow {
 	component = XtextGenerator {
 		configuration = {
 			project = StandardProjectConfig {
-				baseName = "hu.bme.aut.gergelyszaz.BGL"
+				baseName = "BGL"
 				rootPath = rootPath
 			}
 			code = {
