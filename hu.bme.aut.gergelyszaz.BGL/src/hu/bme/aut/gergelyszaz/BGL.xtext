@@ -1,0 +1,137 @@
+grammar hu.bme.aut.gergelyszaz.BGL with org.eclipse.xtext.common.Terminals
+
+generate bGL "http://www.bme.hu/aut/gergelyszaz/BGL"
+
+Model:
+	'GAME' name=ID
+	 player=Player 
+	 board=Board 
+	 (tokens+=Token)* 
+	 (cards+=Card)*
+	 
+	 'RULES' rule=NestedAction
+;
+
+Player:
+	name='PLAYERS' playercount=INT
+	'{'
+		(variables+=SimpleAssignment)*
+		(decks+=Deck)*
+		(playerSetups+=PlayerSetup)*	
+	'}'
+	;
+	
+PlayerSetup:
+	name='PLAYER' id=INT 
+	'SETUP' setupRule=NestedAction
+;
+
+Board:
+	
+	name='BOARD' '{'
+	(decks+=Deck)*
+	(variables+=SimpleAssignment)*
+	(fields+=Field)* 
+	'}'
+	;
+	
+
+
+Token returns Token:
+	'TOKEN' name=ID '{' (variables+=SimpleAssignment)* '}'
+;
+
+Field:
+	('FIELD')? name=ID '{'
+	(neighbours+=[Field])* 
+	(variables+=SimpleAssignment)*
+	'}';
+
+Action:
+	
+	(name='SPAWN' (token=[Token]) ('AS' toVar=AttributeName)? 'TO' spawnTo=AttributeName)|
+	(name='MOVE' type=('TOKEN'|'CARD') selected=AttributeName 'TO' moveTo=AttributeName) | 
+	(name='DESTROY' selected=AttributeName) | (name='WIN') | (name='LOSE') |
+	(name='SELECT' 'AS' toVar=AttributeName 'WHERE'  condition=OrExp) |
+	(name='ROLL' numberOfDice=INT  from=INT '-' to=INT 'AS' toVar=AttributeName ) |
+	(assignment=ValueAssignment) |
+	(name='SHUFFLE' selected=AttributeName)|
+	(name=('IF'|'WHILE') condition=OrExp nestedAction=NestedAction )|
+	(name='END TURN')
+	
+	;
+	
+NestedAction:
+	name='{'  (actions+=Action)+ '}'
+;
+	
+	
+//Cardgame specific parts
+Card:
+	'CARD' name=ID
+	'{'
+	(variables+=SimpleAssignment)*
+	('ACTION' action=NestedAction)?
+	('CONDITION' '(' (condition=OrExp)? ')')?
+	'}'
+;
+
+Deck:
+	visibility=('PUBLIC'|'PROTECTED'|'PRIVATE') 'DECK'
+	name=ID
+	'{'
+	(cards+=[Card])*
+	'}'
+;
+
+
+
+//Part for writing condition
+OrExp:
+	expressions+=AndExp (operators+='OR' expressions+=AndExp)*
+;
+
+AndExp:
+	expressions+=BooleanExp (operators+='AND' expressions+=BooleanExp)*
+;
+
+BooleanExp:
+	(not='NOT')?
+	(left=AttributeOrInt name=('!=='|'==='|'=='|'!='|'>'|'>='|'<'|'<=') right=AttributeOrInt)
+	|
+	( '('nestedExp=OrExp')' )
+;
+
+AttributeName:
+	( name=ID|(parent=ID'.'child=AttributeName) )
+;
+
+AttributeOrInt:
+	attribute=AttributeName| value=INT
+;
+
+//Arithmetic operations and value assignment
+AdditionExp:
+	expressions+=MultiplicationExp (operators+= ('+'|'-') expressions+=MultiplicationExp)*
+;
+
+MultiplicationExp:
+	(expressions+=AttributeOrInt (operators+= ('*'|'/') expressions+=AttributeOrInt)*)
+	|
+	( '(' nestedExp=AdditionExp ')' )
+;
+
+ValueAssignment:
+	name=AttributeName  '=' addition=AdditionExp 
+;
+
+SimpleAssignment:
+	name=ID '=' attribute=AttributeOrInt
+;
+
+
+
+
+
+
+
