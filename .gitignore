@@ -11,3 +11,9 @@
 out/
 *.idea
 */classes/
+BGL/model/
+BGL/src/hu/bme/aut/gergelyszaz/BGLRuntimeModule.xtend
+BGL/src/hu/bme/aut/gergelyszaz/BGLStandaloneSetup.xtend
+BGL/src/hu/bme/aut/gergelyszaz/generator/
+BGL/src/hu/bme/aut/gergelyszaz/scoping/
+BGL/src/hu/bme/aut/gergelyszaz/validation/
