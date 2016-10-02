@@ -6,18 +6,23 @@ The project contains 4 main parts:
 * server and client
 * graphic application
 
-###Softwares used for developement:
-* Eclipse Mars/IntelliJ Idea
-* Xtext, EMF
-* Xtend
-* Maven
+###Software needed to build
+Java 8
+Maven 3
 
+###Build
+From the root folder run in command line: "mvn install".
 
-##Language and editor
-The language is described in "BGL.xtext". To make an editor, start a new Xtext project and insert the contents of "BGL.xtext".
+###Running the server
+Go to the Server folder and run: "mvn exec:java"
 
+###Running the Application
+Go to the Application folder and run: "mvn exec:java"
 
 ##Projects
+###BGL
+The language written in Xtext.
+
 ###BGS
 Core simulator project for running the board games. Includes:
 * Game - represents a board game instance
