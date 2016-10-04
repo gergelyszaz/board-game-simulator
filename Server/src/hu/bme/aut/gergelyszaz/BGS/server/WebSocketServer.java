@@ -51,7 +51,13 @@ public class WebSocketServer {
 
     public static void main(String[] args){
         logger.log(Level.INFO, "Starting server");
-        WebSocketServer.runServer("localhost", 8025, "websockets", "/config/games.properties");
+
+        int port=8025;
+        String portString=System.getenv("PORT");
+        if(portString!=null){
+            port=Integer.parseInt(portString);
+        }
+        WebSocketServer.runServer("0.0.0.0", port, "websockets", "/config/games.properties");
         logger.log(Level.INFO, "Server Started");
         while(WebSocketServer.isRunning()){
             Thread.yield();

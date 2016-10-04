@@ -40,7 +40,7 @@ public class BGSClient {
 		logger.info("Received: " + message);
 		JSONObject obj = new JSONObject(message);
 		recievers.get(session.getId()).RecieveMessage(obj);
-		return "got message";
+		return "ok";
 	}
 
 	@OnClose
