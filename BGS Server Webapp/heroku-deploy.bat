@@ -1,1 +1,0 @@
-heroku deploy:war --war target/bgs-server-webapp.war --app powerful-dusk-75224
