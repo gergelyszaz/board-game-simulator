@@ -1,6 +1,6 @@
 package graphics;
 
-import hu.bme.aut.gergelyszaz.BGS.client.BGSClient;
+import hu.bme.aut.gergelyszaz.BGS.client.Connection;
 import hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.Properties;
 
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -29,14 +30,6 @@ public class LoadWindow {
             try {
                 LoadWindow window = new LoadWindow();
                 window.frmBoardgameSimulator.setVisible(true);
-                // new
-                // org.eclipse.emf.mwe.utils.StandaloneSetup().setPlatformUri("../");
-                // Injector injector = new
-                // BGLStandaloneSetup().createInjectorAndDoEMFRegistration();
-                // resourceSet =
-                // injector.getInstance(XtextResourceSet.class);
-                // resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL,
-                // Boolean.TRUE);
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -57,7 +50,7 @@ public class LoadWindow {
     private void initialize() {
         frmBoardgameSimulator = new JFrame();
         frmBoardgameSimulator.setTitle("Boardgame Simulator");
-        frmBoardgameSimulator.setMinimumSize(new Dimension( 500, 200));
+        frmBoardgameSimulator.setMinimumSize(new Dimension(500, 200));
         frmBoardgameSimulator.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frmBoardgameSimulator.getContentPane()
                 .setLayout(new BoxLayout(frmBoardgameSimulator.getContentPane(), BoxLayout.Y_AXIS));
@@ -70,48 +63,50 @@ public class LoadWindow {
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(list.getModel().getSize()<1) return;
+                if (list.getModel().getSize() < 1) return;
                 JFrame frame = new JFrame();
                 frame.add(new JPanel());
 
-                MessageReciever messageReciever=new MessageReciever();
-                BoardPanel boardPanel= new BoardPanel(messageReciever);
+                MessageListener messageReciever = new MessageListener();
+                BoardPanel boardPanel = new BoardPanel(messageReciever);
                 messageReciever.addStateReciever(boardPanel);
                 frame.add(boardPanel);
-                JPanel panel2=new JPanel();
+                JPanel panel2 = new JPanel();
                 panel2.setLayout(new BorderLayout());
                 frame.add(panel2);
 
-                CardPanel cp=new CardPanel();
+                CardPanel cp = new CardPanel();
                 cp.setMessageReciever(messageReciever);
                 messageReciever.addStateReciever(cp);
 
-                panel2.add(new PlayerInfoPanel(),BorderLayout.LINE_END);
-                panel2.add(boardPanel,BorderLayout.CENTER);
-                panel2.add(cp,BorderLayout.PAGE_END);
+                panel2.add(new PlayerInfoPanel(), BorderLayout.LINE_END);
+                panel2.add(boardPanel, BorderLayout.CENTER);
+                panel2.add(cp, BorderLayout.PAGE_END);
 
 
-
-
-                Properties gameprop=new Properties();
+                Properties gameprop = new Properties();
                 try {
-                    gameprop.load(WebSocketServer.class.getResourceAsStream("/resources/properties/"+getList().getSelectedValue()+".properties"));
+                    gameprop.load(WebSocketServer.class.getResourceAsStream("/resources/properties/" + getList().getSelectedValue() + ".properties"));
                     boardPanel.setGameProperties(gameprop);
-                }
-                catch (IOException exception){
+                } catch (IOException exception) {
                     return;
                 }
 
 
-                boardPanel.setPreferredSize(new Dimension(100,100));
+                boardPanel.setPreferredSize(new Dimension(100, 100));
                 frame.setVisible(true);
                 frame.setSize(new Dimension(500, 500));
 
-                BGSClient client;
-                messageReciever.setClient(client = new BGSClient());
-                client.Connect(pathField.getText(), messageReciever);
-                client.SendMessage(
-                        new JSONObject().put("action", "join").put("parameter", getList().getSelectedValue()));
+                Connection connection = new Connection(pathField.getText());
+                messageReciever.setClient(connection);
+                connection.addMessageListener(messageReciever);
+                try {
+                    connection.open();
+                } catch (ConnectException e1) {
+                    e1.printStackTrace();
+                }
+                connection.sendJoinGame(getList().getSelectedValue());
+
             }
         });
         panel_1.add(list);
@@ -149,7 +144,7 @@ public class LoadWindow {
                         }
                     }.start();
 
-                } else{
+                } else {
                     DefaultListModel<String> model = new DefaultListModel<>();
                     list.setModel(model);
                     WebSocketServer.stopServer();
@@ -166,32 +161,36 @@ public class LoadWindow {
         btnconnectButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent arg0) {
-                new Thread() {
-                    @Override
-                    public void run() {
 
-                        BGSClient client = new BGSClient();
-                        client.Connect(pathField.getText(), obj -> {
-                            JSONArray games = obj.getJSONArray("games");
+                new Thread(() -> {
+                    Connection client = new Connection(pathField.getText());
+                    try {
+                        client.open();
+                        client.addMessageListener(
+                                message -> {
+                                    JSONArray games = message.getJSONArray("games");
 
-                            DefaultListModel<String> model = new DefaultListModel<>();
+                                    DefaultListModel<String> model = new DefaultListModel<>();
 
-                            for (Object o : games) {
-                                String e = ((JSONObject) o).getString("name");
-                                model.addElement(e);
-                            }
-                            SwingUtilities.invokeLater(() -> {
-                                list.setModel(model);
-                                list.setSelectedIndex(0);
-                            });
+                                    for (Object o : games) {
+                                        String e = ((JSONObject) o).getString("name");
+                                        model.addElement(e);
+                                    }
+                                    SwingUtilities.invokeLater(() -> {
+                                        list.setModel(model);
+                                        list.setSelectedIndex(0);
+                                    });
 
-                        });
-                        client.SendMessage(new JSONObject().put("action", "info"));
-                        client.SendMessage(new JSONObject().put("action", "quit"));
+                                });
+                    } catch (ConnectException e) {
+                        e.printStackTrace();
                     }
-                }.start();
-            }
+                    client.sendRequestServerInfo();
+                    //     client.close();
 
+
+                }).start();
+            }
         });
         btnconnectButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 

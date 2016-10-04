@@ -16,7 +16,7 @@ import java.util.Hashtable;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
-class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever {
+class BoardPanel extends JLayeredPane implements ActionListener, StateListener {
 
     ConcurrentHashMap<Integer, JButton> buttons = new ConcurrentHashMap<Integer, JButton>();
     ConcurrentHashMap<JButton, Integer> buttons2 = new ConcurrentHashMap<JButton, Integer>();
@@ -26,10 +26,10 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
     Hashtable<Integer, FieldState> fields = new Hashtable<Integer, FieldState>();
     ColorManager colorManager = new ColorManager();
     PlayerInfoPanel playerInfoPanel=null;
-    MessageReciever messageReciever;
+    MessageListener messageReciever;
     Image boardImage=null;
 
-    public BoardPanel(MessageReciever messageReciever) {
+    public BoardPanel(MessageListener messageReciever) {
         super();
         this.messageReciever=messageReciever;
         setLayout(null);
@@ -189,7 +189,7 @@ class BoardPanel extends JLayeredPane implements ActionListener, IStateReciever 
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
         if (action == "fieldPressed" || action == "tokenPressed") {
-            messageReciever.SendSelect(buttons2.get(e.getSource()));
+            messageReciever.getClient().sendSelected(buttons2.get(e.getSource()));
         }
         DisableButtons();
     }
