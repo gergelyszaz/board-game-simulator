@@ -5,6 +5,11 @@
     <artifactId>bgs-server-application</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
+    <parent>
+        <groupId>hu.bme.aut.gergelyszaz.bgs</groupId>
+        <artifactId>bgl-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
     <dependencies>
         <dependency>
             <groupId>javax.websocket</groupId>
@@ -115,6 +120,17 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <configuration>
+                    <appName>powerful-dusk-75224</appName>
+                    <processTypes>
+                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer -Dserver.port=8025</web>
+                    </processTypes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

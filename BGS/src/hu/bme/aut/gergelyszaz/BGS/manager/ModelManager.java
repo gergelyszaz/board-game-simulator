@@ -19,7 +19,7 @@ public class ModelManager {
 	private int numberOfGames=0;
 	private Hashtable<String, Model> models=new Hashtable<String, Model>();
 
-	public void Initialize() {
+	static  {
 		new org.eclipse.emf.mwe.utils.StandaloneSetup().setPlatformUri("../");
 		Injector injector = new BGLStandaloneSetup().createInjectorAndDoEMFRegistration();
 		resourceSet = injector.getInstance(XtextResourceSet.class);

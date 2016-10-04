@@ -14,7 +14,7 @@ public class GameManagerSingleton {
         synchronized (lock) {
             if (gameManager == null) {
                 ModelManager modelManager = new ModelManager();
-                modelManager.Initialize();
+//                modelManager.Initialize();
                 GameFactory gameFactory = new GameFactory();
                 gameManager = new GameManager(gameFactory, modelManager);
                 new Thread(gameManager).start();

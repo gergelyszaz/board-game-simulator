@@ -28,16 +28,16 @@ public class GameManager implements Runnable{
 			availableGames.put(gameName, gameFactory.CreateGame(modelManager.Get(gameName)));
 		}
 		//TODO what happens if multiple clients try connect at the same time?
-		Game g=availableGames.get(gameName);
-		g.Join(clientID);
-		playerConnections.put(clientID, g);
-		if(g.IsFull()){
+		Game game=availableGames.get(gameName);
+		game.Join(clientID);
+		playerConnections.put(clientID, game);
+		if(game.IsFull()){
 			availableGames.remove(gameName);
-			g.Start();
-			runningGames.add(g);
+			game.Start();
+			runningGames.add(game);
 			
 		}
-		return g;
+		return game;
 	}
 	
 	
