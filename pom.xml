@@ -17,6 +17,7 @@
 		<module>BGL</module>
 		<module>BGS</module>
 		<module>Server</module>
+		<module>Client</module>
 		<module>Application</module>
 	</modules>
 	<build>

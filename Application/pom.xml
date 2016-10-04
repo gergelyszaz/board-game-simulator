@@ -79,5 +79,10 @@
             <artifactId>bgs-server-application</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>hu.bme.aut.gergelyszaz.bgs</groupId>
+            <artifactId>bgs-client</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

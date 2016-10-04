@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>hu.bme.aut.gergelyszaz.bgs</groupId>
-    <artifactId>bgs-server-application</artifactId>
+    <artifactId>bgs-client</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
     <parent>
@@ -41,11 +41,6 @@
             <artifactId>gson</artifactId>
             <version>1.7.1</version>
         </dependency>
-        <dependency>
-            <groupId>hu.bme.aut.gergelyszaz.bgs</groupId>
-            <artifactId>bgs</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
     <build>
         <sourceDirectory>src</sourceDirectory>
@@ -57,22 +52,7 @@
                 </excludes>
             </resource>
         </resources>
-        <plugins>
-		    <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>exec-maven-plugin</artifactId>
-                    <version>1.2.1</version>
-                    <executions>
-                         <execution>
-                             <goals>
-                                 <goal>java</goal>
-                             </goals>
-                         </execution>
-                     </executions>
-                <configuration>
-                    <mainClass>hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer</mainClass>
-                </configuration>
-            </plugin>     
+        <plugins>     
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -81,17 +61,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.heroku.sdk</groupId>
-                <artifactId>heroku-maven-plugin</artifactId>
-                <version>1.1.1</version>
-                <configuration>
-                    <appName>powerful-dusk-75224</appName>
-                    <processTypes>
-                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer -Dserver.port=8025</web>
-                    </processTypes>
                 </configuration>
             </plugin>
         </plugins>
