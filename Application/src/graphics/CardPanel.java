@@ -13,7 +13,7 @@ import java.util.HashMap;
 /**
  * Created by mad on 2016. 04. 13..
  */
-public class CardPanel extends JPanel implements IStateReciever {
+public class CardPanel extends JPanel implements StateListener {
     HashMap<Integer, DefaultListModel> deckListModels = new HashMap<>();
 
     DefaultListModel<String> selectableCardsModel = new DefaultListModel<>();
@@ -27,15 +27,15 @@ public class CardPanel extends JPanel implements IStateReciever {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (cardlist.getModel().getSize() < 1) return;
-                client.SendSelect(Integer.parseInt(cardlist.getSelectedValue()));
+                client.getClient().sendSelected(Integer.parseInt(cardlist.getSelectedValue()));
             }
         });
         this.add(new JScrollPane(cardlist));
     }
 
-    MessageReciever client;
+    MessageListener client;
 
-    public void setMessageReciever(MessageReciever c) {
+    public void setMessageReciever(MessageListener c) {
         client = c;
     }
 

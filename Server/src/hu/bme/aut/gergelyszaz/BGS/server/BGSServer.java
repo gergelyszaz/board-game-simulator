@@ -59,6 +59,7 @@ public class BGSServer implements IView {
 			return Update(session);
 
 		case "info":
+			logger.info("info request");
 			ret.put("running", gm.runningGames.size());
 			JSONArray games = new JSONArray();
 			ret.put("waiting", gm.availableGames.size());

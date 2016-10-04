@@ -1,8 +1,7 @@
 package graphics;
 
 import com.google.gson.Gson;
-import hu.bme.aut.gergelyszaz.BGS.client.BGSClient;
-import hu.bme.aut.gergelyszaz.BGS.client.IMessageReciever;
+import hu.bme.aut.gergelyszaz.BGS.client.Connection;
 import hu.bme.aut.gergelyszaz.BGS.state.DeckState;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 import org.json.JSONObject;
@@ -16,8 +15,8 @@ import java.util.Stack;
 /**
  * Created by mad on 2016. 04. 01..
  */
-public class MessageReciever implements IMessageReciever {
-    Stack<GameState> states = new Stack<GameState>();
+public class MessageListener implements hu.bme.aut.gergelyszaz.BGS.client.MessageListener {
+    Stack<GameState> states = new Stack<>();
 
 
     public boolean IsEmpty(){
@@ -28,23 +27,24 @@ public class MessageReciever implements IMessageReciever {
         return states.peek();
     }
 
-    public MessageReciever(){
+    public MessageListener(){
         states.add(
                 new GameState("", 0, 0, -1, new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(),
                         new ArrayList(),new ArrayList<DeckState>(), -1));
     }
 
 
-    public void addStateReciever(IStateReciever sr){
+    public void addStateReciever(StateListener sr){
         recieverList.add(sr);
     }
 
-    BGSClient client;
-    public BGSClient getClient(){return client;}
-    public void setClient(BGSClient c) {
+    Connection client;
+    public Connection getClient(){return client;}
+    public void setClient(Connection c) {
         client = c;
     }
-    Set<IStateReciever> recieverList=new HashSet<IStateReciever>();
+    Set<StateListener> recieverList=new HashSet<>();
+
     @Override
     public void RecieveMessage(JSONObject obj) {
         System.out.println(obj.toString());
@@ -55,7 +55,7 @@ public class MessageReciever implements IMessageReciever {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                for(IStateReciever reciever:recieverList){
+                for(StateListener reciever:recieverList){
                     reciever.UpdateGameState(state);
                 }
 
@@ -63,9 +63,5 @@ public class MessageReciever implements IMessageReciever {
         });
     }
 
-    public void SendSelect(int id){
-        client.SendMessage(
-                new JSONObject().put("action", "select").put("parameter", id)
-        );
-    }
+
 }
