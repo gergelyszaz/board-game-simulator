@@ -76,7 +76,7 @@
         </dependency>
         <dependency>
             <groupId>hu.bme.aut.gergelyszaz.bgs</groupId>
-            <artifactId>bgs-server-application</artifactId>
+            <artifactId>bgs-server</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
