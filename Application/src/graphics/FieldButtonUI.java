@@ -1,5 +1,6 @@
 package graphics;
 
+
 import hu.bme.aut.gergelyszaz.BGS.state.FieldState;
 
 import javax.swing.*;

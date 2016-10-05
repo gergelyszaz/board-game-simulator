@@ -1,4 +1,5 @@
-package graphics;
+package hu.bme.aut.gergelyszaz.BGS.client;
+
 
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 

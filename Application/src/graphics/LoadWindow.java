@@ -99,7 +99,7 @@ public class LoadWindow {
 
                 Connection connection = new Connection(pathField.getText());
                 messageReciever.setClient(connection);
-                connection.addMessageListener(messageReciever);
+                connection.addStateListener(messageReciever);
                 try {
                     connection.open();
                 } catch (ConnectException e1) {

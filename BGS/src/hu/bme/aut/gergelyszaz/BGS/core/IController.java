@@ -1,5 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.core;
 
+
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 
 public interface IController {
