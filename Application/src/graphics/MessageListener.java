@@ -1,10 +1,9 @@
 package graphics;
 
-import com.google.gson.Gson;
 import hu.bme.aut.gergelyszaz.BGS.client.Connection;
+import hu.bme.aut.gergelyszaz.BGS.client.StateListener;
 import hu.bme.aut.gergelyszaz.BGS.state.DeckState;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
-import org.json.JSONObject;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -15,9 +14,8 @@ import java.util.Stack;
 /**
  * Created by mad on 2016. 04. 01..
  */
-public class MessageListener implements hu.bme.aut.gergelyszaz.BGS.client.MessageListener {
+public class MessageListener implements hu.bme.aut.gergelyszaz.BGS.client.StateListener {
     Stack<GameState> states = new Stack<>();
-
 
     public boolean IsEmpty(){
         return states.isEmpty();
@@ -45,13 +43,13 @@ public class MessageListener implements hu.bme.aut.gergelyszaz.BGS.client.Messag
     }
     Set<StateListener> recieverList=new HashSet<>();
 
+
     @Override
-    public void RecieveMessage(JSONObject obj) {
-        System.out.println(obj.toString());
-        Gson gson = new Gson();
-        if (obj.getString("name") == null) return;
-        GameState state = gson.fromJson(obj.toString(), GameState.class);
+    public void UpdateGameState(GameState state) {
         states.push(state);
+        if(state==null){
+            System.out.println("null");
+        }
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -62,6 +60,4 @@ public class MessageListener implements hu.bme.aut.gergelyszaz.BGS.client.Messag
             }
         });
     }
-
-
 }

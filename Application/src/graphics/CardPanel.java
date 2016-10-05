@@ -1,5 +1,6 @@
 package graphics;
 
+import hu.bme.aut.gergelyszaz.BGS.client.StateListener;
 import hu.bme.aut.gergelyszaz.BGS.state.CardState;
 import hu.bme.aut.gergelyszaz.BGS.state.DeckState;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;

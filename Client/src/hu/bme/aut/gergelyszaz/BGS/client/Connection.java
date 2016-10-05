@@ -1,5 +1,9 @@
 package hu.bme.aut.gergelyszaz.BGS.client;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import hu.bme.aut.gergelyszaz.BGS.state.GameState;
+import hu.bme.aut.gergelyszaz.BGS.state.validator.GameStateValidator;
 import org.glassfish.tyrus.client.ClientManager;
 import org.json.JSONObject;
 
@@ -8,8 +12,8 @@ import javax.websocket.Session;
 import java.net.ConnectException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,9 +21,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Connection {
     private Session session;
-    private List<MessageListener> messageListeners = new ArrayList<>();
+    private Set<MessageListener> messageListeners = new HashSet<>();
     private static ConcurrentHashMap<String, Connection> connections = new ConcurrentHashMap<>();
     private String address;
+    private Set<StateListener> stateListeners = new HashSet<>();
 
     public Connection(String address) {
         this.address = address;
@@ -45,6 +50,15 @@ public class Connection {
     public void removeMessageListener(MessageListener messageListener) {
         messageListeners.remove(messageListener);
     }
+
+    public void addStateListener(StateListener stateListener) {
+        stateListeners.add(stateListener);
+    }
+
+    public void removeStateListener(StateListener stateListener) {
+        stateListeners.remove(stateListener);
+    }
+
 
     public void close() {
 
@@ -78,13 +92,28 @@ public class Connection {
     }
 
     static void processMessage(String id, String message) {
-        connections.get(id).processMessage(message);
+        connections.get(id).notifyListeners(message);
     }
 
-    private void processMessage(String message) {
+    private void notifyListeners(String message) {
         JSONObject obj = new JSONObject(message);
+        notifyMessageListeners(obj);
+        notifyStateListeners(obj);
+    }
+
+    private void notifyMessageListeners(JSONObject obj){
         for (MessageListener messageListener : messageListeners) {
             messageListener.RecieveMessage(obj);
+        }
+    }
+    private void notifyStateListeners(JSONObject obj){
+        Gson gson = new Gson();
+        try {
+            GameState gameState = gson.fromJson(obj.toString(), GameState.class);
+            if(!GameStateValidator.isValid(gameState)) throw new JsonSyntaxException(obj.toString().concat(" not a valid GameState"));
+            stateListeners.forEach(stateListener -> stateListener.UpdateGameState(gameState));
+        } catch (JsonSyntaxException e){
+            //TODO log as warning
         }
     }
 

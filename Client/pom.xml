@@ -12,6 +12,11 @@
     </parent>
     <dependencies>
         <dependency>
+            <groupId>hu.bme.aut.gergelyszaz.BGS</groupId>
+            <artifactId>State</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
             <groupId>javax.websocket</groupId>
             <artifactId>javax.websocket-api</artifactId>
             <version>1.0</version>
