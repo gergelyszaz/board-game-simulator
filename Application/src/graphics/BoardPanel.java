@@ -19,182 +19,175 @@ import java.util.concurrent.ConcurrentHashMap;
 
 class BoardPanel extends JLayeredPane implements ActionListener, StateListener {
 
-    ConcurrentHashMap<Integer, JButton> buttons = new ConcurrentHashMap<Integer, JButton>();
-    ConcurrentHashMap<JButton, Integer> buttons2 = new ConcurrentHashMap<JButton, Integer>();
-    HashSet<JButton> enabledButtons = new HashSet<JButton>();
-    int SCALE = 100;
-    Hashtable<Integer, TokenState> tokens = new Hashtable<Integer, TokenState>();
-    Hashtable<Integer, FieldState> fields = new Hashtable<Integer, FieldState>();
-    ColorManager colorManager = new ColorManager();
-    PlayerInfoPanel playerInfoPanel=null;
-    MessageListener messageReciever;
-    Image boardImage=null;
+	ConcurrentHashMap<Integer, JButton> buttons = new ConcurrentHashMap<Integer, JButton>();
+	ConcurrentHashMap<JButton, Integer> buttons2 = new ConcurrentHashMap<JButton, Integer>();
+	HashSet<JButton> enabledButtons = new HashSet<JButton>();
+	int SCALE = 100;
+	Hashtable<Integer, TokenState> tokens = new Hashtable<Integer, TokenState>();
+	Hashtable<Integer, FieldState> fields = new Hashtable<Integer, FieldState>();
+	ColorManager colorManager = new ColorManager();
+	PlayerInfoPanel playerInfoPanel = null;
+	MessageListener messageReciever;
+	Image boardImage = null;
+	Properties properties;
+	HashMap<String, Image> images = new HashMap<>();
 
-    public BoardPanel(MessageListener messageReciever) {
-        super();
-        this.messageReciever=messageReciever;
-        setLayout(null);
-    }
+	public BoardPanel(MessageListener messageReciever) {
+		super();
+		this.messageReciever = messageReciever;
+		setLayout(null);
+	}
 
+	public void setGameProperties(Properties properties) {
+		this.properties = properties;
+		try {
+			boardImage = ImageIO.read(BoardPanel.class.getResourceAsStream(properties.getProperty("board")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    Properties properties;
-    public void setGameProperties(Properties properties){
-        this.properties=properties;
-        try {
-            boardImage= ImageIO.read(BoardPanel.class.getResourceAsStream( properties.getProperty("board")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public void UpdateGameState(GameState gs) {
 
+		if (buttons.isEmpty()) {
+			for (FieldState field : gs.getFields()) {
 
+				JButton btn = new JButton();
+				buttons.put(field.id, btn);
+				buttons2.put(btn, field.id);
+				btn.setUI(new FieldButtonUI(field));
+				btn.setOpaque(false);
+				btn.setContentAreaFilled(false);
+				btn.setBorderPainted(true);
 
-    public void UpdateGameState(GameState gs) {
+				String[] fp = properties.getProperty(field.name).split("\\,");
 
-        if (buttons.isEmpty()) {
-            for (FieldState field : gs.getFields()) {
+				btn.setBounds(new Rectangle());//field.x * SCALE - SCALE / 3, field.y * SCALE - SCALE / 3, SCALE * 2 / 3,                        SCALE * 2 / 3));
+				btn.setActionCommand("fieldPressed");
+				btn.addActionListener(this);
+				btn.setEnabled(false);
+				add(btn, new Integer(1));
 
-                JButton btn = new JButton();
-                buttons.put(field.id, btn);
-                buttons2.put(btn, field.id);
-                btn.setUI(new FieldButtonUI(field));
-                btn.setOpaque(false);
-                btn.setContentAreaFilled(false);
-                btn.setBorderPainted(true);
+			}
+		}
 
-                String[] fp=properties.getProperty(field.name).split("\\,");
+		HashSet original = new HashSet();
+		original.addAll(tokens.keySet());
+		HashSet destroyed = new HashSet();
+		destroyed.addAll(tokens.keySet());
+		HashSet newtokens = new HashSet();
+		for (TokenState t : gs.getTokens()) {
+			tokens.put(t.id, t);
+			newtokens.add(t.id);
+		}
 
+		destroyed.removeAll(newtokens);
+		newtokens.removeAll(original);
 
-                btn.setBounds(new Rectangle());//field.x * SCALE - SCALE / 3, field.y * SCALE - SCALE / 3, SCALE * 2 / 3,                        SCALE * 2 / 3));
-                btn.setActionCommand("fieldPressed");
-                btn.addActionListener(this);
-                btn.setEnabled(false);
-                add(btn, new Integer(1));
+		for (Object d : destroyed) {
+			remove(buttons.get(d));
+		}
+		for (Object n : newtokens) {
+			AddToken(tokens.get(n));
+			buttons.get(n).setEnabled(false);
+		}
 
-            }
-        }
+		for (FieldState f : gs.getFields()) {
+			fields.put(f.id, f);
+		}
 
-        HashSet original = new HashSet();
-        original.addAll(tokens.keySet());
-        HashSet destroyed = new HashSet();
-        destroyed.addAll(tokens.keySet());
-        HashSet newtokens = new HashSet();
-        for (TokenState t : gs.getTokens()) {
-            tokens.put(t.id, t);
-            newtokens.add(t.id);
-        }
+		for (Object s : gs.getSelectables()) {
+			JButton b = buttons.get(s);
+			if (b != null) {
+				b.setEnabled(true);
+				enabledButtons.add(b);
+			}
+		}
 
-        destroyed.removeAll(newtokens);
-        newtokens.removeAll(original);
+		repaint();
+	}
 
-        for (Object d : destroyed) {
-            remove(buttons.get(d));
-        }
-        for (Object n : newtokens) {
-            AddToken(tokens.get(n));
-            buttons.get(n).setEnabled(false);
-        }
+	public Image getImage(String name) {
+		if (!images.containsKey(name)) {
+			try {
+				String path = properties.getProperty(name);
 
-        for (FieldState f : gs.getFields()) {
-            fields.put(f.id, f);
-        }
+				images.put(name, ImageIO.read(BoardPanel.class.getResourceAsStream(path)));
+			} catch (Exception e) {
+				System.err.println("Image " + name + " not found!");
+				images.put(name, null);
+			}
+		}
+		return images.get(name);
+	}
 
-        for (Object s : gs.getSelectables()) {
-            JButton b=buttons.get(s);
-            if(b!=null) {
-                b.setEnabled(true);
-                enabledButtons.add(b);
-            }
-        }
+	public void Rescale() {
+		SCALE = Math.min(this.getWidth(), this.getHeight());
+		for (FieldState field : messageReciever.getCurrentState().getFields()) {
+			String[] fp = properties.getProperty(field.name).split("\\,");
+			int size = SCALE / 10;
+			buttons.get(field.id).setBounds(new Rectangle((int) (Float.parseFloat(fp[0]) * SCALE - size / 2), (int) (Float.parseFloat(fp[1]) * SCALE - size / 2), size, size));
 
-        repaint();
-    }
+			for (TokenState token : tokens.values()) {
+				if (field.id == token.field)
 
+					buttons.get(token.id).setBounds(new Rectangle((int) (Float.parseFloat(fp[0]) * SCALE - size / 2), (int) (Float.parseFloat(fp[1]) * SCALE - size / 2), size, size));
+			}
+		}
+	}
 
-    HashMap<String, Image> images=new HashMap<>();
-    public Image getImage(String name){
-        if(!images.containsKey(name)){
-            try {
-                String path= properties.getProperty(name);
+	@Override
+	public void paint(Graphics g) {
+		if (messageReciever.IsEmpty()) return;
+		Rescale();
+		Graphics2D g2 = (Graphics2D) g;
 
-                images.put(name,ImageIO.read(BoardPanel.class.getResourceAsStream( path)));
-            } catch (Exception e) {
-                System.err.println("Image "+name+" not found!");
-                images.put(name,null);
-            }
-        }
-        return images.get(name);
-    }
+		g2.clearRect(0, 0, getWidth(), getHeight());
+		g2.drawImage(boardImage, 0, 0, SCALE, SCALE, null);
+		for (FieldState field : messageReciever.getCurrentState().getFields()) {
+			for (Object ne : field.neighbours) {
+				FieldState n = fields.get(ne);
+				if (n != null) {
+					//Line2D line = new Line2D.Float((field.x - minX + 1) * SCALE, (field.y - minY + 1) * SCALE, n.x * SCALE,                            n.y * SCALE);
+					//g2.draw(line);
 
-    private void AddToken(TokenState t) {
-        JButton button = new JButton();
-        button.setOpaque(false);
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
+				}
 
-        button.setUI(new TokenButtonUI(colorManager, t,getImage(t.type)));
-        add(button, new Integer(2));
-        button.setActionCommand("tokenPressed");
-        button.addActionListener(this);
-        buttons.put(t.id, button);
-        buttons2.put(button, t.id);
-        tokens.put(t.id, t);
-    }
+			}
+		}
 
-    public void Rescale() {
-        SCALE = Math.min(this.getWidth(), this.getHeight());
-        for (FieldState field : messageReciever.getCurrentState().getFields()) {
-            String[] fp=properties.getProperty(field.name).split("\\,");
-            int size=SCALE/10;
-            buttons.get(field.id).setBounds(new Rectangle((int)(Float.parseFloat(fp[0]) * SCALE-size/2),(int)( Float.parseFloat(fp[1]) * SCALE-size/2), size, size));
+		super.paint(g);
+	}
 
-            for (TokenState token : tokens.values()) {
-                if (field.id == token.field)
+	public void DisableButtons() {
+		for (JButton b : enabledButtons) {
+			b.setEnabled(false);
+		}
+		enabledButtons.clear();
+	}
 
-                    buttons.get(token.id).setBounds(new Rectangle((int)(Float.parseFloat(fp[0]) * SCALE-size/2),(int)( Float.parseFloat(fp[1]) * SCALE-size/2), size, size));
-            }
-        }
-    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String action = e.getActionCommand();
+		if (action == "fieldPressed" || action == "tokenPressed") {
+			messageReciever.getClient().sendSelected(buttons2.get(e.getSource()));
+		}
+		DisableButtons();
+	}
 
-    @Override
-    public void paint(Graphics g) {
-        if (messageReciever.IsEmpty()) return;
-        Rescale();
-        Graphics2D g2 = (Graphics2D) g;
+	private void AddToken(TokenState t) {
+		JButton button = new JButton();
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
 
-        g2.clearRect(0, 0, getWidth(), getHeight());
-        g2.drawImage(boardImage,0,0,SCALE,SCALE,null);
-        for (FieldState field : messageReciever.getCurrentState().getFields()) {
-            for (Object ne : field.neighbours) {
-                FieldState n = fields.get(ne);
-                if (n != null) {
-                    //Line2D line = new Line2D.Float((field.x - minX + 1) * SCALE, (field.y - minY + 1) * SCALE, n.x * SCALE,                            n.y * SCALE);
-                    //g2.draw(line);
-
-                }
-
-            }
-        }
-
-        super.paint(g);
-    }
-
-    public void DisableButtons() {
-        for (JButton b : enabledButtons) {
-            b.setEnabled(false);
-        }
-        enabledButtons.clear();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String action = e.getActionCommand();
-        if (action == "fieldPressed" || action == "tokenPressed") {
-            messageReciever.getClient().sendSelected(buttons2.get(e.getSource()));
-        }
-        DisableButtons();
-    }
-
-
+		button.setUI(new TokenButtonUI(colorManager, t, getImage(t.type)));
+		add(button, new Integer(2));
+		button.setActionCommand("tokenPressed");
+		button.addActionListener(this);
+		buttons.put(t.id, button);
+		buttons2.put(button, t.id);
+		tokens.put(t.id, t);
+	}
 
 }

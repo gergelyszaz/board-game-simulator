@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>hu.bme.aut.gergelyszaz.bgs</groupId>
@@ -58,21 +59,23 @@
             </resource>
         </resources>
         <plugins>
-		    <plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>exec-maven-plugin</artifactId>
-                    <version>1.2.1</version>
-                    <executions>
-                         <execution>
-                             <goals>
-                                 <goal>java</goal>
-                             </goals>
-                         </execution>
-                     </executions>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <mainClass>hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer</mainClass>
+                    <mainClass>
+                        hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer
+                    </mainClass>
                 </configuration>
-            </plugin>     
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -90,7 +93,11 @@
                 <configuration>
                     <appName>powerful-dusk-75224</appName>
                     <processTypes>
-                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer -Dserver.port=8025</web>
+                        <web>java $JAVA_OPTS -cp
+                            target/classes:target/dependency/*
+                            hu.bme.aut.gergelyszaz.BGS.server.WebSocketServer
+                            -Dserver.port=8025
+                        </web>
                     </processTypes>
                 </configuration>
             </plugin>

@@ -10,27 +10,28 @@ public class Player {
 
 	public Player(int id) {
 		sessionID = null;
-		uniqueID=id		;
-		userName="Player";
+		uniqueID = id;
+		userName = "Player";
 	}
 
-	public Color getColor() { return color ;}
+	public Color getColor() {
+		return color;
+	}
 
 	public String getSessionID() {
 		return sessionID;
-	}
-
-	public String getName() {
-		return userName;
 	}
 
 	public void setSessionID(String id) {
 		sessionID = id;
 	}
 
+	public String getName() {
+		return userName;
+	}
+
 	public boolean IsConnected() {
 		return sessionID != null;
 	}
-
 
 }
