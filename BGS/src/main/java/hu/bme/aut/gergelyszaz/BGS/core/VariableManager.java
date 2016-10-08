@@ -147,7 +147,7 @@ public class VariableManager {
 		return variables;
 	}
 
-	private boolean Evaluate(AndExp exp) throws IllegalAccessException {
+	boolean Evaluate(AndExp exp) throws IllegalAccessException {
 		boolean result = true;
 		for (BooleanExp e : exp.getExpressions()) {
 			result = (result && Evaluate(e));
@@ -155,7 +155,7 @@ public class VariableManager {
 		return result;
 	}
 
-	private boolean Evaluate(BooleanExp exp) throws IllegalAccessException {
+	boolean Evaluate(BooleanExp exp) throws IllegalAccessException {
 		boolean not = (exp.getNot() != null);
 		if (exp.getNestedExp() != null)
 			return not != Evaluate(exp.getNestedExp());
@@ -204,19 +204,16 @@ public class VariableManager {
 
 	}
 
-	private int GetValue(AttributeOrInt attributeOrInt)
+	int GetValue(AttributeOrInt attributeOrInt)
 					throws IllegalAccessException {
-		if (attributeOrInt.getAttribute() == null)
-			return attributeOrInt.getValue();
-
 		Object reference = GetReference(attributeOrInt);
 		if (!(reference instanceof Integer))
 			throw new IllegalAccessException(
-							attributeOrInt + " cannot be resolved");
+							attributeOrInt + " is not a number");
 		return (Integer) reference;
 	}
 
-	private List<String> getVariablePath(AttributeName attribute) {
+	List<String> getVariablePath(AttributeName attribute) {
 		List<String> variablePath = new ArrayList<>();
 		AttributeName child = attribute;
 		while (child != null) {
@@ -226,7 +223,7 @@ public class VariableManager {
 		return variablePath;
 	}
 
-	private Object GetReference(AttributeOrInt variable)
+	Object GetReference(AttributeOrInt variable)
 					throws IllegalAccessException {
 		if (variable.getAttribute() == null) {
 			return variable.getValue();
@@ -234,7 +231,7 @@ public class VariableManager {
 		return GetReference(variable.getAttribute());
 	}
 
-	private Object getReference(List<String> variablePath)
+	Object getReference(List<String> variablePath)
 					throws IllegalAccessException {
 		Object parent = null;
 		for (String variable :
