@@ -142,27 +142,32 @@ public class Game implements IController {
 	}
 
 	@Override
-	public boolean setSelected(String playerID, int selectedID) throws IllegalAccessException {
-		if (!Objects.equals(playerID, getCurrentPlayer().getSessionID()))
-			return false;
-		if (!activebuttons.contains(selectedID)) return false;
+	public boolean setSelected(String playerID, int selectedID){
+		try {
+			if (!Objects.equals(playerID, getCurrentPlayer().getSessionID()))
+				return false;
+			if (!activebuttons.contains(selectedID)) return false;
 
-		if (Objects.equals(currentAction.getName(), "SELECT")) {
-			Object object = IDStore.get(selectedID);
-			variableManager.Store(currentAction.getToVar(), object);
+			if (Objects.equals(currentAction.getName(), "SELECT")) {
+				Object object = IDStore.get(selectedID);
+				variableManager.Store(currentAction.getToVar(), object);
 
-			if (object instanceof Token) {
-				for (Field f : gameModel.getBoard().getFields()) {
-					variableManager.Store(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, -1);
+				if (object instanceof Token) {
+					for (Field f : gameModel.getBoard().getFields()) {
+						variableManager.Store(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, -1);
+					}
+					setupDistance(((Token) object).getField(), 0);
 				}
-				setupDistance(((Token) object).getField(), 0);
 			}
+
+			//Probably would be better with synchronization
+			waitForInput = false;
+			return true;
 		}
-
-		//Probably would be better with synchronization
-		waitForInput = false;
-		return true;
-
+		catch (IllegalAccessException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	private Player getCurrentPlayer() throws IllegalAccessException {

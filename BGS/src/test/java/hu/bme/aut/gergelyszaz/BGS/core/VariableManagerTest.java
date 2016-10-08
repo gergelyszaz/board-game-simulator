@@ -3,6 +3,8 @@ package hu.bme.aut.gergelyszaz.BGS.core;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.*;
+
 public class VariableManagerTest {
 	VariableManager variableManager;
 
@@ -13,7 +15,29 @@ public class VariableManagerTest {
 	}
 
 	@Test
-	public void testSeriousness() throws Exception {
-
+	public void GetValueTest() {
+		assertTrue(false);
 	}
+
+	@Test
+	public void StoreTest() {
+
+		assertTrue(false);
+	}
+
+	@Test
+	public void EvaluateTest() {
+		assertTrue(false);
+	}
+
+	@Test
+	public void getVariablePathTest() {
+		assertTrue(false);
+	}
+
+	@Test
+	public void GetReferenceTest() {
+		assertTrue(false);
+	}
+
 }
