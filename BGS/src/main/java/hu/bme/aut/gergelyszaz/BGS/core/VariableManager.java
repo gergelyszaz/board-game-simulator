@@ -57,6 +57,7 @@ public class VariableManager {
 		int value = GetValue(additionExp.getExpressions().get(i));
 		for (String operator :
 						additionExp.getOperators()) {
+			i++;
 			MultiplicationExp multiplicationExp = additionExp.getExpressions().get(i);
 			if (Objects.equals(operator, "+"))
 				value += GetValue(multiplicationExp);
@@ -75,6 +76,7 @@ public class VariableManager {
 		int value = GetValue(multiplicationExp.getExpressions().get(i));
 		for (String operator :
 						multiplicationExp.getOperators()) {
+			i++;
 			AttributeOrInt attributeOrInt = multiplicationExp.getExpressions().get(i);
 			if (Objects.equals(operator, "*"))
 				value *= GetValue(attributeOrInt);
