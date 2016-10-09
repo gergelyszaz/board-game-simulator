@@ -113,7 +113,7 @@ public class VariableManagerTest {
 		when(attributeOrInt.getAttribute()).thenReturn(firstAttribute);
 		when(attributeOrInt.getValue()).thenReturn(5);
 
-		Object reference = variableManager.GetValue(attributeOrInt);
+		Object reference = variableManager.calculate(attributeOrInt);
 
 		assertEquals(0, reference);
 		assertNotSame(5, reference);
@@ -131,7 +131,7 @@ public class VariableManagerTest {
 		when(attributeOrInt.getAttribute()).thenReturn(firstAttribute);
 		when(attributeOrInt.getValue()).thenReturn(5);
 
-		variableManager.GetValue(attributeOrInt);
+		variableManager.calculate(attributeOrInt);
 
 	}
 
@@ -141,7 +141,7 @@ public class VariableManagerTest {
 
 		AttributeOrInt attributeOrInt = mock(AttributeOrInt.class);
 
-		Object reference = variableManager.GetValue(attributeOrInt);
+		Object reference = variableManager.calculate(attributeOrInt);
 		assertEquals(reference, 0);
 	}
 
@@ -161,52 +161,6 @@ Object object=new Object();
 		variableManager.Store(path, object);
 
 		assertEquals(object,variableManager.getReference(path));
-	}
-
-	@Test
-	public void StoreUsingValueAssingmentTest() throws IllegalAccessException {
-
-		VariableManager spy = spy(variableManager);
-
-		ValueAssignment valueAssignment = mock(ValueAssignment.class);
-		AdditionExp additionExp = mock(AdditionExp.class);
-		AttributeName attributeName = mock(AttributeName.class);
-
-		when(valueAssignment.getAddition()).thenReturn(additionExp);
-		when(valueAssignment.getName()).thenReturn(attributeName);
-
-		doReturn(5).when(spy).GetReference(additionExp);
-
-		spy.Store(valueAssignment);
-	}
-
-	@Test
-	public void StoreUsingAttributNameTest() throws IllegalAccessException {
-
-		AttributeName attributeName = mock(AttributeName.class);
-
-		when(attributeName.getName()).thenReturn("newValue");
-
-		variableManager.Store(attributeName, 5);
-
-		Object reference = variableManager.GetReference(attributeName);
-
-		assertEquals(5, reference);
-
-	}
-
-	@Test(expected = IllegalAccessException.class)
-	public void StoreUsingInvalidAttributNameTest() throws
-																	IllegalAccessException {
-
-		AttributeName attributeName1 = mock(AttributeName.class);
-		AttributeName attributeName2 = mock(AttributeName.class);
-
-		when(attributeName1.getName()).thenReturn("invalid");
-		when(attributeName1.getChild()).thenReturn(attributeName2);
-		when(attributeName2.getName()).thenReturn("newValue");
-
-		variableManager.Store(attributeName1, 5);
 	}
 
 	@Test(expected = IllegalAccessException.class)
@@ -457,10 +411,10 @@ Object object=new Object();
 
 		when(additionExp.getExpressions()).thenReturn(multiplicationExps);
 		when(additionExp.getOperators()).thenReturn(operators);
-		doReturn(value1).when(spy).GetValue(multiplicationExp1);
-		doReturn(value2).when(spy).GetValue(multiplicationExp2);
+		doReturn(value1).when(spy).calculate(multiplicationExp1);
+		doReturn(value2).when(spy).calculate(multiplicationExp2);
 
-		return spy.GetValue(additionExp);
+		return spy.calculate(additionExp);
 	}
 
 	private int GetValueUsingMultiplicationExp(
@@ -480,10 +434,10 @@ Object object=new Object();
 
 		when(multiplicationExp.getExpressions()).thenReturn(attributeOrInts);
 		when(multiplicationExp.getOperators()).thenReturn(operators);
-		doReturn(value1).when(spy).GetValue(attributeOrInt1);
-		doReturn(value2).when(spy).GetValue(attributeOrInt2);
+		doReturn(value1).when(spy).calculate(attributeOrInt1);
+		doReturn(value2).when(spy).calculate(attributeOrInt2);
 
-		return spy.GetValue(multiplicationExp);
+		return spy.calculate(multiplicationExp);
 	}
 
 	private boolean EvaluateBooleanExp(

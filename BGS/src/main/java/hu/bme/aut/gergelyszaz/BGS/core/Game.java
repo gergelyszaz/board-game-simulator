@@ -11,6 +11,7 @@ import hu.bme.aut.gergelyszaz.bGL.*;
 import org.eclipse.emf.common.util.EList;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Game implements IController {
 
@@ -33,7 +34,7 @@ public class Game implements IController {
 	List<Deck> decks;
 	List<Integer> losers = new ArrayList<>();
 	List<Integer> winners = new ArrayList<>();
-	//TODO add everything selectable to objects
+
 	Set<Object> objects = new HashSet<>();
 	private Set<Integer> activebuttons = new HashSet<>();
 
@@ -72,24 +73,20 @@ public class Game implements IController {
 		this.gameModel = gameModel;
 
 		setCurrentPlayer(players.get(0));
-		for (Field field : gameModel.getBoard().getFields()) {
-			objects.add(field);
-		}
+		objects.addAll(gameModel.getBoard().getFields().stream()
+			 .collect(Collectors.toList()));
 		for (Deck deck : decks) {
 			objects.add(deck);
-			for (Card c : deck.cards) {
-				objects.add(c);
-			}
+			objects.addAll(deck.cards.stream().collect(Collectors.toList()));
 		}
-		for (Player player : players) {
-			objects.add(player);
-		}
+		objects.addAll(players.stream().collect(Collectors.toList()));
 	}
 
 	public void Step() throws IllegalAccessException {
 
 		if (waitForInput || gameEnded) return;
 		actionManager.Step();
+
 		ExecuteAction(actionManager.getCurrentAction());
 
 	}
@@ -133,15 +130,6 @@ public class Game implements IController {
 		return gameEnded;
 	}
 
-	public void run() throws IllegalAccessException {
-
-		Start();
-		while (!gameEnded) {
-			Step();
-			Thread.yield();
-		}
-	}
-
 	@Override
 	public void AddView(IView v) {
 
@@ -173,9 +161,11 @@ public class Game implements IController {
 
 			if (Objects
 				 .equals(actionManager.getCurrentAction().getName(), "SELECT")) {
+
 				Object object = IDStore.get(selectedID);
-				variableManager
-					 .Store(actionManager.getCurrentAction().getToVar(), object);
+				List<String> variablePath = variableManager.getVariablePath
+					 (actionManager.getCurrentAction().getToVar());
+				variableManager.Store(variablePath, object);
 
 				if (object instanceof Token) {
 					for (Field f : gameModel.getBoard().getFields()) {
@@ -260,10 +250,10 @@ public class Game implements IController {
 					ExecuteDestroy(action);
 					break;
 				case "WIN":
-					ExecuteWin(action);
+					ExecuteWin();
 					break;
 				case "LOSE":
-					ExecuteLose(action);
+					ExecuteLose();
 					break;
 				case "IF":
 					ExecuteIf(action);
@@ -272,14 +262,20 @@ public class Game implements IController {
 					ExecuteWhile(action);
 					break;
 				case "END TURN":
-					ExecuteEndTurn(action);
+					ExecuteEndTurn();
 					break;
 				case "ROLL":
 					ExecuteRoll(action);
 					break;
 
 				default:
-					variableManager.Store(action.getAssignment());
+					ValueAssignment assignment=action.getAssignment();
+					Object reference = variableManager.GetReference(assignment
+						 .getAddition());
+
+					List<String> variablePath = variableManager.getVariablePath
+						 (assignment.getName());
+					variableManager.Store(variablePath, reference);
 					break;
 			}
 		} catch (IllegalAccessException e) {
@@ -295,10 +291,11 @@ public class Game implements IController {
 			int rollresult = r.nextInt(action.getTo()) + action.getFrom();
 			result += rollresult;
 		}
-		variableManager.Store(action.getToVar(), result);
+		List<String> variablePath = variableManager.getVariablePath(action.getToVar());
+		variableManager.Store(variablePath, result);
 	}
 
-	private void ExecuteEndTurn(Action action) throws IllegalAccessException {
+	private void ExecuteEndTurn() throws IllegalAccessException {
 
 		actionManager.reset();
 		setCurrentPlayer(getNextPlayer());
@@ -326,7 +323,9 @@ public class Game implements IController {
 		}
 		token.setOwner(getCurrentPlayer());
 		token.setField((Field) variableManager.GetReference(action.getSpawnTo()));
-		variableManager.Store(action.getToVar(), token);
+		List<String> variablePath = variableManager.getVariablePath(action
+			 .getToVar());
+		variableManager.Store(variablePath, token);
 		tokens.add(token);
 		objects.add(token);
 	}
@@ -348,12 +347,12 @@ public class Game implements IController {
 		views.forEach(IView::Refresh);
 	}
 
-	private void ExecuteWin(Action action) throws IllegalAccessException {
+	private void ExecuteWin() throws IllegalAccessException {
 
 		Win();
 	}
 
-	private void ExecuteLose(Action action) throws IllegalAccessException {
+	private void ExecuteLose() throws IllegalAccessException {
 
 		Lose();
 	}
@@ -418,9 +417,9 @@ public class Game implements IController {
 			FieldState fs = new FieldState();
 			fs.id = IDStore.get(f);
 			fs.name = f.getName();
-			for (Field n : f.getNeighbours()) {
-				fs.neighbours.add(IDStore.get(n));
-			}
+			fs.neighbours.addAll(
+				 f.getNeighbours().stream().map(n -> IDStore.get(n))
+					  .collect(Collectors.toList()));
 			flist.add(fs);
 		}
 		List<TokenState> tlist = new ArrayList<>();
@@ -435,7 +434,7 @@ public class Game implements IController {
 
 		int stateVersion = gameStates.getCurrentVersion() + 1;
 
-		List<DeckState> deckstates = new ArrayList<DeckState>();
+		List<DeckState> deckstates = new ArrayList<>();
 		for (Deck deck : decks) {
 			DeckState deckState = new DeckState();
 			switch (deck.visibility) {
