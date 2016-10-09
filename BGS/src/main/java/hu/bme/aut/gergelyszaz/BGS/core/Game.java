@@ -95,7 +95,10 @@ public class Game implements IController {
 			setCurrentPlayer(players.get(setupId - 1));
 			variableManager.Store(null, VariableManager.THIS, getCurrentPlayer());
 			for (SimpleAssignment variable : gameModel.getPlayer().getVariables()) {
-				variableManager.Store(getCurrentPlayer(), variable);
+				String variableName=variable.getName();
+				Object reference=variableManager.GetReference(
+					 variable.getAttribute());
+				variableManager.Store(getCurrentPlayer(), variableName,reference);
 			}
 
 			currentAction = GetNextAction(setup.getSetupRule().getActions());
@@ -165,6 +168,7 @@ public class Game implements IController {
 			return true;
 		}
 		catch (IllegalAccessException e){
+			System.out.println(variableManager.getVariables());
 			e.printStackTrace();
 			return false;
 		}
@@ -269,7 +273,9 @@ public class Game implements IController {
 			} else if (Objects.equals(action.getName(), "SPAWN")) {
 				Token token = new Token(variableManager, action.getToken().getName());
 				for (SimpleAssignment a : action.getToken().getVariables()) {
-					variableManager.Store(token, a);
+					String variableName=a.getName();
+					Object reference=variableManager.GetReference(a.getAttribute());
+					variableManager.Store(token, variableName,reference);
 				}
 				token.setOwner(getCurrentPlayer());
 				token.setField((Field) variableManager.GetReference(action.getSpawnTo()));
@@ -316,8 +322,10 @@ public class Game implements IController {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			System.err.println("	at Action: " + action);
+			System.out.println(variableManager.getVariables());
+			e.printStackTrace();
+
 			if (action.getAssignment() != null) {
 				System.err.println("		" + action.getAssignment().getAddition() + " could not be resolved.");
 			}

@@ -146,34 +146,67 @@ public class VariableManagerTest {
 	}
 
 	@Test
-	public void StoreUsingNameStringTest() {
+	public void StoreUsingNameStringTest() throws IllegalAccessException {
 
-		variableManager.Store(null, "newName", new Object());
+		Object object=new Object();
+		variableManager.Store(null, "newName",object);
+
+		assertEquals(object,variableManager.GetReference(null, "newName"));
 	}
 
 	@Test
 	public void StoreUsingPathTest() throws IllegalAccessException {
-
+Object object=new Object();
 		List<String> path = Arrays.asList("first", "second", "third", "fourth");
-		variableManager.Store(path, new Object());
-	}
+		variableManager.Store(path, object);
 
-	@Test
-	public void StoreUsingSimpleAssignmentTest() throws IllegalAccessException {
-
-		assertTrue(false);
+		assertEquals(object,variableManager.getReference(path));
 	}
 
 	@Test
 	public void StoreUsingValueAssingmentTest() throws IllegalAccessException {
 
-		assertTrue(false);
+		VariableManager spy = spy(variableManager);
+
+		ValueAssignment valueAssignment = mock(ValueAssignment.class);
+		AdditionExp additionExp = mock(AdditionExp.class);
+		AttributeName attributeName = mock(AttributeName.class);
+
+		when(valueAssignment.getAddition()).thenReturn(additionExp);
+		when(valueAssignment.getName()).thenReturn(attributeName);
+
+		doReturn(5).when(spy).GetReference(additionExp);
+
+		spy.Store(valueAssignment);
 	}
 
 	@Test
 	public void StoreUsingAttributNameTest() throws IllegalAccessException {
 
-		assertTrue(false);
+		AttributeName attributeName = mock(AttributeName.class);
+
+		when(attributeName.getName()).thenReturn("newValue");
+
+		variableManager.Store(attributeName, 5);
+
+		Object reference = variableManager.GetReference(attributeName);
+
+		assertEquals(5, reference);
+
+	}
+
+	@Test(expected = IllegalAccessException.class)
+	public void StoreUsingInvalidAttributNameTest() throws
+																	IllegalAccessException {
+
+		AttributeName attributeName1 = mock(AttributeName.class);
+		AttributeName attributeName2 = mock(AttributeName.class);
+
+		when(attributeName1.getName()).thenReturn("invalid");
+		when(attributeName1.getChild()).thenReturn(attributeName2);
+		when(attributeName2.getName()).thenReturn("newValue");
+
+		variableManager.Store(attributeName1, 5);
 	}
 
 	@Test(expected = IllegalAccessException.class)
@@ -184,34 +217,75 @@ public class VariableManagerTest {
 		path.add("second");
 		path.add("invalid");
 		path.add("fourth");
-		variableManager.Store(path, new Object());
+
+		Object object = new Object();
+		variableManager.Store(path, object);
+		assertEquals(object, variableManager.getReference(path));
+
 	}
 
 	@Test
 	public void EvaluateBooleanExpTest() throws IllegalAccessException {
 
-		assertTrue(EvaluateBooleanExp(null, 5, "<", 6));
-		assertFalse(EvaluateBooleanExp(null, 6, "<", 5));
-		assertFalse(EvaluateBooleanExp(null, 6, "<", 6));
+		AttributeOrInt attributeOrInt5 = mock(AttributeOrInt.class);
+		AttributeOrInt attributeOrInt6 = mock(AttributeOrInt.class);
+		AttributeOrInt attributeOrIntObject1 = mock(AttributeOrInt.class);
+		AttributeOrInt attributeOrIntObject2 = mock(AttributeOrInt.class);
+		AttributeName attributeName1 = mock(AttributeName.class);
+		AttributeName attributeName2 = mock(AttributeName.class);
 
-		assertTrue(EvaluateBooleanExp(null, 5, "<=", 6));
-		assertFalse(EvaluateBooleanExp(null, 6, "<=", 5));
-		assertTrue(EvaluateBooleanExp(null, 6, "<=", 6));
+		when(attributeOrInt5.getValue()).thenReturn(5);
+		when(attributeOrInt6.getValue()).thenReturn(6);
+		when(attributeOrIntObject1.getAttribute()).thenReturn(attributeName1);
+		when(attributeOrIntObject2.getAttribute()).thenReturn(attributeName2);
+		when(attributeName1.getName()).thenReturn("first");
+		when(attributeName2.getName()).thenReturn("zero");
 
-		assertFalse(EvaluateBooleanExp(null, 5, ">=", 6));
-		assertTrue(EvaluateBooleanExp(null, 6, ">=", 5));
-		assertTrue(EvaluateBooleanExp(null, 6, ">=", 6));
+		assertTrue(EvaluateBooleanExp(null, attributeOrInt5, "<",
+			 attributeOrInt6));
+		assertFalse(
+			 EvaluateBooleanExp(null, attributeOrInt6, "<", attributeOrInt5));
+		assertFalse(
+			 EvaluateBooleanExp(null, attributeOrInt6, "<", attributeOrInt6));
 
-		assertTrue(EvaluateBooleanExp(null, 5, "==", 5));
-		assertFalse(EvaluateBooleanExp(null, 5, "==", 6));
+		assertTrue(EvaluateBooleanExp(null, attributeOrInt6, ">",
+			 attributeOrInt5));
+		assertFalse(EvaluateBooleanExp(null, attributeOrInt5, ">",
+			 attributeOrInt6));
+		assertFalse(EvaluateBooleanExp(null, attributeOrInt6, ">",
+			 attributeOrInt6));
 
-		assertTrue(EvaluateBooleanExp(null, firstObject, "===", firstObject));
-		assertFalse(EvaluateBooleanExp(null, firstObject, "===", null));
+		assertTrue(
+			 EvaluateBooleanExp(null, attributeOrInt5, "<=", attributeOrInt6));
+		assertFalse(
+			 EvaluateBooleanExp(null, attributeOrInt6, "<=", attributeOrInt5));
+		assertTrue(
+			 EvaluateBooleanExp(null, attributeOrInt6, "<=", attributeOrInt6));
 
-		assertFalse(EvaluateBooleanExp(null, firstObject, "!==", firstObject));
-		assertTrue(EvaluateBooleanExp(null, firstObject, "!==", null));
+		assertFalse(
+			 EvaluateBooleanExp(null, attributeOrInt5, ">=", attributeOrInt6));
+		assertTrue(
+			 EvaluateBooleanExp(null, attributeOrInt6, ">=", attributeOrInt5));
+		assertTrue(
+			 EvaluateBooleanExp(null, attributeOrInt6, ">=", attributeOrInt6));
 
-		assertTrue(EvaluateBooleanExp("NOT", 6, "<", 5));
+		assertTrue(
+			 EvaluateBooleanExp(null, attributeOrInt5, "==", attributeOrInt5));
+		assertFalse(
+			 EvaluateBooleanExp(null, attributeOrInt5, "==", attributeOrInt6));
+
+		assertTrue(EvaluateBooleanExp(null, attributeOrIntObject1, "===",
+			 attributeOrIntObject1));
+		assertFalse(EvaluateBooleanExp(null, attributeOrIntObject1, "===",
+			 attributeOrIntObject2));
+
+		assertFalse(EvaluateBooleanExp(null, attributeOrIntObject1, "!==",
+			 attributeOrIntObject1));
+		assertTrue(EvaluateBooleanExp(null, attributeOrIntObject1, "!==",
+			 attributeOrIntObject2));
+
+		assertTrue(
+			 EvaluateBooleanExp("NOT", attributeOrInt6, "<", attributeOrInt5));
 	}
 
 	@Test
@@ -413,24 +487,17 @@ public class VariableManagerTest {
 	}
 
 	private boolean EvaluateBooleanExp(
-		 String not, Object left, String operator, Object right)
+		 String not, AttributeOrInt left, String operator, AttributeOrInt right)
 		 throws IllegalAccessException {
 
-		VariableManager spy = spy(variableManager);
-
 		BooleanExp booleanExp = mock(BooleanExp.class);
-		AttributeOrInt attributeOrInt1 = mock(AttributeOrInt.class);
-		AttributeOrInt attributeOrInt2 = mock(AttributeOrInt.class);
 
 		when(booleanExp.getNot()).thenReturn(not);
 		when(booleanExp.getName()).thenReturn(operator);
-		when(booleanExp.getLeft()).thenReturn(attributeOrInt1);
-		when(booleanExp.getRight()).thenReturn(attributeOrInt1);
+		when(booleanExp.getLeft()).thenReturn(left);
+		when(booleanExp.getRight()).thenReturn(right);
 
-		doReturn(left).when(spy).GetReference(attributeOrInt1);
-		doReturn(right).when(spy).GetReference(attributeOrInt2);
-
-		return spy.Evaluate(booleanExp);
+		return variableManager.Evaluate(booleanExp);
 	}
 
 	private boolean EvaluateAndExp(boolean left, boolean right)
@@ -447,7 +514,7 @@ public class VariableManagerTest {
 		when(andExp.getExpressions()).thenReturn(booleanExps);
 
 		doReturn(left).when(spy).Evaluate(booleanExp1);
-		doReturn(right).when(spy).Evaluate(booleanExp1);
+		doReturn(right).when(spy).Evaluate(booleanExp2);
 
 		return spy.Evaluate(andExp);
 	}

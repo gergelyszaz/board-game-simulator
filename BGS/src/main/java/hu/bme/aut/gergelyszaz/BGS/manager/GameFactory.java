@@ -27,13 +27,19 @@ public class GameFactory {
 			Player player = new Player(generatedId);
 			players.add(player);
 			for (SimpleAssignment variableModel : model.getPlayer().getVariables()) {
-				variableManager.Store(player, variableModel);
+				String variableName=variableModel.getName();
+				Object reference=variableManager.GetReference(variableModel
+					 .getAttribute());
+				variableManager.Store(player, variableName, reference);
 			}
 		}
 
 		variableManager.Store(null, VariableManager.NULL, null);
 		for (SimpleAssignment variable : model.getBoard().getVariables()) {
-			variableManager.Store(variable, null);
+			String variableName=variable.getName();
+			Object reference=variableManager.GetReference(variable
+				 .getAttribute());
+			variableManager.Store(null, variableName, reference);
 		}
 
 		for (Field field : model.getBoard().getFields()) {
@@ -46,7 +52,10 @@ public class GameFactory {
 				Card card = new Card(variableManager, cardModel);
 				cardModels.add(card);
 				for (SimpleAssignment variable : cardModel.getVariables()) {
-					variableManager.Store(card, variable);
+					String variableName=variable.getName();
+					Object reference=variableManager.GetReference(variable
+						 .getAttribute());
+					variableManager.Store(card, variableName, reference);
 				}
 
 			}
@@ -62,7 +71,10 @@ public class GameFactory {
 				for (hu.bme.aut.gergelyszaz.bGL.Card cardModel : deckModel.getCards()) {
 					cards.add(new Card(variableManager, cardModel));
 					for (SimpleAssignment variable : cardModel.getVariables()) {
-						variableManager.Store(cardModel, variable);
+						String variableName=variable.getName();
+						Object reference=variableManager.GetReference(variable
+							 .getAttribute());
+						variableManager.Store(cardModel, variableName,reference);
 					}
 				}
 				Deck deck = new Deck(variableManager, cards, player, deckModel.getVisibility());
@@ -78,7 +90,10 @@ public class GameFactory {
 		for (Field fieldModel : model.getBoard().getFields()) {
 			variableManager.Store(fieldModel, "tokenCount", 0);
 			for (SimpleAssignment v : fieldModel.getVariables()) {
-				variableManager.Store(fieldModel, v);
+				String variableName=v.getName();
+				Object reference=variableManager.GetReference(v
+					 .getAttribute());
+				variableManager.Store(fieldModel, variableName,reference);
 			}
 		}
 
