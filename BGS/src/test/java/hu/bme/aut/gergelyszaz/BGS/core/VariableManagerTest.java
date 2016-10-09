@@ -56,76 +56,35 @@ public class VariableManagerTest {
 	}
 
 	@Test
-	public void GetValueUsingAdditionExpPlusTest() throws IllegalAccessException {
+	public void GetValueUsingAdditionExpPlusTest()
+		 throws IllegalAccessException {
 
 		int value = GetValueUsingAdditionExp(1, 2, "+");
 		assertEquals(3, value);
 	}
 
 	@Test
-	public void GetValueUsingAdditionExpMinusTest() throws IllegalAccessException {
+	public void GetValueUsingAdditionExpMinusTest()
+		 throws IllegalAccessException {
 
 		int value = GetValueUsingAdditionExp(1, 2, "-");
 		assertEquals(-1, value);
 	}
 
-	private int GetValueUsingAdditionExp(int value1, int value2, String operator) throws IllegalAccessException {
-
-		VariableManager spy = spy(variableManager);
-		AdditionExp additionExp = mock(AdditionExp.class);
-		MultiplicationExp multiplicationExp1 = mock(MultiplicationExp.class);
-		MultiplicationExp multiplicationExp2 = mock(MultiplicationExp.class);
-
-		EList<MultiplicationExp> multiplicationExps =
-			 new BasicEList<>(Arrays.asList(
-				  multiplicationExp1, multiplicationExp2));
-		EList<String> operators =
-			 new BasicEList<>(Arrays.asList(
-				  operator));
-
-		when(additionExp.getExpressions()).thenReturn(multiplicationExps);
-		when(additionExp.getOperators()).thenReturn(operators);
-		doReturn(value1).when(spy).GetValue(multiplicationExp1);
-		doReturn(value2).when(spy).GetValue(multiplicationExp2);
-
-		return spy.GetValue(additionExp);
-	}
-
 	@Test
-	public void GetValueUsingMultiplicationExpStarTest() throws IllegalAccessException {
+	public void GetValueUsingMultiplicationExpStarTest()
+		 throws IllegalAccessException {
 
 		int value = GetValueUsingMultiplicationExp(6, 3, "*");
 		assertEquals(18, value);
 	}
 
 	@Test
-	public void GetValueUsingMultiplicationExpSlashTest() throws IllegalAccessException {
+	public void GetValueUsingMultiplicationExpSlashTest()
+		 throws IllegalAccessException {
 
 		int value = GetValueUsingMultiplicationExp(6, 3, "/");
 		assertEquals(2, value);
-	}
-
-	private int GetValueUsingMultiplicationExp(
-		 int value1, int value2, String operator) throws IllegalAccessException {
-
-		VariableManager spy = spy(variableManager);
-
-		MultiplicationExp multiplicationExp = mock(MultiplicationExp.class);
-		AttributeOrInt attributeOrInt1 = mock(AttributeOrInt.class);
-		AttributeOrInt attributeOrInt2 = mock(AttributeOrInt.class);
-		EList<AttributeOrInt> attributeOrInts =
-			 new BasicEList<>(Arrays.asList(
-				  attributeOrInt1, attributeOrInt2));
-		EList<String> operators =
-			 new BasicEList<>(Arrays.asList(
-				  operator));
-
-		when(multiplicationExp.getExpressions()).thenReturn(attributeOrInts);
-		when(multiplicationExp.getOperators()).thenReturn(operators);
-		doReturn(value1).when(spy).GetValue(attributeOrInt1);
-		doReturn(value2).when(spy).GetValue(attributeOrInt2);
-
-		return spy.GetValue(multiplicationExp);
 	}
 
 	@Test
@@ -196,8 +155,25 @@ public class VariableManagerTest {
 	public void StoreUsingPathTest() throws IllegalAccessException {
 
 		List<String> path = Arrays.asList("first", "second", "third", "fourth");
-
 		variableManager.Store(path, new Object());
+	}
+
+	@Test
+	public void StoreUsingSimpleAssignmentTest() throws IllegalAccessException {
+
+		assertTrue(false);
+	}
+
+	@Test
+	public void StoreUsingValueAssingmentTest() throws IllegalAccessException {
+
+		assertTrue(false);
+	}
+
+	@Test
+	public void StoreUsingAttributNameTest() throws IllegalAccessException {
+
+		assertTrue(false);
 	}
 
 	@Test(expected = IllegalAccessException.class)
@@ -238,27 +214,6 @@ public class VariableManagerTest {
 		assertTrue(EvaluateBooleanExp("NOT", 6, "<", 5));
 	}
 
-	private boolean EvaluateBooleanExp(
-		 String not, Object left, String operator, Object right)
-		 throws IllegalAccessException {
-
-		VariableManager spy = spy(variableManager);
-
-		BooleanExp booleanExp = mock(BooleanExp.class);
-		AttributeOrInt attributeOrInt1 = mock(AttributeOrInt.class);
-		AttributeOrInt attributeOrInt2 = mock(AttributeOrInt.class);
-
-		when(booleanExp.getNot()).thenReturn(not);
-		when(booleanExp.getName()).thenReturn(operator);
-		when(booleanExp.getLeft()).thenReturn(attributeOrInt1);
-		when(booleanExp.getRight()).thenReturn(attributeOrInt1);
-
-		doReturn(left).when(spy).GetReference(attributeOrInt1);
-		doReturn(right).when(spy).GetReference(attributeOrInt2);
-
-		return spy.Evaluate(booleanExp);
-	}
-
 	@Test
 	public void EvaluateAndExpTest() throws IllegalAccessException {
 
@@ -268,23 +223,6 @@ public class VariableManagerTest {
 		assertFalse(EvaluateAndExp(false, false));
 	}
 
-	private boolean EvaluateAndExp(boolean left, boolean right) throws IllegalAccessException {
-
-		VariableManager spy = spy(variableManager);
-
-		BooleanExp booleanExp1 = mock(BooleanExp.class);
-		BooleanExp booleanExp2 = mock(BooleanExp.class);
-		AndExp andExp = mock(AndExp.class);
-		EList<BooleanExp> booleanExps = new BasicEList<>(Arrays.asList(booleanExp1, booleanExp2));
-
-		when(andExp.getExpressions()).thenReturn(booleanExps);
-
-		doReturn(left).when(spy).Evaluate(booleanExp1);
-		doReturn(right).when(spy).Evaluate(booleanExp1);
-
-		return spy.Evaluate(andExp);
-	}
-
 	@Test
 	public void EvaluateOrExpTest() throws IllegalAccessException {
 
@@ -292,24 +230,6 @@ public class VariableManagerTest {
 		assertTrue(EvaluateOrExp(true, false));
 		assertTrue(EvaluateOrExp(false, true));
 		assertFalse(EvaluateOrExp(false, false));
-	}
-
-	private boolean EvaluateOrExp(boolean left, boolean right)
-		 throws IllegalAccessException {
-
-		VariableManager spy = spy(variableManager);
-
-		OrExp orExp = mock(OrExp.class);
-		AndExp andExp1 = mock(AndExp.class);
-		AndExp andExp2 = mock(AndExp.class);
-		EList<AndExp> andExps = new BasicEList<>(Arrays.asList(andExp1, andExp2));
-
-		when(orExp.getExpressions()).thenReturn(andExps);
-
-		doReturn(left).when(spy).Evaluate(andExp1);
-		doReturn(right).when(spy).Evaluate(andExp2);
-
-		return spy.Evaluate(orExp);
 	}
 
 	@Test
@@ -334,8 +254,6 @@ public class VariableManagerTest {
 		assertEquals("third", path.get(2));
 	}
 
-//GetReference tests
-
 	@Test
 	public void GetReferenceUsingPathTest() throws IllegalAccessException {
 
@@ -348,7 +266,8 @@ public class VariableManagerTest {
 	}
 
 	@Test(expected = IllegalAccessException.class)
-	public void GetReferenceUsingInvalidPathTest() throws IllegalAccessException {
+	public void GetReferenceUsingInvalidPathTest()
+		 throws IllegalAccessException {
 
 		List<String> path = new ArrayList<>();
 		path.add("invalid");
@@ -368,7 +287,8 @@ public class VariableManagerTest {
 	}
 
 	@Test(expected = IllegalAccessException.class)
-	public void GetReferenceUsingInvalidNameTest() throws IllegalAccessException {
+	public void GetReferenceUsingInvalidNameTest()
+		 throws IllegalAccessException {
 
 		variableManager.GetReference(null, "invalid");
 	}
@@ -389,6 +309,8 @@ public class VariableManagerTest {
 
 		assertEquals(secondObject, reference);
 	}
+
+//GetReference tests
 
 	@Test(expected = IllegalAccessException.class)
 	public void GetReferenceUsingInvalidAttributeNameTest()
@@ -442,6 +364,110 @@ public class VariableManagerTest {
 
 		Object reference = variableManager.GetReference(attributeOrInt);
 		assertEquals(0, reference);
+	}
+
+	private int GetValueUsingAdditionExp(int value1, int value2, String operator)
+		 throws IllegalAccessException {
+
+		VariableManager spy = spy(variableManager);
+		AdditionExp additionExp = mock(AdditionExp.class);
+		MultiplicationExp multiplicationExp1 = mock(MultiplicationExp.class);
+		MultiplicationExp multiplicationExp2 = mock(MultiplicationExp.class);
+
+		EList<MultiplicationExp> multiplicationExps =
+			 new BasicEList<>(Arrays.asList(
+				  multiplicationExp1, multiplicationExp2));
+		EList<String> operators =
+			 new BasicEList<>(Arrays.asList(
+				  operator));
+
+		when(additionExp.getExpressions()).thenReturn(multiplicationExps);
+		when(additionExp.getOperators()).thenReturn(operators);
+		doReturn(value1).when(spy).GetValue(multiplicationExp1);
+		doReturn(value2).when(spy).GetValue(multiplicationExp2);
+
+		return spy.GetValue(additionExp);
+	}
+
+	private int GetValueUsingMultiplicationExp(
+		 int value1, int value2, String operator) throws IllegalAccessException {
+
+		VariableManager spy = spy(variableManager);
+
+		MultiplicationExp multiplicationExp = mock(MultiplicationExp.class);
+		AttributeOrInt attributeOrInt1 = mock(AttributeOrInt.class);
+		AttributeOrInt attributeOrInt2 = mock(AttributeOrInt.class);
+		EList<AttributeOrInt> attributeOrInts =
+			 new BasicEList<>(Arrays.asList(
+				  attributeOrInt1, attributeOrInt2));
+		EList<String> operators =
+			 new BasicEList<>(Arrays.asList(
+				  operator));
+
+		when(multiplicationExp.getExpressions()).thenReturn(attributeOrInts);
+		when(multiplicationExp.getOperators()).thenReturn(operators);
+		doReturn(value1).when(spy).GetValue(attributeOrInt1);
+		doReturn(value2).when(spy).GetValue(attributeOrInt2);
+
+		return spy.GetValue(multiplicationExp);
+	}
+
+	private boolean EvaluateBooleanExp(
+		 String not, Object left, String operator, Object right)
+		 throws IllegalAccessException {
+
+		VariableManager spy = spy(variableManager);
+
+		BooleanExp booleanExp = mock(BooleanExp.class);
+		AttributeOrInt attributeOrInt1 = mock(AttributeOrInt.class);
+		AttributeOrInt attributeOrInt2 = mock(AttributeOrInt.class);
+
+		when(booleanExp.getNot()).thenReturn(not);
+		when(booleanExp.getName()).thenReturn(operator);
+		when(booleanExp.getLeft()).thenReturn(attributeOrInt1);
+		when(booleanExp.getRight()).thenReturn(attributeOrInt1);
+
+		doReturn(left).when(spy).GetReference(attributeOrInt1);
+		doReturn(right).when(spy).GetReference(attributeOrInt2);
+
+		return spy.Evaluate(booleanExp);
+	}
+
+	private boolean EvaluateAndExp(boolean left, boolean right)
+		 throws IllegalAccessException {
+
+		VariableManager spy = spy(variableManager);
+
+		BooleanExp booleanExp1 = mock(BooleanExp.class);
+		BooleanExp booleanExp2 = mock(BooleanExp.class);
+		AndExp andExp = mock(AndExp.class);
+		EList<BooleanExp> booleanExps =
+			 new BasicEList<>(Arrays.asList(booleanExp1, booleanExp2));
+
+		when(andExp.getExpressions()).thenReturn(booleanExps);
+
+		doReturn(left).when(spy).Evaluate(booleanExp1);
+		doReturn(right).when(spy).Evaluate(booleanExp1);
+
+		return spy.Evaluate(andExp);
+	}
+
+	private boolean EvaluateOrExp(boolean left, boolean right)
+		 throws IllegalAccessException {
+
+		VariableManager spy = spy(variableManager);
+
+		OrExp orExp = mock(OrExp.class);
+		AndExp andExp1 = mock(AndExp.class);
+		AndExp andExp2 = mock(AndExp.class);
+		EList<AndExp> andExps = new BasicEList<>(Arrays.asList(andExp1, andExp2));
+
+		when(orExp.getExpressions()).thenReturn(andExps);
+
+		doReturn(left).when(spy).Evaluate(andExp1);
+		doReturn(right).when(spy).Evaluate(andExp2);
+
+		return spy.Evaluate(orExp);
 	}
 
 }
