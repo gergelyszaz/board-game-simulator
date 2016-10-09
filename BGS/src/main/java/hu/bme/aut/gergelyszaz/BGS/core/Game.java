@@ -25,8 +25,8 @@ public class Game implements IController {
 
 	Set<IView> views = new HashSet<>();
 	int turnCount = 1;
-	Action currentAction = null;
-	Stack<Action> actionStack = new Stack<>();
+ActionManager actionManager;
+
 	List<Player> players;
 	ArrayList<Token> tokens = new ArrayList<>();
 	List<Deck> decks;
@@ -52,10 +52,10 @@ public class Game implements IController {
 	}
 
 	public boolean IsFull() {
-		boolean isFull = false;
+		boolean isFull = true;
 		for (Player player :
 						players) {
-			isFull |= player.IsConnected();
+			isFull &= player.IsConnected();
 		}
 		return isFull;
 	}
@@ -83,16 +83,20 @@ public class Game implements IController {
 
 	public void Step() throws IllegalAccessException {
 		if (waitForInput || gameEnded) return;
-		currentAction = GetNextAction(gameModel.getRule().getActions());
-		ExecuteAction(currentAction);
+		actionManager.Step();
+		ExecuteAction(actionManager.getCurrentAction());
 	}
 
 	public void Start() throws IllegalAccessException {
+
+
 		for (PlayerSetup setup : gameModel.getPlayer().getPlayerSetups()) {
+
 			int setupId = setup.getId();
 			if (setupId < 1 || setupId > players.size())
 				throw new IllegalAccessException("Invalid player id: Player " + setupId);
 			setCurrentPlayer(players.get(setupId - 1));
+
 			variableManager.Store(null, VariableManager.THIS, getCurrentPlayer());
 			for (SimpleAssignment variable : gameModel.getPlayer().getVariables()) {
 				String variableName=variable.getName();
@@ -101,15 +105,14 @@ public class Game implements IController {
 				variableManager.Store(getCurrentPlayer(), variableName,reference);
 			}
 
-			currentAction = GetNextAction(setup.getSetupRule().getActions());
-			ExecuteAction(currentAction);
-
-			EList<Action> actions = setup.getSetupRule().getActions();
-			while (actions.lastIndexOf(currentAction) < actions.size() - 1) {
-				ExecuteAction(currentAction = GetNextAction(setup.getSetupRule().getActions()));
+			ActionManager startActionManager=new ActionManager(setup.getSetupRule()
+				 .getActions());
+			while(startActionManager.Step()){
+				ExecuteAction(startActionManager.getCurrentAction());
 			}
+
 			variableManager.Store(null, VariableManager.THIS, null);
-			currentAction = null;
+
 		}
 		SaveCurrentState();
 	}
@@ -151,9 +154,9 @@ public class Game implements IController {
 				return false;
 			if (!activebuttons.contains(selectedID)) return false;
 
-			if (Objects.equals(currentAction.getName(), "SELECT")) {
+			if (Objects.equals(actionManager.getCurrentAction().getName(), "SELECT")) {
 				Object object = IDStore.get(selectedID);
-				variableManager.Store(currentAction.getToVar(), object);
+				variableManager.Store(actionManager.getCurrentAction().getToVar(), object);
 
 				if (object instanceof Token) {
 					for (Field f : gameModel.getBoard().getFields()) {
@@ -206,50 +209,7 @@ public class Game implements IController {
 		return players.get(0);
 	}
 
-	private Action GetNextAction(List<Action> actions) throws IllegalAccessException {
-		//current action was not set before
-		if (currentAction == null) return actions.get(0);
 
-		if (!actionStack.isEmpty()) {
-			//Nested action was entered
-			if (actionStack.peek() == currentAction) {
-				return actionStack.peek().getNestedAction().getActions().get(0);
-			}
-			//Last element of nested action
-			actions = actionStack.peek().getNestedAction().getActions();
-			if (actions.lastIndexOf(currentAction) == actions.size() - 1) {
-				//WHILE loop returns first nested element if condition is met
-				if (Objects.equals(actionStack.peek().getName(), "WHILE") &&
-								variableManager.Evaluate(actionStack.peek().getCondition())) {
-					return actionStack.peek().getNestedAction().getActions().get(0);
-				}
-				//Step out of nested action
-				currentAction = actionStack.pop();
-				return GetNextAction(actions);
-			}
-			//Get next element in nested action
-			EList<Action> nested = actionStack.peek().getNestedAction().getActions();
-			for (int i = 0; i < nested.size() - 1; i++) {
-				if (currentAction == nested.get(i)) {
-					return nested.get(i + 1);
-				}
-			}
-		}
-
-		//No nested action
-
-		if (actions.lastIndexOf(currentAction) == actions.size() - 1) {
-			if (actionStack.isEmpty()) {
-				return actions.get(0);
-			}
-		}
-		for (int i = 0; i < actions.size() - 1; i++) {
-			if (currentAction == actions.get(i)) {
-				return actions.get(i + 1);
-			}
-		}
-		return null;
-	}
 
 	private void ExecuteAction(Action action) {
 		try {
@@ -302,13 +262,14 @@ public class Game implements IController {
 				Lose();
 			} else if (Objects.equals(action.getName(), "IF") || Objects.equals(action.getName(), "WHILE")) {
 				if (variableManager.Evaluate(action.getCondition())) {
-					actionStack.push(action);
+					actionManager.stepIntoNested();
 				}
-			} else if (Objects.equals(action.getName(), "END TURN")) {
-				actionStack.clear();
+			}
+			else if (Objects.equals(action.getName(), "END TURN")) {
+				actionManager.reset();
 				setCurrentPlayer(getNextPlayer());
-				currentAction = null;
-			} else if (Objects.equals(action.getName(), "ROLL")) {
+			}
+			else if (Objects.equals(action.getName(), "ROLL")) {
 
 				Random r = new Random();
 				int result = 0;
@@ -321,7 +282,7 @@ public class Game implements IController {
 				variableManager.Store(action.getAssignment());
 
 			}
-		} catch (Exception e) {
+		} catch (IllegalAccessException e) {
 			System.err.println("	at Action: " + action);
 			System.out.println(variableManager.getVariables());
 			e.printStackTrace();
