@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
 import java.util.*;
 
 public class Game implements IController {
+
 	Model gameModel;
 	String name;
 	StateStore gameStates = new StateStore();
@@ -25,7 +26,7 @@ public class Game implements IController {
 
 	Set<IView> views = new HashSet<>();
 	int turnCount = 1;
-ActionManager actionManager;
+	ActionManager actionManager;
 
 	List<Player> players;
 	ArrayList<Token> tokens = new ArrayList<>();
@@ -37,10 +38,12 @@ ActionManager actionManager;
 	private Set<Integer> activebuttons = new HashSet<>();
 
 	public Game(VariableManager variableManager) {
+
 		this.variableManager = variableManager;
 	}
 
 	public boolean Join(String clientID) throws IllegalAccessException {
+
 		for (Player player : players) {
 			if (!player.IsConnected()) {
 				player.setSessionID(clientID);
@@ -52,15 +55,17 @@ ActionManager actionManager;
 	}
 
 	public boolean IsFull() {
+
 		boolean isFull = true;
 		for (Player player :
-						players) {
+			 players) {
 			isFull &= player.IsConnected();
 		}
 		return isFull;
 	}
 
 	public void Init(Model gameModel, List<Player> players, List<Deck> decks) {
+
 		name = gameModel.getName();
 		this.players = players;
 		this.decks = decks;
@@ -82,6 +87,7 @@ ActionManager actionManager;
 	}
 
 	public void Step() throws IllegalAccessException {
+
 		if (waitForInput || gameEnded) return;
 		actionManager.Step();
 		ExecuteAction(actionManager.getCurrentAction());
@@ -90,40 +96,45 @@ ActionManager actionManager;
 
 	public void Start() throws IllegalAccessException {
 
-
 		for (PlayerSetup setup : gameModel.getPlayer().getPlayerSetups()) {
 
 			int setupId = setup.getId();
-			if (setupId < 1 || setupId > players.size())
-				throw new IllegalAccessException("Invalid player id: Player " + setupId);
+			if (setupId < 1 || setupId > players.size()) {
+				throw new IllegalAccessException(
+					 "Invalid player id: Player " + setupId);
+			}
 			setCurrentPlayer(players.get(setupId - 1));
 
 			variableManager.Store(null, VariableManager.THIS, getCurrentPlayer());
-			for (SimpleAssignment variable : gameModel.getPlayer().getVariables()) {
-				String variableName=variable.getName();
-				Object reference=variableManager.GetReference(
+			for (SimpleAssignment variable : gameModel.getPlayer()
+				 .getVariables()) {
+				String variableName = variable.getName();
+				Object reference = variableManager.GetReference(
 					 variable.getAttribute());
-				variableManager.Store(getCurrentPlayer(), variableName,reference);
+				variableManager.Store(getCurrentPlayer(), variableName, reference);
 			}
 
-			ActionManager startActionManager=new ActionManager(setup.getSetupRule()
-				 .getActions());
-			do{
+			ActionManager startActionManager =
+				 new ActionManager(setup.getSetupRule()
+					  .getActions());
+			do {
 				ExecuteAction(startActionManager.getCurrentAction());
-			}while(!startActionManager.Step());
+			} while (!startActionManager.Step());
 
 			variableManager.Store(null, VariableManager.THIS, null);
 
 		}
-		actionManager=new ActionManager(gameModel.getRule().getActions());
+		actionManager = new ActionManager(gameModel.getRule().getActions());
 		SaveCurrentState();
 	}
 
 	public boolean IsFinished() {
+
 		return gameEnded;
 	}
 
 	public void run() throws IllegalAccessException {
+
 		Start();
 		while (!gameEnded) {
 			Step();
@@ -133,16 +144,18 @@ ActionManager actionManager;
 
 	@Override
 	public void AddView(IView v) {
+
 		views.add(v);
 	}
 
 	@Override
 	public GameState getCurrentState(String sessionID) {
+
 		GameState gs = gameStates.getCurrentState();
 
 		Player p = null;
 		for (Player player :
-						players) {
+			 players) {
 			if (Objects.equals(player.getSessionID(), sessionID)) p = player;
 		}
 
@@ -150,19 +163,25 @@ ActionManager actionManager;
 	}
 
 	@Override
-	public boolean setSelected(String playerID, int selectedID){
+	public boolean setSelected(String playerID, int selectedID) {
+
 		try {
-			if (!Objects.equals(playerID, getCurrentPlayer().getSessionID()))
+			if (!Objects.equals(playerID, getCurrentPlayer().getSessionID())) {
 				return false;
+			}
 			if (!activebuttons.contains(selectedID)) return false;
 
-			if (Objects.equals(actionManager.getCurrentAction().getName(), "SELECT")) {
+			if (Objects
+				 .equals(actionManager.getCurrentAction().getName(), "SELECT")) {
 				Object object = IDStore.get(selectedID);
-				variableManager.Store(actionManager.getCurrentAction().getToVar(), object);
+				variableManager
+					 .Store(actionManager.getCurrentAction().getToVar(), object);
 
 				if (object instanceof Token) {
 					for (Field f : gameModel.getBoard().getFields()) {
-						variableManager.Store(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, -1);
+						variableManager
+							 .Store(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN,
+								  -1);
 					}
 					setupDistance(((Token) object).getField(), 0);
 				}
@@ -171,8 +190,7 @@ ActionManager actionManager;
 			//Probably would be better with synchronization
 			waitForInput = false;
 			return true;
-		}
-		catch (IllegalAccessException e){
+		} catch (IllegalAccessException e) {
 			System.out.println(variableManager.getVariables());
 			e.printStackTrace();
 			return false;
@@ -180,23 +198,31 @@ ActionManager actionManager;
 	}
 
 	private Player getCurrentPlayer() throws IllegalAccessException {
-		return (Player) variableManager.GetReference(null, VariableManager.CURRENTPLAYER);
+
+		return (Player) variableManager
+			 .GetReference(null, VariableManager.CURRENTPLAYER);
 	}
 
 	private void setCurrentPlayer(Player player) {
+
 		variableManager.Store(null, VariableManager.CURRENTPLAYER, player);
 	}
 
 	private EList<Field> getFields() {
+
 		return gameModel.getBoard().getFields();
 	}
 
-	private void setupDistance(Field startingField, int distance) throws IllegalAccessException {
+	private void setupDistance(Field startingField, int distance)
+		 throws IllegalAccessException {
 
 		//	TODO write without recursion and use BFS instead of DFS
-		int dist = variableManager.GetValue(startingField, VariableManager.DISTANCE_FROM_SELECTED_TOKEN);
+		int dist = variableManager.GetValue(startingField,
+			 VariableManager.DISTANCE_FROM_SELECTED_TOKEN);
 		if ((dist > -1 && dist <= distance)) return;
-		variableManager.Store(startingField, VariableManager.DISTANCE_FROM_SELECTED_TOKEN, distance);
+		variableManager
+			 .Store(startingField, VariableManager.DISTANCE_FROM_SELECTED_TOKEN,
+				  distance);
 		for (Field field : startingField.getNeighbours()) {
 			{
 				setupDistance(field, distance + 1);
@@ -205,41 +231,52 @@ ActionManager actionManager;
 	}
 
 	private Player getNextPlayer() throws IllegalAccessException {
+
 		for (int i = 0; i < players.size() - 1; i++) {
 			if (getCurrentPlayer() == players.get(i)) return players.get(i + 1);
 		}
 		return players.get(0);
 	}
 
-
-
 	private void ExecuteAction(Action action) {
+
 		try {
 			activebuttons.clear();
 
-			switch(action.getName()){
+			switch (action.getName()) {
 				case "SELECT":
-					ExecuteSelect(action); 	break;
+					ExecuteSelect(action);
+					break;
 				case "SPAWN":
-					ExecuteSpawn(action);	break;
+					ExecuteSpawn(action);
+					break;
 				case "MOVE":
-					ExecuteMove(action);		break;
+					ExecuteMove(action);
+					break;
 				case "SHUFFLE":
-					ExecuteShuffle(action); break;
+					ExecuteShuffle(action);
+					break;
 				case "DESTROY":
-					ExecuteDestroy(action); break;
+					ExecuteDestroy(action);
+					break;
 				case "WIN":
-					ExecuteWin(action);		break;
+					ExecuteWin(action);
+					break;
 				case "LOSE":
-					ExecuteLose(action);		break;
+					ExecuteLose(action);
+					break;
 				case "IF":
-					ExecuteIf(action);		break;
+					ExecuteIf(action);
+					break;
 				case "WHILE":
-					ExecuteWhile(action);	break;
+					ExecuteWhile(action);
+					break;
 				case "END TURN":
-					ExecuteEndTurn(action);break;
+					ExecuteEndTurn(action);
+					break;
 				case "ROLL":
-					ExecuteRoll(action);break;
+					ExecuteRoll(action);
+					break;
 
 				default:
 					variableManager.Store(action.getAssignment());
@@ -251,6 +288,7 @@ ActionManager actionManager;
 	}
 
 	private void ExecuteRoll(Action action) throws IllegalAccessException {
+
 		Random r = new Random();
 		int result = 0;
 		for (int i = 1; i < action.getNumberOfDice() + 1; i++) {
@@ -261,15 +299,20 @@ ActionManager actionManager;
 	}
 
 	private void ExecuteEndTurn(Action action) throws IllegalAccessException {
+
 		actionManager.reset();
 		setCurrentPlayer(getNextPlayer());
 	}
 
 	private void ExecuteMove(Action action) throws IllegalAccessException {
+
 		if (Objects.equals(action.getType(), "CARD")) {
-			((Card) variableManager.GetReference(action.getSelected())).MoveTo((Deck) variableManager.GetReference(action.getMoveTo()));
-		} else {
-			((Token) variableManager.GetReference(action.getSelected())).setField((Field) variableManager.GetReference(action.getMoveTo()));
+			((Card) variableManager.GetReference(action.getSelected()))
+				 .MoveTo((Deck) variableManager.GetReference(action.getMoveTo()));
+		}
+		else {
+			((Token) variableManager.GetReference(action.getSelected())).setField(
+				 (Field) variableManager.GetReference(action.getMoveTo()));
 		}
 	}
 
@@ -277,9 +320,9 @@ ActionManager actionManager;
 
 		Token token = new Token(variableManager, action.getToken().getName());
 		for (SimpleAssignment a : action.getToken().getVariables()) {
-			String variableName=a.getName();
-			Object reference=variableManager.GetReference(a.getAttribute());
-			variableManager.Store(token, variableName,reference);
+			String variableName = a.getName();
+			Object reference = variableManager.GetReference(a.getAttribute());
+			variableManager.Store(token, variableName, reference);
 		}
 		token.setOwner(getCurrentPlayer());
 		token.setField((Field) variableManager.GetReference(action.getSpawnTo()));
@@ -289,6 +332,7 @@ ActionManager actionManager;
 	}
 
 	private void ExecuteSelect(Action action) throws IllegalAccessException {
+
 		waitForInput = true;
 		for (Object o : objects) {
 			variableManager.Store(null, VariableManager.THIS, o);
@@ -305,34 +349,45 @@ ActionManager actionManager;
 	}
 
 	private void ExecuteWin(Action action) throws IllegalAccessException {
+
 		Win();
 	}
 
 	private void ExecuteLose(Action action) throws IllegalAccessException {
+
 		Lose();
 	}
 
 	private void ExecuteIf(Action action) throws IllegalAccessException {
+
 		if (variableManager.Evaluate(action.getCondition())) {
 			actionManager.stepIntoNested();
 		}
 
 	}
+
 	private void ExecuteWhile(Action action) throws IllegalAccessException {
+
 		ExecuteIf(action);
 
 	}
+
 	private void ExecuteDestroy(Action action) throws IllegalAccessException {
+
 		Token t;
-		(t = (Token) variableManager.GetReference(action.getSelected())).Destroy();
+		(t = (Token) variableManager.GetReference(action.getSelected()))
+			 .Destroy();
 		tokens.remove(t);
 		objects.remove(t);
 	}
+
 	private void ExecuteShuffle(Action action) throws IllegalAccessException {
+
 		((Deck) variableManager.GetReference(action.getSelected())).Shuffle();
 	}
 
 	private void Lose() throws IllegalAccessException {
+
 		losers.add(IDStore.get(getCurrentPlayer()));
 		// TODO think about it: does the game end, or only the player is removed from game
 		SaveCurrentState();
@@ -341,6 +396,7 @@ ActionManager actionManager;
 	}
 
 	private void Win() throws IllegalAccessException {
+
 		winners.add(IDStore.get(getCurrentPlayer()));
 		// TODO think about it: does the game end, or only the player is removed from game
 		SaveCurrentState();
@@ -349,6 +405,7 @@ ActionManager actionManager;
 	}
 
 	private void SaveCurrentState() throws IllegalAccessException {
+
 		List<PlayerState> plist = new ArrayList<>();
 		for (Player p : players) {
 			PlayerState ps = new PlayerState();
@@ -402,9 +459,9 @@ ActionManager actionManager;
 		}
 
 		GameState state =
-						new GameState(this.gameModel.getName(), stateVersion,
-										turnCount, IDStore.get(getCurrentPlayer()), plist, flist, tlist,
-										new ArrayList<>(activebuttons), winners, losers, deckstates, -1);
+			 new GameState(this.gameModel.getName(), stateVersion,
+				  turnCount, IDStore.get(getCurrentPlayer()), plist, flist, tlist,
+				  new ArrayList<>(activebuttons), winners, losers, deckstates, -1);
 		gameStates.addState(state);
 
 	}
