@@ -85,6 +85,7 @@ ActionManager actionManager;
 		if (waitForInput || gameEnded) return;
 		actionManager.Step();
 		ExecuteAction(actionManager.getCurrentAction());
+
 	}
 
 	public void Start() throws IllegalAccessException {
@@ -107,13 +108,14 @@ ActionManager actionManager;
 
 			ActionManager startActionManager=new ActionManager(setup.getSetupRule()
 				 .getActions());
-			while(startActionManager.Step()){
+			do{
 				ExecuteAction(startActionManager.getCurrentAction());
-			}
+			}while(!startActionManager.Step());
 
 			variableManager.Store(null, VariableManager.THIS, null);
 
 		}
+		actionManager=new ActionManager(gameModel.getRule().getActions());
 		SaveCurrentState();
 	}
 
@@ -260,7 +262,8 @@ ActionManager actionManager;
 				Win();
 			} else if (Objects.equals(action.getName(), "LOSE")) {
 				Lose();
-			} else if (Objects.equals(action.getName(), "IF") || Objects.equals(action.getName(), "WHILE")) {
+			} else if (Objects.equals(action.getName(), "IF")|| Objects.equals
+				 (action.getName(),"WHILE")){
 				if (variableManager.Evaluate(action.getCondition())) {
 					actionManager.stepIntoNested();
 				}
