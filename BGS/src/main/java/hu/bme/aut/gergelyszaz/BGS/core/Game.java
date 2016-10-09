@@ -217,84 +217,119 @@ ActionManager actionManager;
 		try {
 			activebuttons.clear();
 
-			if (Objects.equals(action.getName(), "SELECT")) {
-				waitForInput = true;
-				for (Object o : objects) {
-					variableManager.Store(null, VariableManager.THIS, o);
-					if (variableManager.Evaluate(action.getCondition())) {
-						activebuttons.add(IDStore.get(o));
-					}
-				}
-				if (activebuttons.isEmpty()) {
-					Lose();
-					waitForInput = false;
-				}
-				SaveCurrentState();
-				views.forEach(IView::Refresh);
+			switch(action.getName()){
+				case "SELECT":
+					ExecuteSelect(action); 	break;
+				case "SPAWN":
+					ExecuteSpawn(action);	break;
+				case "MOVE":
+					ExecuteMove(action);		break;
+				case "SHUFFLE":
+					ExecuteShuffle(action); break;
+				case "DESTROY":
+					ExecuteDestroy(action); break;
+				case "WIN":
+					ExecuteWin(action);		break;
+				case "LOSE":
+					ExecuteLose(action);		break;
+				case "IF":
+					ExecuteIf(action);		break;
+				case "WHILE":
+					ExecuteWhile(action);	break;
+				case "END TURN":
+					ExecuteEndTurn(action);break;
+				case "ROLL":
+					ExecuteRoll(action);break;
 
-			} else if (Objects.equals(action.getName(), "SPAWN")) {
-				Token token = new Token(variableManager, action.getToken().getName());
-				for (SimpleAssignment a : action.getToken().getVariables()) {
-					String variableName=a.getName();
-					Object reference=variableManager.GetReference(a.getAttribute());
-					variableManager.Store(token, variableName,reference);
-				}
-				token.setOwner(getCurrentPlayer());
-				token.setField((Field) variableManager.GetReference(action.getSpawnTo()));
-				variableManager.Store(action.getToVar(), token);
-				tokens.add(token);
-				objects.add(token);
-
-			} else if (Objects.equals(action.getName(), "MOVE")) {
-				if (Objects.equals(action.getType(), "CARD")) {
-					((Card) variableManager.GetReference(action.getSelected())).MoveTo((Deck) variableManager.GetReference(action.getMoveTo()));
-				} else {
-					((Token) variableManager.GetReference(action.getSelected())).setField((Field) variableManager.GetReference(action.getMoveTo()));
-				}
-			} else if (Objects.equals(action.getName(), "SHUFFLE")) {
-				((Deck) variableManager.GetReference(action.getSelected())).Shuffle();
-			} else if (Objects.equals(action.getName(), "DESTROY")) {
-				Token t;
-				(t = (Token) variableManager.GetReference(action.getSelected())).Destroy();
-				tokens.remove(t);
-				objects.remove(t);
-			} else if (Objects.equals(action.getName(), "WIN")) {
-				Win();
-			} else if (Objects.equals(action.getName(), "LOSE")) {
-				Lose();
-			} else if (Objects.equals(action.getName(), "IF")|| Objects.equals
-				 (action.getName(),"WHILE")){
-				if (variableManager.Evaluate(action.getCondition())) {
-					actionManager.stepIntoNested();
-				}
-			}
-			else if (Objects.equals(action.getName(), "END TURN")) {
-				actionManager.reset();
-				setCurrentPlayer(getNextPlayer());
-			}
-			else if (Objects.equals(action.getName(), "ROLL")) {
-
-				Random r = new Random();
-				int result = 0;
-				for (int i = 1; i < action.getNumberOfDice() + 1; i++) {
-					int rollresult = r.nextInt(action.getTo()) + action.getFrom();
-					result += rollresult;
-				}
-				variableManager.Store(action.getToVar(), result);
-			} else if (action.getAssignment() != null) {
-				variableManager.Store(action.getAssignment());
-
+				default:
+					variableManager.Store(action.getAssignment());
+					break;
 			}
 		} catch (IllegalAccessException e) {
-			System.err.println("	at Action: " + action);
-			System.out.println(variableManager.getVariables());
 			e.printStackTrace();
-
-			if (action.getAssignment() != null) {
-				System.err.println("		" + action.getAssignment().getAddition() + " could not be resolved.");
-			}
-
 		}
+	}
+
+	private void ExecuteRoll(Action action) throws IllegalAccessException {
+		Random r = new Random();
+		int result = 0;
+		for (int i = 1; i < action.getNumberOfDice() + 1; i++) {
+			int rollresult = r.nextInt(action.getTo()) + action.getFrom();
+			result += rollresult;
+		}
+		variableManager.Store(action.getToVar(), result);
+	}
+
+	private void ExecuteEndTurn(Action action) throws IllegalAccessException {
+		actionManager.reset();
+		setCurrentPlayer(getNextPlayer());
+	}
+
+	private void ExecuteMove(Action action) throws IllegalAccessException {
+		if (Objects.equals(action.getType(), "CARD")) {
+			((Card) variableManager.GetReference(action.getSelected())).MoveTo((Deck) variableManager.GetReference(action.getMoveTo()));
+		} else {
+			((Token) variableManager.GetReference(action.getSelected())).setField((Field) variableManager.GetReference(action.getMoveTo()));
+		}
+	}
+
+	private void ExecuteSpawn(Action action) throws IllegalAccessException {
+
+		Token token = new Token(variableManager, action.getToken().getName());
+		for (SimpleAssignment a : action.getToken().getVariables()) {
+			String variableName=a.getName();
+			Object reference=variableManager.GetReference(a.getAttribute());
+			variableManager.Store(token, variableName,reference);
+		}
+		token.setOwner(getCurrentPlayer());
+		token.setField((Field) variableManager.GetReference(action.getSpawnTo()));
+		variableManager.Store(action.getToVar(), token);
+		tokens.add(token);
+		objects.add(token);
+	}
+
+	private void ExecuteSelect(Action action) throws IllegalAccessException {
+		waitForInput = true;
+		for (Object o : objects) {
+			variableManager.Store(null, VariableManager.THIS, o);
+			if (variableManager.Evaluate(action.getCondition())) {
+				activebuttons.add(IDStore.get(o));
+			}
+		}
+		if (activebuttons.isEmpty()) {
+			Lose();
+			waitForInput = false;
+		}
+		SaveCurrentState();
+		views.forEach(IView::Refresh);
+	}
+
+	private void ExecuteWin(Action action) throws IllegalAccessException {
+		Win();
+	}
+
+	private void ExecuteLose(Action action) throws IllegalAccessException {
+		Lose();
+	}
+
+	private void ExecuteIf(Action action) throws IllegalAccessException {
+		if (variableManager.Evaluate(action.getCondition())) {
+			actionManager.stepIntoNested();
+		}
+
+	}
+	private void ExecuteWhile(Action action) throws IllegalAccessException {
+		ExecuteIf(action);
+
+	}
+	private void ExecuteDestroy(Action action) throws IllegalAccessException {
+		Token t;
+		(t = (Token) variableManager.GetReference(action.getSelected())).Destroy();
+		tokens.remove(t);
+		objects.remove(t);
+	}
+	private void ExecuteShuffle(Action action) throws IllegalAccessException {
+		((Deck) variableManager.GetReference(action.getSelected())).Shuffle();
 	}
 
 	private void Lose() throws IllegalAccessException {
