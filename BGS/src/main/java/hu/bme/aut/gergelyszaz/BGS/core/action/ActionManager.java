@@ -1,4 +1,4 @@
-package hu.bme.aut.gergelyszaz.BGS.core;
+package hu.bme.aut.gergelyszaz.BGS.core.action;
 
 import hu.bme.aut.gergelyszaz.bGL.Action;
 
@@ -17,7 +17,7 @@ public class ActionManager {
 	private boolean steppedIn = false;
 	private boolean steppedInOnce=false;
 
-	ActionManager(List<Action> actions) {
+	public ActionManager(List<Action> actions) {
 
 		actionStack.push(actions);
 		currentActions.push(actions.get(0));
