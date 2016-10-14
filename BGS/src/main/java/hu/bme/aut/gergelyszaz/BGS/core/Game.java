@@ -1,5 +1,7 @@
 package hu.bme.aut.gergelyszaz.BGS.core;
 
+import hu.bme.aut.gergelyszaz.BGS.core.action.ActionManager;
+import hu.bme.aut.gergelyszaz.BGS.core.action.SpawnAction;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Card;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Deck;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Player;
@@ -222,10 +224,10 @@ public class Game implements IController {
 
 	private Player getNextPlayer() throws IllegalAccessException {
 
-		for (int i = 0; i < players.size() - 1; i++) {
-			if (getCurrentPlayer() == players.get(i)) return players.get(i + 1);
-		}
-		return players.get(0);
+		int playerIndex=players.lastIndexOf(getCurrentPlayer());
+		playerIndex++;
+		if(playerIndex>=players.size()) playerIndex=0;
+		return players.get(playerIndex);
 	}
 
 	private void ExecuteAction(Action action) {
@@ -314,20 +316,8 @@ public class Game implements IController {
 	}
 
 	private void ExecuteSpawn(Action action) throws IllegalAccessException {
+			new SpawnAction(variableManager,action,this).Execute();
 
-		Token token = new Token(variableManager, action.getToken().getName());
-		for (SimpleAssignment a : action.getToken().getVariables()) {
-			String variableName = a.getName();
-			Object reference = variableManager.GetReference(a.getAttribute());
-			variableManager.Store(token, variableName, reference);
-		}
-		token.setOwner(getCurrentPlayer());
-		token.setField((Field) variableManager.GetReference(action.getSpawnTo()));
-		List<String> variablePath = variableManager.getVariablePath(action
-			 .getToVar());
-		variableManager.Store(variablePath, token);
-		tokens.add(token);
-		objects.add(token);
 	}
 
 	private void ExecuteSelect(Action action) throws IllegalAccessException {
@@ -463,6 +453,11 @@ public class Game implements IController {
 				  new ArrayList<>(activebuttons), winners, losers, deckstates, -1);
 		gameStates.addState(state);
 
+	}
+
+	public void addToken(Token token){
+		tokens.add(token);
+		objects.add(token);
 	}
 
 }
