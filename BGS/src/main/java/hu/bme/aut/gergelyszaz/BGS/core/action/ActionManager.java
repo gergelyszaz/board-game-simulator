@@ -1,5 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.core.action;
 
+import com.sun.istack.internal.NotNull;
 import hu.bme.aut.gergelyszaz.bGL.Action;
 
 import java.util.List;
@@ -11,135 +12,137 @@ import java.util.Stack;
  */
 public class ActionManager {
 
-	Stack<List<Action>> actionStack = new Stack<>();
-	Stack<Action> currentActions = new Stack<>();
-	Stack<Action> ifs = new Stack<>();
-	private boolean steppedIn = false;
-	private boolean steppedInOnce=false;
+    Stack<List<Action>> actionStack = new Stack<>();
+    Stack<Action> currentActions = new Stack<>();
+    private boolean steppedIn = false;
 
-	public ActionManager(List<Action> actions) {
+    public ActionManager(@NotNull List<Action> actions) {
+        actionStack.push(actions);
+        if (!actions.isEmpty())
+            currentActions.push(actions.get(0));
+    }
 
-		actionStack.push(actions);
-		currentActions.push(actions.get(0));
-	}
+    /**
+     * Returns the Action after action in actions. If action was the last one,
+     * returns null.
+     *
+     * @param actions
+     * @param action
+     * @return
+     * @throws IllegalAccessException
+     */
+    private static Action getNextAction(List<Action> actions, Action action)
+            throws IllegalAccessException {
 
-	/**
-	 * Returns the Action after action in actions. If action was the last one,
-	 * returns null.
-	 *
-	 * @param actions
-	 * @param action
-	 * @return
-	 * @throws IllegalAccessException
-	 */
-	private static Action getNextAction(List<Action> actions, Action action)
-		 throws IllegalAccessException {
+        int nextActionIndex = actions.lastIndexOf(action) + 1;
+        if (nextActionIndex == 0) {
+            throw new IllegalAccessException(action + " is " +
+                    "not part of " + actions);
+        }
+        if (nextActionIndex == actions.size()) {
+            return null;
+        } else {
+            return actions.get(nextActionIndex);
+        }
+    }
 
-		int nextActionIndex = actions.lastIndexOf(action) + 1;
-		if (nextActionIndex == 0) {
-			throw new IllegalAccessException(action + " is " +
-				 "not part of " + actions);
-		}
-		if (nextActionIndex == actions.size()) {
-			return null;
-		}
-		else {
-			return actions.get(nextActionIndex);
-		}
-	}
+    public Action getCurrentAction() {
+        if (!currentActions.isEmpty())
+            return currentActions.peek();
+        else
+            return null;
+    }
 
-	public Action getCurrentAction() {
+    /**
+     * @return true, if went back to the first action
+     * @throws IllegalAccessException
+     */
+    public boolean Step() throws IllegalAccessException {
 
-		return currentActions.peek();
-	}
+        if (currentActions.isEmpty()) {
+            currentActions.push(actionStack.peek().get(0));
+            return false;
+        }
 
-	/**
-	 * @return true, if went back to the first action
-	 * @throws IllegalAccessException
-	 */
-	public boolean Step() throws IllegalAccessException {
-
-		if (currentActions.isEmpty()) {
-			currentActions.push(actionStack.peek().get(0));
-			return false;
-		}
-
-		if (steppedIn) {
-			_stepIntoNested();
-			steppedIn = false;
-			return false;
-		}
-
-
-		Action nextAction = getNextAction(actionStack.peek(), getCurrentAction());
-
-		if (nextAction == null) {
-			if (actionStack.size() > 1) {
-				stepOutNested();
-				if(Objects.equals(getCurrentAction().getName(), "IF")){
-					Step();
-				}
-			}
-			else {
-				reset();
-				return true;
-			}
-			return false;
-
-		}
-
-		currentActions.pop();
-		currentActions.push(nextAction);
-		return false;
-	}
-
-	/**
-	 * Resets back to the first action.
-	 */
-	public void reset() {
-
-		List<Action> actions = actionStack.get(0);
-
-		actionStack.clear();
-		actionStack.push(actions);
-
-		currentActions.clear();
-	}
-
-	public void stepIntoNested() {
-
-		steppedIn = true;
-	}
+        if (steppedIn) {
+            _stepIntoNested();
+            steppedIn = false;
+            return false;
+        }
 
 
+        Action nextAction = getNextAction(actionStack.peek(), getCurrentAction());
+
+        if (nextAction == null) {
+            if (actionStack.size() > 1) {
+                stepOutNested();
+                if (Objects.equals(getCurrentAction().getName(), "IF")) {
+                    Step();
+                }
+            } else {
+                reset();
+                return true;
+            }
+            return false;
+
+        }
+
+        currentActions.pop();
+        currentActions.push(nextAction);
+        return false;
+    }
+
+    /**
+     * Resets back to the first action.
+     */
+    public void reset() {
+
+        List<Action> actions = actionStack.get(0);
+
+        actionStack.clear();
+        actionStack.push(actions);
+
+        _resetCurrentActions();
+    }
+    private void _resetCurrentActions(){
+        currentActions.clear();
+        List<Action> actions=actionStack.get(0);
+        if(!actions.isEmpty()){
+            currentActions.push(actions.get(0));
+        }
+    }
+
+    public void stepIntoNested() {
+
+        steppedIn = true;
+    }
 
 
-	/**
-	 * Steps into nested action if current action has nested actions,
-	 * otherwise throws an exception.
-	 *
-	 * @throws IllegalAccessException
-	 */
-	private void _stepIntoNested() throws IllegalAccessException {
+    /**
+     * Steps into nested action if current action has nested actions,
+     * otherwise throws an exception.
+     *
+     * @throws IllegalAccessException
+     */
+    private void _stepIntoNested() throws IllegalAccessException {
 
-		if (getCurrentAction().getNestedAction() != null) {
-			List<Action> actions = getCurrentAction().getNestedAction()
-				 .getActions();
-			actionStack.push(actions);
-			currentActions.push(actions.get(0));
-		}
-		else {
-			throw new IllegalAccessException("");
-		}
-	}
+        if (getCurrentAction().getNestedAction() != null) {
+            List<Action> actions = getCurrentAction().getNestedAction()
+                    .getActions();
+            actionStack.push(actions);
+            currentActions.push(actions.get(0));
+        } else {
+            throw new IllegalAccessException("");
+        }
+    }
 
-	/**
-	 * Steps out of nested action
-	 */
-	private void stepOutNested() throws IllegalAccessException {
+    /**
+     * Steps out of nested action
+     */
+    private void stepOutNested() throws IllegalAccessException {
 
-		currentActions.pop();
-		actionStack.pop();
-	}
+        currentActions.pop();
+        actionStack.pop();
+    }
 
 }
