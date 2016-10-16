@@ -1,6 +1,5 @@
 package hu.bme.aut.gergelyszaz.BGS.core.action;
 
-import com.sun.istack.internal.NotNull;
 import hu.bme.aut.gergelyszaz.bGL.Action;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public class ActionManager {
     Stack<Action> currentActions = new Stack<>();
     private boolean steppedIn = false;
 
-    public ActionManager(@NotNull List<Action> actions) {
+    public ActionManager(List<Action> actions) {
         actionStack.push(actions);
         if (!actions.isEmpty())
             currentActions.push(actions.get(0));
