@@ -19,16 +19,15 @@ public class Game implements IController {
 
 	Model gameModel;
 	String name;
-	StateStore gameStates = new StateStore();
 
+    StateStore gameStates = new StateStore();
 	VariableManager variableManager;
-	boolean gameEnded = false;
+    IDManager IDStore = new IDManager();
+
+    boolean gameEnded = false;
 	volatile boolean waitForInput = false;
-
-	IDManager IDStore = new IDManager();
-
 	Set<IView> views = new HashSet<>();
-	int turnCount = 1;
+
 	ActionManager actionManager;
 
 	List<Player> players;
@@ -235,45 +234,9 @@ public class Game implements IController {
 
 		try {
 			activebuttons.clear();
+            ActionFactory actionFactory=new ActionFactory(variableManager,IDStore,actionManager,this);
+            actionFactory.createAction(action).Execute();
 
-			switch (action.getName()) {
-				case "SELECT":
-					new SelectAction(variableManager,action,IDStore,this).Execute();
-					break;
-				case "SPAWN":
-					new SpawnAction(variableManager,action,this).Execute();
-					break;
-				case "MOVE":
-					new MoveAction(variableManager,action).Execute();
-					break;
-				case "SHUFFLE":
-					new ShuffleAction(variableManager,action).Execute();
-					break;
-				case "DESTROY":
-					new DestroyAction(variableManager,action,this).Execute();
-					break;
-				case "WIN":
-					new WinAction(this).Execute();
-					break;
-				case "LOSE":
-					new LoseAction(this).Execute();
-					break;
-				case "IF":
-					new IfAction(variableManager,action,actionManager).Execute();
-					break;
-				case "WHILE":
-					new WhileAction(variableManager,action,actionManager).Execute();
-					break;
-				case "END TURN":
-					new EndTurnAction(variableManager, actionManager,this).Execute();
-					break;
-				case "ROLL":
-					new RollAction(variableManager,action).Execute();
-					break;
-				default:
-					new AssignmentAction(variableManager,action).Execute();
-					break;
-			}
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
@@ -357,7 +320,7 @@ public class Game implements IController {
 
 		GameState state =
 			 new GameState(this.gameModel.getName(), stateVersion,
-				  turnCount, IDStore.get(getCurrentPlayer()), plist, flist, tlist,
+				  IDStore.get(getCurrentPlayer()), plist, flist, tlist,
 				  new ArrayList<>(activebuttons), winners, losers, deckstates, -1);
 		gameStates.addState(state);
 
@@ -374,7 +337,6 @@ public class Game implements IController {
 
 	public void setSelectableObjects(Set<Integer> ids) throws IllegalAccessException {
 		waitForInput(true);
-
 
 		activebuttons.addAll(ids);
 
