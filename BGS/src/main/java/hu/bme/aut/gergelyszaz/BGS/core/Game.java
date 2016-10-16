@@ -238,96 +238,45 @@ public class Game implements IController {
 
 			switch (action.getName()) {
 				case "SELECT":
-					ExecuteSelect(action);
+					new SelectAction(variableManager,action,IDStore,this).Execute();
 					break;
 				case "SPAWN":
-					ExecuteSpawn(action);
+					new SpawnAction(variableManager,action,this).Execute();
 					break;
 				case "MOVE":
-					ExecuteMove(action);
+					new MoveAction(variableManager,action).Execute();
 					break;
 				case "SHUFFLE":
-					ExecuteShuffle(action);
+					new ShuffleAction(variableManager,action).Execute();
 					break;
 				case "DESTROY":
-					ExecuteDestroy(action);
+					new DestroyAction(variableManager,action,this).Execute();
 					break;
 				case "WIN":
-					ExecuteWin();
+					new WinAction(this).Execute();
 					break;
 				case "LOSE":
-					ExecuteLose();
+					new LoseAction(this).Execute();
 					break;
 				case "IF":
-					ExecuteIf(action);
+					new IfAction(variableManager,action,actionManager).Execute();
 					break;
 				case "WHILE":
-					ExecuteWhile(action);
+					new WhileAction(variableManager,action,actionManager).Execute();
 					break;
 				case "END TURN":
-					ExecuteEndTurn();
+					new EndTurnAction(variableManager, actionManager,this).Execute();
 					break;
 				case "ROLL":
-					ExecuteRoll(action);
+					new RollAction(variableManager,action).Execute();
 					break;
-
 				default:
-					ValueAssignment assignment=action.getAssignment();
-					Object reference = variableManager.GetReference(assignment
-						 .getAddition());
-
-					List<String> variablePath = variableManager.getVariablePath
-						 (assignment.getName());
-					variableManager.Store(variablePath, reference);
+					new AssignmentAction(variableManager,action).Execute();
 					break;
 			}
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void ExecuteRoll(Action action) throws IllegalAccessException {
-		new RollAction(variableManager,action).Execute();
-	}
-
-	private void ExecuteEndTurn() throws IllegalAccessException {
-		new EndTurnAction(variableManager, actionManager,this).Execute();
-	}
-
-	private void ExecuteMove(Action action) throws IllegalAccessException {
-		new MoveAction(variableManager,action).Execute();
-	}
-
-	private void ExecuteSpawn(Action action) throws IllegalAccessException {
-		new SpawnAction(variableManager,action,this).Execute();
-	}
-
-	private void ExecuteSelect(Action action) throws IllegalAccessException {
-		new SelectAction(variableManager,action,IDStore,this).Execute();
-	}
-
-	private void ExecuteWin() throws IllegalAccessException {
-		new WinAction(this).Execute();
-	}
-
-	private void ExecuteLose() throws IllegalAccessException {
-		new LoseAction(this).Execute();
-	}
-
-	private void ExecuteIf(Action action) throws IllegalAccessException {
-		new IfAction(variableManager,action,actionManager).Execute();
-	}
-
-	private void ExecuteWhile(Action action) throws IllegalAccessException {
-		new WhileAction(variableManager,action,actionManager).Execute();
-	}
-
-	private void ExecuteDestroy(Action action) throws IllegalAccessException {
-		new DestroyAction(variableManager,action,this).Execute();
-	}
-
-	private void ExecuteShuffle(Action action) throws IllegalAccessException {
-		new ShuffleAction(variableManager,action).Execute();
 	}
 
 	public void Lose() throws IllegalAccessException {
