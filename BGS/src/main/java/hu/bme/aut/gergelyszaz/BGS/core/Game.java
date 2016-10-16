@@ -335,7 +335,7 @@ public class Game implements IController {
 		losers.add(IDStore.get(getCurrentPlayer()));
 		// TODO think about it: does the game end, or only the player is removed from game
 		SaveCurrentState();
-		views.forEach(IView::Refresh);
+		_updateViews();
 		gameEnded = true;
 	}
 
@@ -344,8 +344,12 @@ public class Game implements IController {
 		winners.add(IDStore.get(getCurrentPlayer()));
 		// TODO think about it: does the game end, or only the player is removed from game
 		SaveCurrentState();
-		views.forEach(IView::Refresh);
+		_updateViews();
 		gameEnded = true;
+	}
+
+	private void _updateViews(){
+		views.forEach(IView::Refresh);
 	}
 
 	private void SaveCurrentState() throws IllegalAccessException {
@@ -431,7 +435,7 @@ public class Game implements IController {
 		}
 		SaveCurrentState();
 
-		views.forEach(IView::Refresh);
+		_updateViews();
 	}
 
 	public Set<Object> getObjects() {
