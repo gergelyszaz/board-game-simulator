@@ -83,10 +83,16 @@ public class ActionManagerTest {
         //Does not actually step in
         Action action=actionManager.getCurrentAction();
         assertEquals(secondAction,action);
+
         //Only at the next step
         actionManager.Step();
         action=actionManager.getCurrentAction();
         assertEquals(nestedAction,action);
+
+        //No more nested actions, step out
+        actionManager.Step();
+        action=actionManager.getCurrentAction();
+        assertEquals(secondAction,action);
     }
 
     @Test
@@ -98,10 +104,6 @@ public class ActionManagerTest {
         actionManager.Step();
         Action action=actionManager.getCurrentAction();
         assertEquals(secondAction,action);
-
-
-
-
     }
 
 }
