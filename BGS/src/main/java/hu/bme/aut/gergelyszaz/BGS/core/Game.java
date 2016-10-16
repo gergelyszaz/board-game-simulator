@@ -1,7 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.core;
 
-import hu.bme.aut.gergelyszaz.BGS.core.action.ActionManager;
-import hu.bme.aut.gergelyszaz.BGS.core.action.SpawnAction;
+import hu.bme.aut.gergelyszaz.BGS.core.action.*;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Card;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Deck;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Player;
@@ -10,6 +9,7 @@ import hu.bme.aut.gergelyszaz.BGS.manager.IDManager;
 import hu.bme.aut.gergelyszaz.BGS.state.*;
 import hu.bme.aut.gergelyszaz.BGS.state.util.StateStore;
 import hu.bme.aut.gergelyszaz.bGL.*;
+import hu.bme.aut.gergelyszaz.bGL.Action;
 import org.eclipse.emf.common.util.EList;
 
 import java.util.*;
@@ -39,6 +39,7 @@ public class Game implements IController {
 
 	Set<Object> objects = new HashSet<>();
 	private Set<Integer> activebuttons = new HashSet<>();
+	private Iterable<? extends Object> ojects;
 
 	public Game(VariableManager variableManager) {
 
@@ -195,7 +196,7 @@ public class Game implements IController {
 			 .GetReference(null, VariableManager.CURRENTPLAYER);
 	}
 
-	private void setCurrentPlayer(Player player) {
+	public void setCurrentPlayer(Player player) {
 
 		variableManager.Store(null, VariableManager.CURRENTPLAYER, player);
 	}
@@ -222,7 +223,7 @@ public class Game implements IController {
 		}
 	}
 
-	private Player getNextPlayer() throws IllegalAccessException {
+	public Player getNextPlayer() throws IllegalAccessException {
 
 		int playerIndex=players.lastIndexOf(getCurrentPlayer());
 		playerIndex++;
@@ -286,96 +287,50 @@ public class Game implements IController {
 	}
 
 	private void ExecuteRoll(Action action) throws IllegalAccessException {
-
-		Random r = new Random();
-		int result = 0;
-		for (int i = 1; i < action.getNumberOfDice() + 1; i++) {
-			int rollresult = r.nextInt(action.getTo()) + action.getFrom();
-			result += rollresult;
-		}
-		List<String> variablePath = variableManager.getVariablePath(action.getToVar());
-		variableManager.Store(variablePath, result);
+		new RollAction(variableManager,action).Execute();
 	}
 
 	private void ExecuteEndTurn() throws IllegalAccessException {
-
-		actionManager.reset();
-		setCurrentPlayer(getNextPlayer());
+		new EndTurnAction(variableManager, actionManager,this).Execute();
 	}
 
 	private void ExecuteMove(Action action) throws IllegalAccessException {
-
-		if (Objects.equals(action.getType(), "CARD")) {
-			((Card) variableManager.GetReference(action.getSelected()))
-				 .MoveTo((Deck) variableManager.GetReference(action.getMoveTo()));
-		}
-		else {
-			((Token) variableManager.GetReference(action.getSelected())).setField(
-				 (Field) variableManager.GetReference(action.getMoveTo()));
-		}
+		new MoveAction(variableManager,action).Execute();
 	}
 
 	private void ExecuteSpawn(Action action) throws IllegalAccessException {
-			new SpawnAction(variableManager,action,this).Execute();
-
+		new SpawnAction(variableManager,action,this).Execute();
 	}
 
 	private void ExecuteSelect(Action action) throws IllegalAccessException {
-
-		waitForInput = true;
-		for (Object o : objects) {
-			variableManager.Store(null, VariableManager.THIS, o);
-			if (variableManager.Evaluate(action.getCondition())) {
-				activebuttons.add(IDStore.get(o));
-			}
-		}
-		if (activebuttons.isEmpty()) {
-			Lose();
-			waitForInput = false;
-		}
-		SaveCurrentState();
-		views.forEach(IView::Refresh);
+		new SelectAction(variableManager,action,IDStore,this).Execute();
 	}
 
 	private void ExecuteWin() throws IllegalAccessException {
-
-		Win();
+		new WinAction(this).Execute();
 	}
 
 	private void ExecuteLose() throws IllegalAccessException {
-
-		Lose();
+		new LoseAction(this).Execute();
 	}
 
 	private void ExecuteIf(Action action) throws IllegalAccessException {
-
-		if (variableManager.Evaluate(action.getCondition())) {
-			actionManager.stepIntoNested();
-		}
-
+		new IfAction(variableManager,action,actionManager).Execute();
 	}
 
 	private void ExecuteWhile(Action action) throws IllegalAccessException {
-
-		ExecuteIf(action);
-
+		new WhileAction(variableManager,action,actionManager).Execute();
 	}
 
 	private void ExecuteDestroy(Action action) throws IllegalAccessException {
-
-		Token t;
-		(t = (Token) variableManager.GetReference(action.getSelected()))
-			 .Destroy();
-		tokens.remove(t);
-		objects.remove(t);
+		new DestroyAction(variableManager,action,this).Execute();
 	}
 
 	private void ExecuteShuffle(Action action) throws IllegalAccessException {
-
-		((Deck) variableManager.GetReference(action.getSelected())).Shuffle();
+		new ShuffleAction(variableManager,action).Execute();
 	}
 
-	private void Lose() throws IllegalAccessException {
+	public void Lose() throws IllegalAccessException {
 
 		losers.add(IDStore.get(getCurrentPlayer()));
 		// TODO think about it: does the game end, or only the player is removed from game
@@ -384,7 +339,7 @@ public class Game implements IController {
 		gameEnded = true;
 	}
 
-	private void Win() throws IllegalAccessException {
+	public void Win() throws IllegalAccessException {
 
 		winners.add(IDStore.get(getCurrentPlayer()));
 		// TODO think about it: does the game end, or only the player is removed from game
@@ -460,4 +415,31 @@ public class Game implements IController {
 		objects.add(token);
 	}
 
+	public void waitForInput(boolean wait) {
+		this.waitForInput=wait;
+	}
+
+	public void setSelectableObjects(Set<Integer> ids) throws IllegalAccessException {
+		waitForInput(true);
+
+
+		activebuttons.addAll(ids);
+
+		if (activebuttons.isEmpty()) {
+			Lose();
+			waitForInput = false;
+		}
+		SaveCurrentState();
+
+		views.forEach(IView::Refresh);
+	}
+
+	public Set<Object> getObjects() {
+		return objects;
+	}
+
+	public void DestroyToken(Token t) {
+		tokens.remove(t);
+		objects.remove(t);
+	}
 }

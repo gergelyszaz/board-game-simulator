@@ -25,7 +25,7 @@ public class SpawnAction extends AbstractAction {
 		 VariableManager variableManager, hu.bme.aut.gergelyszaz.bGL.Action
 		 action, Game game) {
 
-		super(variableManager);
+		super(variableManager,action);
 
 		this.game = game;
 		tokenTypeName = action.getToken().getName();
