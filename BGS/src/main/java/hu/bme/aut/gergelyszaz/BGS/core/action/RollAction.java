@@ -1,8 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.core.action;
 
 import hu.bme.aut.gergelyszaz.BGS.core.VariableManager;
-import hu.bme.aut.gergelyszaz.bGL.*;
-import hu.bme.aut.gergelyszaz.bGL.Action;
 
 import java.util.List;
 import java.util.Random;
@@ -25,6 +23,6 @@ public class RollAction extends AbstractAction {
             result += rollresult;
         }
         List<String> variablePath = variableManager.getVariablePath(action.getToVar());
-        variableManager.Store(variablePath, result);
+        variableManager.store(variablePath, result);
     }
 }

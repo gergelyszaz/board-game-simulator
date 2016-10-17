@@ -25,24 +25,24 @@ public class VariableManagerTest {
 
 		variableManager = new VariableManager();
 
-		variableManager.Store(null, "first", firstObject);
+		variableManager.store(null, "first", firstObject);
 
-		variableManager.Store(firstObject, "second", secondObject);
+		variableManager.store(firstObject, "second", secondObject);
 
-		variableManager.Store(secondObject, "third", thirdObject);
+		variableManager.store(secondObject, "third", thirdObject);
 
-		variableManager.Store(null, "zero", 0);
+		variableManager.store(null, "zero", 0);
 
-		variableManager.Store(firstObject, "one", 1);
-		variableManager.Store(secondObject, "two", 2);
+		variableManager.store(firstObject, "one", 1);
+		variableManager.store(secondObject, "two", 2);
 
 	}
 
 	@Test
 	public void GetValueUsingNameTest() throws IllegalAccessException {
 
-		int zero = variableManager.GetValue(null, "zero");
-		int one = variableManager.GetValue(firstObject, "one");
+		int zero = variableManager.getValue(null, "zero");
+		int one = variableManager.getValue(firstObject, "one");
 
 		assertEquals(0, zero);
 		assertEquals(1, one);
@@ -52,7 +52,7 @@ public class VariableManagerTest {
 	@Test(expected = IllegalAccessException.class)
 	public void GetValueUsingInvalidNameTest() throws IllegalAccessException {
 
-		variableManager.GetValue(null, "invalid");
+		variableManager.getValue(null, "invalid");
 	}
 
 	@Test
@@ -96,7 +96,7 @@ public class VariableManagerTest {
 		when(attributeOrInt.getAttribute()).thenReturn(null);
 		when(attributeOrInt.getValue()).thenReturn(5);
 
-		Object reference = variableManager.GetReference(attributeOrInt);
+		Object reference = variableManager.getReference(attributeOrInt);
 
 		assertEquals(5, reference);
 	}
@@ -149,16 +149,16 @@ public class VariableManagerTest {
 	public void StoreUsingNameStringTest() throws IllegalAccessException {
 
 		Object object=new Object();
-		variableManager.Store(null, "newName",object);
+		variableManager.store(null, "newName",object);
 
-		assertEquals(object,variableManager.GetReference(null, "newName"));
+		assertEquals(object,variableManager.getReference(null, "newName"));
 	}
 
 	@Test
 	public void StoreUsingPathTest() throws IllegalAccessException {
 Object object=new Object();
 		List<String> path = Arrays.asList("first", "second", "third", "fourth");
-		variableManager.Store(path, object);
+		variableManager.store(path, object);
 
 		assertEquals(object,variableManager.getReference(path));
 	}
@@ -173,7 +173,7 @@ Object object=new Object();
 		path.add("fourth");
 
 		Object object = new Object();
-		variableManager.Store(path, object);
+		variableManager.store(path, object);
 		assertEquals(object, variableManager.getReference(path));
 
 	}
@@ -308,8 +308,8 @@ Object object=new Object();
 	@Test
 	public void GetReferenceUsingNameTest() throws IllegalAccessException {
 
-		Object first = variableManager.GetReference(null, "first");
-		Object second = variableManager.GetReference(firstObject, "second");
+		Object first = variableManager.getReference(null, "first");
+		Object second = variableManager.getReference(firstObject, "second");
 		assertEquals(firstObject, first);
 		assertEquals(secondObject, second);
 	}
@@ -318,7 +318,7 @@ Object object=new Object();
 	public void GetReferenceUsingInvalidNameTest()
 		 throws IllegalAccessException {
 
-		variableManager.GetReference(null, "invalid");
+		variableManager.getReference(null, "invalid");
 	}
 
 	@Test
@@ -333,12 +333,12 @@ Object object=new Object();
 		when(secondAttribute.getName()).thenReturn("second");
 		when(secondAttribute.getChild()).thenReturn(null);
 
-		Object reference = variableManager.GetReference(firstAttribute);
+		Object reference = variableManager.getReference(firstAttribute);
 
 		assertEquals(secondObject, reference);
 	}
 
-//GetReference tests
+//getReference tests
 
 	@Test(expected = IllegalAccessException.class)
 	public void GetReferenceUsingInvalidAttributeNameTest()
@@ -349,7 +349,7 @@ Object object=new Object();
 		when(firstAttribute.getName()).thenReturn("invalid");
 		when(firstAttribute.getChild()).thenReturn(null);
 
-		variableManager.GetReference(firstAttribute);
+		variableManager.getReference(firstAttribute);
 	}
 
 	@Test
@@ -361,7 +361,7 @@ Object object=new Object();
 		when(attributeOrInt.getAttribute()).thenReturn(null);
 		when(attributeOrInt.getValue()).thenReturn(5);
 
-		Object reference = variableManager.GetReference(attributeOrInt);
+		Object reference = variableManager.getReference(attributeOrInt);
 
 		assertEquals(5, reference);
 	}
@@ -378,7 +378,7 @@ Object object=new Object();
 		when(attributeOrInt.getAttribute()).thenReturn(firstAttribute);
 		when(attributeOrInt.getValue()).thenReturn(5);
 
-		Object reference = variableManager.GetReference(attributeOrInt);
+		Object reference = variableManager.getReference(attributeOrInt);
 
 		assertEquals(firstObject, reference);
 		assertNotSame(5, reference);
@@ -390,7 +390,7 @@ Object object=new Object();
 
 		AttributeOrInt attributeOrInt = mock(AttributeOrInt.class);
 
-		Object reference = variableManager.GetReference(attributeOrInt);
+		Object reference = variableManager.getReference(attributeOrInt);
 		assertEquals(0, reference);
 	}
 
@@ -451,7 +451,7 @@ Object object=new Object();
 		when(booleanExp.getLeft()).thenReturn(left);
 		when(booleanExp.getRight()).thenReturn(right);
 
-		return variableManager.Evaluate(booleanExp);
+		return variableManager.evaluate(booleanExp);
 	}
 
 	private boolean EvaluateAndExp(boolean left, boolean right)
@@ -467,10 +467,10 @@ Object object=new Object();
 
 		when(andExp.getExpressions()).thenReturn(booleanExps);
 
-		doReturn(left).when(spy).Evaluate(booleanExp1);
-		doReturn(right).when(spy).Evaluate(booleanExp2);
+		doReturn(left).when(spy).evaluate(booleanExp1);
+		doReturn(right).when(spy).evaluate(booleanExp2);
 
-		return spy.Evaluate(andExp);
+		return spy.evaluate(andExp);
 	}
 
 	private boolean EvaluateOrExp(boolean left, boolean right)
@@ -485,10 +485,10 @@ Object object=new Object();
 
 		when(orExp.getExpressions()).thenReturn(andExps);
 
-		doReturn(left).when(spy).Evaluate(andExp1);
-		doReturn(right).when(spy).Evaluate(andExp2);
+		doReturn(left).when(spy).evaluate(andExp1);
+		doReturn(right).when(spy).evaluate(andExp2);
 
-		return spy.Evaluate(orExp);
+		return spy.evaluate(orExp);
 	}
 
 }

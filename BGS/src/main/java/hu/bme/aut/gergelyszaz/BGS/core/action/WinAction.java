@@ -21,7 +21,7 @@ public class WinAction extends AbstractAction {
 	public void Execute() throws IllegalAccessException {
 
 		Player player =
-			 (Player) variableManager.GetReference(null, VariableManager
+			 (Player) variableManager.getReference(null, VariableManager
 				  .CURRENTPLAYER);
 		game.Win(player);
 	}

@@ -5,7 +5,6 @@ import hu.bme.aut.gergelyszaz.BGS.core.model.Card;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Deck;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Token;
 import hu.bme.aut.gergelyszaz.bGL.*;
-import hu.bme.aut.gergelyszaz.bGL.Action;
 
 import java.util.Objects;
 
@@ -21,12 +20,12 @@ public class MoveAction extends AbstractAction {
     @Override
     public void Execute() throws IllegalAccessException {
         if (Objects.equals(action.getType(), "CARD")) {
-            ((Card) variableManager.GetReference(action.getSelected()))
-                    .MoveTo((Deck) variableManager.GetReference(action.getMoveTo()));
+            ((Card) variableManager.getReference(action.getSelected()))
+                    .MoveTo((Deck) variableManager.getReference(action.getMoveTo()));
         }
         else {
-            ((Token) variableManager.GetReference(action.getSelected())).setField(
-                    (Field) variableManager.GetReference(action.getMoveTo()));
+            ((Token) variableManager.getReference(action.getSelected())).setField(
+                    (Field) variableManager.getReference(action.getMoveTo()));
         }
     }
 }

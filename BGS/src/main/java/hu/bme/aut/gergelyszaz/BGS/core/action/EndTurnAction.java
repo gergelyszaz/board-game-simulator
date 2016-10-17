@@ -2,6 +2,7 @@ package hu.bme.aut.gergelyszaz.BGS.core.action;
 
 import hu.bme.aut.gergelyszaz.BGS.core.Game;
 import hu.bme.aut.gergelyszaz.BGS.core.VariableManager;
+import hu.bme.aut.gergelyszaz.BGS.core.model.Player;
 
 /**
  * Created by gergely.szaz on 2016. 10. 16..
@@ -19,6 +20,9 @@ public class EndTurnAction extends AbstractAction{
     @Override
     public void Execute() throws IllegalAccessException {
        actionManager.reset();
-		 variableManager.Store(null,VariableManager.CURRENTPLAYER,game.getNextPlayer());
+		 Player player= (Player) variableManager.getReference(null,VariableManager
+			  .CURRENTPLAYER);
+		 variableManager.store(null,VariableManager.CURRENTPLAYER,game
+			  .getNextPlayer(player));
     }
 }

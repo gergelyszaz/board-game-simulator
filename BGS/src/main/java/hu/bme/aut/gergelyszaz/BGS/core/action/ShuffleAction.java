@@ -1,8 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.core.action;
 
 import hu.bme.aut.gergelyszaz.BGS.core.VariableManager;
-import hu.bme.aut.gergelyszaz.BGS.core.model.*;
-import hu.bme.aut.gergelyszaz.bGL.*;
 import hu.bme.aut.gergelyszaz.bGL.Action;
 
 /**
@@ -15,7 +13,7 @@ public class ShuffleAction extends AbstractAction{
 
     @Override
     public void Execute() throws IllegalAccessException {
-        ((hu.bme.aut.gergelyszaz.BGS.core.model.Deck) variableManager.GetReference(action.getSelected())).Shuffle();
+        ((hu.bme.aut.gergelyszaz.BGS.core.model.Deck) variableManager.getReference(action.getSelected())).Shuffle();
 
     }
 }

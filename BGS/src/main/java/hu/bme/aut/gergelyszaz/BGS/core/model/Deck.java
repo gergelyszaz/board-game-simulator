@@ -41,8 +41,8 @@ public class Deck {
 	}
 
 	private void UpdateTop() {
-		vm.Store(this, VariableManager.CARDCOUNT, cards.size());
+		vm.store(this, VariableManager.CARDCOUNT, cards.size());
 		if (cards.isEmpty()) return;
-		vm.Store(this, VariableManager.TOP, cards.peek());
+		vm.store(this, VariableManager.TOP, cards.peek());
 	}
 }

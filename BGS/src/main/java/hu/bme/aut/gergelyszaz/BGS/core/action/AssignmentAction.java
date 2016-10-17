@@ -17,11 +17,11 @@ public class AssignmentAction extends AbstractAction{
     @Override
     public void Execute() throws IllegalAccessException {
         ValueAssignment assignment=action.getAssignment();
-        Object reference = variableManager.GetReference(assignment
+        Object reference = variableManager.getReference(assignment
                 .getAddition());
 
         List<String> variablePath = variableManager.getVariablePath
                 (assignment.getName());
-        variableManager.Store(variablePath, reference);
+        variableManager.store(variablePath, reference);
     }
 }

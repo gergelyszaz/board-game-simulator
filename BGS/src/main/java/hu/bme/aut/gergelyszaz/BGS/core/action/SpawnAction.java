@@ -47,18 +47,18 @@ public class SpawnAction extends AbstractAction {
 
 		for (SimpleAssignment a : variables) {
 			String variableName = a.getName();
-			Object reference = variableManager.GetReference(a.getAttribute());
-			variableManager.Store(token, variableName, reference);
+			Object reference = variableManager.getReference(a.getAttribute());
+			variableManager.store(token, variableName, reference);
 		}
 		token.setOwner(
-			 (Player) variableManager.GetReference(null, "currentPlayer"));
-		token.setField((Field) variableManager.GetReference(fieldName));
+			 (Player) variableManager.getReference(null, "currentPlayer"));
+		token.setField((Field) variableManager.getReference(fieldName));
 	}
 
 	private void addTokenToVariableManager(Token token)
 		 throws IllegalAccessException {
 
 		List<String> variablePath = variableManager.getVariablePath(tokenName);
-		variableManager.Store(variablePath, token);
+		variableManager.store(variablePath, token);
 	}
 }

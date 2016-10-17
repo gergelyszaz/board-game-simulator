@@ -58,8 +58,8 @@ public class Game implements IController {
 		 Game game
 	) throws IllegalAccessException {
 
-		variableManager.Store(null, VariableManager.CURRENTPLAYER, player);
-		variableManager.Store(null, VariableManager.THIS, player);
+		variableManager.store(null, VariableManager.CURRENTPLAYER, player);
+		variableManager.store(null, VariableManager.THIS, player);
 
 		ActionManager startActionManager =
 			 new ActionManager(setup.getSetupRule()
@@ -68,7 +68,7 @@ public class Game implements IController {
 			game.ExecuteAction(startActionManager.getCurrentAction());
 		} while (!startActionManager.Step());
 
-		variableManager.Store(null, VariableManager.THIS, null);
+		variableManager.store(null, VariableManager.THIS, null);
 	}
 
 	private static void _setupPlayersStartRules(Model model, VariableManager
@@ -116,7 +116,7 @@ public class Game implements IController {
 		this.decks = decks;
 		this.gameModel = gameModel;
 		variableManager
-			 .Store(null, VariableManager.CURRENTPLAYER, players.get(0));
+			 .store(null, VariableManager.CURRENTPLAYER, players.get(0));
 
 		objects.addAll(gameModel.getBoard().getFields().stream()
 			 .collect(Collectors.toList()));
@@ -182,12 +182,12 @@ public class Game implements IController {
 				Object object = IDStore.get(selectedID);
 				List<String> variablePath = variableManager.getVariablePath
 					 (actionManager.getCurrentAction().getToVar());
-				variableManager.Store(variablePath, object);
+				variableManager.store(variablePath, object);
 
 				if (object instanceof Token) {
 					for (Field f : gameModel.getBoard().getFields()) {
 						variableManager
-							 .Store(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN,
+							 .store(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN,
 								  -1);
 					}
 					setupDistance(((Token) object).getField(), 0);
@@ -271,7 +271,7 @@ public class Game implements IController {
 	private Player _getCurrentPlayer() throws IllegalAccessException {
 
 		return (Player) variableManager
-			 .GetReference(null, VariableManager.CURRENTPLAYER);
+			 .getReference(null, VariableManager.CURRENTPLAYER);
 	}
 
 	private EList<Field> getFields() {
@@ -283,11 +283,11 @@ public class Game implements IController {
 		 throws IllegalAccessException {
 
 		//	TODO write without recursion and use BFS instead of DFS
-		int dist = variableManager.GetValue(startingField,
+		int dist = variableManager.getValue(startingField,
 			 VariableManager.DISTANCE_FROM_SELECTED_TOKEN);
 		if ((dist > -1 && dist <= distance)) return;
 		variableManager
-			 .Store(startingField, VariableManager.DISTANCE_FROM_SELECTED_TOKEN,
+			 .store(startingField, VariableManager.DISTANCE_FROM_SELECTED_TOKEN,
 				  distance);
 		for (Field field : startingField.getNeighbours()) {
 			{

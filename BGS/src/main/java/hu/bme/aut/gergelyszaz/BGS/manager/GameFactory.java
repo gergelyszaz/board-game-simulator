@@ -54,9 +54,9 @@ private void _setupPlayer(){
 			for (SimpleAssignment variableModel : model.getPlayer()
 				 .getVariables()) {
 				String variableName = variableModel.getName();
-				Object reference = variableManager.GetReference(variableModel
+				Object reference = variableManager.getReference(variableModel
 					 .getAttribute());
-				variableManager.Store(player, variableName, reference);
+				variableManager.store(player, variableName, reference);
 			}
 		}
 		return players;
@@ -76,17 +76,17 @@ private void _setupPlayer(){
 				cardModels.add(card);
 				for (SimpleAssignment variable : cardModel.getVariables()) {
 					String variableName = variable.getName();
-					Object reference = variableManager.GetReference(variable
+					Object reference = variableManager.getReference(variable
 						 .getAttribute());
-					variableManager.Store(card, variableName, reference);
+					variableManager.store(card, variableName, reference);
 				}
 
 			}
 			Deck deck = new Deck(variableManager, cardModels, null,
 				 deckModel.getVisibility());
 			decks.add(deck);
-			variableManager.Store(null, deckModel.getName(), deck);
-			variableManager.Store(deck, VariableManager.OWNER, null);
+			variableManager.store(null, deckModel.getName(), deck);
+			variableManager.store(deck, VariableManager.OWNER, null);
 		}
 
 		return decks;
@@ -96,16 +96,16 @@ private void _setupPlayer(){
 												  VariableManager variableManager)
 		 throws IllegalAccessException {
 
-		variableManager.Store(null, VariableManager.NULL, null);
+		variableManager.store(null, VariableManager.NULL, null);
 		for (SimpleAssignment variable : model.getBoard().getVariables()) {
 			String variableName = variable.getName();
-			Object reference = variableManager.GetReference(variable
+			Object reference = variableManager.getReference(variable
 				 .getAttribute());
-			variableManager.Store(null, variableName, reference);
+			variableManager.store(null, variableName, reference);
 		}
 
 		for (Field field : model.getBoard().getFields()) {
-			variableManager.Store(null, field.getName(), field);
+			variableManager.store(null, field.getName(), field);
 		}
 	}
 
@@ -122,16 +122,16 @@ private void _setupPlayer(){
 					cards.add(new Card(variableManager, cardModel));
 					for (SimpleAssignment variable : cardModel.getVariables()) {
 						String variableName = variable.getName();
-						Object reference = variableManager.GetReference(variable
+						Object reference = variableManager.getReference(variable
 							 .getAttribute());
-						variableManager.Store(cardModel, variableName, reference);
+						variableManager.store(cardModel, variableName, reference);
 					}
 				}
 				Deck deck = new Deck(variableManager, cards, player,
 					 deckModel.getVisibility());
 				decks.add(deck);
-				variableManager.Store(player, deckModel.getName(), deck);
-				variableManager.Store(deck, VariableManager.OWNER, player);
+				variableManager.store(player, deckModel.getName(), deck);
+				variableManager.store(deck, VariableManager.OWNER, player);
 			}
 		}
 	}
@@ -140,12 +140,12 @@ private void _setupPlayer(){
 		 throws IllegalAccessException {
 
 		for (Field fieldModel : model.getBoard().getFields()) {
-			variableManager.Store(fieldModel, "tokenCount", 0);
+			variableManager.store(fieldModel, "tokenCount", 0);
 			for (SimpleAssignment v : fieldModel.getVariables()) {
 				String variableName = v.getName();
-				Object reference = variableManager.GetReference(v
+				Object reference = variableManager.getReference(v
 					 .getAttribute());
-				variableManager.Store(fieldModel, variableName, reference);
+				variableManager.store(fieldModel, variableName, reference);
 			}
 		}
 	}

@@ -1,7 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.core.action;
 
 import hu.bme.aut.gergelyszaz.BGS.core.VariableManager;
-import hu.bme.aut.gergelyszaz.bGL.*;
 import hu.bme.aut.gergelyszaz.bGL.Action;
 
 /**
@@ -18,7 +17,7 @@ public class WhileAction extends AbstractAction{
 
         @Override
         public void Execute() throws IllegalAccessException {
-            if (variableManager.Evaluate(action.getCondition())) {
+            if (variableManager.evaluate(action.getCondition())) {
                 actionManager.stepIntoNested();
             }
         }

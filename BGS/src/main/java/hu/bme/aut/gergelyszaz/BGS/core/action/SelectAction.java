@@ -27,8 +27,8 @@ public class SelectAction extends AbstractAction {
         Set<Integer> ids=new HashSet<>();
 
         for (Object o : game.getObjects()) {
-            variableManager.Store(null, VariableManager.THIS, o);
-            if (variableManager.Evaluate(action.getCondition())) {
+            variableManager.store(null, VariableManager.THIS, o);
+            if (variableManager.evaluate(action.getCondition())) {
                 ids.add(idManager.get(o));
             }
         }

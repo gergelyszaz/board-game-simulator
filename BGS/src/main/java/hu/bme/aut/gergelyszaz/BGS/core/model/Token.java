@@ -13,24 +13,24 @@ public class Token {
 	}
 
 	public Field getField() throws IllegalAccessException {
-		return (Field) varManager.GetReference(this, varManager.FIELD);
+		return (Field) varManager.getReference(this, varManager.FIELD);
 	}
 
 	public void setField(Field field) {
-		varManager.Store(this, varManager.FIELD, field);
+		varManager.store(this, varManager.FIELD, field);
 	}
 
 	public Player getOwner() throws IllegalAccessException {
-		return (Player) varManager.GetReference(this, varManager.OWNER);
+		return (Player) varManager.getReference(this, varManager.OWNER);
 	}
 
 	public void setOwner(Player player) {
-		varManager.Store(this, varManager.OWNER, player);
+		varManager.store(this, varManager.OWNER, player);
 	}
 
 	public void Destroy() {
 		setField(null);
-		varManager.Remove(this);
+		varManager.remove(this);
 	}
 
 }

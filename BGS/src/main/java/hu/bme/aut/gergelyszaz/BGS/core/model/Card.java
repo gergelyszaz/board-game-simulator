@@ -21,7 +21,7 @@ public class Card {
 
 	public void SetDeck(Deck deck) {
 		this.deck = deck;
-		vm.Store(this, "deck", deck);
+		vm.store(this, "deck", deck);
 	}
 
 	public void MoveTo(Deck toDeck) {
