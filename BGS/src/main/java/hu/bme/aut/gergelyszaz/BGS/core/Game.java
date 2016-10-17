@@ -1,6 +1,7 @@
 package hu.bme.aut.gergelyszaz.BGS.core;
 
-import hu.bme.aut.gergelyszaz.BGS.core.action.*;
+import hu.bme.aut.gergelyszaz.BGS.core.action.ActionFactory;
+import hu.bme.aut.gergelyszaz.BGS.core.action.ActionManager;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Card;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Deck;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Player;
@@ -8,8 +9,10 @@ import hu.bme.aut.gergelyszaz.BGS.core.model.Token;
 import hu.bme.aut.gergelyszaz.BGS.manager.IDManager;
 import hu.bme.aut.gergelyszaz.BGS.state.*;
 import hu.bme.aut.gergelyszaz.BGS.state.util.StateStore;
-import hu.bme.aut.gergelyszaz.bGL.*;
 import hu.bme.aut.gergelyszaz.bGL.Action;
+import hu.bme.aut.gergelyszaz.bGL.Field;
+import hu.bme.aut.gergelyszaz.bGL.Model;
+import hu.bme.aut.gergelyszaz.bGL.PlayerSetup;
 import org.eclipse.emf.common.util.EList;
 
 import java.util.*;
@@ -20,15 +23,16 @@ public class Game implements IController {
 	Model gameModel;
 	String name;
 
-    StateStore gameStates = new StateStore();
 	VariableManager variableManager;
-    IDManager IDStore = new IDManager();
+	ActionManager actionManager;
 
-    boolean gameEnded = false;
+	StateStore gameStates = new StateStore();
+
+	IDManager IDStore = new IDManager();
+
+	boolean gameEnded = false;
 	volatile boolean waitForInput = false;
 	Set<IView> views = new HashSet<>();
-
-	ActionManager actionManager;
 
 	List<Player> players;
 	ArrayList<Token> tokens = new ArrayList<>();
@@ -39,10 +43,48 @@ public class Game implements IController {
 	Set<Object> objects = new HashSet<>();
 	private Set<Integer> activebuttons = new HashSet<>();
 	private Iterable<? extends Object> ojects;
+	private ActionManager startActionManager;
 
-	public Game(VariableManager variableManager) {
+	public Game(VariableManager variableManager, ActionManager actionManager) {
 
 		this.variableManager = variableManager;
+		this.actionManager = actionManager;
+	}
+
+	private static void _setupPlayerStartRules(
+		 VariableManager variableManager,
+		 Player player,
+		 PlayerSetup setup,
+		 Game game
+	) throws IllegalAccessException {
+
+		variableManager.Store(null, VariableManager.CURRENTPLAYER, player);
+		variableManager.Store(null, VariableManager.THIS, player);
+
+		ActionManager startActionManager =
+			 new ActionManager(setup.getSetupRule()
+				  .getActions());
+		do {
+			game.ExecuteAction(startActionManager.getCurrentAction());
+		} while (!startActionManager.Step());
+
+		variableManager.Store(null, VariableManager.THIS, null);
+	}
+
+	private static void _setupPlayersStartRules(Model model, VariableManager
+		 variableManager, Game game, List<Player> players)
+		 throws IllegalAccessException {
+
+		for (PlayerSetup setup : model.getPlayer().getPlayerSetups()) {
+			int setupId = setup.getId();
+			if (setupId < 1 || setupId > players.size()) {
+				throw new IllegalAccessException(
+					 "Invalid player id: " + setupId);
+			}
+			Player player = players.get(setupId - 1);
+			_setupPlayerStartRules(variableManager, player, setup, game);
+
+		}
 	}
 
 	public boolean Join(String clientID) throws IllegalAccessException {
@@ -73,8 +115,9 @@ public class Game implements IController {
 		this.players = players;
 		this.decks = decks;
 		this.gameModel = gameModel;
+		variableManager
+			 .Store(null, VariableManager.CURRENTPLAYER, players.get(0));
 
-		setCurrentPlayer(players.get(0));
 		objects.addAll(gameModel.getBoard().getFields().stream()
 			 .collect(Collectors.toList()));
 		for (Deck deck : decks) {
@@ -95,35 +138,7 @@ public class Game implements IController {
 
 	public void Start() throws IllegalAccessException {
 
-		for (PlayerSetup setup : gameModel.getPlayer().getPlayerSetups()) {
-
-			int setupId = setup.getId();
-			if (setupId < 1 || setupId > players.size()) {
-				throw new IllegalAccessException(
-					 "Invalid player id: Player " + setupId);
-			}
-			setCurrentPlayer(players.get(setupId - 1));
-
-			variableManager.Store(null, VariableManager.THIS, getCurrentPlayer());
-			for (SimpleAssignment variable : gameModel.getPlayer()
-				 .getVariables()) {
-				String variableName = variable.getName();
-				Object reference = variableManager.GetReference(
-					 variable.getAttribute());
-				variableManager.Store(getCurrentPlayer(), variableName, reference);
-			}
-
-			ActionManager startActionManager =
-				 new ActionManager(setup.getSetupRule()
-					  .getActions());
-			do {
-				ExecuteAction(startActionManager.getCurrentAction());
-			} while (!startActionManager.Step());
-
-			variableManager.Store(null, VariableManager.THIS, null);
-
-		}
-		actionManager = new ActionManager(gameModel.getRule().getActions());
+		_setupPlayersStartRules(gameModel, variableManager, this, players);
 		_saveCurrentState();
 	}
 
@@ -151,7 +166,6 @@ public class Game implements IController {
 
 		return gs.getPublicState(IDStore.get(p));
 	}
-
 
 	@Override
 	public boolean setSelected(String playerID, int selectedID) {
@@ -190,15 +204,74 @@ public class Game implements IController {
 		}
 	}
 
+	public Player getNextPlayer() throws IllegalAccessException {
+
+		int playerIndex = players.lastIndexOf(getCurrentPlayer());
+		playerIndex++;
+		if (playerIndex >= players.size()) playerIndex = 0;
+		return players.get(playerIndex);
+	}
+
+	public void Lose() throws IllegalAccessException {
+
+		losers.add(IDStore.get(getCurrentPlayer()));
+		// TODO think about it: does the game end, or only the player is removed from game
+		_saveCurrentState();
+		_updateViews();
+		gameEnded = true;
+	}
+
+	public void Win() throws IllegalAccessException {
+
+		winners.add(IDStore.get(getCurrentPlayer()));
+		// TODO think about it: does the game end, or only the player is removed from game
+		_saveCurrentState();
+		_updateViews();
+		gameEnded = true;
+	}
+
+	public void addToken(Token token) {
+
+		tokens.add(token);
+		objects.add(token);
+	}
+
+	public void waitForInput(boolean wait) {
+
+		this.waitForInput = wait;
+	}
+
+	public void setSelectableObjects(Set<Integer> ids)
+		 throws IllegalAccessException {
+
+		waitForInput(true);
+
+		activebuttons.addAll(ids);
+
+		if (activebuttons.isEmpty()) {
+			Lose();
+			waitForInput = false;
+		}
+		_saveCurrentState();
+
+		_updateViews();
+	}
+
+	public Set<Object> getObjects() {
+
+		return objects;
+	}
+
+	public void DestroyToken(Token t) {
+
+		tokens.remove(t);
+		objects.remove(t);
+	}
+
 	private Player getCurrentPlayer() throws IllegalAccessException {
 
 		return (Player) variableManager
 			 .GetReference(null, VariableManager.CURRENTPLAYER);
-	}
-
-	public void setCurrentPlayer(Player player) {
-
-		variableManager.Store(null, VariableManager.CURRENTPLAYER, player);
 	}
 
 	private EList<Field> getFields() {
@@ -223,45 +296,21 @@ public class Game implements IController {
 		}
 	}
 
-	public Player getNextPlayer() throws IllegalAccessException {
-
-		int playerIndex=players.lastIndexOf(getCurrentPlayer());
-		playerIndex++;
-		if(playerIndex>=players.size()) playerIndex=0;
-		return players.get(playerIndex);
-	}
-
 	private void ExecuteAction(Action action) {
 
 		try {
 			activebuttons.clear();
-            ActionFactory actionFactory=new ActionFactory(variableManager,IDStore,actionManager,this);
-            actionFactory.createAction(action).Execute();
+			ActionFactory actionFactory =
+				 new ActionFactory(variableManager, IDStore, actionManager, this);
+			actionFactory.createAction(action).Execute();
 
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void Lose() throws IllegalAccessException {
+	private void _updateViews() {
 
-		losers.add(IDStore.get(getCurrentPlayer()));
-		// TODO think about it: does the game end, or only the player is removed from game
-		_saveCurrentState();
-		_updateViews();
-		gameEnded = true;
-	}
-
-	public void Win() throws IllegalAccessException {
-
-		winners.add(IDStore.get(getCurrentPlayer()));
-		// TODO think about it: does the game end, or only the player is removed from game
-		_saveCurrentState();
-		_updateViews();
-		gameEnded = true;
-	}
-
-	private void _updateViews(){
 		views.forEach(IView::Refresh);
 	}
 
@@ -325,37 +374,5 @@ public class Game implements IController {
 				  new ArrayList<>(activebuttons), winners, losers, deckstates, -1);
 		gameStates.addState(state);
 
-	}
-
-	public void addToken(Token token){
-		tokens.add(token);
-		objects.add(token);
-	}
-
-	public void waitForInput(boolean wait) {
-		this.waitForInput=wait;
-	}
-
-	public void setSelectableObjects(Set<Integer> ids) throws IllegalAccessException {
-		waitForInput(true);
-
-		activebuttons.addAll(ids);
-
-		if (activebuttons.isEmpty()) {
-			Lose();
-			waitForInput = false;
-		}
-		_saveCurrentState();
-
-		_updateViews();
-	}
-
-	public Set<Object> getObjects() {
-		return objects;
-	}
-
-	public void DestroyToken(Token t) {
-		tokens.remove(t);
-		objects.remove(t);
 	}
 }

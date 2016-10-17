@@ -2,6 +2,8 @@ package hu.bme.aut.gergelyszaz.BGS.manager;
 
 import hu.bme.aut.gergelyszaz.BGS.core.Game;
 import hu.bme.aut.gergelyszaz.BGS.core.VariableManager;
+import hu.bme.aut.gergelyszaz.BGS.core.action.Action;
+import hu.bme.aut.gergelyszaz.BGS.core.action.ActionManager;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Card;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Deck;
 import hu.bme.aut.gergelyszaz.BGS.core.model.Player;
@@ -18,15 +20,28 @@ public class GameFactory {
 	public Game CreateGame(Model model) throws IllegalAccessException {
 
 		VariableManager variableManager = new VariableManager();
+		ActionManager actionManager=new ActionManager(model.getRule().getActions());
+		ActionManager startActionManager=new ActionManager(model.getRule()
+			 .getActions());
 		List<Player> players = _setupPlayers(model, variableManager);
 		List<Deck> decks = _setupDecks(model, variableManager);
 		_setupPlayerDecks(model, variableManager, players, decks);
 		_setupGlobalVariables(model, variableManager);
 		_setupFields(model, variableManager);
-		Game game = new Game(variableManager);
+		Game game = new Game(variableManager, actionManager);
 		game.Init(model, players, decks);
 		return game;
 	}
+
+	private List<Action> _setupActions(){
+		List<Action> actions=new ArrayList<>();
+
+		return actions;
+	}
+
+private void _setupPlayer(){
+
+}
 
 	private List<Player> _setupPlayers(Model model, VariableManager
 		 variableManager) throws IllegalAccessException {
