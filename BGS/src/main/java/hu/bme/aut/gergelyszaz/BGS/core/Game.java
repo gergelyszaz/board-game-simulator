@@ -25,7 +25,7 @@ public class Game implements IController {
 
 	VariableManager variableManager;
 	ActionManager actionManager;
-	IDManager IDStore;
+	IDManager idManager;
 	ActionFactory actionFactory;
 
 	StateStore gameStates = new StateStore();
@@ -50,7 +50,7 @@ public class Game implements IController {
 
 		this.variableManager = variableManager;
 		this.actionManager = actionManager;
-		this.IDStore=idManager;
+		this.idManager =idManager;
 	}
 
 	private static void _setupPlayerStartRules(
@@ -166,7 +166,7 @@ public class Game implements IController {
 			if (Objects.equals(player.getSessionID(), sessionID)) p = player;
 		}
 
-		return gs.getPublicState(IDStore.get(p));
+		return gs.getPublicState(idManager.get(p));
 	}
 
 	@Override
@@ -181,7 +181,7 @@ public class Game implements IController {
 			if (Objects
 				 .equals(actionManager.getCurrentAction().getName(), "SELECT")) {
 
-				Object object = IDStore.get(selectedID);
+				Object object = idManager.get(selectedID);
 				List<String> variablePath = variableManager.getVariablePath
 					 (actionManager.getCurrentAction().getToVar());
 				variableManager.store(variablePath, object);
@@ -216,7 +216,7 @@ public class Game implements IController {
 
 	public void Lose(Player player) throws IllegalAccessException {
 
-		losers.add(IDStore.get(player));
+		losers.add(idManager.get(player));
 		// TODO think about it: does the game end, or only the player is removed from game
 		_saveCurrentState();
 		_updateViews();
@@ -225,7 +225,7 @@ public class Game implements IController {
 
 	public void Win(Player player) throws IllegalAccessException {
 
-		winners.add(IDStore.get(player));
+		winners.add(idManager.get(player));
 		// TODO think about it: does the game end, or only the player is removed from game
 		_saveCurrentState();
 		_updateViews();
@@ -304,7 +304,7 @@ public class Game implements IController {
 		try {
 			activebuttons.clear();
 			actionFactory =
-				 new ActionFactory(variableManager, IDStore, actionManager, this);
+				 new ActionFactory(variableManager, idManager, actionManager, this);
 			actionFactory.createAction(action).Execute();
 
 		} catch (IllegalAccessException e) {
@@ -319,34 +319,51 @@ public class Game implements IController {
 
 	private void _saveCurrentState() throws IllegalAccessException {
 
+		int stateVersion = gameStates.getCurrentVersion() + 1;
+		gameStates.addState(createGameState(gameModel.getName(), idManager,
+			 stateVersion, _getCurrentPlayer(), players, getFields(),
+			 tokens, decks,
+			 activebuttons,winners,losers));
+
+	}
+
+	public static GameState createGameState(String
+															  gameName, IDManager
+															  idManager, int version,
+														 Player player, List<Player> players,
+														 List<Field> fields,
+														 List<Token> tokens,
+														 List<Deck> decks,
+														 Set<Integer> selectables,
+														 List<Integer> winners,
+														 List<Integer> losers)
+		 throws IllegalAccessException {
 		List<PlayerState> plist = new ArrayList<>();
 		for (Player p : players) {
 			PlayerState ps = new PlayerState();
-			ps.id = IDStore.get(p);
+			ps.id = idManager.get(p);
 			ps.name = p.getName();
 			plist.add(ps);
 		}
 		List<FieldState> flist = new ArrayList<>();
-		for (Field f : getFields()) {
+		for (Field f : fields) {
 			FieldState fs = new FieldState();
-			fs.id = IDStore.get(f);
+			fs.id = idManager.get(f);
 			fs.name = f.getName();
 			fs.neighbours.addAll(
-				 f.getNeighbours().stream().map(n -> IDStore.get(n))
+				 f.getNeighbours().stream().map(n -> idManager.get(n))
 					  .collect(Collectors.toList()));
 			flist.add(fs);
 		}
 		List<TokenState> tlist = new ArrayList<>();
 		for (Token t : tokens) {
 			TokenState ts = new TokenState();
-			ts.id = IDStore.get(t);
-			ts.field = IDStore.get(t.getField());
-			ts.owner = IDStore.get(t.getOwner());
+			ts.id = idManager.get(t);
+			ts.field = idManager.get(t.getField());
+			ts.owner = idManager.get(t.getOwner());
 			ts.type = t.type;
 			tlist.add(ts);
 		}
-
-		int stateVersion = gameStates.getCurrentVersion() + 1;
 
 		List<DeckState> deckstates = new ArrayList<>();
 		for (Deck deck : decks) {
@@ -363,19 +380,18 @@ public class Game implements IController {
 					break;
 			}
 			deckstates.add(deckState);
-			deckState.id = IDStore.get(deck);
-			if (deck.owner != null) deckState.owner = IDStore.get(deck.owner);
+			deckState.id = idManager.get(deck);
+			if (deck.owner != null) deckState.owner = idManager.get(deck.owner);
 			for (Card c : deck.cards) {
-				CardState cs = new CardState(IDStore.get(c), c.getType());
+				CardState cs = new CardState(idManager.get(c), c.getType());
 				deckState.cards.add(cs);
 			}
 		}
 
 		GameState state =
-			 new GameState(this.gameModel.getName(), stateVersion,
-				  IDStore.get(_getCurrentPlayer()), plist, flist, tlist,
-				  new ArrayList<>(activebuttons), winners, losers, deckstates, -1);
-		gameStates.addState(state);
-
+			 new GameState(gameName, version,
+				  idManager.get(player), plist, flist, tlist,
+				  new ArrayList<>(selectables), winners, losers, deckstates, -1);
+		return state;
 	}
 }
