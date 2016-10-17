@@ -171,7 +171,7 @@ public class Game implements IController {
 	public boolean setSelected(String playerID, int selectedID) {
 
 		try {
-			if (!Objects.equals(playerID, getCurrentPlayer().getSessionID())) {
+			if (!Objects.equals(playerID, _getCurrentPlayer().getSessionID())) {
 				return false;
 			}
 			if (!activebuttons.contains(selectedID)) return false;
@@ -204,26 +204,26 @@ public class Game implements IController {
 		}
 	}
 
-	public Player getNextPlayer() throws IllegalAccessException {
+	public Player getNextPlayer(Player player) throws IllegalAccessException {
 
-		int playerIndex = players.lastIndexOf(getCurrentPlayer());
+		int playerIndex = players.lastIndexOf(player);
 		playerIndex++;
 		if (playerIndex >= players.size()) playerIndex = 0;
 		return players.get(playerIndex);
 	}
 
-	public void Lose() throws IllegalAccessException {
+	public void Lose(Player player) throws IllegalAccessException {
 
-		losers.add(IDStore.get(getCurrentPlayer()));
+		losers.add(IDStore.get(player));
 		// TODO think about it: does the game end, or only the player is removed from game
 		_saveCurrentState();
 		_updateViews();
 		gameEnded = true;
 	}
 
-	public void Win() throws IllegalAccessException {
+	public void Win(Player player) throws IllegalAccessException {
 
-		winners.add(IDStore.get(getCurrentPlayer()));
+		winners.add(IDStore.get(player));
 		// TODO think about it: does the game end, or only the player is removed from game
 		_saveCurrentState();
 		_updateViews();
@@ -249,7 +249,7 @@ public class Game implements IController {
 		activebuttons.addAll(ids);
 
 		if (activebuttons.isEmpty()) {
-			Lose();
+			Lose(_getCurrentPlayer());
 			waitForInput = false;
 		}
 		_saveCurrentState();
@@ -268,7 +268,7 @@ public class Game implements IController {
 		objects.remove(t);
 	}
 
-	private Player getCurrentPlayer() throws IllegalAccessException {
+	private Player _getCurrentPlayer() throws IllegalAccessException {
 
 		return (Player) variableManager
 			 .GetReference(null, VariableManager.CURRENTPLAYER);
@@ -370,7 +370,7 @@ public class Game implements IController {
 
 		GameState state =
 			 new GameState(this.gameModel.getName(), stateVersion,
-				  IDStore.get(getCurrentPlayer()), plist, flist, tlist,
+				  IDStore.get(_getCurrentPlayer()), plist, flist, tlist,
 				  new ArrayList<>(activebuttons), winners, losers, deckstates, -1);
 		gameStates.addState(state);
 
