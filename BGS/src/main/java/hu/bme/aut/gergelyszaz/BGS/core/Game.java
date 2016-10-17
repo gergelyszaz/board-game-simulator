@@ -25,10 +25,12 @@ public class Game implements IController {
 
 	VariableManager variableManager;
 	ActionManager actionManager;
+	IDManager IDStore;
+	ActionFactory actionFactory;
 
 	StateStore gameStates = new StateStore();
 
-	IDManager IDStore = new IDManager();
+
 
 	boolean gameEnded = false;
 	volatile boolean waitForInput = false;
@@ -42,13 +44,13 @@ public class Game implements IController {
 
 	Set<Object> objects = new HashSet<>();
 	private Set<Integer> activebuttons = new HashSet<>();
-	private Iterable<? extends Object> ojects;
-	private ActionManager startActionManager;
 
-	public Game(VariableManager variableManager, ActionManager actionManager) {
+	public Game(VariableManager variableManager, ActionManager actionManager,
+					IDManager idManager) {
 
 		this.variableManager = variableManager;
 		this.actionManager = actionManager;
+		this.IDStore=idManager;
 	}
 
 	private static void _setupPlayerStartRules(
@@ -296,11 +298,12 @@ public class Game implements IController {
 		}
 	}
 
+
 	private void ExecuteAction(Action action) {
 
 		try {
 			activebuttons.clear();
-			ActionFactory actionFactory =
+			actionFactory =
 				 new ActionFactory(variableManager, IDStore, actionManager, this);
 			actionFactory.createAction(action).Execute();
 

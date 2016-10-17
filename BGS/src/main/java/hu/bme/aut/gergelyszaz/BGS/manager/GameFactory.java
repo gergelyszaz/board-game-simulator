@@ -20,15 +20,15 @@ public class GameFactory {
 	public Game CreateGame(Model model) throws IllegalAccessException {
 
 		VariableManager variableManager = new VariableManager();
-		ActionManager actionManager=new ActionManager(model.getRule().getActions());
-		ActionManager startActionManager=new ActionManager(model.getRule()
+		ActionManager actionManager=new ActionManager(model.getRule()
 			 .getActions());
+		IDManager idManager=new IDManager();
 		List<Player> players = _setupPlayers(model, variableManager);
 		List<Deck> decks = _setupDecks(model, variableManager);
 		_setupPlayerDecks(model, variableManager, players, decks);
 		_setupGlobalVariables(model, variableManager);
 		_setupFields(model, variableManager);
-		Game game = new Game(variableManager, actionManager);
+		Game game = new Game(variableManager, actionManager, idManager);
 		game.Init(model, players, decks);
 		return game;
 	}
