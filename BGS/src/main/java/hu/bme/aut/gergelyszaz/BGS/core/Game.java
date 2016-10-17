@@ -50,7 +50,7 @@ public class Game implements IController {
 		for (Player player : players) {
 			if (!player.IsConnected()) {
 				player.setSessionID(clientID);
-				SaveCurrentState();
+				_saveCurrentState();
 				return true;
 			}
 		}
@@ -124,7 +124,7 @@ public class Game implements IController {
 
 		}
 		actionManager = new ActionManager(gameModel.getRule().getActions());
-		SaveCurrentState();
+		_saveCurrentState();
 	}
 
 	public boolean IsFinished() {
@@ -151,6 +151,7 @@ public class Game implements IController {
 
 		return gs.getPublicState(IDStore.get(p));
 	}
+
 
 	@Override
 	public boolean setSelected(String playerID, int selectedID) {
@@ -246,7 +247,7 @@ public class Game implements IController {
 
 		losers.add(IDStore.get(getCurrentPlayer()));
 		// TODO think about it: does the game end, or only the player is removed from game
-		SaveCurrentState();
+		_saveCurrentState();
 		_updateViews();
 		gameEnded = true;
 	}
@@ -255,7 +256,7 @@ public class Game implements IController {
 
 		winners.add(IDStore.get(getCurrentPlayer()));
 		// TODO think about it: does the game end, or only the player is removed from game
-		SaveCurrentState();
+		_saveCurrentState();
 		_updateViews();
 		gameEnded = true;
 	}
@@ -264,7 +265,7 @@ public class Game implements IController {
 		views.forEach(IView::Refresh);
 	}
 
-	private void SaveCurrentState() throws IllegalAccessException {
+	private void _saveCurrentState() throws IllegalAccessException {
 
 		List<PlayerState> plist = new ArrayList<>();
 		for (Player p : players) {
@@ -344,7 +345,7 @@ public class Game implements IController {
 			Lose();
 			waitForInput = false;
 		}
-		SaveCurrentState();
+		_saveCurrentState();
 
 		_updateViews();
 	}

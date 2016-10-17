@@ -68,8 +68,7 @@ public class ActionManager {
             steppedIn = false;
             return false;
         }
-
-
+        
         Action nextAction = getNextAction(actionStack.peek(), getCurrentAction());
 
         if (nextAction == null) {
