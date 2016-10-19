@@ -1,7 +1,7 @@
 package hu.bme.aut.gergelyszaz.BGS.manager;
 
-import hu.bme.aut.gergelyszaz.BGS.core.Game;
-import hu.bme.aut.gergelyszaz.BGS.core.IController;
+import hu.bme.aut.gergelyszaz.BGS.game.Game;
+import hu.bme.aut.gergelyszaz.BGS.view.Controller;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -19,7 +19,7 @@ public class GameManager implements Runnable {
 		this.modelManager = modelManager;
 	}
 
-	public IController JoinGame(String clientID, String gameName) throws Exception {
+	public Controller JoinGame(String clientID, String gameName) throws Exception {
 		if (playerConnections.contains(clientID))
 			return playerConnections.get(clientID);
 		if (availableGames.get(gameName) == null) {

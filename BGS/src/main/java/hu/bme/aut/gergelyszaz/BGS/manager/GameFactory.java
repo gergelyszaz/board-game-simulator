@@ -1,12 +1,15 @@
 package hu.bme.aut.gergelyszaz.BGS.manager;
 
-import hu.bme.aut.gergelyszaz.BGS.core.Game;
-import hu.bme.aut.gergelyszaz.BGS.core.VariableManager;
-import hu.bme.aut.gergelyszaz.BGS.core.action.Action;
-import hu.bme.aut.gergelyszaz.BGS.core.action.ActionManager;
-import hu.bme.aut.gergelyszaz.BGS.core.model.Card;
-import hu.bme.aut.gergelyszaz.BGS.core.model.Deck;
-import hu.bme.aut.gergelyszaz.BGS.core.model.Player;
+import hu.bme.aut.gergelyszaz.BGS.game.Game;
+import hu.bme.aut.gergelyszaz.BGS.game.SelectableManager;
+import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
+import hu.bme.aut.gergelyszaz.BGS.action.Action;
+import hu.bme.aut.gergelyszaz.BGS.action.ActionManager;
+import hu.bme.aut.gergelyszaz.BGS.game.internal.Card;
+import hu.bme.aut.gergelyszaz.BGS.game.internal.Deck;
+import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
+import hu.bme.aut.gergelyszaz.BGS.state.IDManager;
+import hu.bme.aut.gergelyszaz.BGS.state.util.StateStore;
 import hu.bme.aut.gergelyszaz.bGL.Field;
 import hu.bme.aut.gergelyszaz.bGL.Model;
 import hu.bme.aut.gergelyszaz.bGL.SimpleAssignment;
@@ -23,12 +26,19 @@ public class GameFactory {
 		ActionManager actionManager=new ActionManager(model.getRule()
 			 .getActions());
 		IDManager idManager=new IDManager();
+		StateStore stateStore=new StateStore();
+		SelectableManager selectableManager =new
+			 SelectableManager();
+
 		List<Player> players = _setupPlayers(model, variableManager);
 		List<Deck> decks = _setupDecks(model, variableManager);
+
 		_setupPlayerDecks(model, variableManager, players, decks);
 		_setupGlobalVariables(model, variableManager);
 		_setupFields(model, variableManager);
-		Game game = new Game(variableManager, actionManager, idManager);
+
+		Game game = new Game(variableManager, actionManager, idManager,
+			 stateStore, selectableManager);
 		game.Init(model, players, decks);
 		return game;
 	}

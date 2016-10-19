@@ -1,8 +1,8 @@
 package hu.bme.aut.gergelyszaz.BGS.server;
 
 import com.google.gson.Gson;
-import hu.bme.aut.gergelyszaz.BGS.core.IController;
-import hu.bme.aut.gergelyszaz.BGS.core.IView;
+import hu.bme.aut.gergelyszaz.BGS.view.Controller;
+import hu.bme.aut.gergelyszaz.BGS.view.View;
 import hu.bme.aut.gergelyszaz.BGS.manager.GameManager;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
 import org.json.JSONArray;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 @ServerEndpoint(value = "/game")
-public class BGSServer implements IView {
+public class BGSServer implements View {
 
 	private static final String GAMESTATEVERSION = "gameStateVersion";
 	private static final String GAME = "game";
@@ -44,7 +44,7 @@ public class BGSServer implements IView {
 			case "join":
 				String gameName = message.getString(PARAMETER);
 				try {
-					IController c = gm.JoinGame(session.getId(), gameName);
+					Controller c = gm.JoinGame(session.getId(), gameName);
 					c.AddView(this);
 					session.getUserProperties().put(GAME, c);
 					session.getUserProperties().put(GAMESTATEVERSION, -1);
@@ -73,7 +73,7 @@ public class BGSServer implements IView {
 			case "select":
 				String status;
 				int selected = message.getInt(PARAMETER);
-				IController c = (IController) session.getUserProperties().get(GAME);
+				Controller c = (Controller) session.getUserProperties().get(GAME);
 				if (c.setSelected(session.getId(), selected)) {
 					status = "ok";
 				} else {
@@ -109,7 +109,7 @@ public class BGSServer implements IView {
 
 	private String Update(Session session) {
 		// TODO error if there is no game yet
-		IController c = (IController) session.getUserProperties().get(GAME);
+		Controller c = (Controller) session.getUserProperties().get(GAME);
 		Gson gson = new Gson();
 
 		GameState gs = c.getCurrentState(session.getId());
