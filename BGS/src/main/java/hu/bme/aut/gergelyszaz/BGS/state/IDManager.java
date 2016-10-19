@@ -14,7 +14,8 @@ public class IDManager {
 	private HashMap<Integer, Object> reverseidmap = new HashMap<>();
 
 	/**
-	 * Returns the id of object
+	 * Returns the id of object. It is generated at the first call.
+	 * One object has one id and vica versa.
 	 * @param object
 	 * @return
 	 */
@@ -27,8 +28,18 @@ public class IDManager {
 		return idmap.get(object);
 	}
 
-	public Object get(int id) {
-		return reverseidmap.get(id);
+	/**
+	 * Returns the object with the given id. If there is no object with that
+	 * id (yet) an exception is thrown.
+	 * @param id
+	 * @return
+	 */
+	public Object get(int id)
+	{
+		Object object=reverseidmap.get(id);
+		if(object==null) throw new IllegalAccessError(object+" has no ID " +
+			 "yet");
+		return object;
 	}
 
 }
