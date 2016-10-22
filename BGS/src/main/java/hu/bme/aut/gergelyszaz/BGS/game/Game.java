@@ -177,7 +177,7 @@ public class Game implements Controller {
 				return false;
 			}
 
-			if(!selectableManager.isSelectable(idManager.get(selectedID)))
+			if(!selectableManager.getSelectableObjects().contains(idManager.get(selectedID)))
 				return false;
 
 
@@ -245,11 +245,6 @@ public class Game implements Controller {
 		this.waitForInput = wait;
 	}
 
-	public Iterable<?> getObjects() {
-
-		return selectableManager.getAllObjects();
-	}
-
 	public void DestroyToken(Token t) {
 
 		tokens.remove(t);
@@ -287,7 +282,6 @@ public class Game implements Controller {
 	private void ExecuteAction(Action action) {
 
 		try {
-			selectableManager.clear();
 			actionFactory =
 				 new ActionFactory(variableManager, idManager, actionManager,
 					  selectableManager,
