@@ -30,7 +30,7 @@
                 <plugin>
                     <groupId>org.eclipse.xtend</groupId>
                     <artifactId>xtend-maven-plugin</artifactId>
-                    <version>${xtextVersion}</version>
+                    <version>${xtendVersion}</version>
                     <executions>
                         <execution>
                             <goals>
