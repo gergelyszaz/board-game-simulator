@@ -20,7 +20,7 @@ public class VariableManager {
 
 	private Map<Object, Map<String, Object>> references = new HashMap<>();
 
-	public boolean evaluate(OrExp exp) throws IllegalAccessException {
+	public boolean evaluate(OrExp exp){
 		boolean result = false;
 		for (AndExp e : exp.getExpressions()) {
 			result = (result || evaluate(e));
@@ -47,38 +47,38 @@ public class VariableManager {
 	}
 
 	public Object getReference(AttributeName variable)
-					throws IllegalAccessException {
+					{
 		List<String> variablePath = getVariablePath(variable);
 		return getReference(variablePath);
 	}
 
 	public Object getReference(Object parent, String variableName)
-					throws IllegalAccessException {
+					{
 		Object variable = getVariables(parent).get(variableName);
 		if (variable == null)
-			throw new IllegalAccessException(parent + " has no " + variableName);
+			throw new IllegalAccessError(parent + " has no " + variableName);
 		return variable;
 	}
 
 	public int getValue(Object parent, String variableName)
-					throws IllegalAccessException {
+					{
 		Object variable = getReference(parent, variableName);
 		if (!(variable instanceof Integer))
-			throw new IllegalAccessException(
+			throw new IllegalAccessError(
 							variableName + " of " + parent + " is not a number");
 		return (int) (Integer) variable;
 	}
 
 	public int calculate(AdditionExp additionExp)
-					throws IllegalAccessException {
+					{
 		Object reference= getReference(additionExp);
 		if(!(reference instanceof Integer))
-			throw new IllegalAccessException("Could not get value of"+additionExp);
+			throw new IllegalAccessError("Could not get value of"+additionExp);
 		return (Integer) reference;
 	}
 
 	public int calculate(MultiplicationExp multiplicationExp)
-					throws IllegalAccessException {
+					{
 		if (multiplicationExp.getNestedExp() != null) {
 			return calculate(multiplicationExp.getNestedExp());
 		}
@@ -101,9 +101,9 @@ public class VariableManager {
 	}
 
 	public void store(List<String> variablePath, Object objectToStore)
-					throws IllegalAccessException {
+					{
 		if (variablePath.size() == 0)
-			throw new IllegalAccessException(
+			throw new IllegalAccessError(
 							objectToStore + "cannot be stored with empty path ");
 		String variableName = variablePath.get(variablePath.size() - 1);
 		Object parent = null;
@@ -125,7 +125,7 @@ public class VariableManager {
 	}
 
 	public Object getReference(AdditionExp additionExp)
-		 throws IllegalAccessException {
+		 {
 
 		//just a simple reference
 		List<MultiplicationExp> expressions =
@@ -152,14 +152,14 @@ public class VariableManager {
 	}
 
 	public Map<String, Object> getVariables(Object parent)
-					throws IllegalAccessException {
+					 {
 		Map<String, Object> variables = references.get(parent);
 		if (variables == null)
-			throw new IllegalAccessException(parent + " has no variables");
+			throw new IllegalAccessError(parent + " has no variables");
 		return variables;
 	}
 
-	public boolean evaluate(AndExp exp) throws IllegalAccessException {
+	public boolean evaluate(AndExp exp){
 		boolean result = true;
 		for (BooleanExp e : exp.getExpressions()) {
 			result = (result && evaluate(e));
@@ -167,7 +167,7 @@ public class VariableManager {
 		return result;
 	}
 
-	public boolean evaluate(BooleanExp exp) throws IllegalAccessException {
+	public boolean evaluate(BooleanExp exp){
 		boolean not = (exp.getNot() != null);
 		if (exp.getNestedExp() != null)
 			return not != evaluate(exp.getNestedExp());
@@ -177,7 +177,7 @@ public class VariableManager {
 		try {
 			left = getReference(exp.getLeft());
 			right = getReference(exp.getRight());
-		} catch (IllegalAccessException e){
+		} catch (IllegalAccessError e){
 			return false;
 		}
 
@@ -185,9 +185,9 @@ public class VariableManager {
 		//It is a number comparation
 		if (exp.getName().length() <= 2) {
 			if (!(left instanceof Integer))
-				throw new IllegalAccessException(left + " is not a number");
+				throw new IllegalAccessError(left + " is not a number");
 			if (!(right instanceof Integer))
-				throw new IllegalAccessException(right + " is not a number");
+				throw new IllegalAccessError(right + " is not a number");
 			leftValue = (Integer) left;
 			rightValue = (Integer) right;
 		}
@@ -216,7 +216,7 @@ public class VariableManager {
 				break;
 
 			default:
-				throw new IllegalAccessException(exp.getName()+ " operator not " +
+				throw new IllegalAccessError(exp.getName()+ " operator not " +
 					 "found");
 		}
 		return not != result;
@@ -224,10 +224,10 @@ public class VariableManager {
 	}
 
 	public int calculate(AttributeOrInt attributeOrInt)
-					throws IllegalAccessException {
+					{
 		Object reference = getReference(attributeOrInt);
 		if (!(reference instanceof Integer))
-			throw new IllegalAccessException(
+			throw new IllegalAccessError(
 							attributeOrInt + " is not a number");
 		return (Integer) reference;
 	}
@@ -243,7 +243,7 @@ public class VariableManager {
 	}
 
 	public Object getReference(AttributeOrInt variable)
-					throws IllegalAccessException {
+					 {
 		if (variable.getAttribute() == null) {
 			return variable.getValue();
 		}
@@ -251,7 +251,7 @@ public class VariableManager {
 	}
 
 	public Object getReference(List<String> variablePath)
-					throws IllegalAccessException {
+					{
 		Object parent = null;
 		for (String variable :
 						variablePath) {
