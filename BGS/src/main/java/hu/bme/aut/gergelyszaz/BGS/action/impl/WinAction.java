@@ -1,7 +1,7 @@
 package hu.bme.aut.gergelyszaz.BGS.action.impl;
 
 import hu.bme.aut.gergelyszaz.BGS.action.AbstractAction;
-import hu.bme.aut.gergelyszaz.BGS.game.Game;
+import hu.bme.aut.gergelyszaz.BGS.game.InternalManager;
 import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
 
@@ -10,12 +10,13 @@ import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
  */
 public class WinAction extends AbstractAction {
 
-	private final Game game;
 
-	public WinAction(VariableManager variableManager, Game game) {
+	private final InternalManager internalManager;
+
+	public WinAction(VariableManager variableManager, InternalManager game) {
 
 		super(variableManager, null);
-		this.game = game;
+		this.internalManager=game;
 	}
 
 	@Override
@@ -24,6 +25,6 @@ public class WinAction extends AbstractAction {
 		Player player =
 			 (Player) variableManager.getReference(null, VariableManager
 				  .CURRENTPLAYER);
-		game.Win(player);
+		//TODO
 	}
 }

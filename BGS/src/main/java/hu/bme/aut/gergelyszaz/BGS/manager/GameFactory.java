@@ -1,10 +1,11 @@
 package hu.bme.aut.gergelyszaz.BGS.manager;
 
-import hu.bme.aut.gergelyszaz.BGS.game.Game;
+import hu.bme.aut.gergelyszaz.BGS.action.ActionFactory;
+import hu.bme.aut.gergelyszaz.BGS.action.ActionManager;
+import hu.bme.aut.gergelyszaz.BGS.game.GameImpl;
+import hu.bme.aut.gergelyszaz.BGS.game.InternalManager;
 import hu.bme.aut.gergelyszaz.BGS.game.SelectableManager;
 import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
-import hu.bme.aut.gergelyszaz.BGS.action.Action;
-import hu.bme.aut.gergelyszaz.BGS.action.ActionManager;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Card;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Deck;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
@@ -12,6 +13,7 @@ import hu.bme.aut.gergelyszaz.BGS.state.IDManager;
 import hu.bme.aut.gergelyszaz.BGS.state.util.StateStore;
 import hu.bme.aut.gergelyszaz.bGL.Field;
 import hu.bme.aut.gergelyszaz.bGL.Model;
+import hu.bme.aut.gergelyszaz.bGL.PlayerSetup;
 import hu.bme.aut.gergelyszaz.bGL.SimpleAssignment;
 
 import java.util.ArrayList;
@@ -20,15 +22,14 @@ import java.util.Stack;
 
 public class GameFactory {
 
-	public Game CreateGame(Model model) throws IllegalAccessException {
+	public GameImpl CreateGame(Model model) throws IllegalAccessException {
 
 		VariableManager variableManager = new VariableManager();
-		ActionManager actionManager=new ActionManager(model.getRule()
-			 .getActions());
+		ActionManager actionManager=new ActionManager(model.getRule().getActions());
 		IDManager idManager=new IDManager();
 		StateStore stateStore=new StateStore();
-		SelectableManager selectableManager =new
-			 SelectableManager();
+		SelectableManager selectableManager =new SelectableManager();
+		InternalManager internalManager=new InternalManager(selectableManager);
 
 		List<Player> players = _setupPlayers(model, variableManager);
 		List<Deck> decks = _setupDecks(model, variableManager);
@@ -36,22 +37,54 @@ public class GameFactory {
 		_setupPlayerDecks(model, variableManager, players, decks);
 		_setupGlobalVariables(model, variableManager);
 		_setupFields(model, variableManager);
+		_setupPlayersStartRules(model,variableManager,players,actionManager,internalManager,idManager);
 
-		Game game = new Game(variableManager, actionManager, idManager,
-			 stateStore, selectableManager);
+		model.getBoard().getFields().forEach(field ->selectableManager.add(field));
+		decks.forEach(deck -> deck.cards.forEach(card -> selectableManager.add(card)));
+		players.forEach(player -> selectableManager.add(player));
+
+		GameImpl game = new GameImpl(variableManager, actionManager, idManager, stateStore, internalManager);
 		game.Init(model, players, decks);
 		return game;
 	}
 
-	private List<Action> _setupActions(){
-		List<Action> actions=new ArrayList<>();
+	private static void _setupPlayerStartRules(
+			VariableManager variableManager,
+			Player player,
+			PlayerSetup setup,
+			IDManager idManager, ActionManager actionManager, InternalManager internalManager) throws IllegalAccessException {
 
-		return actions;
+		variableManager.store(null, VariableManager.CURRENTPLAYER, player);
+		variableManager.store(null, VariableManager.THIS, player);
+
+		ActionManager startActionManager =
+				new ActionManager(setup.getSetupRule()
+						.getActions());
+		do {
+			ActionFactory actionFactory =
+					new ActionFactory(variableManager, idManager, actionManager,
+							internalManager );
+			actionFactory.createAction(startActionManager.getCurrentAction()).Execute();
+		} while (!startActionManager.Step());
+
+		variableManager.store(null, VariableManager.THIS, null);
 	}
 
-private void _setupPlayer(){
+	private static void _setupPlayersStartRules(Model model, VariableManager
+			variableManager, List<Player> players, ActionManager actionManager, InternalManager internalManager, IDManager idManager)
+			throws IllegalAccessException {
 
-}
+		for (PlayerSetup setup : model.getPlayer().getPlayerSetups()) {
+			int setupId = setup.getId();
+			if (setupId < 1 || setupId > players.size()) {
+				throw new IllegalAccessException(
+						"Invalid player id: " + setupId);
+			}
+			Player player = players.get(setupId - 1);
+			_setupPlayerStartRules(variableManager, player, setup, idManager, actionManager, internalManager);
+
+		}
+	}
 
 	private List<Player> _setupPlayers(Model model, VariableManager
 		 variableManager) throws IllegalAccessException {

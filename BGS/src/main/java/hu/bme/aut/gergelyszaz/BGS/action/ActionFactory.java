@@ -1,8 +1,7 @@
 package hu.bme.aut.gergelyszaz.BGS.action;
 
 import hu.bme.aut.gergelyszaz.BGS.action.impl.*;
-import hu.bme.aut.gergelyszaz.BGS.game.Game;
-import hu.bme.aut.gergelyszaz.BGS.game.SelectableManager;
+import hu.bme.aut.gergelyszaz.BGS.game.InternalManager;
 import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
 import hu.bme.aut.gergelyszaz.BGS.state.IDManager;
 
@@ -14,22 +13,16 @@ import java.util.List;
  */
 public class ActionFactory {
 
-	private final Game game;
 	private final VariableManager variableManager;
 	private final IDManager idManager;
 	private final ActionManager actionManager;
-	private final SelectableManager selectableManager;
+	private final InternalManager internalManager;
 
-	public ActionFactory(VariableManager variableManager, IDManager idManager,
-								ActionManager actionManager, SelectableManager
-									 selectableManager,
-									 Game game) {
-
+	public ActionFactory(VariableManager variableManager, IDManager idManager, ActionManager actionManager, InternalManager internalManager) {
 		this.variableManager = variableManager;
 		this.idManager = idManager;
 		this.actionManager = actionManager;
-		this.game = game;
-		this.selectableManager = selectableManager;
+		this.internalManager=internalManager;
 	}
 
 	public List<Action> createActionSequence(
@@ -55,10 +48,10 @@ public class ActionFactory {
 			case "SELECT":
 				returnAction =
 					 new SelectAction(variableManager, action,
-						  selectableManager);
+						  internalManager.getSelectableManager());
 				break;
 			case "SPAWN":
-				returnAction = new SpawnAction(variableManager, action, game);
+				returnAction = new SpawnAction(variableManager, action, internalManager);
 				break;
 			case "MOVE":
 				returnAction = new MoveAction(variableManager, action);
@@ -67,13 +60,13 @@ public class ActionFactory {
 				returnAction = new ShuffleAction(variableManager, action);
 				break;
 			case "DESTROY":
-				returnAction = new DestroyAction(variableManager, action, game);
+				returnAction = new DestroyAction(variableManager, action, internalManager);
 				break;
 			case "WIN":
-				returnAction = new WinAction(variableManager, game);
+				returnAction = new WinAction(variableManager, internalManager);
 				break;
 			case "LOSE":
-				returnAction = new LoseAction(variableManager, game);
+				returnAction = new LoseAction(variableManager, internalManager);
 				break;
 			case "IF":
 				returnAction = new IfAction(variableManager, action, actionManager);
@@ -84,7 +77,7 @@ public class ActionFactory {
 				break;
 			case "END TURN":
 				returnAction =
-					 new EndTurnAction(variableManager, actionManager, game);
+					 new EndTurnAction(variableManager, actionManager,null);
 				break;
 			case "ROLL":
 				returnAction = new RollAction(variableManager, action);

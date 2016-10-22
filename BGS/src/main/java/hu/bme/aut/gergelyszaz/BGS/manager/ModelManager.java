@@ -48,7 +48,7 @@ public class ModelManager {
 
 	public Model Get(String name) throws Exception {
 		Model m = models.get(name);
-		if (m == null) throw new Exception("Game " + name + " not found!");
+		if (m == null) throw new Exception("GameImpl " + name + " not found!");
 		return m;
 
 	}

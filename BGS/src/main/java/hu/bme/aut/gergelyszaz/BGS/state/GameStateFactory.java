@@ -1,5 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.state;
 
+import hu.bme.aut.gergelyszaz.BGS.game.InternalManager;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Card;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Deck;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
@@ -83,5 +84,11 @@ public class GameStateFactory {
 				  idManager.get(player), plist, flist, tlist,
 				  new ArrayList<>(selectables), winners, losers, deckstates, -1);
 		return state;
+	}
+
+	public static GameState createGameState(String name, IDManager idManager, int stateVersion, InternalManager internalManager) throws IllegalAccessException {
+		return createGameState(name,idManager,stateVersion,internalManager.getCurrentPlayer(), internalManager.getPlayers(), internalManager.getFields(),
+				internalManager.getTokens(), internalManager.getDecks(),
+				internalManager.getSelectables(), internalManager.getWinners(), internalManager.getLosers());
 	}
 }

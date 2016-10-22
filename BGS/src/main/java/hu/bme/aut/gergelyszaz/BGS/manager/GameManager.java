@@ -9,9 +9,9 @@ import java.util.List;
 
 public class GameManager implements Runnable {
 	public ModelManager modelManager;
-	public Hashtable<String, Game> availableGames = new Hashtable<String, Game>();
-	public Hashtable<String, Game> playerConnections = new Hashtable<String, Game>();
-	public List<Game> runningGames = new ArrayList<Game>();
+	public Hashtable<String, Game> availableGames = new Hashtable<>();
+	public Hashtable<String, Game> playerConnections = new Hashtable<>();
+	public List<Game> runningGames = new ArrayList<>();
 	private GameFactory gameFactory;
 
 	public GameManager(GameFactory gameFactory, ModelManager modelManager) {

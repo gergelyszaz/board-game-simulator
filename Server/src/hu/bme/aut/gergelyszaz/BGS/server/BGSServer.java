@@ -84,7 +84,7 @@ public class BGSServer implements View {
 
 			case "quit":
 				try {
-					session.close(new CloseReason(CloseCodes.NORMAL_CLOSURE, "Game finished"));
+					session.close(new CloseReason(CloseCodes.NORMAL_CLOSURE, "GameImpl finished"));
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}

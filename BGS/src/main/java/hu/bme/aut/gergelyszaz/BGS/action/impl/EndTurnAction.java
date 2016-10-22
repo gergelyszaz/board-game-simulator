@@ -2,7 +2,7 @@ package hu.bme.aut.gergelyszaz.BGS.action.impl;
 
 import hu.bme.aut.gergelyszaz.BGS.action.AbstractAction;
 import hu.bme.aut.gergelyszaz.BGS.action.ActionManager;
-import hu.bme.aut.gergelyszaz.BGS.game.Game;
+import hu.bme.aut.gergelyszaz.BGS.game.GameImpl;
 import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
 
@@ -11,13 +11,15 @@ import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
  */
 public class EndTurnAction extends AbstractAction {
     private final ActionManager actionManager;
-    private final Game game;
+    private final GameImpl game;
 
-    public EndTurnAction(VariableManager variableManager, ActionManager actionManager, Game game) {
+    public EndTurnAction(VariableManager variableManager, ActionManager actionManager, GameImpl game) {
         super(variableManager,null);
         this.actionManager=actionManager;
         this.game=game;
     }
+
+
 
     @Override
     public void Execute() throws IllegalAccessException {
