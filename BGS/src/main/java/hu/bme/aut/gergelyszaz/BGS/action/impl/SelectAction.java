@@ -11,11 +11,13 @@ import hu.bme.aut.gergelyszaz.bGL.Action;
 public class SelectAction extends AbstractAction {
 
     private final SelectableManager selectableManager;
+	private String toVar;
 
-    public SelectAction(VariableManager variableManager, Action action,
+	public SelectAction(VariableManager variableManager, Action action,
 								SelectableManager selectableManager) {
         super(variableManager,action);
 		 this.selectableManager = selectableManager;
+		this.toVar=action.getToVar().getName();
     }
 
     @Override
@@ -24,6 +26,7 @@ public class SelectAction extends AbstractAction {
 			variableManager.store(null, VariableManager.THIS, o);
 			return variableManager.evaluate(action.getCondition());
 		});
+		 selectableManager.setSelectableName(this.toVar);
 			 //TODO game.wait
 			 //TODO game.save
 			 //TODO game.refreshViews

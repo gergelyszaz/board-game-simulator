@@ -1,6 +1,7 @@
 package hu.bme.aut.gergelyszaz.BGS.game;
 
 import hu.bme.aut.gergelyszaz.BGS.action.ActionManager;
+import hu.bme.aut.gergelyszaz.BGS.action.impl.SelectAction;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Deck;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Token;
@@ -84,8 +85,8 @@ public class GameImpl implements Controller, Game{
 	@Override
 	public void Step() throws IllegalAccessException {
 		if (waitForInput || gameEnded) return;
-		actionManager.Step();
-		//actionManager.getCurrentAction(); TODO execute action
+		actionManager.step();
+		actionManager.getCurrentAction().Execute();
 	}
 
 	@Override
@@ -122,13 +123,11 @@ public class GameImpl implements Controller, Game{
 				return false;
 
 
-			if (Objects
-				 .equals(actionManager.getCurrentAction().getName(), "SELECT")) {
+			if (actionManager.getCurrentAction() instanceof SelectAction) {
 
 				Object object = idManager.get(selectedID);
-				List<String> variablePath = variableManager.getVariablePath
-					 (actionManager.getCurrentAction().getToVar());
-				variableManager.store(variablePath, object);
+				variableManager.store(null,internalManager.getSelectableManager()
+					 .getSelectableName(), object);
 
 				if (object instanceof Token) {
 					for (Field f : fields) {

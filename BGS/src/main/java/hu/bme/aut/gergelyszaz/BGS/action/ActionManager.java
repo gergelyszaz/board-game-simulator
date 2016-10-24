@@ -7,15 +7,18 @@ import java.util.List;
  */
 public class ActionManager {
 
-	private final List<Action> actions;
-
+	private List<Action> actions;
 	private Action currentAction;
 	private Action nextAction;
 
-	public ActionManager(List<Action> actions){
+	public void setActions(List<Action> actions){
 		this.actions=actions;
+	}
+
+	public ActionManager() {
 		currentAction=null;
 		nextAction=null;
+		actions=null;
 	}
 
 	/**
@@ -24,6 +27,10 @@ public class ActionManager {
 	 * @return
 	 */
 	public boolean step(){
+		if(actions==null||actions.isEmpty()){
+			throw new IllegalAccessError("Action list cannot be empty");
+		}
+
 		if(nextAction!=null){
 			currentAction=nextAction;
 			nextAction=null;
@@ -48,5 +55,7 @@ public class ActionManager {
 		this.nextAction=action;
 	}
 
-
+	public void reset() {
+		currentAction=null;
+	}
 }

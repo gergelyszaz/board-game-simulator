@@ -25,11 +25,16 @@ public class GameFactory {
 	public GameImpl CreateGame(Model model) throws IllegalAccessException {
 
 		VariableManager variableManager = new VariableManager();
-		ActionManager actionManager=new ActionManager(model.getRule().getActions());
+		ActionManager actionManager=new ActionManager();
 		IDManager idManager=new IDManager();
 		StateStore stateStore=new StateStore();
 		SelectableManager selectableManager =new SelectableManager();
 		InternalManager internalManager=new InternalManager(selectableManager);
+
+		ActionFactory actionFactory=new ActionFactory(variableManager,
+			 idManager,actionManager,internalManager);
+		actionManager.setActions(actionFactory.createActionSequence(model
+			 .getRule().getActions()));
 
 		List<Player> players = _setupPlayers(model, variableManager);
 		List<Deck> decks = _setupDecks(model, variableManager);
@@ -58,14 +63,17 @@ public class GameFactory {
 		variableManager.store(null, VariableManager.THIS, player);
 
 		ActionManager startActionManager =
-				new ActionManager(setup.getSetupRule()
-						.getActions());
-		do {
-			ActionFactory actionFactory =
-					new ActionFactory(variableManager, idManager, actionManager,
-							internalManager );
-			actionFactory.createAction(startActionManager.getCurrentAction()).Execute();
-		} while (!startActionManager.Step());
+				new ActionManager();
+		ActionFactory actionFactory =
+			 new ActionFactory(variableManager, idManager, actionManager,
+				  internalManager );
+		startActionManager.setActions(actionFactory.createActionSequence(setup
+			 .getSetupRule().getActions()));
+
+
+		while (!startActionManager.step()){
+			startActionManager.getCurrentAction().Execute();
+		}
 
 		variableManager.store(null, VariableManager.THIS, null);
 	}

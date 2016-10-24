@@ -13,6 +13,7 @@ public class SelectableManager {
 
 	private Set<Object> allObjects=new HashSet<>();
 	private Set<Object> selectableObjects=new HashSet<>();
+	private String selectableName;
 
 	public Set<Object> getSelectableObjects() {
 		return selectableObjects;
@@ -30,5 +31,14 @@ public class SelectableManager {
 	public void remove(Object object) {
 
 		allObjects.remove(object);
+	}
+
+	public void setSelectableName(String selectableName) {
+
+		this.selectableName = selectableName;
+	}
+
+	public String getSelectableName(){
+		return selectableName;
 	}
 }

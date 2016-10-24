@@ -1,8 +1,5 @@
 package hu.bme.aut.gergelyszaz.BGS.action;
 
-import hu.bme.aut.gergelyszaz.bGL.Action;
-import hu.bme.aut.gergelyszaz.bGL.NestedAction;
-import org.eclipse.emf.common.util.BasicEList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,53 +7,61 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by gergely.szaz on 2016. 10. 16..
  */
 public class ActionManagerTest {
 
-	@Test
-	public void step() throws Exception {
+	ActionManager actionManager;
+	List<Action> actions;
+	Action firstAction;
+	Action secondAction;
+
+	@Test(expected = IllegalAccessError.class)
+	public void emptyList() throws Exception {
+
+		ActionManager actionManager = new ActionManager();
+		actionManager.step();
 
 	}
 
 	@Test
-	public void getCurrentAction() throws Exception {
+	public void fullCycle() throws Exception {
 
+		assertEquals(null, actionManager.getCurrentAction());
+		actionManager.step();
+		assertEquals(firstAction, actionManager.getCurrentAction());
+		actionManager.step();
+		assertEquals(secondAction, actionManager.getCurrentAction());
+		actionManager.step();
+		assertEquals(firstAction, actionManager.getCurrentAction());
 	}
 
 	@Test
 	public void setNextAction() throws Exception {
 
+		actionManager.step();
+		assertEquals(firstAction, actionManager.getCurrentAction());
+		actionManager.setNextAction(firstAction);
+		assertEquals(firstAction, actionManager.getCurrentAction());
 	}
 
-	List<Action> actions;
-    Action nestedAction;
-    Action firstAction;
-    Action secondAction;
-    @Before
-    public void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-        firstAction=mock(Action.class);
-        secondAction=mock(Action.class);
-        nestedAction=mock(Action.class);
-        NestedAction nested=mock(NestedAction.class);
-        when(secondAction.getNestedAction()).thenReturn(
-                nested
-        );
-        when(secondAction.getNestedAction().getActions()).thenReturn(
-                new BasicEList<>(Arrays.asList(nestedAction))
-        );
+		firstAction = mock(Action.class);
+		secondAction = mock(Action.class);
 
-        actions=new ArrayList<>(Arrays.asList(
-                firstAction,secondAction
-        ));
+		actions = new ArrayList<>(Arrays.asList(
+			 firstAction, secondAction
+		));
 
-    }
+		actionManager = new ActionManager();
+		actionManager.setActions(actions);
 
-
+	}
 
 }

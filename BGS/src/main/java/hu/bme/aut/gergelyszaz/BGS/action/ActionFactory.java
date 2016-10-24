@@ -39,6 +39,10 @@ public class ActionFactory {
 			returnActions.addAll(_createActionSequence(action));
 		}
 
+		if(actions.size()==0){
+			returnActions.add(new NopAction());
+		}
+
 		return returnActions;
 	}
 
@@ -61,7 +65,7 @@ public class ActionFactory {
 			Action nopAction=new NopAction();
 			returnActions.add(nopAction);
 			((ConditionalAction)newAction).setSkipAction(nopAction);
-			
+
 		}
 
 		return returnActions;
