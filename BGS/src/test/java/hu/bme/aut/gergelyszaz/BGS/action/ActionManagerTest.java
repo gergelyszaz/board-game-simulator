@@ -1,5 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.action;
 
+import hu.bme.aut.gergelyszaz.bGL.Action;
 import hu.bme.aut.gergelyszaz.bGL.NestedAction;
 import org.eclipse.emf.common.util.BasicEList;
 import org.junit.Before;
@@ -9,17 +10,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import hu.bme.aut.gergelyszaz.bGL.Action;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by gergely.szaz on 2016. 10. 16..
  */
 public class ActionManagerTest {
 
-    List<Action> actions;
+	@Test
+	public void step() throws Exception {
+
+	}
+
+	@Test
+	public void getCurrentAction() throws Exception {
+
+	}
+
+	@Test
+	public void setNextAction() throws Exception {
+
+	}
+
+	List<Action> actions;
     Action nestedAction;
     Action firstAction;
     Action secondAction;
@@ -43,67 +57,6 @@ public class ActionManagerTest {
 
     }
 
-    @Test
-    public void getCurrentActionEmpty() throws Exception {
-        ActionManager actionManager=new ActionManager(new ArrayList<>());
-        Action action=actionManager.getCurrentAction();
-        assertEquals(null,action);
-    }
 
-    @Test
-    public void getCurrentAction() throws Exception {
-        ActionManager actionManager=new ActionManager(actions);
-        Action action=actionManager.getCurrentAction();
-        assertEquals(firstAction,action);
-    }
-
-    @Test
-    public void step() throws Exception {
-        ActionManager actionManager=new ActionManager(actions);
-        actionManager.Step();
-        Action action=actionManager.getCurrentAction();
-        assertEquals(secondAction,action);
-    }
-
-    @Test
-    public void reset() throws Exception {
-        ActionManager actionManager=new ActionManager(actions);
-        actionManager.Step();
-        actionManager.reset();
-        Action action=actionManager.getCurrentAction();
-        assertEquals(firstAction,action);
-    }
-
-    @Test
-    public void stepIntoNested() throws Exception {
-        ActionManager actionManager=new ActionManager(actions);
-        actionManager.Step();
-        actionManager.stepIntoNested();
-
-        //Does not actually step in
-        Action action=actionManager.getCurrentAction();
-        assertEquals(secondAction,action);
-
-        //Only at the next step
-        actionManager.Step();
-        action=actionManager.getCurrentAction();
-        assertEquals(nestedAction,action);
-
-        //No more nested actions, step out
-        actionManager.Step();
-        action=actionManager.getCurrentAction();
-        assertEquals(secondAction,action);
-    }
-
-    @Test
-    public void fullTurn()throws Exception {
-        ActionManager actionManager=new ActionManager(actions);
-        for(Action ignored :actions){
-            actionManager.Step();
-        }
-        actionManager.Step();
-        Action action=actionManager.getCurrentAction();
-        assertEquals(secondAction,action);
-    }
 
 }

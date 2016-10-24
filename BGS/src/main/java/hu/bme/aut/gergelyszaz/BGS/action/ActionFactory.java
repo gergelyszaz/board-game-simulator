@@ -7,6 +7,7 @@ import hu.bme.aut.gergelyszaz.BGS.state.IDManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by gergely.szaz on 2016. 10. 16..
@@ -18,11 +19,14 @@ public class ActionFactory {
 	private final ActionManager actionManager;
 	private final InternalManager internalManager;
 
-	public ActionFactory(VariableManager variableManager, IDManager idManager, ActionManager actionManager, InternalManager internalManager) {
+	public ActionFactory(VariableManager variableManager, IDManager idManager,
+								ActionManager actionManager,
+								InternalManager internalManager) {
+
 		this.variableManager = variableManager;
 		this.idManager = idManager;
 		this.actionManager = actionManager;
-		this.internalManager=internalManager;
+		this.internalManager = internalManager;
 	}
 
 	public List<Action> createActionSequence(
@@ -32,8 +36,32 @@ public class ActionFactory {
 		List<Action> returnActions = new ArrayList<>();
 
 		for (hu.bme.aut.gergelyszaz.bGL.Action action : actions) {
-			returnActions.add(createAction(action));
-			//TODO nestedActions in IF and WHILE
+			returnActions.addAll(_createActionSequence(action));
+		}
+
+		return returnActions;
+	}
+
+	private List<Action> _createActionSequence(hu.bme.aut.gergelyszaz.bGL
+																  .Action action)
+		 throws IllegalAccessException {
+
+		List<Action> returnActions = new ArrayList<>();
+		Action newAction = createAction(action);
+		returnActions.add(newAction);
+
+		if (action.getNestedAction() != null) {
+			returnActions.addAll(
+				 createActionSequence(action.getNestedAction().getActions()));
+
+			if (Objects.equals(action.getName(), "WHILE")) {
+				returnActions.add(new GotoAction(newAction, actionManager));
+			}
+
+			Action nopAction=new NopAction();
+			returnActions.add(nopAction);
+			((ConditionalAction)newAction).setSkipAction(nopAction);
+			
 		}
 
 		return returnActions;
@@ -51,7 +79,8 @@ public class ActionFactory {
 						  internalManager.getSelectableManager());
 				break;
 			case "SPAWN":
-				returnAction = new SpawnAction(variableManager, action, internalManager);
+				returnAction =
+					 new SpawnAction(variableManager, action, internalManager);
 				break;
 			case "MOVE":
 				returnAction = new MoveAction(variableManager, action);
@@ -60,7 +89,8 @@ public class ActionFactory {
 				returnAction = new ShuffleAction(variableManager, action);
 				break;
 			case "DESTROY":
-				returnAction = new DestroyAction(variableManager, action, internalManager);
+				returnAction =
+					 new DestroyAction(variableManager, action, internalManager);
 				break;
 			case "WIN":
 				returnAction = new WinAction(variableManager, internalManager);
@@ -69,7 +99,8 @@ public class ActionFactory {
 				returnAction = new LoseAction(variableManager, internalManager);
 				break;
 			case "IF":
-				returnAction = new IfAction(variableManager, action, actionManager);
+				returnAction = new IfAction(variableManager, action,
+					 actionManager);
 				break;
 			case "WHILE":
 				returnAction =
@@ -77,7 +108,7 @@ public class ActionFactory {
 				break;
 			case "END TURN":
 				returnAction =
-					 new EndTurnAction(variableManager, actionManager,null);
+					 new EndTurnAction(variableManager, actionManager, null);
 				break;
 			case "ROLL":
 				returnAction = new RollAction(variableManager, action);
