@@ -64,44 +64,44 @@ public class ActionFactory {
 		Action returnAction;
 
 		switch (action.getName()) {
-			case "SELECT":
+			case SELECT:
 				returnAction =
 					 new SelectAction(variableManager, action,
 						  internalManager.getSelectableManager());
 				break;
-			case "SPAWN":
+			case SPAWN:
 				returnAction =
 					 new SpawnAction(variableManager, action, internalManager);
 				break;
-			case "MOVE":
+			case MOVE:
 				returnAction = new MoveAction(variableManager, action);
 				break;
-			case "SHUFFLE":
+			case SHUFFLE:
 				returnAction = new ShuffleAction(variableManager, action);
 				break;
-			case "DESTROY":
+			case DESTROY:
 				returnAction =
 					 new DestroyAction(variableManager, action, internalManager);
 				break;
-			case "WIN":
+			case WIN:
 				returnAction = new WinAction(variableManager, internalManager);
 				break;
-			case "LOSE":
+			case LOSE:
 				returnAction = new LoseAction(variableManager, internalManager);
 				break;
-			case "IF":
+			case IF:
 				returnAction = new IfAction(variableManager, action,
 					 actionManager);
 				break;
-			case "WHILE":
+			case WHILE:
 				returnAction =
 					 new WhileAction(variableManager, action, actionManager);
 				break;
-			case "END TURN":
+			case ENDTURN:
 				returnAction =
 					 new EndTurnAction(variableManager, actionManager, null);
 				break;
-			case "ROLL":
+			case ROLL:
 				returnAction = new RollAction(variableManager, action);
 				break;
 			default:
@@ -124,7 +124,7 @@ public class ActionFactory {
 			returnActions.addAll(
 				 createActionSequence(action.getNestedAction().getActions()));
 
-			if (Objects.equals(action.getName(), "WHILE")) {
+			if (Objects.equals(action.getName(), WHILE)) {
 				returnActions.add(new GotoAction(newAction, actionManager));
 			}
 
