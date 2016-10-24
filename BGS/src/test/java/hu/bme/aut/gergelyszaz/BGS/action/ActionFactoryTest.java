@@ -132,4 +132,12 @@ public class ActionFactoryTest {
 		assertTrue(actions.get(1) instanceof AssignmentAction);
 		assertTrue(actions.get(2) instanceof NopAction);
 	}
+
+	@Test
+	public void createEmptySequnce() throws Exception {
+		List<Action> actions=actionFactory.createActionSequence(Arrays.asList
+			 ());
+		assertTrue(actions.size()==1);
+		assertTrue(actions.get(0) instanceof NopAction);
+	}
 }
