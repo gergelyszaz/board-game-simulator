@@ -14,6 +14,18 @@ import java.util.Objects;
  */
 public class ActionFactory {
 
+	public static final String DESTROY = "DESTROY";
+	public static final String IF = "IF";
+	public static final String WHILE = "WHILE";
+	public static final String ENDTURN = "END TURN";
+	public static final String MOVE = "MOVE";
+	public static final String LOSE = "LOSE";
+	public static final String WIN = "WIN";
+	public static final String ROLL = "ROLL";
+	public static final String SELECT = "SELECT";
+	public static final String SHUFFLE = "SHUFFLE";
+	public static final String SPAWN = "SPAWN";
+
 	private final VariableManager variableManager;
 	private final IDManager idManager;
 	private final ActionManager actionManager;
@@ -39,33 +51,8 @@ public class ActionFactory {
 			returnActions.addAll(_createActionSequence(action));
 		}
 
-		if(actions.size()==0){
+		if (actions.size() == 0) {
 			returnActions.add(new NopAction());
-		}
-
-		return returnActions;
-	}
-
-	private List<Action> _createActionSequence(hu.bme.aut.gergelyszaz.bGL
-																  .Action action)
-		 throws IllegalAccessException {
-
-		List<Action> returnActions = new ArrayList<>();
-		Action newAction = createAction(action);
-		returnActions.add(newAction);
-
-		if (action.getNestedAction() != null) {
-			returnActions.addAll(
-				 createActionSequence(action.getNestedAction().getActions()));
-
-			if (Objects.equals(action.getName(), "WHILE")) {
-				returnActions.add(new GotoAction(newAction, actionManager));
-			}
-
-			Action nopAction=new NopAction();
-			returnActions.add(nopAction);
-			((ConditionalAction)newAction).setSkipAction(nopAction);
-
 		}
 
 		return returnActions;
@@ -123,5 +110,30 @@ public class ActionFactory {
 		}
 		return returnAction;
 
+	}
+
+	private List<Action> _createActionSequence(hu.bme.aut.gergelyszaz.bGL
+																  .Action action)
+		 throws IllegalAccessException {
+
+		List<Action> returnActions = new ArrayList<>();
+		Action newAction = createAction(action);
+		returnActions.add(newAction);
+
+		if (action.getNestedAction() != null) {
+			returnActions.addAll(
+				 createActionSequence(action.getNestedAction().getActions()));
+
+			if (Objects.equals(action.getName(), "WHILE")) {
+				returnActions.add(new GotoAction(newAction, actionManager));
+			}
+
+			Action nopAction = new NopAction();
+			returnActions.add(nopAction);
+			((ConditionalAction) newAction).setSkipAction(nopAction);
+
+		}
+
+		return returnActions;
 	}
 }
