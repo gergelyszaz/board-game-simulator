@@ -22,6 +22,8 @@ public class SelectableManager {
 
 	public void setSelectableObjects(Predicate<? super Object> predicate, String toVar) {
 		selectableObjects=allObjects.stream().filter(predicate).collect(Collectors.toSet());
+		if(selectableObjects.isEmpty())
+			throw new RuntimeException("Nothing selectable");
 		selectableName=toVar;
 		isSelectionDone=false;
 	}

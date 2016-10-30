@@ -17,7 +17,7 @@ import java.util.List;
 public class ModelManager {
 	private static XtextResourceSet resourceSet;
 
-	static {
+	public ModelManager() {
 		new org.eclipse.emf.mwe.utils.StandaloneSetup().setPlatformUri("../");
 		Injector injector = new BGLStandaloneSetup().createInjectorAndDoEMFRegistration();
 		resourceSet = injector.getInstance(XtextResourceSet.class);
@@ -35,7 +35,7 @@ public class ModelManager {
 		return availableModels;
 	}
 
-	public void LoadModel(String gameString) throws Exception {
+	public Model LoadModel(String gameString) throws Exception {
 		//TODO refactor the resource path to make sense
 		Resource resource = resourceSet.createResource(URI.createURI("dummy:/" + numberOfGames++ + ".bgl"));
 		InputStream in = new ByteArrayInputStream(gameString.getBytes());
@@ -44,11 +44,12 @@ public class ModelManager {
 		if (models.contains(model.getName()))
 			throw new Exception("Language with this name already loaded.");
 		models.put(model.getName(), model);
+		return model;
 	}
 
 	public Model Get(String name) throws Exception {
 		Model m = models.get(name);
-		if (m == null) throw new Exception("GameImpl " + name + " not found!");
+		if (m == null) throw new Exception("Game " + name + " not found!");
 		return m;
 
 	}

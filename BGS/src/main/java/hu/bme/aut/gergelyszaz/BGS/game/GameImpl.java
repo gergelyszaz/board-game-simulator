@@ -23,17 +23,14 @@ import java.util.Set;
 public class GameImpl implements Controller, Game {
 
     String name;
-
     VariableManager variableManager;
     ActionManager actionManager;
     IDManager idManager;
     StateStore stateStore;
     InternalManager internalManager;
-
     boolean gameEnded = false;
     Set<View> views = new HashSet<>();
     private EList<Field> fields;
-
     public GameImpl(VariableManager variableManager, ActionManager actionManager,
                     IDManager idManager, StateStore stateStore,
                     InternalManager internalManager) {
@@ -43,6 +40,10 @@ public class GameImpl implements Controller, Game {
         this.idManager = idManager;
         this.stateStore = stateStore;
 
+    }
+
+    public VariableManager getVariableManager() {
+        return variableManager;
     }
 
     @Override

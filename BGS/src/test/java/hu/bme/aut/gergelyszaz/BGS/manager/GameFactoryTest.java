@@ -1,0 +1,61 @@
+package hu.bme.aut.gergelyszaz.BGS.manager;
+
+import hu.bme.aut.gergelyszaz.BGS.game.Game;
+import hu.bme.aut.gergelyszaz.BGS.game.GameImpl;
+import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
+import hu.bme.aut.gergelyszaz.bGL.Model;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Map;
+
+import static org.junit.Assert.*;
+
+/**
+ * Created by gergely.szaz on 2016. 10. 30..
+ */
+public class GameFactoryTest {
+    GameFactory gameFactory;
+    ModelManager modelManager;
+    String rules="GAME TestGame\n" +
+            "PLAYERS 2{" +
+            "variable=10" +
+            " } \n" +
+            "BOARD {\n" +
+            "    x=1\n" +
+            "\tF1{tokenCount=2}\n" +
+            "}\n" +
+            "TOKEN token{}\n" +
+            "RULES {\n" +
+
+            "}";
+
+    @Before
+    public void setUp() throws Exception {
+        gameFactory=new GameFactory();
+        modelManager=new ModelManager();
+
+    }
+
+    @Test
+    public void PlayerCountTest() throws Exception{
+        Model model=modelManager.LoadModel("GAME PlayerCountTest PLAYERS 4 {} BOARD { RULES {}}");
+        GameImpl game=gameFactory.CreateGame(model);
+        VariableManager variableManager=game.getVariableManager();
+
+        Map variables=variableManager.getVariables(null);
+        assertEquals(2,variables.size());
+    }
+
+    @Test
+    public void PlayerVariableTest() throws Exception{
+
+        Model model=modelManager.LoadModel("GAME PlayerVariableTest PLAYERS 4 {a=5} BOARD { RULES {}}");
+        GameImpl game=gameFactory.CreateGame(model);
+        VariableManager variableManager=game.getVariableManager();
+
+        Map variables=variableManager.getVariables(null);
+        assertEquals(6,variables.size());
+        assertEquals(5,variableManager.getReference(variableManager.getReference(null,"currentPlayer"),"a"));
+    }
+}

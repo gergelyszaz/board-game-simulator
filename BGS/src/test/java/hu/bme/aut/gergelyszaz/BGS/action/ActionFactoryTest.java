@@ -39,7 +39,7 @@ public class ActionFactoryTest {
 
 
 		assingmentAction = mock(hu.bme.aut.gergelyszaz.bGL.Action.class);
-		when(assingmentAction.getName()).thenReturn("");
+		when(assingmentAction.getName()).thenReturn(null);
 
 		NestedAction nestedAction=mock(NestedAction.class);
 		when(nestedAction.getActions()).thenReturn(new BasicEList(Arrays.asList

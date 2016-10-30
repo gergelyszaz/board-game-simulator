@@ -115,7 +115,7 @@ public class GameFactory {
 
 	private List<Deck> _setupDecks(Model model, VariableManager variableManager)
 		 throws IllegalAccessException {
-
+		if(model.getBoard().getDecks()==null) return new ArrayList<>();
 		List<Deck> decks = new ArrayList<>();
 
 		for (hu.bme.aut.gergelyszaz.bGL.Deck deckModel : model.getBoard()
