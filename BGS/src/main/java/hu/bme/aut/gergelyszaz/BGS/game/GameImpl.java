@@ -31,7 +31,6 @@ public class GameImpl implements Controller, Game {
     InternalManager internalManager;
 
     boolean gameEnded = false;
-    volatile boolean waitForInput = false;
     Set<View> views = new HashSet<>();
     private EList<Field> fields;
 
@@ -77,11 +76,13 @@ public class GameImpl implements Controller, Game {
         internalManager.getPlayers().addAll(players);
         internalManager.getDecks().addAll(decks);
 
+        internalManager.setCurrentPlayer(players.get(0),variableManager);
+
     }
 
     @Override
     public void Step() throws IllegalAccessException {
-        if (waitForInput || gameEnded) return;
+        if (!internalManager.getSelectableManager().isSelectionDone() || gameEnded) return;
         actionManager.step();
         actionManager.getCurrentAction().Execute();
     }
@@ -136,9 +137,7 @@ public class GameImpl implements Controller, Game {
                 _setupDistance(((Token) object).getField(), 0);
             }
 
-
-            //Probably would be better with synchronization
-            waitForInput = false;
+            internalManager.getSelectableManager().finishSelection();
             return true;
         } catch (IllegalAccessException e) {
             System.out.println(variableManager.getVariables());

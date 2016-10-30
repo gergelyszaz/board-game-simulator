@@ -8,6 +8,7 @@ import java.util.Set;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by mad on 22/10/2016.
@@ -32,10 +33,11 @@ public class SelectableManagerTest {
     public void setSelectableObjects() throws Exception {
         Object object=new Object();
         selectableManager.add(object);
-        selectableManager.setSelectableObjects(o -> true);
+        selectableManager.setSelectableObjects(o -> true, "name");
         Set<Object> selectables=selectableManager.getSelectableObjects();
         assertTrue(selectables.size()==1);
         assertTrue(selectables.contains(object));
+        assertFalse(selectableManager.isSelectionDone());
     }
 
     @Test

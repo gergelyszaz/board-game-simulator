@@ -14,13 +14,16 @@ public class SelectableManager {
 	private Set<Object> allObjects=new HashSet<>();
 	private Set<Object> selectableObjects=new HashSet<>();
 	private String selectableName="";
+	private boolean isSelectionDone=true;
 
 	public Set<Object> getSelectableObjects() {
 		return selectableObjects;
 	}
 
-	public void setSelectableObjects(Predicate<? super Object> predicate) {
+	public void setSelectableObjects(Predicate<? super Object> predicate, String toVar) {
 		selectableObjects=allObjects.stream().filter(predicate).collect(Collectors.toSet());
+		selectableName=toVar;
+		isSelectionDone=false;
 	}
 
 	public void add(Object object) {
@@ -33,12 +36,15 @@ public class SelectableManager {
 		allObjects.remove(object);
 	}
 
-	public void setSelectableName(String selectableName) {
-
-		this.selectableName = selectableName;
-	}
-
 	public String getSelectableName(){
 		return selectableName;
+	}
+
+	public boolean isSelectionDone() {
+		return isSelectionDone;
+	}
+
+	public void finishSelection() {
+		isSelectionDone=true;
 	}
 }

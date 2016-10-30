@@ -25,8 +25,7 @@ public class SelectAction extends AbstractAction {
 		selectableManager.setSelectableObjects(o -> {
 			variableManager.store(null, VariableManager.THIS, o);
 			return variableManager.evaluate(action.getCondition());
-		});
-		 selectableManager.setSelectableName(this.toVar);
+		},this.toVar);
 			 //TODO game.wait
 			 //TODO game.save
 			 //TODO game.refreshViews

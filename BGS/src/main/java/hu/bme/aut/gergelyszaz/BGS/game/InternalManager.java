@@ -5,6 +5,8 @@ import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Token;
 import hu.bme.aut.gergelyszaz.bGL.Field;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,13 +15,13 @@ import java.util.Set;
  */
 public class InternalManager {
 
-    private List<Player> players;
-    private List<Field> fields;
-    private List<Token> tokens;
-    private List<Deck> decks;
-    private Set<Integer> selectables;
-    private List<Integer> winners;
-    private List<Integer> losers;
+    private List<Player> players=new ArrayList<>();
+    private List<Field> fields=new ArrayList<>();
+    private List<Token> tokens=new ArrayList<>();
+    private List<Deck> decks=new ArrayList<>();
+    private Set<Integer> selectables=new HashSet<>();
+    private List<Integer> winners=new ArrayList<>();
+    private List<Integer> losers=new ArrayList<>();
     private SelectableManager selectableManager;
     private Player currentPlayer;
 
@@ -73,4 +75,8 @@ public class InternalManager {
         return currentPlayer;
     }
 
+    public void setCurrentPlayer(Player currentPlayer, VariableManager variableManager) {
+        this.currentPlayer=currentPlayer;
+        variableManager.store(null,"currentPlayer",currentPlayer);
+    }
 }
