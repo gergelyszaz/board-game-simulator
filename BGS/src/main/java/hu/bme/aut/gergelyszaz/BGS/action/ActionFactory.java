@@ -25,6 +25,7 @@ public class ActionFactory {
 	public static final String SELECT = "SELECT";
 	public static final String SHUFFLE = "SHUFFLE";
 	public static final String SPAWN = "SPAWN";
+	public static final String ASSIGNMENT = "ASSIGNMENT";
 
 	private final VariableManager variableManager;
 	private final IDManager idManager;
@@ -61,9 +62,11 @@ public class ActionFactory {
 	public Action createAction(hu.bme.aut.gergelyszaz.bGL.Action action)
 		 throws IllegalAccessException {
 
-		Action returnAction;
-
-		switch (action.getName()) {
+		Action returnAction = null;
+		String actionName=action.getName();
+		if(actionName==null)
+			actionName=ASSIGNMENT;
+		switch (actionName) {
 			case SELECT:
 				returnAction =
 					 new SelectAction(variableManager, action,
@@ -104,8 +107,10 @@ public class ActionFactory {
 			case ROLL:
 				returnAction = new RollAction(variableManager, action);
 				break;
-			default:
+			case ASSIGNMENT:
 				returnAction = new AssignmentAction(variableManager, action);
+				break;
+			default:
 				break;
 		}
 		return returnAction;

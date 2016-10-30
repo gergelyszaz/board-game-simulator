@@ -3,12 +3,7 @@ GAME Mills
 PLAYERS 2 {
 	tokensPlaced=0
 	tokenCount=0
-	PLAYER 1 SETUP{
-		this.maxTokenCount=5
-	}
-	PLAYER 2 SETUP{
-		this.maxTokenCount=5
-	}
+	maxTokenCount=5
 }
 
 

@@ -51,6 +51,7 @@ public class BGSServer implements View {
 					return ret.put(STATUS, "joined").toString();
 				} catch (Exception e) {
 					logger.info(e.toString());
+					e.printStackTrace();
 					ret.put("message", e.getMessage().toString());
 					return ret.put(STATUS, "error").toString();
 				}
