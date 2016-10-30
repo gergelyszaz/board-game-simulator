@@ -1,7 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.action.impl;
 
 import hu.bme.aut.gergelyszaz.BGS.action.ActionManager;
-import hu.bme.aut.gergelyszaz.BGS.action.ConditionalAction;
 import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
 import hu.bme.aut.gergelyszaz.bGL.Action;
 
@@ -10,18 +9,23 @@ import hu.bme.aut.gergelyszaz.bGL.Action;
  */
 public class IfAction extends ConditionalAction {
 
-	private final ActionManager actionManager;
+    private final ActionManager actionManager;
 
-	public IfAction(VariableManager variableManager, Action action,
-						 ActionManager actionManager) {
+    public IfAction(VariableManager variableManager, Action action,
+                    ActionManager actionManager) {
 
-		super(variableManager, action, actionManager);
-		this.actionManager = actionManager;
-	}
+        super(variableManager, action, actionManager);
+        this.actionManager = actionManager;
+    }
 
-	@Override
-	public void Execute() throws IllegalAccessException {
+    @Override
+    public void Execute() throws IllegalAccessException {
 
-		super.Execute();
-	}
+        super.Execute();
+    }
+
+    @Override
+    public String toString() {
+        return "IF " + super.toString();
+    }
 }

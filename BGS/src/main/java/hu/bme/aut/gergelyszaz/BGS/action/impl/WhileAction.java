@@ -1,7 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.action.impl;
 
 import hu.bme.aut.gergelyszaz.BGS.action.ActionManager;
-import hu.bme.aut.gergelyszaz.BGS.action.ConditionalAction;
 import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
 import hu.bme.aut.gergelyszaz.bGL.Action;
 

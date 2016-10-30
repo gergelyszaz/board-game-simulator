@@ -76,7 +76,7 @@ public class GameImpl implements Controller, Game {
         internalManager.getPlayers().addAll(players);
         internalManager.getDecks().addAll(decks);
 
-        internalManager.setCurrentPlayer(players.get(0),variableManager);
+        internalManager.setCurrentPlayer(players.get(0), variableManager);
 
     }
 
@@ -84,6 +84,7 @@ public class GameImpl implements Controller, Game {
     public void Step() throws IllegalAccessException {
         if (!internalManager.getSelectableManager().isSelectionDone() || gameEnded) return;
         actionManager.step();
+        System.out.println(actionManager.getCurrentAction().toString());
         actionManager.getCurrentAction().Execute();
         _saveCurrentState();
         views.forEach(View::Refresh);
@@ -121,7 +122,7 @@ public class GameImpl implements Controller, Game {
 
             if (!internalManager.getSelectableManager().getSelectableObjects().contains(idManager.get(selectedID)))
                 return false;
-            
+
             if (!(actionManager.getCurrentAction() instanceof SelectAction)) {
                 return false;
             }

@@ -7,11 +7,16 @@ import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
  */
 public abstract class AbstractAction implements hu.bme.aut.gergelyszaz.BGS.action.Action {
 
-	protected final VariableManager variableManager;
-	protected hu.bme.aut.gergelyszaz.bGL.Action action;
+    protected final VariableManager variableManager;
+    protected hu.bme.aut.gergelyszaz.bGL.Action action;
 
-    public AbstractAction(VariableManager variableManager, hu.bme.aut.gergelyszaz.bGL.Action action){
-		this.variableManager=variableManager;
-		this.action=action;
-	}
+    public AbstractAction(VariableManager variableManager, hu.bme.aut.gergelyszaz.bGL.Action action) {
+        this.variableManager = variableManager;
+        this.action = action;
+    }
+
+    @Override
+    public String toString() {
+        return action.toString();
+    }
 }
