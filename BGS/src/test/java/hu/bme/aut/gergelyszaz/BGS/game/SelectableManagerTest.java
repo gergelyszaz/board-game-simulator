@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.util.Set;
 
 import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by mad on 22/10/2016.
@@ -49,5 +51,8 @@ public class SelectableManagerTest {
         selectableManager.remove(object);
     }
 
-
+    @Test
+    public void getSelectableName()throws Exception {
+        assertEquals("",selectableManager.getSelectableName());
+    }
 }

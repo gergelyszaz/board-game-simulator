@@ -13,7 +13,7 @@ public class SelectableManager {
 
 	private Set<Object> allObjects=new HashSet<>();
 	private Set<Object> selectableObjects=new HashSet<>();
-	private String selectableName;
+	private String selectableName="";
 
 	public Set<Object> getSelectableObjects() {
 		return selectableObjects;

@@ -71,13 +71,11 @@ public class GameImpl implements Controller, Game {
     }
 
     public void Init(Model gameModel, List<Player> players, List<Deck> decks) {
-        SelectableManager selectableManager = internalManager.getSelectableManager();
 
         name = gameModel.getName();
         fields = gameModel.getBoard().getFields();
         internalManager.getPlayers().addAll(players);
         internalManager.getDecks().addAll(decks);
-
 
     }
 
@@ -120,23 +118,24 @@ public class GameImpl implements Controller, Game {
 
             if (!internalManager.getSelectableManager().getSelectableObjects().contains(idManager.get(selectedID)))
                 return false;
-
-
-            if (actionManager.getCurrentAction() instanceof SelectAction) {
-
-                Object object = idManager.get(selectedID);
-                variableManager.store(null, internalManager.getSelectableManager()
-                        .getSelectableName(), object);
-
-                if (object instanceof Token) {
-                    for (Field f : fields) {
-                        variableManager
-                                .store(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN,
-                                        -1);
-                    }
-                    _setupDistance(((Token) object).getField(), 0);
-                }
+            
+            if (!(actionManager.getCurrentAction() instanceof SelectAction)) {
+                return false;
             }
+
+            Object object = idManager.get(selectedID);
+            variableManager.store(null, internalManager.getSelectableManager()
+                    .getSelectableName(), object);
+
+            if (object instanceof Token) {
+                for (Field f : fields) {
+                    variableManager
+                            .store(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN,
+                                    -1);
+                }
+                _setupDistance(((Token) object).getField(), 0);
+            }
+
 
             //Probably would be better with synchronization
             waitForInput = false;
