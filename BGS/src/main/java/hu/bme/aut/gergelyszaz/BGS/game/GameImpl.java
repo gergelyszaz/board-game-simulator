@@ -85,6 +85,8 @@ public class GameImpl implements Controller, Game {
         if (!internalManager.getSelectableManager().isSelectionDone() || gameEnded) return;
         actionManager.step();
         actionManager.getCurrentAction().Execute();
+        _saveCurrentState();
+        views.forEach(View::Refresh);
     }
 
     @Override

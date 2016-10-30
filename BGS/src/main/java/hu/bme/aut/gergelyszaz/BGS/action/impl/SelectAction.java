@@ -26,9 +26,5 @@ public class SelectAction extends AbstractAction {
 			variableManager.store(null, VariableManager.THIS, o);
 			return variableManager.evaluate(action.getCondition());
 		},this.toVar);
-			 //TODO game.wait
-			 //TODO game.save
-			 //TODO game.refreshViews
-
     }
 }
