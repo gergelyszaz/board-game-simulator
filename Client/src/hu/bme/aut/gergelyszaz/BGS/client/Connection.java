@@ -3,7 +3,7 @@ package hu.bme.aut.gergelyszaz.BGS.client;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import hu.bme.aut.gergelyszaz.BGS.state.GameState;
-import hu.bme.aut.gergelyszaz.BGS.state.validator.GameStateValidator;
+import hu.bme.aut.gergelyszaz.BGS.state.util.GameStateValidator;
 import org.glassfish.tyrus.client.ClientManager;
 import org.json.JSONObject;
 
