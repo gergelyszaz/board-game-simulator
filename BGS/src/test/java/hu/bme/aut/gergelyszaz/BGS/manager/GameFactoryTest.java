@@ -39,23 +39,38 @@ public class GameFactoryTest {
 
     @Test
     public void PlayerCountTest() throws Exception{
-        Model model=modelManager.LoadModel("GAME PlayerCountTest PLAYERS 4 {} BOARD { RULES {}}");
+        Model model=modelManager.LoadModel("GAME PlayerCountTest PLAYERS 1 {} BOARD { RULES {}}");
         GameImpl game=gameFactory.CreateGame(model);
         VariableManager variableManager=game.getVariableManager();
 
         Map variables=variableManager.getVariables(null);
         assertEquals(2,variables.size());
+        assertTrue(variableManager.getVariables(null).containsKey("currentPlayer"));
     }
 
     @Test
-    public void PlayerVariableTest() throws Exception{
+    public void CommonPlayerVariableTest() throws Exception{
 
-        Model model=modelManager.LoadModel("GAME PlayerVariableTest PLAYERS 4 {a=5} BOARD { RULES {}}");
+        Model model=modelManager.LoadModel("GAME PlayerVariableTest PLAYERS 1 {a=5 b=9} BOARD { RULES {}}");
         GameImpl game=gameFactory.CreateGame(model);
         VariableManager variableManager=game.getVariableManager();
 
         Map variables=variableManager.getVariables(null);
-        assertEquals(6,variables.size());
+        assertEquals(2,variables.size());
         assertEquals(5,variableManager.getReference(variableManager.getReference(null,"currentPlayer"),"a"));
+        assertEquals(9,variableManager.getReference(variableManager.getReference(null,"currentPlayer"),"b"));
+    }
+
+    @Test
+    public void UniquePlayerVariableTest() throws Exception{
+
+        Model model=modelManager.LoadModel("GAME PlayerVariableTest PLAYERS 4 {a=5 b=9  } BOARD { RULES {}}");
+        GameImpl game=gameFactory.CreateGame(model);
+        VariableManager variableManager=game.getVariableManager();
+
+        Map variables=variableManager.getVariables(null);
+        assertEquals(2,variables.size());
+        assertEquals(5,variableManager.getReference(variableManager.getReference(null,"currentPlayer"),"a"));
+        assertEquals(9,variableManager.getReference(variableManager.getReference(null,"currentPlayer"),"b"));
     }
 }
