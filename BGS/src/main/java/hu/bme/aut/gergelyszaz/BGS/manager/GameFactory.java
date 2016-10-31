@@ -38,13 +38,13 @@ public class GameFactory {
 
 		List<Player> players = _setupPlayers(model, variableManager);
 		List<Deck> decks = _setupDecks(model, variableManager);
+		List<Field> fields = _setupFields(model, variableManager);
 
 		_setupPlayerDecks(model, variableManager, players, decks);
 		_setupGlobalVariables(model, variableManager);
-		_setupFields(model, variableManager);
 		_setupPlayersStartRules(model,variableManager,players,actionManager,internalManager,idManager);
 
-		model.getBoard().getFields().forEach(field ->selectableManager.add(field));
+		fields.forEach(field ->selectableManager.add(field));
 		decks.forEach(deck -> deck.cards.forEach(card -> selectableManager.add(card)));
 		players.forEach(player -> selectableManager.add(player));
 
@@ -187,18 +187,25 @@ public class GameFactory {
 		}
 	}
 
-	private void _setupFields(Model model, VariableManager variableManager)
+	private List<Field> _setupFields(Model model, VariableManager variableManager)
 		 throws IllegalAccessException {
 
-		for (Field fieldModel : model.getBoard().getFields()) {
-			variableManager.store(fieldModel, "tokenCount", 0);
-			for (SimpleAssignment v : fieldModel.getVariables()) {
+		List<Field> fields=model.getBoard().getFields();
+
+		for(Field field:fields){
+			variableManager.store(null,field.getName(),field);
+		}
+
+		for (Field field: fields) {
+			variableManager.store(field, "tokenCount", 0);
+			for (SimpleAssignment v : field.getVariables()) {
 				String variableName = v.getName();
 				Object reference = variableManager.getReference(v
 					 .getAttribute());
-				variableManager.store(fieldModel, variableName, reference);
+				variableManager.store(field, variableName, reference);
 			}
 		}
+		return fields;
 	}
 
 }

@@ -63,17 +63,37 @@ public class GameFactoryTest {
 	public void UniquePlayerVariableTest() throws Exception {
 
 		Model model = modelManager.LoadModel(
-				"GAME PlayerVariableTest PLAYERS 4 {a=5 b=9 } BOARD { RULES {}}");
+				"GAME PlayerVariableTest PLAYERS 4 { a=5 PLAYER 1 { a=6 b=7 } } " +
+						"BOARD { " +
+						"RULES " +
+						"{}}");
 		GameImpl game = gameFactory.CreateGame(model);
 		VariableManager variableManager = game.getVariableManager();
 
 		Map variables = variableManager.getVariables(null);
-		assertEquals(2, variables.size());
-		assertEquals(5,
+		assertEquals(6,
 				variableManager.getReference(variableManager.getReference(null,
 						"currentPlayer"), "a"));
-		assertEquals(9,
+		assertEquals(7,
 				variableManager.getReference(variableManager.getReference(null,
 						"currentPlayer"), "b"));
+	}
+
+	@Test
+	public void FieldTest() throws Exception {
+
+		Model model = modelManager.LoadModel(
+				"GAME FieldTest PLAYERS 1 {} " +
+						"BOARD { " +
+						"F1 { a=F2 }" +
+						"F2 { a=F1 }" +
+						"RULES {} }");
+		GameImpl game = gameFactory.CreateGame(model);
+		VariableManager variableManager = game.getVariableManager();
+
+		Object F1=variableManager.getReference(null,"F1");
+		Object F2=variableManager.getReference(null,"F2");
+		assertEquals(F2,variableManager.getReference(F1,"a"));
+		assertEquals(F1,variableManager.getReference(F2,"a"));
 	}
 }
