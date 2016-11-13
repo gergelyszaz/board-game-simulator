@@ -63,7 +63,9 @@ public class GameFactoryTest {
 	public void UniquePlayerVariableTest() throws Exception {
 
 		Model model = modelManager.LoadModel(
-				"GAME PlayerVariableTest PLAYERS 4 { a=5 PLAYER 1 { a=6 b=7 } } " +
+				"GAME PlayerVariableTest PLAYERS 4 { a=5 PLAYER 1 SETUP{ " +
+						" currentPlayer.a=6 " +
+						" currentPlayer.b=7 } } " +
 						"BOARD { " +
 						"RULES " +
 						"{}}");

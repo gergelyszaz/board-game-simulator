@@ -37,6 +37,11 @@ public class ActionManager {
 			return false;
 		}
 
+		if(currentAction==null){
+			currentAction=actions.get(0);
+			return false;
+		}
+
 		int nextIndex=actions.lastIndexOf(currentAction)+1;
 
 		if(nextIndex>=actions.size()){
