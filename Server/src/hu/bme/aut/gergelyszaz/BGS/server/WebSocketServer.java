@@ -1,14 +1,11 @@
 package hu.bme.aut.gergelyszaz.BGS.server;
 
-import hu.bme.aut.gergelyszaz.BGS.manager.ModelManager;
+import hu.bme.aut.gergelyszaz.BGS.util.FileUtil;
 import org.glassfish.tyrus.server.Server;
 
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public class WebSocketServer {
 
@@ -17,35 +14,11 @@ public class WebSocketServer {
 	private static volatile boolean running = false;
 	private static Server server = null;
 
-	public static boolean isRunning() {
-		return running;
-	}
-
 	public static void stopServer() {
 		if (running) {
 			server.stop();
 			server = null;
 			running = false;
-		}
-	}
-
-	public static boolean runServer(String hostName, int port, String rootpath, String gamesPath) {
-		running = true;
-		try {
-			server = new Server(hostName, port, "/" + rootpath, BGSServer.class);
-			InputStream input = WebSocketServer.class.getResourceAsStream(gamesPath);
-			configFile.load(input);
-			for (Object k : configFile.values()) {
-				System.out.println((String) k);
-				String gameString = new String(Files.readAllBytes(Paths.get(ModelManager.class.getResource((String) k).toURI())));
-				GameManagerSingleton.getGameManagerInstance().modelManager.LoadModel(gameString);
-			}
-			server.start();
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, e.getMessage());
-			running = false;
-		} finally {
-			return running;
 		}
 	}
 
@@ -62,5 +35,29 @@ public class WebSocketServer {
 		while (WebSocketServer.isRunning()) {
 			Thread.yield();
 		}
+	}
+
+	public static boolean runServer(String hostName, int port, String rootpath, String gamesPath) {
+		running = true;
+		try {
+			server = new Server(hostName, port, "/" + rootpath, BGSServer.class);
+			InputStream input = WebSocketServer.class.getResourceAsStream(gamesPath);
+			configFile.load(input);
+			for (Object k : configFile.values()) {
+				System.out.println((String) k);
+				String gameString = FileUtil.readFile((String) k);
+				GameManagerSingleton.getGameManagerInstance().modelManager.LoadModel(gameString);
+			}
+			server.start();
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, e.getMessage());
+			running = false;
+		} finally {
+			return running;
+		}
+	}
+
+	public static boolean isRunning() {
+		return running;
 	}
 }

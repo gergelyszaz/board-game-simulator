@@ -1,0 +1,5 @@
+GAME PlayerCountTest
+PLAYERS 1 {}
+BOARD {
+RULES {}
+}

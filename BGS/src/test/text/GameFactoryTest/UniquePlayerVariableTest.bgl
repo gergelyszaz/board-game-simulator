@@ -1,0 +1,11 @@
+GAME PlayerVariableTest
+PLAYERS 4 {
+ a=5
+ PLAYER 1 SETUP{
+   currentPlayer.a=6
+   currentPlayer.b=7
+ }
+}
+BOARD {
+RULES {}
+}
