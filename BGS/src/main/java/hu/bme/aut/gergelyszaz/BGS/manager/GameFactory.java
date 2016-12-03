@@ -115,11 +115,10 @@ public class GameFactory {
 
 	private List<Deck> _setupDecks(Model model, VariableManager variableManager)
 		 throws IllegalAccessException {
-		if(model.getBoard().getDecks()==null) return new ArrayList<>();
+		if(model.getDecks()==null) return new ArrayList<>();
 		List<Deck> decks = new ArrayList<>();
 
-		for (hu.bme.aut.gergelyszaz.bGL.Deck deckModel : model.getBoard()
-			 .getDecks()) {
+		for (hu.bme.aut.gergelyszaz.bGL.Deck deckModel : model.getDecks()) {
 			Stack<Card> cardModels = new Stack<Card>();
 			for (hu.bme.aut.gergelyszaz.bGL.Card cardModel : deckModel
 				 .getCards()) {
@@ -148,14 +147,14 @@ public class GameFactory {
 		 throws IllegalAccessException {
 
 		variableManager.store(null, VariableManager.NULL, null);
-		for (SimpleAssignment variable : model.getBoard().getVariables()) {
+		for (SimpleAssignment variable : model.getVariables()) {
 			String variableName = variable.getName();
 			Object reference = variableManager.getReference(variable
 				 .getAttribute());
 			variableManager.store(null, variableName, reference);
 		}
 
-		for (Field field : model.getBoard().getFields()) {
+		for (Field field : model.getFields()) {
 			variableManager.store(null, field.getName(), field);
 		}
 	}
@@ -190,7 +189,7 @@ public class GameFactory {
 	private List<Field> _setupFields(Model model, VariableManager variableManager)
 		 throws IllegalAccessException {
 
-		List<Field> fields=model.getBoard().getFields();
+		List<Field> fields=model.getFields();
 
 		for(Field field:fields){
 			variableManager.store(null,field.getName(),field);
@@ -209,5 +208,3 @@ public class GameFactory {
 	}
 
 }
-
-

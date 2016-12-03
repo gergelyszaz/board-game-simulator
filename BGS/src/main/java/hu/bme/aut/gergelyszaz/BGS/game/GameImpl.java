@@ -73,7 +73,7 @@ public class GameImpl implements Controller, Game {
     public void Init(Model gameModel, List<Player> players, List<Deck> decks) {
 
         name = gameModel.getName();
-        fields = gameModel.getBoard().getFields();
+        fields = gameModel.getFields();
         internalManager.getPlayers().addAll(players);
         internalManager.getDecks().addAll(decks);
 

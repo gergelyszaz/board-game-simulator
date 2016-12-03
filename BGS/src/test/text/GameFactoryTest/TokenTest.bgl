@@ -1,0 +1,13 @@
+GAME TokenTest
+
+PLAYERS 1 {}
+
+FIELD F2 {}
+
+TOKEN t1 {}
+TOKEN t2 {}
+
+RULES {
+    SPAWN t1 AS T1 TO F2
+    SPAWN t2 AS T2 TO F2
+}

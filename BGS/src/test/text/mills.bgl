@@ -1,0 +1,84 @@
+GAME Mills
+
+PLAYERS 2 {
+	tokensPlaced=0
+	tokenCount=0
+	maxTokenCount=5
+}
+
+
+BOARD
+{	
+	F11 {F12 F41 			h1=F12 h2=F13 v1=F41 v2=F71 owned=F11 tokenCount=0}	
+	F12 {F11 F13 F22 		h1=F11 h2=F13 v1=F22 v2=F32 owned=F12 tokenCount=0}
+	F13 {F12 F46 			h1=F11 h2=F12 v1=F46 v2=F73 owned=F13 tokenCount=0}
+	F21 {F22 F42			h1=F22 h2=F23 v1=F42 v2=F61 owned=F21 tokenCount=0}
+	F22 {F21 F23 F12 F32	h1=F21 h2=F23 v1=F12 v2=F32 owned=F22 tokenCount=0}
+	F23 {F22 F45			h1=F21 h2=F22 v1=F45 v2=F63 owned=F23 tokenCount=0}
+	F31 {F43 F32			h1=F32 h2=F33 v1=F43 v2=F51 owned=F31 tokenCount=0}
+	F32 {F31 F33 F22		h1=F31 h2=F33 v1=F12 v2=F22 owned=F32 tokenCount=0}
+	F33 {F32 F44			h1=F31 h2=F32 v1=F44 v2=F53 owned=F33 tokenCount=0}
+	F41 {F11 F42 F71		h1=F42 h2=F43 v1=F11 v2=F71 owned=F41 tokenCount=0}
+	F42 {F41 F21 F43 F61	h1=F41 h2=F43 v1=F21 v2=F61 owned=F42 tokenCount=0}
+	F43 {F42 F31 F51		h1=F41 h2=F42 v1=F31 v2=F51 owned=F43 tokenCount=0}
+	F44 {F33 F45 F53		h1=F45 h2=F46 v1=F33 v2=F53 owned=F44 tokenCount=0}
+	F45 {F44 F23 F46 F63	h1=F44 h2=F46 v1=F23 v2=F63 owned=F45 tokenCount=0}
+	F46 {F45 F13 F73		h1=F44 h2=F45 v1=F13 v2=F73 owned=F46 tokenCount=0}
+	F51 {F43 F52			h1=F52 h2=F53 v1=F31 v2=F43 owned=F51 tokenCount=0}
+	F52 {F51 F53 F62		h1=F51 h2=F53 v1=F62 v2=F72 owned=F52 tokenCount=0}
+	F53 {F52 F44			h1=F51 h2=F52 v1=F33 v2=F44 owned=F53 tokenCount=0}
+	F61 {F62 F42			h1=F62 h2=F63 v1=F21 v2=F42 owned=F61 tokenCount=0}
+	F62 {F52 F72 F61 F63	h1=F61 h2=F63 v1=F52 v2=F72 owned=F62 tokenCount=0}
+	F63 {F62 F45			h1=F61 h2=F62 v1=F23 v2=F45 owned=F63 tokenCount=0}
+	F71 {F41 F72			h1=F72 h2=F73 v1=F11 v2=F41 owned=F71 tokenCount=0}
+	F72 {F62 F73 F71		h1=F71 h2=F73 v1=F52 v2=F62 owned=F72 tokenCount=0}
+	F73 {F46 F72			h1=F71 h2=F72 v1=F13 v2=F46 owned=F73 tokenCount=0}
+}
+
+TOKEN T1{  }
+
+RULES
+{
+		IF (currentPlayer.tokensPlaced>=currentPlayer.maxTokenCount)
+		{
+			IF currentPlayer.tokenCount<3 { LOSE }
+			SELECT AS selectedToken WHERE this.owner===currentPlayer
+			SELECT AS selectedField WHERE ( this.distanceFromSelectedToken==1 OR currentPlayer.tokenCount==3 ) AND this.owned===this
+			selectedToken.field.owned=selectedToken.field
+			selectedField.owned=currentPlayer
+			MOVE TOKEN selectedToken TO selectedField
+		}
+		
+		IF (currentPlayer.tokensPlaced<currentPlayer.maxTokenCount)
+		{
+			SELECT AS selectedField WHERE this.owned === this
+			SPAWN T1 AS selectedToken TO selectedField
+			selectedToken.owner=currentPlayer
+			selectedField.owned=currentPlayer
+			currentPlayer.tokensPlaced=currentPlayer.tokensPlaced+1
+			currentPlayer.tokenCount=currentPlayer.tokenCount+1
+		}
+		
+		
+		IF selectedField.h1.owned===selectedField.owned AND selectedField.h2.owned===selectedField.owned AND selectedField.owned!==selectedField 
+		{
+			SELECT AS selectedToken WHERE this.owner!==currentPlayer AND
+					(this.field.v1.owned!==this.field.owned OR this.field.v2.owned!==this.field.owned) AND 
+					(this.field.h1.owned!==this.field.owned OR this.field.h2.owned!==this.field.owned)
+			selectedToken.field.owned=selectedToken.field
+			selectedToken.owner.tokenCount=selectedToken.owner.tokenCount-1
+			DESTROY selectedToken
+		}
+		
+		IF selectedField.v1.owned===selectedField.owned AND selectedField.v2.owned===selectedField.owned AND selectedField.owned!==selectedField 
+		{ 
+			SELECT AS selectedToken WHERE this.owner!==currentPlayer	AND 
+					(this.field.v1.owned!==this.field.owned OR this.field.v2.owned!==this.field.owned) AND 
+					(this.field.h1.owned!==this.field.owned OR this.field.h2.owned!==this.field.owned)
+			selectedToken.field.owned=selectedToken.field
+			selectedToken.owner.tokenCount=selectedToken.owner.tokenCount-1
+			DESTROY selectedToken		
+		}
+		END TURN
+}
+

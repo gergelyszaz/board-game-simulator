@@ -87,4 +87,27 @@ public class GameFactoryTest {
 		assertEquals(F2, variableManager.getReference(F1, "a"));
 		assertEquals(F1, variableManager.getReference(F2, "a"));
 	}
+
+	@Test
+	public void TokenTest() throws Exception {
+
+		Model model = modelManager.LoadModel(FileUtil.readFile(
+				"/GameFactoryTest/TokenTest.bgl"));
+		GameImpl game = gameFactory.CreateGame(model);
+		VariableManager variableManager = game.getVariableManager();
+
+		game.Step();
+		game.Step();
+
+		Object field=variableManager.getReference(null,"F2");
+		Object token2=variableManager.getReference(null,"T2");
+
+		assertNotNull(variableManager.getReference(null,"T1"));
+		assertNotNull(field);
+		assertNotNull(token2);
+		assertEquals(field,variableManager.getReference(token2,"field"));
+		//assertNull(variableManager.getReference(variableManager.getReference
+			//	(null,"T1"),"field"));
+
+	}
 }

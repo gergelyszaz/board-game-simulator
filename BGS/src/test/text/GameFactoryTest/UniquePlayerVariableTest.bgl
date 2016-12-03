@@ -6,6 +6,5 @@ PLAYERS 4 {
    currentPlayer.b=7
  }
 }
-BOARD {
+
 RULES {}
-}

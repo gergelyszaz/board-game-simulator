@@ -1,5 +1,3 @@
 GAME PlayerCountTest
-PLAYERS 1 {}
-BOARD {
+PLAYERS 1 
 RULES {}
-}
