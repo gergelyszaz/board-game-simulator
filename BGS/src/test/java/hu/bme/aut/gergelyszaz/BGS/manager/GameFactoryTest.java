@@ -9,9 +9,6 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by gergely.szaz on 2016. 10. 30..
- */
 public class GameFactoryTest {
 
 	GameFactory gameFactory;
@@ -156,7 +153,5 @@ public class GameFactoryTest {
 		assertEquals(5,variableManager.getValue(t2,"a"));
 		assertEquals(currentPlayer,variableManager.getReference(t2,
 				VariableManager.TOKEN.OWNER));
-
-
 	}
 }
