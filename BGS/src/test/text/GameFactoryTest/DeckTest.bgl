@@ -1,6 +1,6 @@
 GAME DeckTest
 PLAYERS 1 {
-    PUBLIC DECK deck {}
+    PROTECTED DECK deck {}
 }
 CARD card {}
 PUBLIC DECK d1

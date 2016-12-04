@@ -146,14 +146,17 @@ public class GameFactoryTest {
 		game.Step();
 
 		Object field = variableManager.getReference(null, "F2");
-		Object token2 = variableManager.getReference(null, "T2");
+		Object t2 = variableManager.getReference(null, "t2");
+		Object currentPlayer = variableManager.getReference(null,
+				VariableManager.GLOBAL.CURRENTPLAYER);
 
-		assertNotNull(variableManager.getReference(null, "T1"));
-		assertNotNull(field);
-		assertNotNull(token2);
-		assertEquals(field, variableManager.getReference(token2, "field"));
-		//assertNull(variableManager.getReference(variableManager.getReference
-		//	(null,"T1"),"field"));
+		assertNotNull(variableManager.getReference(null, "t1"));
+		assertNotNull(t2);
+		assertEquals(field, variableManager.getReference(t2, "field"));
+		assertEquals(5,variableManager.getValue(t2,"a"));
+		assertEquals(currentPlayer,variableManager.getReference(t2,
+				VariableManager.TOKEN.OWNER));
+
 
 	}
 }

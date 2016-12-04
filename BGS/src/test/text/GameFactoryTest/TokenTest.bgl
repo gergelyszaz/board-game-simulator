@@ -1,13 +1,13 @@
 GAME TokenTest
 
-PLAYERS 1 {}
+PLAYERS 1
 
-FIELD F2 {}
+FIELD F2
 
-TOKEN t1 {}
-TOKEN t2 {}
+TOKEN T1
+TOKEN T2 { a=5 }
 
 RULES {
-    SPAWN t1 AS T1 TO F2
-    SPAWN t2 AS T2 TO F2
+    SPAWN T1 AS t1 TO F2
+    SPAWN T2 AS t2 TO F2
 }

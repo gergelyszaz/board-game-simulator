@@ -119,7 +119,7 @@ public class GameFactory {
 		List<Deck> decks = new ArrayList<>();
 
 		for (hu.bme.aut.gergelyszaz.bGL.Deck deckModel : model.getDecks()) {
-			Stack<Card> cardModels = new Stack<Card>();
+			Stack<Card> cardModels = new Stack<>();
 			for (hu.bme.aut.gergelyszaz.bGL.Card cardModel : deckModel
 				 .getCards()) {
 				Card card = new Card(variableManager, cardModel);
