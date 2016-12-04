@@ -24,9 +24,9 @@ public class EndTurnAction extends AbstractAction {
     @Override
     public void Execute() throws IllegalAccessException {
        actionManager.reset();
-		 Player player= (Player) variableManager.getReference(null,VariableManager
-			  .CURRENTPLAYER);
-		 variableManager.store(null,VariableManager.CURRENTPLAYER,game
+		 Player player= (Player) variableManager.getReference(null,
+				 VariableManager.GLOBAL.CURRENTPLAYER);
+		 variableManager.store(null,VariableManager.GLOBAL.CURRENTPLAYER,game
 			  .getNextPlayer(player));
     }
 }

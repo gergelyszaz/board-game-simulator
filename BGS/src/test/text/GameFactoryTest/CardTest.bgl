@@ -1,0 +1,8 @@
+GAME CardTest
+PLAYERS 1
+CARD c1
+CARD c2 { a=6 }
+PUBLIC DECK deck { c1, c2, c1 }
+RULES {
+
+}

@@ -24,7 +24,7 @@ public class WinAction extends AbstractAction {
 
 		Player player =
 			 (Player) variableManager.getReference(null, VariableManager
-				  .CURRENTPLAYER);
+				  .GLOBAL.CURRENTPLAYER);
 		//TODO
 	}
 }

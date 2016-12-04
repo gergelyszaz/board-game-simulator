@@ -59,8 +59,8 @@ public class GameFactory {
 			PlayerSetup setup,
 			IDManager idManager, ActionManager actionManager, InternalManager internalManager) throws IllegalAccessException {
 
-		variableManager.store(null, VariableManager.CURRENTPLAYER, player);
-		variableManager.store(null, VariableManager.THIS, player);
+		variableManager.store(null, VariableManager.GLOBAL.CURRENTPLAYER, player);
+		variableManager.store(null, VariableManager.GLOBAL.THIS, player);
 
 		ActionManager startActionManager =
 				new ActionManager();
@@ -75,7 +75,7 @@ public class GameFactory {
 			startActionManager.getCurrentAction().Execute();
 		}
 
-		variableManager.store(null, VariableManager.THIS, null);
+		variableManager.store(null, VariableManager.GLOBAL.THIS, null);
 	}
 
 	private static void _setupPlayersStartRules(Model model, VariableManager
@@ -136,7 +136,7 @@ public class GameFactory {
 				 deckModel.getVisibility());
 			decks.add(deck);
 			variableManager.store(null, deckModel.getName(), deck);
-			variableManager.store(deck, VariableManager.OWNER, null);
+			variableManager.store(deck, VariableManager.DECK.OWNER, null);
 		}
 
 		return decks;
@@ -146,7 +146,7 @@ public class GameFactory {
 												  VariableManager variableManager)
 		 throws IllegalAccessException {
 
-		variableManager.store(null, VariableManager.NULL, null);
+		variableManager.store(null, VariableManager.GLOBAL.NULL, null);
 		for (SimpleAssignment variable : model.getVariables()) {
 			String variableName = variable.getName();
 			Object reference = variableManager.getReference(variable
@@ -181,7 +181,7 @@ public class GameFactory {
 					 deckModel.getVisibility());
 				decks.add(deck);
 				variableManager.store(player, deckModel.getName(), deck);
-				variableManager.store(deck, VariableManager.OWNER, player);
+				variableManager.store(deck, VariableManager.DECK.OWNER, player);
 			}
 		}
 	}

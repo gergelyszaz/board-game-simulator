@@ -22,7 +22,7 @@ public class LoseAction extends AbstractAction {
 
 		 Player player =
 			  (Player) variableManager.getReference(null, VariableManager
-					.CURRENTPLAYER);
+					.GLOBAL.CURRENTPLAYER);
 		 //TODO
 	 }
 }

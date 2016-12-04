@@ -1,13 +1,8 @@
 # board-game-simulator
 The goal is to create a DSL capable of describing the mechanics of simple board games (like "Mills", "Snakes and Ladders") and sample applications to run the language.
-The project contains 4 main parts:
-* language
-* simulator
-* server and client
-* graphic application
 
 ###Software needed to build
-Java 8
+JDK 1.8
 Maven 3
 
 ###Build
@@ -23,14 +18,46 @@ Go to the Application folder and run: "mvn exec:java"
 ###BGL
 The language written in Xtext.
 
+###Syntax
+
+###Built-in variables
+####GLOBAL
+currentplayer
+distancefromselectedtoken
+null
+this
+
+####PLAYER
+
+
+####CARD
+deck
+owner
+
+####FIELD
+
+
+####TOKEN
+field
+owner
+
+####DECK
+top
+cardcount
+
+
+
 ###BGS
-Core simulator project for running the board games. Includes:
-* Game - represents a board game instance
-* ModelManager - reads and manages the languages
-* GameManager - manages the lifecycle of Game objects
+Core simulator project for running the board games.
 
-###BGS.Server
-Contains server and client communication logic using WebSockets. Depends on BGS project.
+###State
+Represents a snapshot of a game.
 
-###BGS.Application
+###Server
+Contains server communication logic using WebSockets.
+
+###Client
+Contains logic communication logic using WebSockets.
+
+###Application
 Graphic (Swing) client application. Depends on BGS.Server project.

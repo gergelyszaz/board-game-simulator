@@ -26,14 +26,17 @@ Player:
 ;
 
 PlayerSetup:
-    name='PLAYER' id=INT
-    'SETUP' setupRule=NestedAction
+    name='PLAYER' id=INT 'SETUP'
+    setupRule=NestedAction
 ;
 
 
 
 Token returns Token:
-    'TOKEN' name=ID ('{' (variables+=SimpleAssignment)* '}')?
+    'TOKEN' name=ID
+    (
+        '{' (variables+=SimpleAssignment)* '}'
+    )?
 ;
 
 Field:
@@ -68,19 +71,23 @@ NestedAction:
 //Cardgame specific parts
 Card:
     'CARD' name=ID
-    '{'
-    (variables+=SimpleAssignment)*
-    ('ACTION' action=NestedAction)?
-    ('CONDITION' '(' (condition=OrExp)? ')')?
-    '}'
+    (
+        '{'
+        (variables+=SimpleAssignment)*
+        ('ACTION' action=NestedAction)?
+        ('CONDITION' '(' (condition=OrExp)? ')')?
+        '}'
+    )?
 ;
 
 Deck:
     visibility=('PUBLIC'|'PROTECTED'|'PRIVATE') 'DECK'
     name=ID
-    '{'
-    (cards+=[Card])*
-    '}'
+    (
+        '{'
+        (cards+=[Card])*
+        '}'
+    )?
 ;
 
 
@@ -127,10 +134,3 @@ ValueAssignment:
 SimpleAssignment:
     name=ID '=' attribute=AttributeOrInt
 ;
-
-
-
-
-
-
-

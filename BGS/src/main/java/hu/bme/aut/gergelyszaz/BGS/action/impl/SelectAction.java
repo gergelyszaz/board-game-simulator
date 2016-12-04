@@ -23,7 +23,7 @@ public class SelectAction extends AbstractAction {
     @Override
     public void Execute() throws IllegalAccessException {
 		selectableManager.setSelectableObjects(o -> {
-			variableManager.store(null, VariableManager.THIS, o);
+			variableManager.store(null, VariableManager.GLOBAL.THIS, o);
 			return variableManager.evaluate(action.getCondition());
 		},this.toVar);
     }

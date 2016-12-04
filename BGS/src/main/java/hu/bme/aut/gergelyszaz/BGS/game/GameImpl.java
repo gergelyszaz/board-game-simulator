@@ -135,7 +135,8 @@ public class GameImpl implements Controller, Game {
             if (object instanceof Token) {
                 for (Field f : fields) {
                     variableManager
-                            .store(f, VariableManager.DISTANCE_FROM_SELECTED_TOKEN,
+                            .store(f, VariableManager
+                                        .GLOBAL.DISTANCE_FROM_SELECTED_TOKEN,
                                     -1);
                 }
                 _setupDistance(((Token) object).getField(), 0);
@@ -162,7 +163,7 @@ public class GameImpl implements Controller, Game {
     private Player _getCurrentPlayer() throws IllegalAccessException {
 
         return (Player) variableManager
-                .getReference(null, VariableManager.CURRENTPLAYER);
+                .getReference(null, VariableManager.GLOBAL.CURRENTPLAYER);
     }
 
     private void _setupDistance(Field startingField, int distance)
@@ -170,10 +171,11 @@ public class GameImpl implements Controller, Game {
 
         //	TODO write without recursion and use BFS instead of DFS
         int dist = variableManager.getValue(startingField,
-                VariableManager.DISTANCE_FROM_SELECTED_TOKEN);
+                VariableManager.GLOBAL.DISTANCE_FROM_SELECTED_TOKEN);
         if ((dist > -1 && dist <= distance)) return;
         variableManager
-                .store(startingField, VariableManager.DISTANCE_FROM_SELECTED_TOKEN,
+                .store(startingField, VariableManager
+                            .GLOBAL.DISTANCE_FROM_SELECTED_TOKEN,
                         distance);
         for (Field field : startingField.getNeighbours()) {
             {

@@ -89,6 +89,52 @@ public class GameFactoryTest {
 	}
 
 	@Test
+	public void CardTest() throws Exception {
+
+		Model model = modelManager.LoadModel(FileUtil.readFile(
+				"/GameFactoryTest/CardTest.bgl"));
+		GameImpl game = gameFactory.CreateGame(model);
+		VariableManager variableManager = game.getVariableManager();
+
+		Object deck = variableManager.getReference(null, "deck");
+		Object card =
+				variableManager.getReference(deck, VariableManager.DECK.TOP);
+
+		assertEquals(deck,
+				variableManager.getReference(card, VariableManager.CARD.DECK));
+
+	}
+
+	@Test
+	public void DeckTest() throws Exception {
+
+		Model model = modelManager.LoadModel(FileUtil.readFile(
+				"/GameFactoryTest/DeckTest.bgl"));
+		GameImpl game = gameFactory.CreateGame(model);
+		VariableManager variableManager = game.getVariableManager();
+
+		Object d1 = variableManager.getReference(null, "d1");
+		Object d2 = variableManager.getReference(null, "d2");
+		Object currentPlayer = variableManager.getReference(null,
+				VariableManager.GLOBAL.CURRENTPLAYER);
+		Object deck = variableManager.getReference(currentPlayer, "deck");
+
+		assertNotNull(d1);
+		assertNotNull(d2);
+
+		assertEquals(0,
+				variableManager.getValue(d1, VariableManager.DECK.CARDCOUNT));
+		assertEquals(2,
+				variableManager.getValue(d2, VariableManager.DECK.CARDCOUNT));
+
+		assertNull(variableManager.getReference(d1, VariableManager.DECK.OWNER));
+		assertEquals(currentPlayer,
+				variableManager.getReference(deck, VariableManager.DECK.OWNER));
+
+		assertNotNull(variableManager.getReference(d2, VariableManager.DECK.TOP));
+	}
+
+	@Test
 	public void TokenTest() throws Exception {
 
 		Model model = modelManager.LoadModel(FileUtil.readFile(
@@ -99,15 +145,15 @@ public class GameFactoryTest {
 		game.Step();
 		game.Step();
 
-		Object field=variableManager.getReference(null,"F2");
-		Object token2=variableManager.getReference(null,"T2");
+		Object field = variableManager.getReference(null, "F2");
+		Object token2 = variableManager.getReference(null, "T2");
 
-		assertNotNull(variableManager.getReference(null,"T1"));
+		assertNotNull(variableManager.getReference(null, "T1"));
 		assertNotNull(field);
 		assertNotNull(token2);
-		assertEquals(field,variableManager.getReference(token2,"field"));
+		assertEquals(field, variableManager.getReference(token2, "field"));
 		//assertNull(variableManager.getReference(variableManager.getReference
-			//	(null,"T1"),"field"));
+		//	(null,"T1"),"field"));
 
 	}
 }

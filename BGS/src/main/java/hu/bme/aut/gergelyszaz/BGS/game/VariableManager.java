@@ -9,14 +9,36 @@ import java.util.*;
  * parent, name, objectToStore
  */
 public class VariableManager {
-	public static String THIS = "this";
-	public static String CURRENTPLAYER = "currentPlayer";
-	public static String OWNER = "owner";
-	public static String NULL = "null";
-	public static String FIELD = "field";
-	public static String TOP = "top";
-	public static String CARDCOUNT = "cardCount";
-	public static String DISTANCE_FROM_SELECTED_TOKEN = "distanceFromSelectedToken";
+	public static class GLOBAL{
+		public static final String THIS = "this";
+		public static final String CURRENTPLAYER = "currentPlayer";
+		public static final String NULL = "null";
+		public static final String DISTANCE_FROM_SELECTED_TOKEN = "distanceFromSelectedToken";
+	}
+
+	public static class PLAYER{
+
+	}
+
+	public static class FIELD{
+
+	}
+
+	public static class DECK{
+
+		public static final String OWNER = "owner" ;
+		public static final String TOP = "top";
+		public static final String CARDCOUNT = "cardCount";
+	}
+
+	public static class CARD{
+		public static final String DECK = "deck";
+	}
+
+	public static class TOKEN{
+		public static final String OWNER = "owner";
+		public static final String FIELD = "field";
+	}
 
 	private Map<Object, Map<String, Object>> references = new HashMap<>();
 
@@ -52,11 +74,12 @@ public class VariableManager {
 		return getReference(variablePath);
 	}
 
-	public Object getReference(Object parent, String variableName)
-					{
-		Object variable = getVariables(parent).get(variableName);
-		if (variable == null)
+	public Object getReference(Object parent, String variableName) {
+		if (!getVariables(parent).containsKey(variableName)) {
 			throw new IllegalAccessError(parent + " has no " + variableName);
+		}
+
+		Object variable = getVariables(parent).get(variableName);
 		return variable;
 	}
 

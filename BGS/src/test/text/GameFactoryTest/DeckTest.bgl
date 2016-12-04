@@ -1,0 +1,10 @@
+GAME DeckTest
+PLAYERS 1 {
+    PUBLIC DECK deck {}
+}
+CARD card {}
+PUBLIC DECK d1
+PUBLIC DECK d2 { card card}
+RULES
+{
+}

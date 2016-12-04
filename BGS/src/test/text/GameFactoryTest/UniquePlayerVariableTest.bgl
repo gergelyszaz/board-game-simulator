@@ -1,6 +1,7 @@
-GAME PlayerVariableTest
+GAME UniquePlayerVariableTest
 PLAYERS 4 {
  a=5
+
  PLAYER 1 SETUP{
    currentPlayer.a=6
    currentPlayer.b=7

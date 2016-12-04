@@ -13,19 +13,19 @@ public class Token {
 	}
 
 	public Field getField() throws IllegalAccessException {
-		return (Field) varManager.getReference(this, varManager.FIELD);
+		return (Field) varManager.getReference(this, VariableManager.TOKEN.FIELD);
 	}
 
 	public void setField(Field field) {
-		varManager.store(this, varManager.FIELD, field);
+		varManager.store(this, VariableManager.TOKEN.FIELD, field);
 	}
 
 	public Player getOwner() throws IllegalAccessException {
-		return (Player) varManager.getReference(this, varManager.OWNER);
+		return (Player) varManager.getReference(this, VariableManager.TOKEN.OWNER);
 	}
 
 	public void setOwner(Player player) {
-		varManager.store(this, varManager.OWNER, player);
+		varManager.store(this, VariableManager.TOKEN.OWNER, player);
 	}
 
 	public void Destroy() {
