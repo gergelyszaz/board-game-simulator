@@ -1,0 +1,5 @@
+GAME WinTest
+PLAYERS 1
+RULES {
+    WIN
+}

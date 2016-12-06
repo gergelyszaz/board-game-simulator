@@ -1,0 +1,7 @@
+GAME EndturnTest
+PLAYERS 2
+a=0
+RULES {
+    END TURN
+    a=6
+}

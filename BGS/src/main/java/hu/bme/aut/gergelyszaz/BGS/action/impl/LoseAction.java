@@ -1,8 +1,7 @@
 package hu.bme.aut.gergelyszaz.BGS.action.impl;
 
 import hu.bme.aut.gergelyszaz.BGS.action.AbstractAction;
-import hu.bme.aut.gergelyszaz.BGS.game.InternalManager;
-import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
+import hu.bme.aut.gergelyszaz.BGS.game.*;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
 
 /**
@@ -10,19 +9,21 @@ import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
  */
 public class LoseAction extends AbstractAction {
 
+	private final InternalManager internalManager;
 
-    public LoseAction(VariableManager variableManager, InternalManager game) {
+	public LoseAction(VariableManager variableManager,
+							InternalManager internalManager) {
 
-		 super(variableManager,null);
+		super(variableManager, null);
+		this.internalManager = internalManager;
+	}
 
-    }
+	@Override
+	public void Execute() throws IllegalAccessException {
 
-    @Override
-    public void Execute() throws IllegalAccessException {
+		Player player = (Player) variableManager.getReference(null,
+				VariableManager.GLOBAL.CURRENTPLAYER);
+		internalManager.addLoser(player);
+	}
 
-		 Player player =
-			  (Player) variableManager.getReference(null, VariableManager
-					.GLOBAL.CURRENTPLAYER);
-		 //TODO
-	 }
 }

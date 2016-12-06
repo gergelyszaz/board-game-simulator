@@ -19,4 +19,9 @@ public class GotoAction implements Action {
 	public void Execute() throws IllegalAccessException {
 		actionManager.setNextAction(toAction);
 	}
+
+	@Override
+	public String toString(){
+		return this.getClass().getSimpleName();
+	}
 }

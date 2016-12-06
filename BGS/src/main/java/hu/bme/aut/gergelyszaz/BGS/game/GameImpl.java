@@ -1,5 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.game;
 
+import com.google.common.collect.Lists;
 import hu.bme.aut.gergelyszaz.BGS.action.ActionManager;
 import hu.bme.aut.gergelyszaz.BGS.action.impl.SelectAction;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Deck;
@@ -28,7 +29,6 @@ public class GameImpl implements Controller, Game {
     IDManager idManager;
     StateStore stateStore;
     InternalManager internalManager;
-    boolean gameEnded = false;
     Set<View> views = new HashSet<>();
     private EList<Field> fields;
     public GameImpl(VariableManager variableManager, ActionManager actionManager,
@@ -83,7 +83,10 @@ public class GameImpl implements Controller, Game {
 
     @Override
     public void Step() throws IllegalAccessException {
-        if (!internalManager.getSelectableManager().isSelectionDone() || gameEnded) return;
+        if (!internalManager.getSelectableManager().isSelectionDone() ||
+              IsFinished()) {
+            return;
+        }
         actionManager.step();
         System.out.println(actionManager.getCurrentAction().toString());
         actionManager.getCurrentAction().Execute();
@@ -98,7 +101,19 @@ public class GameImpl implements Controller, Game {
 
     @Override
     public boolean IsFinished() {
-        return gameEnded;
+        List<Player> winners=internalManager.getWinners();
+        List<Player> losers=internalManager.getLosers();
+        List<Player> players= Lists.newArrayList(internalManager.getPlayers());
+
+        players.removeAll(winners);
+        players.removeAll(losers);
+        if(players.size()>=2){
+            return false;
+        }
+        if(players.size()==1 && internalManager.getPlayers().size()==1){
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -151,13 +166,7 @@ public class GameImpl implements Controller, Game {
         }
     }
 
-    public Player getNextPlayer(Player player) throws IllegalAccessException {
-        List<Player> players = internalManager.getPlayers();
-        int playerIndex = players.lastIndexOf(player);
-        playerIndex++;
-        if (playerIndex >= players.size()) playerIndex = 0;
-        return players.get(playerIndex);
-    }
+
 
 
     private Player _getCurrentPlayer() throws IllegalAccessException {

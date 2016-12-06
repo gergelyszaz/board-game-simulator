@@ -11,4 +11,9 @@ public class NopAction implements Action {
 	public void Execute() throws IllegalAccessException {
 		//Intentionally left empty
 	}
+
+	@Override
+	public String toString(){
+		return this.getClass().getSimpleName();
+	}
 }

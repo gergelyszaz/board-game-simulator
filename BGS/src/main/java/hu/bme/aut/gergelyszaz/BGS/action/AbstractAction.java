@@ -9,6 +9,7 @@ public abstract class AbstractAction implements hu.bme.aut.gergelyszaz.BGS.actio
 
     protected final VariableManager variableManager;
     protected hu.bme.aut.gergelyszaz.bGL.Action action;
+    protected String name;
 
     public AbstractAction(VariableManager variableManager, hu.bme.aut.gergelyszaz.bGL.Action action) {
         this.variableManager = variableManager;
@@ -17,6 +18,6 @@ public abstract class AbstractAction implements hu.bme.aut.gergelyszaz.BGS.actio
 
     @Override
     public String toString() {
-        return action.toString();
+        return this.getClass().getSimpleName();
     }
 }

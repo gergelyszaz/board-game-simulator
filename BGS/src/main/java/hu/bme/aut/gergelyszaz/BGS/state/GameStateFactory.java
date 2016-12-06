@@ -1,5 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.state;
 
+import com.google.common.collect.Lists;
 import hu.bme.aut.gergelyszaz.BGS.game.InternalManager;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Card;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Deck;
@@ -17,10 +18,11 @@ import java.util.stream.Collectors;
  */
 public class GameStateFactory {
 
-	public static GameState createGameState(String
-															  gameName, IDManager
-															  idManager, int version,
-														 Player player, List<Player> players,
+	public static GameState createGameState(String gameName,
+														 IDManager idManager,
+														 int version,
+														 Player player,
+														 List<Player> players,
 														 List<Field> fields,
 														 List<Token> tokens,
 														 List<Deck> decks,
@@ -87,8 +89,17 @@ public class GameStateFactory {
 	}
 
 	public static GameState createGameState(String name, IDManager idManager, int stateVersion, InternalManager internalManager) throws IllegalAccessException {
-		return createGameState(name,idManager,stateVersion,internalManager.getCurrentPlayer(), internalManager.getPlayers(), internalManager.getFields(),
-				internalManager.getTokens(), internalManager.getDecks(),
-				internalManager.getSelectables(), internalManager.getWinners(), internalManager.getLosers());
+		return createGameState(
+				name,
+				idManager,
+				stateVersion,
+				internalManager.getCurrentPlayer(),
+				internalManager.getPlayers(),
+				internalManager.getFields(),
+				internalManager.getTokens(),
+				internalManager.getDecks(),
+				internalManager.getSelectables(),
+				Lists.transform(internalManager.getWinners(), idManager::get),
+				Lists.transform(internalManager.getLosers(), idManager::get));
 	}
 }

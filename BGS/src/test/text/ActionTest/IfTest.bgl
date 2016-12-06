@@ -1,0 +1,12 @@
+GAME IfTest
+PLAYERS 1
+a=1
+RULES {
+    IF a==1 {
+        b=1
+    }
+    IF a==2 {
+        b=2
+    }
+    WIN
+}

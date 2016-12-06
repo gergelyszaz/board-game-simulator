@@ -1,14 +1,9 @@
 package hu.bme.aut.gergelyszaz.BGS.game;
 
-import hu.bme.aut.gergelyszaz.BGS.game.internal.Deck;
-import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
-import hu.bme.aut.gergelyszaz.BGS.game.internal.Token;
+import hu.bme.aut.gergelyszaz.BGS.game.internal.*;
 import hu.bme.aut.gergelyszaz.bGL.Field;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by mad on 2016. 10. 19..
@@ -20,8 +15,8 @@ public class InternalManager {
     private List<Token> tokens=new ArrayList<>();
     private List<Deck> decks=new ArrayList<>();
     private Set<Integer> selectables=new HashSet<>();
-    private List<Integer> winners=new ArrayList<>();
-    private List<Integer> losers=new ArrayList<>();
+    private List<Player> winners=new ArrayList<>();
+    private List<Player> losers=new ArrayList<>();
     private SelectableManager selectableManager;
     private Player currentPlayer;
 
@@ -49,11 +44,11 @@ public class InternalManager {
         return selectables;
     }
 
-    public List<Integer> getWinners() {
+    public List<Player> getWinners() {
         return winners;
     }
 
-    public List<Integer> getLosers() {
+    public List<Player> getLosers() {
         return losers;
     }
 
@@ -78,5 +73,24 @@ public class InternalManager {
     public void setCurrentPlayer(Player currentPlayer, VariableManager variableManager) {
         this.currentPlayer=currentPlayer;
         variableManager.store(null,"currentPlayer",currentPlayer);
+    }
+
+    public void addWinner(Player player) {
+        if(!winners.contains(player)) {
+            winners.add(player);
+        }
+    }
+
+    public void addLoser(Player player) {
+        if(!losers.contains(player)) {
+            losers.add(player);
+        }
+    }
+
+    public Player getNextPlayer(Player player) throws IllegalAccessException {
+        int playerIndex = players.lastIndexOf(player);
+        playerIndex++;
+        if (playerIndex >= players.size()) playerIndex = 0;
+        return players.get(playerIndex);
     }
 }

@@ -102,7 +102,7 @@ public class ActionFactory {
 				break;
 			case ENDTURN:
 				returnAction =
-					 new EndTurnAction(variableManager, actionManager, null);
+					 new EndTurnAction(variableManager, actionManager, internalManager);
 				break;
 			case ROLL:
 				returnAction = new RollAction(variableManager, action);

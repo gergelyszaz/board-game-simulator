@@ -26,7 +26,7 @@ public abstract class ConditionalAction extends AbstractAction {
 
     @Override
     public void Execute() throws IllegalAccessException {
-        if (variableManager.evaluate(action.getCondition())) {
+        if (!variableManager.evaluate(action.getCondition())) {
             actionManager.setNextAction(skipAction);
         }
 

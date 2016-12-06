@@ -1,0 +1,5 @@
+GAME LoseTest
+PLAYERS 1
+RULES {
+    ROLL 1 5-6 AS roll
+}
