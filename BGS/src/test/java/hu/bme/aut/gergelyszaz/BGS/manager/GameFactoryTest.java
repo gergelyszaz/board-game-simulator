@@ -150,8 +150,8 @@ public class GameFactoryTest {
 		assertNotNull(variableManager.getReference(null, "t1"));
 		assertNotNull(t2);
 		assertEquals(field, variableManager.getReference(t2, "field"));
-		assertEquals(5,variableManager.getValue(t2,"a"));
-		assertEquals(currentPlayer,variableManager.getReference(t2,
-				VariableManager.TOKEN.OWNER));
+		assertEquals(5, variableManager.getValue(t2, "a"));
+		assertEquals(currentPlayer,
+				variableManager.getReference(t2, VariableManager.TOKEN.OWNER));
 	}
 }

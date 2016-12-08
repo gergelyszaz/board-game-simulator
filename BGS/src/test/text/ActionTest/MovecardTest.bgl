@@ -1,5 +1,8 @@
 GAME MovecardTest
 PLAYERS 1
+CARD card
+PRIVATE DECK deck1 { card }
+PRIVATE DECK deck2
 RULES {
-
+    MOVE CARD deck1.top TO deck2
 }

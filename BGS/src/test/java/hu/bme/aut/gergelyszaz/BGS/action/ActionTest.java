@@ -12,13 +12,7 @@ public class ActionTest {
 
 	private VariableManager variableManager;
 	private GameImpl gameImpl;
-
-	@Test
-	public void AssignmentTest() throws Exception {
-
-		Init("AssignmentTest");
-		Assert.fail();
-	}
+	private InternalManager internalManager;
 
 	public void Init(String testName) throws Exception {
 
@@ -28,13 +22,32 @@ public class ActionTest {
 				"/ActionTest/" + testName + ".bgl"));
 		gameImpl = gameFactory.CreateGame(model);
 		variableManager = gameImpl.getVariableManager();
+		internalManager=gameImpl.getInternalManager();
+	}
+
+	@Test
+	public void AssignmentTest() throws Exception {
+
+		Init("AssignmentTest");
+		gameImpl.Step();
+		assertEquals(1, variableManager.getValue(null, "a"));
+		gameImpl.Step();
+		assertEquals(2, variableManager.getValue(null, "b"));
+		gameImpl.Step();
+		assertEquals(12, variableManager.getValue(null, "c"));
 	}
 
 	@Test
 	public void DestroyTest() throws Exception {
 
 		Init("DestroyTest");
-		Assert.fail();
+		gameImpl.Step();
+		Object token = variableManager.getReference(null, "token");
+		assertNotNull(variableManager.getReference(token,
+				VariableManager.TOKEN.FIELD));
+		gameImpl.Step();
+		//		assertNull(variableManager.getReference(token,VariableManager.TOKEN.FIELD));
+
 	}
 
 	@Test
@@ -78,14 +91,37 @@ public class ActionTest {
 	public void MovecardTest() throws Exception {
 
 		Init("MovecardTest");
-		Assert.fail();
+		Object deck1 = variableManager.getReference(null, "deck1");
+		Object deck2 = variableManager.getReference(null, "deck2");
+		assertEquals(1,
+				variableManager.getReference(deck1,
+						VariableManager.DECK.CARDCOUNT));
+		assertEquals(0,
+				variableManager.getReference(deck2,
+						VariableManager.DECK.CARDCOUNT));
+		gameImpl.Step();
+		assertEquals(0,
+				variableManager.getReference(deck1,
+						VariableManager.DECK.CARDCOUNT));
+		assertEquals(1,
+				variableManager.getReference(deck2,
+						VariableManager.DECK.CARDCOUNT));
 	}
 
 	@Test
 	public void MovetokenTest() throws Exception {
 
 		Init("MovetokenTest");
-		Assert.fail();
+
+		gameImpl.Step();
+		Object token = variableManager.getReference(null, "token");
+
+		assertEquals(variableManager.getReference(null, "field1"),
+				variableManager.getReference(token, "field"));
+		gameImpl.Step();
+		assertEquals(variableManager.getReference(null, "field2"),
+				variableManager.getReference(token, "field"));
+
 	}
 
 	@Test
@@ -101,17 +137,48 @@ public class ActionTest {
 	}
 
 	@Test
+	public void SelectTest() throws Exception {
+
+		Init("SelectTest");
+		Object field1=variableManager.getReference(null, "field1");
+		Object field2=variableManager.getReference(null, "field2");
+
+		assertEquals(0,internalManager.getSelectableManager()
+				.getSelectableObjects()
+				.size());
+		gameImpl.Step();
+		assertEquals(2,internalManager.getSelectableManager()
+				.getSelectableObjects().size());
+		assertTrue(internalManager.getSelectableManager().getSelectableObjects
+				().contains(field1));
+		assertTrue(internalManager.getSelectableManager().getSelectableObjects
+				().contains(field2));
+	}
+
+	@Test
 	public void ShuffleTest() throws Exception {
 
 		Init("ShuffleTest");
-		Assert.fail();
+		gameImpl.Step();
 	}
 
 	@Test
 	public void SpawnTest() throws Exception {
 
 		Init("SpawnTest");
-		Assert.fail();
+		while (!gameImpl.IsFinished()) {
+			gameImpl.Step();
+		}
+
+		Object token1 = variableManager.getReference(null, "token1");
+		Object token2 = variableManager.getReference(null, "token2");
+		Object token3 = variableManager.getReference(null, "token3");
+		Object field = variableManager.getReference(null, "field");
+
+		assertEquals(field, variableManager.getReference(token1, "field"));
+		assertEquals(1, variableManager.getValue(token3, "a"));
+		assertEquals(2, variableManager.getValue(token3, "b"));
+
 	}
 
 	@Test

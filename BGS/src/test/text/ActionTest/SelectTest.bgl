@@ -1,0 +1,9 @@
+GAME SpawnTest
+PLAYERS 1
+FIELD field1 { a=3 }
+FIELD field2 { a=2 }
+FIELD field3
+FIELD field4 { a=1 }
+RULES {
+    SELECT AS selected WHERE this.a>=2
+}

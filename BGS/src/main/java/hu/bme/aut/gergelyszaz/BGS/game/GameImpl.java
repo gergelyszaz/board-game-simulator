@@ -46,6 +46,10 @@ public class GameImpl implements Controller, Game {
         return variableManager;
     }
 
+    public InternalManager getInternalManager() {
+        return internalManager;
+    }
+
     @Override
     public boolean Join(String clientID) throws IllegalAccessException {
 

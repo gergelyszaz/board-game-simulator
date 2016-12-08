@@ -1,5 +1,12 @@
 GAME SpawnTest
 PLAYERS 1
+FIELD field
+TOKEN t1
+TOKEN t2 { }
+TOKEN t3 { a=1 b=2 }
 RULES {
-
+    SPAWN t1 AS token1 TO field
+    SPAWN t2 AS token2 TO field
+    SPAWN t3 AS token3 TO field
+    WIN
 }

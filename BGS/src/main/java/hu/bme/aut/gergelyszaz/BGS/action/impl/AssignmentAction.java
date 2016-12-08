@@ -2,10 +2,9 @@ package hu.bme.aut.gergelyszaz.BGS.action.impl;
 
 import hu.bme.aut.gergelyszaz.BGS.action.AbstractAction;
 import hu.bme.aut.gergelyszaz.BGS.game.VariableManager;
-import hu.bme.aut.gergelyszaz.bGL.Action;
-import hu.bme.aut.gergelyszaz.bGL.ValueAssignment;
+import hu.bme.aut.gergelyszaz.bGL.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by gergely.szaz on 2016. 10. 16..
@@ -18,8 +17,7 @@ public class AssignmentAction extends AbstractAction {
     @Override
     public void Execute() throws IllegalAccessException {
         ValueAssignment assignment = action.getAssignment();
-        Object reference = variableManager.getReference(assignment
-                .getAddition());
+        Object reference = getReference(assignment.getExpression());
 
         List<String> variablePath = variableManager.getVariablePath
                 (assignment.getName());
@@ -30,5 +28,58 @@ public class AssignmentAction extends AbstractAction {
     public String toString() {
 
         return super.toString();
+    }
+
+    public Object getReference(ArithmeticExp arithmeticExp)
+    {
+        //just a simple reference
+        List<Expression> expressions =
+              arithmeticExp.getExpressions();
+        if (expressions.size() == 1 && expressions.get(0).getAttributeOrInt()
+              !=null){
+            AttributeOrInt attributeOrInt = expressions.get(0).getAttributeOrInt();
+            return variableManager.getReference(attributeOrInt);
+        }
+
+        //an expression
+        int i = 0;
+        int value = getReference(arithmeticExp.getExpressions().get(i));
+        for (String operator :
+              arithmeticExp.getOperators()) {
+            i++;
+
+            int expressionValue=getReference(expressions.get(i));
+            switch (operator){
+                case "+":
+                    value += expressionValue;
+                    break;
+                case "-":         value -= expressionValue; break;
+                case "%":         value %= expressionValue;break;
+                case "*":         value *= expressionValue;break;
+                case "/":         value /= expressionValue;break;
+            }
+
+
+
+        }
+        return value;
+    }
+
+    public int getReference(Expression expression)
+    {
+        Object reference = null;
+        if(expression.getAttributeOrInt()!=null) {
+            reference= variableManager.getReference(expression
+                  .getAttributeOrInt());
+        }
+        if(expression.getArithmeticExp()!=null) {
+            reference= getReference(expression
+                  .getArithmeticExp());
+        }
+
+        if(!(reference instanceof Integer)){
+            throw new IllegalAccessError("Could not get value of"+reference);
+        }
+        return (Integer) reference;
     }
 }

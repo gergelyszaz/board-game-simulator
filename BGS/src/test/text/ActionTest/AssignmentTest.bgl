@@ -1,5 +1,7 @@
 GAME AssignmentTest
 PLAYERS 1
 RULES {
-
+    a=1
+    b=a+1
+    c=b*2*3
 }

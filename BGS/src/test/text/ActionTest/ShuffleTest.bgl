@@ -1,5 +1,7 @@
 GAME ShuffleTest
 PLAYERS 1
+CARD card
+PUBLIC DECK deck { card card card card card card }
 RULES {
-
+    SHUFFLE deck
 }

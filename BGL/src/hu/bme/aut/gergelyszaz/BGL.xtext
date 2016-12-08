@@ -5,11 +5,14 @@ generate bGL "http://www.bme.hu/aut/gergelyszaz/BGL"
 Model:
     'GAME' name=ID
     player=Player
-    (variables+=SimpleAssignment)*
-    (cards+=Card)*
-    (decks+=Deck)*
-    (fields+=Field)*
-    (tokens+=Token)*
+
+    (
+        (variables+=SimpleAssignment)|
+        (cards+=Card)|
+        (decks+=Deck)|
+        (fields+=Field)|
+        (tokens+=Token)
+    )*
 
     'RULES' rule=NestedAction
 ;
@@ -117,18 +120,18 @@ AttributeOrInt:
 ;
 
 //Arithmetic operations and value assignment
-AdditionExp:
-    expressions+=MultiplicationExp (operators+= ('+'|'-') expressions+=MultiplicationExp)*
+ArithmeticExp:
+     ( expressions+=Expression (operators+=
+    ('+'|'-'|'*'|'/'|'%')
+    expressions+=Expression)* )
 ;
 
-MultiplicationExp:
-    (expressions+=AttributeOrInt (operators+= ('*'|'/') expressions+=AttributeOrInt)*)
-    |
-    ( '(' nestedExp=AdditionExp ')' )
+Expression:
+    ('(' arithmeticExp=ArithmeticExp ')') | attributeOrInt=AttributeOrInt
 ;
 
 ValueAssignment:
-    name=AttributeName  '=' addition=AdditionExp
+    name=AttributeName  '=' expression=ArithmeticExp
 ;
 
 SimpleAssignment:

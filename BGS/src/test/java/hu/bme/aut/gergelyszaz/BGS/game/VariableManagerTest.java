@@ -56,34 +56,6 @@ public class VariableManagerTest {
     }
 
     @Test
-    public void GetValueUsingAdditionExpPlusTest() {
-
-        int value = GetValueUsingAdditionExp(1, 2, "+");
-        assertEquals(3, value);
-    }
-
-    @Test
-    public void GetValueUsingAdditionExpMinusTest() {
-
-        int value = GetValueUsingAdditionExp(1, 2, "-");
-        assertEquals(-1, value);
-    }
-
-    @Test
-    public void GetValueUsingMultiplicationExpStarTest() {
-
-        int value = GetValueUsingMultiplicationExp(6, 3, "*");
-        assertEquals(18, value);
-    }
-
-    @Test
-    public void GetValueUsingMultiplicationExpSlashTest() {
-
-        int value = GetValueUsingMultiplicationExp(6, 3, "/");
-        assertEquals(2, value);
-    }
-
-    @Test
     public void GetValueUsingAttributeOrIntReturnsIntTest() {
 
         AttributeOrInt attributeOrInt = mock(AttributeOrInt.class);
@@ -379,50 +351,6 @@ public class VariableManagerTest {
         assertEquals(0, reference);
     }
 
-    private int GetValueUsingAdditionExp(int value1, int value2, String operator) {
-
-        VariableManager spy = spy(variableManager);
-        AdditionExp additionExp = mock(AdditionExp.class);
-        MultiplicationExp multiplicationExp1 = mock(MultiplicationExp.class);
-        MultiplicationExp multiplicationExp2 = mock(MultiplicationExp.class);
-
-        EList<MultiplicationExp> multiplicationExps =
-                new BasicEList<>(Arrays.asList(
-                        multiplicationExp1, multiplicationExp2));
-        EList<String> operators =
-                new BasicEList<>(Arrays.asList(
-                        operator));
-
-        when(additionExp.getExpressions()).thenReturn(multiplicationExps);
-        when(additionExp.getOperators()).thenReturn(operators);
-        doReturn(value1).when(spy).calculate(multiplicationExp1);
-        doReturn(value2).when(spy).calculate(multiplicationExp2);
-
-        return spy.calculate(additionExp);
-    }
-
-    private int GetValueUsingMultiplicationExp(
-            int value1, int value2, String operator) {
-
-        VariableManager spy = spy(variableManager);
-
-        MultiplicationExp multiplicationExp = mock(MultiplicationExp.class);
-        AttributeOrInt attributeOrInt1 = mock(AttributeOrInt.class);
-        AttributeOrInt attributeOrInt2 = mock(AttributeOrInt.class);
-        EList<AttributeOrInt> attributeOrInts =
-                new BasicEList<>(Arrays.asList(
-                        attributeOrInt1, attributeOrInt2));
-        EList<String> operators =
-                new BasicEList<>(Arrays.asList(
-                        operator));
-
-        when(multiplicationExp.getExpressions()).thenReturn(attributeOrInts);
-        when(multiplicationExp.getOperators()).thenReturn(operators);
-        doReturn(value1).when(spy).calculate(attributeOrInt1);
-        doReturn(value2).when(spy).calculate(attributeOrInt2);
-
-        return spy.calculate(multiplicationExp);
-    }
 
     private boolean EvaluateBooleanExp(
             String not, AttributeOrInt left, String operator, AttributeOrInt right) {
