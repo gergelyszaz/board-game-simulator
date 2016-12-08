@@ -1,30 +1,21 @@
 package graphics;
 
 import hu.bme.aut.gergelyszaz.BGS.client.StateListener;
-import hu.bme.aut.gergelyszaz.BGS.state.FieldState;
-import hu.bme.aut.gergelyszaz.BGS.state.GameState;
-import hu.bme.aut.gergelyszaz.BGS.state.TokenState;
+import hu.bme.aut.gergelyszaz.BGS.state.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 
 class BoardPanel extends JLayeredPane implements ActionListener, StateListener {
 
-	ConcurrentHashMap<Integer, JButton> buttons = new ConcurrentHashMap<Integer, JButton>();
-	ConcurrentHashMap<JButton, Integer> buttons2 = new ConcurrentHashMap<JButton, Integer>();
-	HashSet<JButton> enabledButtons = new HashSet<JButton>();
+	Set<JButton> buttons=new HashSet<>();
+	Map<JButton,Integer> ids=new HashMap<>();
+
 	int SCALE = 100;
-	Hashtable<Integer, TokenState> tokens = new Hashtable<Integer, TokenState>();
-	Hashtable<Integer, FieldState> fields = new Hashtable<Integer, FieldState>();
 	ColorManager colorManager = new ColorManager();
 	PlayerInfoPanel playerInfoPanel = null;
 	MessageListener messageReciever;
@@ -48,63 +39,62 @@ class BoardPanel extends JLayeredPane implements ActionListener, StateListener {
 	}
 
 	public void UpdateGameState(GameState gs) {
+		DisableButtons();
 
-		if (buttons.isEmpty()) {
-			for (FieldState field : gs.getFields()) {
+		SCALE = Math.min(this.getWidth(), this.getHeight());
 
-				JButton btn = new JButton();
-				buttons.put(field.id, btn);
-				buttons2.put(btn, field.id);
-				btn.setUI(new FieldButtonUI(field));
-				btn.setOpaque(false);
-				btn.setContentAreaFilled(false);
-				btn.setBorderPainted(true);
+		for (FieldState field : gs.getFields()) {
 
-				String[] fp = properties.getProperty(field.name).split("\\,");
+			JButton btn = new JButton();
 
-				btn.setBounds(new Rectangle());//field.x * SCALE - SCALE / 3, field.y * SCALE - SCALE / 3, SCALE * 2 / 3,                        SCALE * 2 / 3));
-				btn.setActionCommand("fieldPressed");
-				btn.addActionListener(this);
-				btn.setEnabled(false);
-				add(btn, new Integer(1));
+			buttons.add(btn);
+			ids.put(btn,field.id);
 
-			}
+			btn.setUI(new FieldButtonUI(field));
+			btn.setOpaque(!gs.getSelectables().contains(field));
+			btn.setEnabled(gs.getSelectables().contains(field));
+			btn.setContentAreaFilled(false);
+			btn.setBorderPainted(true);
+
+			String[] fp = properties.getProperty(field.name).split("\\,");
+
+			int size = SCALE / 10;
+			btn.setBounds(new Rectangle((int) (Float.parseFloat(fp[0]) * SCALE
+					- size / 2), (int) (Float.parseFloat(fp[1]) * SCALE - size / 2), size, size));
+
+			btn.setActionCommand("fieldPressed");
+			btn.addActionListener(this);
+
+			add(btn, new Integer(1));
+
 		}
 
-		HashSet original = new HashSet();
-		original.addAll(tokens.keySet());
-		HashSet destroyed = new HashSet();
-		destroyed.addAll(tokens.keySet());
-		HashSet newtokens = new HashSet();
-		for (TokenState t : gs.getTokens()) {
-			tokens.put(t.id, t);
-			newtokens.add(t.id);
+		for (TokenState token : gs.getTokens()) {
+			JButton btn = new JButton();
+			buttons.add(btn);
+			ids.put(btn,token.id);
+
+			btn.setUI(new TokenButtonUI(colorManager, token, getImage(token.type)));
+			btn.setOpaque(!gs.getSelectables().contains(token));
+			btn.setEnabled(gs.getSelectables().contains(token));
+			btn.setContentAreaFilled(false);
+			btn.setBorderPainted(false);
+
+			String[] fp = properties.getProperty(gs.getFields().stream()
+					.filter(x -> x.id==token.field).findFirst().get().name)
+					.split("\\,");
+
+			int size = SCALE / 10;
+			btn.setBounds(new Rectangle((int) (Float.parseFloat(fp[0]) * SCALE
+					- size / 2), (int) (Float.parseFloat(fp[1]) * SCALE - size / 2), size, size));
+
+			btn.setActionCommand("tokenPressed");
+			btn.addActionListener(this);
+
+			add(btn, new Integer(2));
 		}
 
-		destroyed.removeAll(newtokens);
-		newtokens.removeAll(original);
-
-		for (Object d : destroyed) {
-			remove(buttons.get(d));
-		}
-		for (Object n : newtokens) {
-			AddToken(tokens.get(n));
-			buttons.get(n).setEnabled(false);
-		}
-
-		for (FieldState f : gs.getFields()) {
-			fields.put(f.id, f);
-		}
-
-		for (Object s : gs.getSelectables()) {
-			JButton b = buttons.get(s);
-			if (b != null) {
-				b.setEnabled(true);
-				enabledButtons.add(b);
-			}
-		}
-
-		repaint();
+		invalidate();
 	}
 
 	public Image getImage(String name) {
@@ -121,73 +111,33 @@ class BoardPanel extends JLayeredPane implements ActionListener, StateListener {
 		return images.get(name);
 	}
 
-	public void Rescale() {
-		SCALE = Math.min(this.getWidth(), this.getHeight());
-		for (FieldState field : messageReciever.getCurrentState().getFields()) {
-			String[] fp = properties.getProperty(field.name).split("\\,");
-			int size = SCALE / 10;
-			buttons.get(field.id).setBounds(new Rectangle((int) (Float.parseFloat(fp[0]) * SCALE - size / 2), (int) (Float.parseFloat(fp[1]) * SCALE - size / 2), size, size));
-
-			for (TokenState token : tokens.values()) {
-				if (field.id == token.field)
-
-					buttons.get(token.id).setBounds(new Rectangle((int) (Float.parseFloat(fp[0]) * SCALE - size / 2), (int) (Float.parseFloat(fp[1]) * SCALE - size / 2), size, size));
-			}
-		}
-	}
 
 	@Override
 	public void paint(Graphics g) {
 		if (messageReciever.IsEmpty()) return;
-		Rescale();
+
 		Graphics2D g2 = (Graphics2D) g;
 
 		g2.clearRect(0, 0, getWidth(), getHeight());
 		g2.drawImage(boardImage, 0, 0, SCALE, SCALE, null);
-		for (FieldState field : messageReciever.getCurrentState().getFields()) {
-			for (Object ne : field.neighbours) {
-				FieldState n = fields.get(ne);
-				if (n != null) {
-					//Line2D line = new Line2D.Float((field.x - minX + 1) * SCALE, (field.y - minY + 1) * SCALE, n.x * SCALE,                            n.y * SCALE);
-					//g2.draw(line);
-
-				}
-
-			}
-		}
 
 		super.paint(g);
 	}
 
 	public void DisableButtons() {
-		for (JButton b : enabledButtons) {
-			b.setEnabled(false);
+		for (JButton b : buttons) {
+			this.remove(b);
 		}
-		enabledButtons.clear();
+		buttons.clear();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		if (action == "fieldPressed" || action == "tokenPressed") {
-			messageReciever.getClient().sendSelected(buttons2.get(e.getSource()));
+			messageReciever.getClient().sendSelected(ids.get(e.getSource()));
 		}
 		DisableButtons();
-	}
-
-	private void AddToken(TokenState t) {
-		JButton button = new JButton();
-		button.setOpaque(false);
-		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
-
-		button.setUI(new TokenButtonUI(colorManager, t, getImage(t.type)));
-		add(button, new Integer(2));
-		button.setActionCommand("tokenPressed");
-		button.addActionListener(this);
-		buttons.put(t.id, button);
-		buttons2.put(button, t.id);
-		tokens.put(t.id, t);
 	}
 
 }

@@ -1,7 +1,6 @@
 package hu.bme.aut.gergelyszaz.BGS.game;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -12,16 +11,17 @@ import java.util.stream.Collectors;
 public class SelectableManager {
 
 	private Set<Object> allObjects=new HashSet<>();
-	private Set<Object> selectableObjects=new HashSet<>();
+	private List<Object> selectableObjects=new ArrayList<>();
 	private String selectableName="";
 	private boolean isSelectionDone=true;
 
-	public Set<Object> getSelectableObjects() {
+	public List<Object> getSelectableObjects() {
 		return selectableObjects;
 	}
 
 	public void setSelectableObjects(Predicate<? super Object> predicate, String toVar) {
-		selectableObjects=allObjects.stream().filter(predicate).collect(Collectors.toSet());
+		selectableObjects=allObjects.stream().filter(predicate).collect
+				(Collectors.toList());
 		if(selectableObjects.isEmpty())
 			throw new RuntimeException("Nothing selectable");
 		selectableName=toVar;

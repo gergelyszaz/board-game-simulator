@@ -28,9 +28,7 @@ public class EndTurnAction extends AbstractAction {
 		Player player = (Player) variableManager.getReference(null,
 				VariableManager.GLOBAL.CURRENTPLAYER);
 		Player nextPlayer = internalManager.getNextPlayer(player);
-		variableManager.store(null,
-				VariableManager.GLOBAL.CURRENTPLAYER,
-				nextPlayer);
+		internalManager.setCurrentPlayer(nextPlayer,variableManager);
 		actionManager.reset();
 	}
 

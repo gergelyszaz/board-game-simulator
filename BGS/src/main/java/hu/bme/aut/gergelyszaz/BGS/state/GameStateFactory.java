@@ -2,15 +2,10 @@ package hu.bme.aut.gergelyszaz.BGS.state;
 
 import com.google.common.collect.Lists;
 import hu.bme.aut.gergelyszaz.BGS.game.InternalManager;
-import hu.bme.aut.gergelyszaz.BGS.game.internal.Card;
-import hu.bme.aut.gergelyszaz.BGS.game.internal.Deck;
-import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
-import hu.bme.aut.gergelyszaz.BGS.game.internal.Token;
+import hu.bme.aut.gergelyszaz.BGS.game.internal.*;
 import hu.bme.aut.gergelyszaz.bGL.Field;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -26,7 +21,7 @@ public class GameStateFactory {
 														 List<Field> fields,
 														 List<Token> tokens,
 														 List<Deck> decks,
-														 Set<Integer> selectables,
+														 List<Integer> selectables,
 														 List<Integer> winners,
 														 List<Integer> losers)
 		 throws IllegalAccessException {
@@ -98,7 +93,7 @@ public class GameStateFactory {
 				internalManager.getFields(),
 				internalManager.getTokens(),
 				internalManager.getDecks(),
-				internalManager.getSelectables(),
+				internalManager.getSelectables(idManager),
 				Lists.transform(internalManager.getWinners(), idManager::get),
 				Lists.transform(internalManager.getLosers(), idManager::get));
 	}

@@ -6,20 +6,13 @@ import hu.bme.aut.gergelyszaz.BGS.action.impl.SelectAction;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Deck;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Player;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.Token;
-import hu.bme.aut.gergelyszaz.BGS.state.GameState;
-import hu.bme.aut.gergelyszaz.BGS.state.GameStateFactory;
-import hu.bme.aut.gergelyszaz.BGS.state.IDManager;
+import hu.bme.aut.gergelyszaz.BGS.state.*;
 import hu.bme.aut.gergelyszaz.BGS.state.util.StateStore;
-import hu.bme.aut.gergelyszaz.BGS.view.Controller;
-import hu.bme.aut.gergelyszaz.BGS.view.View;
+import hu.bme.aut.gergelyszaz.BGS.view.*;
 import hu.bme.aut.gergelyszaz.bGL.Field;
-import hu.bme.aut.gergelyszaz.bGL.Model;
-import org.eclipse.emf.common.util.EList;
+import hu.bme.aut.gergelyszaz.bGL.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class GameImpl implements Controller, Game {
 
@@ -30,7 +23,7 @@ public class GameImpl implements Controller, Game {
     StateStore stateStore;
     InternalManager internalManager;
     Set<View> views = new HashSet<>();
-    private EList<Field> fields;
+
     public GameImpl(VariableManager variableManager, ActionManager actionManager,
                     IDManager idManager, StateStore stateStore,
                     InternalManager internalManager) {
@@ -77,7 +70,7 @@ public class GameImpl implements Controller, Game {
     public void Init(Model gameModel, List<Player> players, List<Deck> decks) {
 
         name = gameModel.getName();
-        fields = gameModel.getFields();
+        internalManager.getFields().addAll( gameModel.getFields());
         internalManager.getPlayers().addAll(players);
         internalManager.getDecks().addAll(decks);
 
@@ -152,7 +145,7 @@ public class GameImpl implements Controller, Game {
                     .getSelectableName(), object);
 
             if (object instanceof Token) {
-                for (Field f : fields) {
+                for (Field f : internalManager.getFields()) {
                     variableManager
                             .store(f, VariableManager
                                         .GLOBAL.DISTANCE_FROM_SELECTED_TOKEN,

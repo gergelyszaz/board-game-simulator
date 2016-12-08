@@ -27,4 +27,10 @@ public class SelectAction extends AbstractAction {
 			return variableManager.evaluate(action.getCondition());
 		},this.toVar);
     }
+
+    @Override
+	public String toString(){
+		 return super.toString()+ " "+ selectableManager.getSelectableObjects()
+				 .size();
+	 }
 }

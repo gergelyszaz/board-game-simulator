@@ -1,6 +1,8 @@
 package hu.bme.aut.gergelyszaz.BGS.game;
 
+import com.google.common.collect.Lists;
 import hu.bme.aut.gergelyszaz.BGS.game.internal.*;
+import hu.bme.aut.gergelyszaz.BGS.state.IDManager;
 import hu.bme.aut.gergelyszaz.bGL.Field;
 
 import java.util.*;
@@ -14,7 +16,6 @@ public class InternalManager {
     private List<Field> fields=new ArrayList<>();
     private List<Token> tokens=new ArrayList<>();
     private List<Deck> decks=new ArrayList<>();
-    private Set<Integer> selectables=new HashSet<>();
     private List<Player> winners=new ArrayList<>();
     private List<Player> losers=new ArrayList<>();
     private SelectableManager selectableManager;
@@ -40,8 +41,9 @@ public class InternalManager {
         return decks;
     }
 
-    public Set<Integer> getSelectables() {
-        return selectables;
+    public List<Integer> getSelectables(IDManager idManager) {
+        return Lists.transform(selectableManager.getSelectableObjects(),
+              o->idManager.get(o)) ;
     }
 
     public List<Player> getWinners() {
@@ -72,7 +74,7 @@ public class InternalManager {
 
     public void setCurrentPlayer(Player currentPlayer, VariableManager variableManager) {
         this.currentPlayer=currentPlayer;
-        variableManager.store(null,"currentPlayer",currentPlayer);
+        variableManager.store(null,VariableManager.GLOBAL.CURRENTPLAYER,currentPlayer);
     }
 
     public void addWinner(Player player) {

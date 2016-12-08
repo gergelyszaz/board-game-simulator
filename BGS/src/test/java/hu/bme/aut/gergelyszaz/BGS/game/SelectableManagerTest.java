@@ -1,14 +1,11 @@
 package hu.bme.aut.gergelyszaz.BGS.game;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
-import java.util.Set;
+import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 /**
  * Created by mad on 22/10/2016.
@@ -34,7 +31,7 @@ public class SelectableManagerTest {
         Object object=new Object();
         selectableManager.add(object);
         selectableManager.setSelectableObjects(o -> true, "name");
-        Set<Object> selectables=selectableManager.getSelectableObjects();
+        List<Object> selectables=selectableManager.getSelectableObjects();
         assertTrue(selectables.size()==1);
         assertTrue(selectables.contains(object));
         assertFalse(selectableManager.isSelectionDone());

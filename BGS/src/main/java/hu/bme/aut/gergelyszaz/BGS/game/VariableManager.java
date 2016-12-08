@@ -134,8 +134,20 @@ public class VariableManager {
 			return false;
 		}
 
+		boolean result = false;
+		switch (exp.getName()) {
+			case "===":
+			case "==":
+				result = Objects.equals(left, right);
+				return not != result;
+			case "!==":
+			case "!=":
+				result = !Objects.equals(left, right);
+				return not != result;
+		}
+
 		int rightValue = 0, leftValue = 0;
-		//It is a number comparation
+		//It is a number comparision
 		if (exp.getName().length() <= 2) {
 			if (!(left instanceof Integer)) {
 				throw new IllegalAccessError(left + " is not a number");
@@ -147,16 +159,7 @@ public class VariableManager {
 			rightValue = (Integer) right;
 		}
 
-		boolean result = false;
 		switch (exp.getName()) {
-			case "===":
-			case "==":
-				result = Objects.equals(left, right);
-				break;
-			case "!==":
-			case "!=":
-				result = !Objects.equals(left, right);
-				break;
 			case ">":
 				result = leftValue > rightValue;
 				break;
