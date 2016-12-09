@@ -51,8 +51,8 @@ class BoardPanel extends JLayeredPane implements ActionListener, StateListener {
 			ids.put(btn,field.id);
 
 			btn.setUI(new FieldButtonUI(field));
-			btn.setOpaque(!gs.getSelectables().contains(field));
-			btn.setEnabled(gs.getSelectables().contains(field));
+			btn.setOpaque(!gs.getSelectables().contains(field.id));
+			btn.setEnabled(gs.getSelectables().contains(field.id));
 			btn.setContentAreaFilled(false);
 			btn.setBorderPainted(true);
 
@@ -75,8 +75,8 @@ class BoardPanel extends JLayeredPane implements ActionListener, StateListener {
 			ids.put(btn,token.id);
 
 			btn.setUI(new TokenButtonUI(colorManager, token, getImage(token.type)));
-			btn.setOpaque(!gs.getSelectables().contains(token));
-			btn.setEnabled(gs.getSelectables().contains(token));
+			btn.setOpaque(!gs.getSelectables().contains(token.id));
+			btn.setEnabled(gs.getSelectables().contains(token.id));
 			btn.setContentAreaFilled(false);
 			btn.setBorderPainted(false);
 

@@ -1,6 +1,5 @@
 package hu.bme.aut.gergelyszaz.BGS.state;
 
-public class PlayerState {
+public class PlayerState extends AbstractState{
 	public String name;
-	public int id;
 }

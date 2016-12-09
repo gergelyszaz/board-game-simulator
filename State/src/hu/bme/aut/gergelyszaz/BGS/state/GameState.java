@@ -3,9 +3,8 @@ package hu.bme.aut.gergelyszaz.BGS.state;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameState {
+public class GameState extends AbstractState{
 
-    final int version;
     final List<PlayerState> players;
     final List<FieldState> fields;
     final List<TokenState> tokens;
@@ -21,7 +20,7 @@ public class GameState {
                      List<FieldState> fields, List<TokenState> tokens, List<Integer> selectables, List<Integer> winners, List<Integer> losers, List<DeckState> decks, int playerID) {
         super();
         this.name = name;
-        this.version = version;
+        this.id = version;
         this.currentplayer = currentplayer;
         this.players = players;
         this.fields = fields;
@@ -43,7 +42,7 @@ public class GameState {
     }
 
     public int getVersion() {
-        return version;
+        return id;
     }
 
     public List<PlayerState> getPlayers() {
@@ -99,6 +98,7 @@ public class GameState {
             publicselectables = new ArrayList<>();
         }
 
-        return new GameState(name, version, currentplayer, players, fields, tokens, publicselectables, winners, losers, publicdecks, playerID);
+        return new GameState(name, id, currentplayer, players, fields, tokens,
+              publicselectables, winners, losers, publicdecks, playerID);
     }
 }
