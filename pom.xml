@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <xtextVersion>2.10.0</xtextVersion>
+        <xtextVersion>2.9.2</xtextVersion>
         <xtendVersion>2.9.0</xtendVersion>
         <junitVersion>4.10</junitVersion>
         <mockitoVersion>2.1.0</mockitoVersion>
@@ -23,6 +23,8 @@
         <module>Server</module>
         <module>Client</module>
         <module>Application</module>
+        <module>bgl.ide</module>
+        <module>bgl.web</module>
     </modules>
     <build>
         <pluginManagement>
@@ -78,26 +80,6 @@
                                         </groupId>
                                         <artifactId>
                                             maven-resources-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [2.4.3,)
-                                        </versionRange>
-                                        <goals>
-                                            <goal>resources</goal>
-                                            <goal>testResources</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore></ignore>
-                                    </action>
-                                </pluginExecution>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>
-                                            org.codehaus.mojo
-                                        </groupId>
-                                        <artifactId>
-                                            build-helper-maven-plugin
                                         </artifactId>
                                         <versionRange>
                                             [1.9.1,)

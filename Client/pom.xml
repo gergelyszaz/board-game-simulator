@@ -2,10 +2,8 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>hu.bme.aut.gergelyszaz.bgs</groupId>
     <artifactId>bgs-client</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
     <parent>
         <groupId>hu.bme.aut.gergelyszaz.bgs</groupId>
         <artifactId>bgl-parent</artifactId>
@@ -13,9 +11,9 @@
     </parent>
     <dependencies>
         <dependency>
-            <groupId>hu.bme.aut.gergelyszaz.BGS</groupId>
-            <artifactId>State</artifactId>
-            <version>1.0</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>state</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.websocket</groupId>
