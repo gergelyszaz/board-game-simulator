@@ -11,13 +11,13 @@ public class GameStateValidator {
 
 		if (
 			 gameState == null ||
-				  gameState.getPlayers() == null ||
-				  gameState.getSelectables() == null ||
-				  gameState.getDecks() == null ||
-				  gameState.getFields() == null ||
-				  gameState.getLosers() == null ||
-				  gameState.getTokens() == null ||
-				  gameState.getWinners() == null
+				  gameState.players == null ||
+				  gameState.selectables == null ||
+				  gameState.decks == null ||
+				  gameState.fields == null ||
+				  gameState.losers == null ||
+				  gameState.tokens == null ||
+				  gameState.winners == null
 			 ) {
 			return false;
 		}

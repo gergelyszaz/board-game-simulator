@@ -71,7 +71,9 @@ public class GameStateFactory {
 			deckState.id = idManager.get(deck);
 			if (deck.owner != null) deckState.owner = idManager.get(deck.owner);
 			for (Card c : deck.cards) {
-				CardState cs = new CardState(idManager.get(c), c.getType());
+				CardState cs = new CardState();
+				cs.id=idManager.get(c);
+				cs.type=c.getType();
 				deckState.cards.add(cs);
 			}
 		}

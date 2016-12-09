@@ -2,28 +2,28 @@ GAME Uno
 
 PLAYERS 2 {
 	setup=1
-	PROTECTED DECK hand {}
+	PROTECTED DECK hand
 }
 
-BOARD {
-	PRIVATE DECK deck {
-		c_r_0 c_r_1 c_r_2 c_r_3 c_r_4 c_r_5 c_r_6 c_r_7 c_r_8 c_r_9 c_r_drawtwo c_r_skip
-		c_g_0 c_g_1 c_g_2 c_g_3 c_g_4 c_g_5 c_g_6 c_g_7 c_g_8 c_g_9 c_g_drawtwo c_g_skip
-		c_b_0 c_b_1 c_b_2 c_b_3 c_b_4 c_b_5 c_b_6 c_b_7 c_b_8 c_b_9 c_b_drawtwo c_b_skip
-		c_y_0 c_y_1 c_y_2 c_y_3 c_y_4 c_y_5 c_y_6 c_y_7 c_y_8 c_y_9 c_y_drawtwo c_y_skip
-		c_r_1 c_r_2 c_r_3 c_r_4 c_r_5 c_r_6 c_r_7 c_r_8 c_r_9 c_r_drawtwo c_r_skip
-        c_g_1 c_g_2 c_g_3 c_g_4 c_g_5 c_g_6 c_g_7 c_g_8 c_g_9 c_g_drawtwo c_g_skip
-        c_b_1 c_b_2 c_b_3 c_b_4 c_b_5 c_b_6 c_b_7 c_b_8 c_b_9 c_b_drawtwo c_b_skip
-        c_y_1 c_y_2 c_y_3 c_y_4 c_y_5 c_y_6 c_y_7 c_y_8 c_y_9 c_y_drawtwo c_y_skip
-        c_u_draw4 c_u_draw4 c_u_draw4 c_u_draw4
-        c_u_select c_u_select c_u_select c_u_select
-	}
-	PUBLIC DECK table {}
-	PUBLIC DECK select_deck { c_r_0 c_g_0 c_b_0 c_y_0 }
-	setup=1
-	skipturn=0
-	drawnumber=0
+
+PRIVATE DECK deck {
+	c_r_0 c_r_1 c_r_2 c_r_3 c_r_4 c_r_5 c_r_6 c_r_7 c_r_8 c_r_9 c_r_drawtwo c_r_skip
+	c_g_0 c_g_1 c_g_2 c_g_3 c_g_4 c_g_5 c_g_6 c_g_7 c_g_8 c_g_9 c_g_drawtwo c_g_skip
+	c_b_0 c_b_1 c_b_2 c_b_3 c_b_4 c_b_5 c_b_6 c_b_7 c_b_8 c_b_9 c_b_drawtwo c_b_skip
+	c_y_0 c_y_1 c_y_2 c_y_3 c_y_4 c_y_5 c_y_6 c_y_7 c_y_8 c_y_9 c_y_drawtwo c_y_skip
+	c_r_1 c_r_2 c_r_3 c_r_4 c_r_5 c_r_6 c_r_7 c_r_8 c_r_9 c_r_drawtwo c_r_skip
+      c_g_1 c_g_2 c_g_3 c_g_4 c_g_5 c_g_6 c_g_7 c_g_8 c_g_9 c_g_drawtwo c_g_skip
+      c_b_1 c_b_2 c_b_3 c_b_4 c_b_5 c_b_6 c_b_7 c_b_8 c_b_9 c_b_drawtwo c_b_skip
+      c_y_1 c_y_2 c_y_3 c_y_4 c_y_5 c_y_6 c_y_7 c_y_8 c_y_9 c_y_drawtwo c_y_skip
+      c_u_draw4 c_u_draw4 c_u_draw4 c_u_draw4
+      c_u_select c_u_select c_u_select c_u_select
 }
+PUBLIC DECK table {}
+PUBLIC DECK select_deck { c_r_0 c_g_0 c_b_0 c_y_0 }
+setup=1
+skipturn=0
+drawnumber=0
+
 
 CARD c_r_0{	color=1	number=0 }
 CARD c_r_1{	color=1	number=1 }

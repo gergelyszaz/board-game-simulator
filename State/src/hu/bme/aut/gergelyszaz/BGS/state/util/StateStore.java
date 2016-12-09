@@ -20,7 +20,7 @@ public class StateStore {
 
 	public int getCurrentVersion() {
 		if (gameStates.isEmpty()) return -1;
-		return getCurrentState().getVersion();
+		return getCurrentState().version;
 	}
 
 }

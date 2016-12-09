@@ -43,7 +43,7 @@ class BoardPanel extends JLayeredPane implements ActionListener, StateListener {
 
 		SCALE = Math.min(this.getWidth(), this.getHeight());
 
-		for (FieldState field : gs.getFields()) {
+		for (FieldState field : gs.fields) {
 
 			JButton btn = new JButton();
 
@@ -51,8 +51,8 @@ class BoardPanel extends JLayeredPane implements ActionListener, StateListener {
 			ids.put(btn,field.id);
 
 			btn.setUI(new FieldButtonUI(field));
-			btn.setOpaque(!gs.getSelectables().contains(field.id));
-			btn.setEnabled(gs.getSelectables().contains(field.id));
+			btn.setOpaque(!gs.selectables.contains(field.id));
+			btn.setEnabled(gs.selectables.contains(field.id));
 			btn.setContentAreaFilled(false);
 			btn.setBorderPainted(true);
 
@@ -69,18 +69,18 @@ class BoardPanel extends JLayeredPane implements ActionListener, StateListener {
 
 		}
 
-		for (TokenState token : gs.getTokens()) {
+		for (TokenState token : gs.tokens) {
 			JButton btn = new JButton();
 			buttons.add(btn);
 			ids.put(btn,token.id);
 
 			btn.setUI(new TokenButtonUI(colorManager, token, getImage(token.type)));
-			btn.setOpaque(!gs.getSelectables().contains(token.id));
-			btn.setEnabled(gs.getSelectables().contains(token.id));
+			btn.setOpaque(!gs.selectables.contains(token.id));
+			btn.setEnabled(gs.selectables.contains(token.id));
 			btn.setContentAreaFilled(false);
 			btn.setBorderPainted(false);
 
-			String[] fp = properties.getProperty(gs.getFields().stream()
+			String[] fp = properties.getProperty(gs.fields.stream()
 					.filter(x -> x.id==token.field).findFirst().get().name)
 					.split("\\,");
 

@@ -42,7 +42,7 @@ public class CardPanel extends JPanel implements StateListener {
 	@Override
 	public void UpdateGameState(GameState state) {
 
-		for (DeckState ds : state.getDecks()) {
+		for (DeckState ds : state.decks) {
 
 			if (!deckListModels.containsKey(ds.id)) {
 				DefaultListModel<String> dsm = new DefaultListModel<>();
@@ -65,8 +65,8 @@ public class CardPanel extends JPanel implements StateListener {
 		}
 
 		selectableCardsModel.clear();
-		if (state.getCurrentplayer() == state.getPlayerID()) {
-			for (int id : state.getSelectables()) {
+		if (state.currentplayer == state.playerID) {
+			for (int id : state.selectables) {
 				selectableCardsModel.addElement(id + "");
 			}
 		}

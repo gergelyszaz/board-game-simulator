@@ -3,24 +3,25 @@ package hu.bme.aut.gergelyszaz.BGS.state;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameState extends AbstractState{
+public class GameState {
 
-    final List<PlayerState> players;
-    final List<FieldState> fields;
-    final List<TokenState> tokens;
-    final List<Integer> selectables;
-    final String name;
-    final int currentplayer;
-    final List<Integer> winners;
-    final List<Integer> losers;
-    final List<DeckState> decks;
-    final int playerID;
+    public final List<PlayerState> players;
+    public final List<FieldState> fields;
+    public final List<TokenState> tokens;
+    public final List<Integer> selectables;
+    public final String name;
+    public final int currentplayer;
+    public final List<Integer> winners;
+    public final List<Integer> losers;
+    public final List<DeckState> decks;
+    public final int playerID;
+    public final int version;
 
     public GameState(String name, int version, int currentplayer, List<PlayerState> players,
                      List<FieldState> fields, List<TokenState> tokens, List<Integer> selectables, List<Integer> winners, List<Integer> losers, List<DeckState> decks, int playerID) {
         super();
         this.name = name;
-        this.id = version;
+        this.version = version;
         this.currentplayer = currentplayer;
         this.players = players;
         this.fields = fields;
@@ -35,50 +36,6 @@ public class GameState extends AbstractState{
     public static GameState emptyGameState() {
         return new GameState("", -1, 0, new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(),
                 new ArrayList(), new ArrayList(), -1);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getVersion() {
-        return id;
-    }
-
-    public List<PlayerState> getPlayers() {
-        return players;
-    }
-
-    public List<FieldState> getFields() {
-        return fields;
-    }
-
-    public List<TokenState> getTokens() {
-        return tokens;
-    }
-
-    public List<Integer> getSelectables() {
-        return selectables;
-    }
-
-    public List<Integer> getWinners() {
-        return winners;
-    }
-
-    public List<Integer> getLosers() {
-        return losers;
-    }
-
-    public List<DeckState> getDecks() {
-        return decks;
-    }
-
-    public int getPlayerID() {
-        return playerID;
-    }
-
-    public int getCurrentplayer() {
-        return currentplayer;
     }
 
     public GameState getPublicState(int playerID) {
@@ -98,7 +55,7 @@ public class GameState extends AbstractState{
             publicselectables = new ArrayList<>();
         }
 
-        return new GameState(name, id, currentplayer, players, fields, tokens,
+        return new GameState(name, version, currentplayer, players, fields, tokens,
               publicselectables, winners, losers, publicdecks, playerID);
     }
 }
