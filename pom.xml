@@ -2,9 +2,9 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>hu.bme.aut.gergelyszaz.bgs</groupId>
+    <groupId>hu.gergelyszaz.bgs</groupId>
     <version>1.0.0-SNAPSHOT</version>
-    <artifactId>bgl-parent</artifactId>
+    <artifactId>parent</artifactId>
     <packaging>pom</packaging>
 
     <properties>
@@ -17,12 +17,12 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <modules>
-        <module>BGL</module>
-        <module>BGS</module>
-        <module>State</module>
-        <module>Server</module>
-        <module>Client</module>
-        <module>Application</module>
+        <module>bgl</module>
+        <module>state</module>
+        <module>bgs</module>
+        <module>bgs.server</module>
+        <module>bgs.client</module>
+        <module>bgs.application</module>
         <module>bgl.ide</module>
         <module>bgl.web</module>
     </modules>
