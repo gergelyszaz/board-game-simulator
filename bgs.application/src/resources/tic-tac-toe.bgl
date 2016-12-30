@@ -19,15 +19,15 @@ RULES {
 	    xplayer=currentPlayer
 	    x=1
 	}
-	IF(currentplayer===xplayer) {
+	IF(currentPlayer==xplayer) {
 	    SPAWN X AS selectedToken TO selectedField
 	}
-	IF(currentplayer!==xplayer){
+	IF(currentPlayer!=xplayer){
 	    SPAWN O AS selectedToken TO selectedField
 	}
 
-	selectedField.OWNER=currentPlayer
-	selectedField.tokenCount=1
+	selectedToken.field.owner=currentPlayer
+	selectedToken.field.tokenCount=1
 	
 	IF(
 		( F11.owner===F12.owner AND F12.owner===F13.owner AND F13.owner===currentPlayer ) OR
@@ -38,8 +38,9 @@ RULES {
 		( F13.owner===F23.owner AND F23.owner===F33.owner AND F33.owner===currentPlayer ) OR
 		( F11.owner===F22.owner AND F22.owner===F33.owner AND F33.owner===currentPlayer ) OR
 		( F13.owner===F22.owner AND F22.owner===F31.owner AND F31.owner===currentPlayer )
-		){
+	)
+	{
 			WIN
-		}
+	}
 	END TURN
 }
