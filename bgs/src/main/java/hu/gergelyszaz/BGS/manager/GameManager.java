@@ -6,6 +6,7 @@ import hu.gergelyszaz.BGS.view.Controller;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import hu.gergelyszaz.bGL.*;
 
 public class GameManager implements Runnable {
 	public ModelManager modelManager;
@@ -23,7 +24,9 @@ public class GameManager implements Runnable {
 		if (playerConnections.contains(clientID))
 			return playerConnections.get(clientID);
 		if (availableGames.get(gameName) == null) {
-			availableGames.put(gameName, gameFactory.CreateGame(modelManager.Get(gameName)));
+			Model model=modelManager.Get(gameName);
+			if(model==null) throw new RuntimeException("Game "+ gameName + " not found!");
+			availableGames.put(gameName, gameFactory.CreateGame(model));
 		}
 		//TODO what happens if multiple clients try connect at the same time?
 		Game game = availableGames.get(gameName);

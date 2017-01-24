@@ -41,8 +41,9 @@ RULES
 		IF (currentPlayer.tokensPlaced>=currentPlayer.maxTokenCount)
 		{
 			IF currentPlayer.tokenCount<3 { LOSE }
-			SELECT AS selectedToken WHERE this.owner===currentPlayer
-			SELECT AS selectedField WHERE ( this.distanceFromSelectedToken==1 OR currentPlayer.tokenCount==3 ) AND this.owned===this
+			SELECT AS selectedToken WHERE this.owner==currentPlayer
+			SELECT AS selectedField WHERE ( this.distanceFromSelectedToken==1
+			 OR currentPlayer.tokenCount==3 ) AND this.owned==this
 			selectedToken.field.owned=selectedToken.field
 			selectedField.owned=currentPlayer
 			MOVE TOKEN selectedToken TO selectedField
@@ -50,7 +51,7 @@ RULES
 		
 		IF (currentPlayer.tokensPlaced<currentPlayer.maxTokenCount)
 		{
-			SELECT AS selectedField WHERE this.owned === this
+			SELECT AS selectedField WHERE this.owned == this
 			SPAWN T1 AS selectedToken TO selectedField
 			selectedToken.owner=currentPlayer
 			selectedField.owned=currentPlayer
@@ -59,21 +60,27 @@ RULES
 		}
 		
 		
-		IF selectedField.h1.owned===selectedField.owned AND selectedField.h2.owned===selectedField.owned AND selectedField.owned!==selectedField 
+		IF selectedField.h1.owned==selectedField.owned AND selectedField.h2
+		.owned==selectedField.owned AND selectedField.owned!=selectedField
 		{
-			SELECT AS selectedToken WHERE this.owner!==currentPlayer AND
-					(this.field.v1.owned!==this.field.owned OR this.field.v2.owned!==this.field.owned) AND 
-					(this.field.h1.owned!==this.field.owned OR this.field.h2.owned!==this.field.owned)
+			SELECT AS selectedToken WHERE this.owner!=currentPlayer AND
+					(this.field.v1.owned!=this.field.owned OR this.field.v2
+					.owned!=this.field.owned) AND
+					(this.field.h1.owned!=this.field.owned OR this.field.h2
+					.owned!=this.field.owned)
 			selectedToken.field.owned=selectedToken.field
 			selectedToken.owner.tokenCount=selectedToken.owner.tokenCount-1
 			DESTROY selectedToken
 		}
 		
-		IF selectedField.v1.owned===selectedField.owned AND selectedField.v2.owned===selectedField.owned AND selectedField.owned!==selectedField 
+		IF selectedField.v1.owned==selectedField.owned AND selectedField.v2
+		.owned==selectedField.owned AND selectedField.owned!=selectedField
 		{ 
-			SELECT AS selectedToken WHERE this.owner!==currentPlayer	AND 
-					(this.field.v1.owned!==this.field.owned OR this.field.v2.owned!==this.field.owned) AND 
-					(this.field.h1.owned!==this.field.owned OR this.field.h2.owned!==this.field.owned)
+			SELECT AS selectedToken WHERE this.owner!=currentPlayer	AND
+					(this.field.v1.owned!=this.field.owned OR this.field.v2
+					.owned!=this.field.owned) AND
+					(this.field.h1.owned!=this.field.owned OR this.field.h2
+					.owned!=this.field.owned)
 			selectedToken.field.owned=selectedToken.field
 			selectedToken.owner.tokenCount=selectedToken.owner.tokenCount-1
 			DESTROY selectedToken		

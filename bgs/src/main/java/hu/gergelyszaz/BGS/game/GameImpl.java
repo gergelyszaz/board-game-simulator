@@ -85,7 +85,6 @@ public class GameImpl implements Controller, Game {
             return;
         }
         actionManager.step();
-        System.out.println(actionManager.getCurrentAction().toString());
         actionManager.getCurrentAction().Execute();
         _saveCurrentState();
         views.forEach(View::Refresh);
