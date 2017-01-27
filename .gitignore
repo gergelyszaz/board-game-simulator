@@ -9,9 +9,11 @@
 out/
 *.idea
 */classes/
-BGL/model/
-BGL/src/hu/bme/aut/gergelyszaz/BGLRuntimeModule.xtend
-BGL/src/hu/bme/aut/gergelyszaz/BGLStandaloneSetup.xtend
-BGL/src/hu/bme/aut/gergelyszaz/generator/
-BGL/src/hu/bme/aut/gergelyszaz/scoping/
-BGL/src/hu/bme/aut/gergelyszaz/validation/
+bgl/model/
+bgl/src/hu/gergelyszaz/BGLRuntimeModule.xtend
+bgl/src/hu/gergelyszaz/BGLStandaloneSetup.xtend
+bgl/src/hu/gergelyszaz/generator/
+bgl/src/hu/gergelyszaz/scoping/
+bgl/src/hu/gergelyszaz/validation/
+bgl.web/WebRoot/
+bgl.web/src/
