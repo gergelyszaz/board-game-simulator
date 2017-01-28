@@ -40,7 +40,7 @@ public class WebSocketServer {
 	public static boolean runServer(String hostName, int port, String rootpath, String gamesPath) {
 		running = true;
 		try {
-			server = new Server(hostName, port, "/" + rootpath, BGSServer.class);
+			server = new Server(hostName, port, "/" + rootpath, null, BGSServer.class);
 			InputStream input = WebSocketServer.class.getResourceAsStream(gamesPath);
 			configFile.load(input);
 			for (Object k : configFile.values()) {

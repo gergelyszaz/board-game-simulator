@@ -9,6 +9,10 @@
 out/
 *.idea
 */classes/
+.project
+.settings
+.classpath
+.metadata
 bgl/model/
 bgl/src/hu/gergelyszaz/BGLRuntimeModule.xtend
 bgl/src/hu/gergelyszaz/BGLStandaloneSetup.xtend

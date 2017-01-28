@@ -13,22 +13,22 @@
         <dependency>
             <groupId>javax.websocket</groupId>
             <artifactId>javax.websocket-api</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.tyrus</groupId>
             <artifactId>tyrus-server</artifactId>
-            <version>1.1</version>
+            <version>1.13</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.tyrus</groupId>
             <artifactId>tyrus-client</artifactId>
-            <version>1.1</version>
+            <version>1.13</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.tyrus</groupId>
-            <artifactId>tyrus-container-grizzly</artifactId>
-            <version>1.1</version>
+            <artifactId>tyrus-container-grizzly-server</artifactId>
+            <version>1.13</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
@@ -87,15 +87,11 @@
             <plugin>
                 <groupId>com.heroku.sdk</groupId>
                 <artifactId>heroku-maven-plugin</artifactId>
-                <version>1.1.1</version>
+                <version>1.1.3</version>
                 <configuration>
                     <appName>powerful-dusk-75224</appName>
                     <processTypes>
-                        <web>java $JAVA_OPTS -cp
-                            target/classes:target/dependency/*
-                            hu.gergelyszaz.BGS.server.WebSocketServer
-                            -Dserver.port=8025
-                        </web>
+                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* hu.gergelyszaz.BGS.server.WebSocketServer</web>
                     </processTypes>
                 </configuration>
             </plugin>

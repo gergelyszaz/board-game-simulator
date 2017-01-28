@@ -13,10 +13,9 @@ public class BGSClient {
 	}
 
 	@OnMessage
-	public String onMessage(String message, Session session) {
+	public void onMessage(String message, Session session) {
 		logger.info("Received: " + message);
 		Connection.processMessage(session.getId(), message);
-		return "ok";
 	}
 
 	@OnClose
