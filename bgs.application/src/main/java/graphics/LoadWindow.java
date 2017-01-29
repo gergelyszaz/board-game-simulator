@@ -89,7 +89,7 @@ public class LoadWindow {
 
 				Properties gameprop = new Properties();
 				try {
-					gameprop.load(WebSocketServer.class.getResourceAsStream("/resources/properties/" + getList().getSelectedValue() + ".properties"));
+					gameprop.load(WebSocketServer.class.getResourceAsStream("/properties/" + getList().getSelectedValue() + ".properties"));
 					boardPanel.setGameProperties(gameprop);
 				} catch (IOException exception) {
 					return;
