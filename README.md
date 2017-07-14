@@ -103,7 +103,7 @@ TBW
 ```
 
 ### Client
-Contains logic communication logic using WebSockets.
+Contains communication logic using WebSockets.
 
 ### Application
 Graphic (Swing) client application. Depends on BGS.Server project.

@@ -48,23 +48,18 @@ public class BGSServer implements View {
 					c.AddView(this);
 					session.getUserProperties().put(GAME, c);
 					session.getUserProperties().put(GAMESTATEVERSION, -1);
-					return ret.put(STATUS, "joined").toString();
+					return ret.put(STATUS, "ok").put("message","Joined").toString();
 				} catch (Exception e) {
-					logger.info(e.toString());
-					e.printStackTrace();
-					ret.put("message", e.getMessage().toString());
-					return ret.put(STATUS, "error").toString();
+					logger.warning(e.toString());
+					return ret.put(STATUS, "error").put("message", e.getMessage().toString()).toString();
 				}
 
 			case "update":
 				return Update(session);
 
 			case "info":
-				logger.info("info request");
-				ret.put("running", gm.runningGames.size());
+				ret.put(STATUS, "ok");
 				JSONArray games = new JSONArray();
-				ret.put("waiting", gm.availableGames.size());
-				ret.put("connections", gm.playerConnections.size());
 				for (String g : gm.modelManager.AvailableModels()) {
 					games.put(new JSONObject().put("name", g));
 				}
@@ -83,7 +78,7 @@ public class BGSServer implements View {
 				ret.put(STATUS, status);
 				return ret.toString();
 		}
-		return ret.put(STATUS, "no action").toString();
+		return ret.put(STATUS, "error").put("message","Invalid action: " + action).toString();
 	}
 
 	@OnClose
@@ -102,7 +97,6 @@ public class BGSServer implements View {
 	}
 
 	private String Update(Session session) {
-		// TODO error if there is no game yet
 		Controller c = (Controller) session.getUserProperties().get(GAME);
 		Gson gson = new Gson();
 
