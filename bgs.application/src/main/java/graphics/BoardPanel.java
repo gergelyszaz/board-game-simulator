@@ -1,7 +1,8 @@
 package graphics;
 
-import hu.gergelyszaz.BGS.client.StateListener;
-import hu.gergelyszaz.BGS.state.*;
+import hu.gergelyszaz.bgs.client.StateListener;
+import hu.gergelyszaz.bgs.state.*;
+import hu.gergelyszaz.bgs.state.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

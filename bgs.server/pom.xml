@@ -77,7 +77,7 @@
 				</executions>
 				<configuration>
 					<mainClass>
-						hu.gergelyszaz.BGS.server.WebSocketServer
+						hu.gergelyszaz.bgs.server.WebSocketServer
 					</mainClass>
 				</configuration>
 			</plugin>
@@ -88,8 +88,9 @@
 				<configuration>
 					<appName>powerful-dusk-75224</appName>
 					<processTypes>
-						<web>java $JAVA_OPTS -cp target/classes:target/dependency/*
-							hu.gergelyszaz.BGS.server.WebSocketServer</web>
+						<web>java $JAVA_OPTS -cp
+							target/classes:target/dependency/*
+							hu.gergelyszaz.bgs.server.WebSocketServer</web>
 					</processTypes>
 				</configuration>
 			</plugin>

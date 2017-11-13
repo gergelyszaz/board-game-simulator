@@ -1,7 +1,7 @@
 package graphics;
 
-import hu.gergelyszaz.BGS.client.Connection;
-import hu.gergelyszaz.BGS.server.WebSocketServer;
+import hu.gergelyszaz.bgs.client.Connection;
+import hu.gergelyszaz.bgs.server.WebSocketServer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

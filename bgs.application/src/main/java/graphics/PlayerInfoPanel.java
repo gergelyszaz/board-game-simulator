@@ -1,6 +1,6 @@
 package graphics;
 
-import hu.gergelyszaz.BGS.state.PlayerState;
+import hu.gergelyszaz.bgs.state.PlayerState;
 
 import javax.swing.*;
 import java.awt.*;

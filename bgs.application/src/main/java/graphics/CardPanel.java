@@ -1,9 +1,9 @@
 package graphics;
 
-import hu.gergelyszaz.BGS.client.StateListener;
-import hu.gergelyszaz.BGS.state.CardState;
-import hu.gergelyszaz.BGS.state.DeckState;
-import hu.gergelyszaz.BGS.state.GameState;
+import hu.gergelyszaz.bgs.client.StateListener;
+import hu.gergelyszaz.bgs.state.CardState;
+import hu.gergelyszaz.bgs.state.DeckState;
+import hu.gergelyszaz.bgs.state.GameState;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
 package graphics;
 
-import hu.gergelyszaz.BGS.state.TokenState;
+import hu.gergelyszaz.bgs.state.TokenState;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;

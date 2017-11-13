@@ -1,6 +1,6 @@
 package graphics;
 
-import hu.gergelyszaz.BGS.state.FieldState;
+import hu.gergelyszaz.bgs.state.FieldState;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
