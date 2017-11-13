@@ -82,13 +82,6 @@ public class BGSServer implements View {
 				}
 				ret.put(STATUS, status);
 				return ret.toString();
-
-			case "quit":
-				try {
-					session.close(new CloseReason(CloseCodes.NORMAL_CLOSURE, "GameImpl finished"));
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
 		}
 		return ret.put(STATUS, "no action").toString();
 	}
