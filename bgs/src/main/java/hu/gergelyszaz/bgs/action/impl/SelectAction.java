@@ -1,8 +1,7 @@
 package hu.gergelyszaz.bgs.action.impl;
 
 import hu.gergelyszaz.bgs.action.AbstractAction;
-import hu.gergelyszaz.bgs.game.SelectableManager;
-import hu.gergelyszaz.bgs.game.VariableManager;
+import hu.gergelyszaz.bgs.game.*;
 import hu.gergelyszaz.bGL.Action;
 
 /**
@@ -10,27 +9,33 @@ import hu.gergelyszaz.bGL.Action;
  */
 public class SelectAction extends AbstractAction {
 
-    private final SelectableManager selectableManager;
+	private final SelectableManager selectableManager;
 	private String toVar;
+	private ArithmeticManager arithmeticManager;
 
-	public SelectAction(VariableManager variableManager, Action action,
-								SelectableManager selectableManager) {
-        super(variableManager,action);
-		 this.selectableManager = selectableManager;
-		this.toVar=action.getToVar().getName();
-    }
+	public SelectAction(VariableManager variableManager,
+							  Action action,
+							  SelectableManager selectableManager) {
 
-    @Override
-    public void Execute() throws IllegalAccessException {
+		super(variableManager, action);
+		this.selectableManager = selectableManager;
+		this.toVar = action.getToVar().getName();
+
+		this.arithmeticManager = new ArithmeticManager(variableManager);
+	}
+
+	@Override
+	public void Execute() throws IllegalAccessException {
 		selectableManager.setSelectableObjects(o -> {
-			variableManager.store(null, VariableManager.GLOBAL.THIS, o);
-			return variableManager.evaluate(action.getCondition());
-		},this.toVar);
-    }
+			variableManager.store(VariableManager.GLOBAL.THIS, o);
+			return arithmeticManager.evaluate(action.getCondition());
+		}, this.toVar);
+	}
 
-    @Override
-	public String toString(){
-		 return super.toString()+ " "+ selectableManager.getSelectableObjects()
-				 .size();
-	 }
+	@Override
+	public String toString() {
+
+		return super.toString() + " " +
+				selectableManager.getSelectableObjects().size();
+	}
 }

@@ -16,6 +16,7 @@ import static org.mockito.Mockito.*;
 public class VariableManagerTest {
 
     VariableManager variableManager;
+    ArithmeticManager arithmeticManager;
     Object firstObject = "firstObject";
     Object secondObject = "secondObject";
     Object thirdObject = "thirdObject";
@@ -24,6 +25,7 @@ public class VariableManagerTest {
     public void setup() {
 
         variableManager = new VariableManager();
+        arithmeticManager = new ArithmeticManager(variableManager);
 
         variableManager.store(null, "first", firstObject);
 
@@ -56,58 +58,13 @@ public class VariableManagerTest {
     }
 
     @Test
-    public void GetValueUsingAttributeOrIntReturnsIntTest() {
+    public void GetValueTest() {
 
-        AttributeOrInt attributeOrInt = mock(AttributeOrInt.class);
+        Object one = variableManager.getReference("first.one");
 
-        when(attributeOrInt.getAttribute()).thenReturn(null);
-        when(attributeOrInt.getValue()).thenReturn(5);
-
-        Object reference = variableManager.getReference(attributeOrInt);
-
-        assertEquals(5, reference);
+        assertEquals(1, one);
     }
 
-    @Test
-    public void GetValueUsingAttributeOrIntReturnsAttributeTest() {
-
-        AttributeOrInt attributeOrInt = mock(AttributeOrInt.class);
-        AttributeName firstAttribute = mock(AttributeName.class);
-
-        when(firstAttribute.getName()).thenReturn("zero");
-        when(firstAttribute.getChild()).thenReturn(null);
-        when(attributeOrInt.getAttribute()).thenReturn(firstAttribute);
-        when(attributeOrInt.getValue()).thenReturn(5);
-
-        Object reference = variableManager.calculate(attributeOrInt);
-
-        assertEquals(0, reference);
-        assertNotSame(5, reference);
-    }
-
-    @Test(expected = IllegalAccessError.class)
-    public void GetValueUsingAttributeOrIntReturnsInvalidAttributeTest() {
-
-        AttributeOrInt attributeOrInt = mock(AttributeOrInt.class);
-        AttributeName firstAttribute = mock(AttributeName.class);
-
-        when(firstAttribute.getName()).thenReturn("first");
-        when(firstAttribute.getChild()).thenReturn(null);
-        when(attributeOrInt.getAttribute()).thenReturn(firstAttribute);
-        when(attributeOrInt.getValue()).thenReturn(5);
-
-        variableManager.calculate(attributeOrInt);
-
-    }
-
-    @Test
-    public void GetValueUsingInvalidAttributeOrIntTest() {
-
-        AttributeOrInt attributeOrInt = mock(AttributeOrInt.class);
-
-        Object reference = variableManager.calculate(attributeOrInt);
-        assertEquals(reference, 0);
-    }
 
     @Test
     public void StoreUsingNameStringTest() {
@@ -121,7 +78,7 @@ public class VariableManagerTest {
     @Test
     public void StoreUsingPathTest() {
         Object object = new Object();
-        List<String> path = Arrays.asList("first", "second", "third", "fourth");
+        String path = "first.second.third.fourth";
         variableManager.store(path, object);
 
         assertEquals(object, variableManager.getReference(path));
@@ -130,17 +87,15 @@ public class VariableManagerTest {
     @Test(expected = IllegalAccessError.class)
     public void StoreUsingInvalidPathTest() {
 
-        List<String> path = new ArrayList<>();
-        path.add("first");
-        path.add("second");
-        path.add("invalid");
-        path.add("fourth");
+        String path = "first.second.invalid.fourth";
 
         Object object = new Object();
         variableManager.store(path, object);
         assertEquals(object, variableManager.getReference(path));
 
     }
+
+    //ArithmeticManager tests
 
     @Test
     public void EvaluateBooleanExpTest() throws Exception {
@@ -225,34 +180,9 @@ public class VariableManagerTest {
     }
 
     @Test
-    public void getVariablePathTest() {
-
-        AttributeName firstAttribute = mock(AttributeName.class);
-        AttributeName secondAttribute = mock(AttributeName.class);
-        AttributeName thirdAttribute = mock(AttributeName.class);
-
-        when(firstAttribute.getName()).thenReturn("first");
-        when(firstAttribute.getChild()).thenReturn(secondAttribute);
-        when(secondAttribute.getName()).thenReturn("second");
-        when(secondAttribute.getChild()).thenReturn(thirdAttribute);
-        when(thirdAttribute.getName()).thenReturn("third");
-        when(thirdAttribute.getChild()).thenReturn(null);
-
-        List<String> path = variableManager.getVariablePath(firstAttribute);
-
-        assertEquals(3, path.size());
-        assertEquals("first", path.get(0));
-        assertEquals("second", path.get(1));
-        assertEquals("third", path.get(2));
-    }
-
-    @Test
     public void GetReferenceUsingPathTest() {
 
-        List<String> path = new ArrayList<>();
-        path.add("first");
-        path.add("second");
-        path.add("third");
+        String path = "first.second.third";
         Object reference = variableManager.getReference(path);
         assertEquals(thirdObject, reference);
     }
@@ -260,12 +190,8 @@ public class VariableManagerTest {
     @Test(expected = IllegalAccessError.class)
     public void GetReferenceUsingInvalidPathTest() {
 
-        List<String> path = new ArrayList<>();
-        path.add("invalid");
-        path.add("second");
-        path.add("third");
-        Object reference = variableManager.getReference(path);
-        assertEquals(thirdObject, reference);
+        String path = "first.second.invalid.fourth";
+        variableManager.getReference(path);
     }
 
     @Test
@@ -283,75 +209,6 @@ public class VariableManagerTest {
         variableManager.getReference(null, "invalid");
     }
 
-    @Test
-    public void GetReferenceUsingAttributeNameTest() {
-
-        AttributeName firstAttribute = mock(AttributeName.class);
-        AttributeName secondAttribute = mock(AttributeName.class);
-
-        when(firstAttribute.getName()).thenReturn("first");
-        when(firstAttribute.getChild()).thenReturn(secondAttribute);
-        when(secondAttribute.getName()).thenReturn("second");
-        when(secondAttribute.getChild()).thenReturn(null);
-
-        Object reference = variableManager.getReference(firstAttribute);
-
-        assertEquals(secondObject, reference);
-    }
-
-//getReference tests
-
-    @Test(expected = IllegalAccessError.class)
-    public void GetReferenceUsingInvalidAttributeNameTest() {
-
-        AttributeName firstAttribute = mock(AttributeName.class);
-
-        when(firstAttribute.getName()).thenReturn("invalid");
-        when(firstAttribute.getChild()).thenReturn(null);
-
-        variableManager.getReference(firstAttribute);
-    }
-
-    @Test
-    public void GetReferenceUsingAttributeOrIntReturnsIntTest() {
-
-        AttributeOrInt attributeOrInt = mock(AttributeOrInt.class);
-
-        when(attributeOrInt.getAttribute()).thenReturn(null);
-        when(attributeOrInt.getValue()).thenReturn(5);
-
-        Object reference = variableManager.getReference(attributeOrInt);
-
-        assertEquals(5, reference);
-    }
-
-    @Test
-    public void GetReferenceUsingAttributeOrIntReturnsAttributeTest() {
-
-        AttributeOrInt attributeOrInt = mock(AttributeOrInt.class);
-        AttributeName firstAttribute = mock(AttributeName.class);
-
-        when(firstAttribute.getName()).thenReturn("first");
-        when(firstAttribute.getChild()).thenReturn(null);
-        when(attributeOrInt.getAttribute()).thenReturn(firstAttribute);
-        when(attributeOrInt.getValue()).thenReturn(5);
-
-        Object reference = variableManager.getReference(attributeOrInt);
-
-        assertEquals(firstObject, reference);
-        assertNotSame(5, reference);
-    }
-
-    @Test
-    public void GetReferenceUsingInvalidAttributeOrIntTest() {
-
-        AttributeOrInt attributeOrInt = mock(AttributeOrInt.class);
-
-        Object reference = variableManager.getReference(attributeOrInt);
-        assertEquals(0, reference);
-    }
-
-
     private boolean EvaluateBooleanExp(
             String not, AttributeOrInt left, String operator, AttributeOrInt right) {
 
@@ -362,12 +219,12 @@ public class VariableManagerTest {
         when(booleanExp.getLeft()).thenReturn(left);
         when(booleanExp.getRight()).thenReturn(right);
 
-        return variableManager.evaluate(booleanExp);
+        return arithmeticManager.evaluate(booleanExp);
     }
 
     private boolean EvaluateAndExp(boolean left, boolean right) {
 
-        VariableManager spy = spy(variableManager);
+        ArithmeticManager spy = spy(arithmeticManager);
 
         BooleanExp booleanExp1 = mock(BooleanExp.class);
         BooleanExp booleanExp2 = mock(BooleanExp.class);
@@ -385,7 +242,7 @@ public class VariableManagerTest {
 
     private boolean EvaluateOrExp(boolean left, boolean right) {
 
-        VariableManager spy = spy(variableManager);
+        ArithmeticManager spy = spy(arithmeticManager);
 
         OrExp orExp = mock(OrExp.class);
         AndExp andExp1 = mock(AndExp.class);

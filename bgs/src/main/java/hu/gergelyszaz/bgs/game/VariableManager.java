@@ -12,14 +12,6 @@ public class VariableManager {
 
 	private Map<Object, Map<String, Object>> references = new HashMap<>();
 
-	public boolean evaluate(OrExp exp) {
-
-		boolean result = false;
-		for (AndExp e : exp.getExpressions()) {
-			result = (result || evaluate(e));
-		}
-		return result;
-	}
 
 	public String getVariables() {
 
@@ -73,7 +65,9 @@ public class VariableManager {
 		references.remove(object);
 	}
 
-	public void store(List<String> variablePath, Object objectToStore) {
+	public void store(String variable, Object objectToStore) {
+
+		List<String> variablePath = Arrays.asList(variable.split("\\."));
 
 		if (variablePath.size() == 0) {
 			throw new IllegalAccessError(
@@ -84,17 +78,18 @@ public class VariableManager {
 		if (variablePath.size() > 1) {
 			List<String> parentPath =
 					variablePath.subList(0, variablePath.size() - 1);
-			parent = getReference(parentPath);
+			parent = getReference(String.join(".",parentPath));
 		}
 		store(parent, variableName, objectToStore);
 	}
 
-	public Object getReference(List<String> variablePath) {
+	public Object getReference(String variablePath) {
 
 		Object parent = null;
-		for (String variable : variablePath) {
+		for (String variable : variablePath.split("\\.")) {
 			parent = getReference(parent, variable);
 		}
+
 		return parent;
 	}
 
@@ -106,113 +101,6 @@ public class VariableManager {
 			references.put(parent, variables);
 		}
 		variables.put(name, objectToStore);
-	}
-
-	public boolean evaluate(AndExp exp) {
-
-		boolean result = true;
-		for (BooleanExp e : exp.getExpressions()) {
-			result = (result && evaluate(e));
-		}
-		return result;
-	}
-
-	public boolean evaluate(BooleanExp exp) {
-
-		boolean not = (exp.getNot() != null);
-		if (exp.getNestedExp() != null) {
-			return not != evaluate(exp.getNestedExp());
-		}
-
-		Object left;
-		Object right;
-		try {
-			left = getReference(exp.getLeft());
-			right = getReference(exp.getRight());
-		}
-		catch (IllegalAccessError e) {
-			return false;
-		}
-
-		boolean result = false;
-		switch (exp.getName()) {
-			case "===":
-			case "==":
-				result = Objects.equals(left, right);
-				return not != result;
-			case "!==":
-			case "!=":
-				result = !Objects.equals(left, right);
-				return not != result;
-		}
-
-		int rightValue = 0, leftValue = 0;
-		//It is a number comparision
-		if (exp.getName().length() <= 2) {
-			if (!(left instanceof Integer)) {
-				throw new IllegalAccessError(left + " is not a number");
-			}
-			if (!(right instanceof Integer)) {
-				throw new IllegalAccessError(right + " is not a number");
-			}
-			leftValue = (Integer) left;
-			rightValue = (Integer) right;
-		}
-
-		switch (exp.getName()) {
-			case ">":
-				result = leftValue > rightValue;
-				break;
-			case "<":
-				result = leftValue < rightValue;
-				break;
-			case "<=":
-				result = leftValue <= rightValue;
-				break;
-			case ">=":
-				result = leftValue >= rightValue;
-				break;
-
-			default:
-				throw new IllegalAccessError(
-						exp.getName() + " operator not " + "found");
-		}
-		return not != result;
-
-	}
-
-	public int calculate(AttributeOrInt attributeOrInt) {
-
-		Object reference = getReference(attributeOrInt);
-		if (!(reference instanceof Integer)) {
-			throw new IllegalAccessError(attributeOrInt + " is not a number");
-		}
-		return (Integer) reference;
-	}
-
-	public Object getReference(AttributeOrInt variable) {
-
-		if (variable.getAttribute() == null) {
-			return variable.getValue();
-		}
-		return getReference(variable.getAttribute());
-	}
-
-	public Object getReference(AttributeName variable) {
-
-		List<String> variablePath = getVariablePath(variable);
-		return getReference(variablePath);
-	}
-
-	public List<String> getVariablePath(AttributeName attribute) {
-
-		List<String> variablePath = new ArrayList<>();
-		AttributeName child = attribute;
-		while (child != null) {
-			variablePath.add(child.getName());
-			child = child.getChild();
-		}
-		return variablePath;
 	}
 
 	public static class GLOBAL {

@@ -13,6 +13,7 @@ import hu.gergelyszaz.bGL.*;
 import java.util.*;
 
 public class GameFactory {
+	BGLUtil bglUtil = new BGLUtil();
 
 	public GameImpl CreateGame(Model model) throws IllegalAccessException {
 
@@ -70,7 +71,8 @@ public class GameFactory {
 					.getVariables()) {
 				String variableName = variableModel.getName();
 				Object reference =
-						variableManager.getReference(variableModel.getAttribute());
+						variableManager.getReference(
+								bglUtil.toString(variableModel.getAttribute()));
 				variableManager.store(player, variableName, reference);
 			}
 		}
@@ -93,7 +95,8 @@ public class GameFactory {
 				for (SimpleAssignment variable : cardModel.getVariables()) {
 					String variableName = variable.getName();
 					Object reference =
-							variableManager.getReference(variable.getAttribute());
+							variableManager.getReference(bglUtil.toString(variable
+									.getAttribute()));
 					variableManager.store(card, variableName, reference);
 				}
 
@@ -124,7 +127,9 @@ public class GameFactory {
 			variableManager.store(field, "tokenCount", 0);
 			for (SimpleAssignment v : field.getVariables()) {
 				String variableName = v.getName();
-				Object reference = variableManager.getReference(v.getAttribute());
+				Object reference = variableManager.getReference(bglUtil.toString(v
+						.getAttribute
+						()));
 				variableManager.store(field, variableName, reference);
 			}
 		}
@@ -146,7 +151,9 @@ public class GameFactory {
 					for (SimpleAssignment variable : cardModel.getVariables()) {
 						String variableName = variable.getName();
 						Object reference =
-								variableManager.getReference(variable.getAttribute());
+								variableManager.getReference(bglUtil.toString(variable
+										.getAttribute
+										()));
 						variableManager.store(cardModel, variableName, reference);
 					}
 				}
@@ -169,7 +176,8 @@ public class GameFactory {
 		for (SimpleAssignment variable : model.getVariables()) {
 			String variableName = variable.getName();
 			Object reference =
-					variableManager.getReference(variable.getAttribute());
+					variableManager.getReference(bglUtil.toString(variable
+							.getAttribute()));
 			variableManager.store(null, variableName, reference);
 		}
 

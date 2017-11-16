@@ -1,8 +1,7 @@
 package hu.gergelyszaz.bgs.action.impl;
 
 import hu.gergelyszaz.bgs.action.AbstractAction;
-import hu.gergelyszaz.bgs.game.InternalManager;
-import hu.gergelyszaz.bgs.game.VariableManager;
+import hu.gergelyszaz.bgs.game.*;
 import hu.gergelyszaz.bgs.game.internal.Player;
 import hu.gergelyszaz.bgs.game.internal.Token;
 import hu.gergelyszaz.bGL.Action;
@@ -22,6 +21,7 @@ public class SpawnAction extends AbstractAction {
 	private final List<SimpleAssignment> variables;
 	private final AttributeName fieldName;
 	private final AttributeName tokenName;
+	BGLUtil bglUtil = new BGLUtil();
 
 	public SpawnAction(
             VariableManager variableManager, Action
@@ -49,18 +49,20 @@ public class SpawnAction extends AbstractAction {
 
 		for (SimpleAssignment a : variables) {
 			String variableName = a.getName();
-			Object reference = variableManager.getReference(a.getAttribute());
+			Object reference = variableManager.getReference(bglUtil.toString(a
+					.getAttribute()));
 			variableManager.store(token, variableName, reference);
 		}
 		token.setOwner(
 			 (Player) variableManager.getReference(null, "currentPlayer"));
-		token.setField((Field) variableManager.getReference(fieldName));
+		token.setField((Field) variableManager.getReference(bglUtil.toString
+				(fieldName)));
 	}
 
 	private void addTokenToVariableManager(Token token)
 		 throws IllegalAccessException {
 
-		List<String> variablePath = variableManager.getVariablePath(tokenName);
+		String variablePath = bglUtil.toString(tokenName);
 		variableManager.store(variablePath, token);
 	}
 }

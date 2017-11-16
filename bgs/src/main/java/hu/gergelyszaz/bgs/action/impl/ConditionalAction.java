@@ -2,7 +2,7 @@ package hu.gergelyszaz.bgs.action.impl;
 
 import hu.gergelyszaz.bgs.action.AbstractAction;
 import hu.gergelyszaz.bgs.action.ActionManager;
-import hu.gergelyszaz.bgs.game.VariableManager;
+import hu.gergelyszaz.bgs.game.*;
 import hu.gergelyszaz.bGL.Action;
 
 /**
@@ -11,13 +11,14 @@ import hu.gergelyszaz.bGL.Action;
 public abstract class ConditionalAction extends AbstractAction {
     protected hu.gergelyszaz.bgs.action.Action skipAction;
     protected ActionManager actionManager;
+    private ArithmeticManager arithmeticManager ;
 
     public ConditionalAction(VariableManager variableManager,
                              Action action, ActionManager actionManager) {
 
         super(variableManager, action);
         this.actionManager = actionManager;
-
+        this.arithmeticManager = new ArithmeticManager(variableManager);
     }
 
     public void setSkipAction(hu.gergelyszaz.bgs.action.Action action) {
@@ -26,7 +27,7 @@ public abstract class ConditionalAction extends AbstractAction {
 
     @Override
     public void Execute() throws IllegalAccessException {
-        if (!variableManager.evaluate(action.getCondition())) {
+        if (!arithmeticManager.evaluate(action.getCondition())) {
             actionManager.setNextAction(skipAction);
         }
 

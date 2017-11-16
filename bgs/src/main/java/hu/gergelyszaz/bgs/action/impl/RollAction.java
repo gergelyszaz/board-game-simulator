@@ -1,7 +1,7 @@
 package hu.gergelyszaz.bgs.action.impl;
 
 import hu.gergelyszaz.bgs.action.AbstractAction;
-import hu.gergelyszaz.bgs.game.VariableManager;
+import hu.gergelyszaz.bgs.game.*;
 
 import java.util.*;
 
@@ -9,7 +9,7 @@ import java.util.*;
  * Created by gergely.szaz on 2016. 10. 16..
  */
 public class RollAction extends AbstractAction {
-
+    private BGLUtil bglUtil = new BGLUtil();
     public RollAction(VariableManager variableManager, hu.gergelyszaz.bGL.Action action) {
         super(variableManager,action);
     }
@@ -30,7 +30,7 @@ public class RollAction extends AbstractAction {
             result += i;
         }
 
-        List<String> variablePath = variableManager.getVariablePath(action.getToVar());
+        String variablePath = bglUtil.toString(action.getToVar());
         variableManager.store(variablePath, result);
 
         //TODO store independent values

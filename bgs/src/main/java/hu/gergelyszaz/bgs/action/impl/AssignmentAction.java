@@ -1,7 +1,7 @@
 package hu.gergelyszaz.bgs.action.impl;
 
 import hu.gergelyszaz.bgs.action.AbstractAction;
-import hu.gergelyszaz.bgs.game.VariableManager;
+import hu.gergelyszaz.bgs.game.*;
 import hu.gergelyszaz.bGL.*;
 
 import java.util.*;
@@ -10,6 +10,8 @@ import java.util.*;
  * Created by gergely.szaz on 2016. 10. 16..
  */
 public class AssignmentAction extends AbstractAction {
+    BGLUtil bglUtil = new BGLUtil();
+
     public AssignmentAction(VariableManager variableManager, Action action) {
         super(variableManager, action);
     }
@@ -19,8 +21,9 @@ public class AssignmentAction extends AbstractAction {
         ValueAssignment assignment = action.getAssignment();
         Object reference = getReference(assignment.getExpression());
 
-        List<String> variablePath = variableManager.getVariablePath
-                (assignment.getName());
+        String variablePath = bglUtil.toString(
+                assignment.getName());
+
         variableManager.store(variablePath, reference);
     }
 
@@ -38,7 +41,8 @@ public class AssignmentAction extends AbstractAction {
         if (expressions.size() == 1 && expressions.get(0).getAttributeOrInt()
               !=null){
             AttributeOrInt attributeOrInt = expressions.get(0).getAttributeOrInt();
-            return variableManager.getReference(attributeOrInt);
+            return variableManager.getReference(bglUtil.toString
+                  (attributeOrInt));
         }
 
         //an expression
@@ -69,8 +73,8 @@ public class AssignmentAction extends AbstractAction {
     {
         Object reference = null;
         if(expression.getAttributeOrInt()!=null) {
-            reference= variableManager.getReference(expression
-                  .getAttributeOrInt());
+            reference= variableManager.getReference(bglUtil.toString(expression
+                  .getAttributeOrInt()));
         }
         if(expression.getArithmeticExp()!=null) {
             reference= getReference(expression

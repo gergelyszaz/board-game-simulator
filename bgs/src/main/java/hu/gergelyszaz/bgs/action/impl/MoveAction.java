@@ -1,7 +1,7 @@
 package hu.gergelyszaz.bgs.action.impl;
 
 import hu.gergelyszaz.bgs.action.AbstractAction;
-import hu.gergelyszaz.bgs.game.VariableManager;
+import hu.gergelyszaz.bgs.game.*;
 import hu.gergelyszaz.bgs.game.internal.Card;
 import hu.gergelyszaz.bgs.game.internal.Deck;
 import hu.gergelyszaz.bgs.game.internal.Token;
@@ -14,6 +14,8 @@ import java.util.Objects;
  */
 public class MoveAction extends AbstractAction {
 
+    BGLUtil bglUtil = new BGLUtil();
+
     public MoveAction(VariableManager variableManager, hu.gergelyszaz.bGL.Action action) {
         super(variableManager,action);
     }
@@ -21,12 +23,14 @@ public class MoveAction extends AbstractAction {
     @Override
     public void Execute() throws IllegalAccessException {
         if (Objects.equals(action.getType(), "CARD")) {
-            ((Card) variableManager.getReference(action.getSelected()))
-                    .MoveTo((Deck) variableManager.getReference(action.getMoveTo()));
+            ((Card) variableManager.getReference(bglUtil.toString(action.getSelected())))
+                    .MoveTo((Deck) variableManager.getReference(bglUtil.toString(action
+                          .getMoveTo())));
         }
         else {
-            ((Token) variableManager.getReference(action.getSelected())).setField(
-                    (Field) variableManager.getReference(action.getMoveTo()));
+            ((Token) variableManager.getReference(bglUtil.toString(action.getSelected())))
+                  .setField((Field) variableManager.getReference(bglUtil.toString(
+                        action.getMoveTo())));
         }
     }
 }
