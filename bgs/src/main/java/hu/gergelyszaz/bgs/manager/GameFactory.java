@@ -1,5 +1,7 @@
 package hu.gergelyszaz.bgs.manager;
 
+import hu.gergelyszaz.bGL.*;
+import hu.gergelyszaz.bGL.Field;
 import hu.gergelyszaz.bgs.action.*;
 import hu.gergelyszaz.bgs.game.*;
 import hu.gergelyszaz.bgs.game.internal.Card;
@@ -7,12 +9,11 @@ import hu.gergelyszaz.bgs.game.internal.Deck;
 import hu.gergelyszaz.bgs.game.internal.Player;
 import hu.gergelyszaz.bgs.state.IDManager;
 import hu.gergelyszaz.bgs.state.util.StateStore;
-import hu.gergelyszaz.bGL.Field;
-import hu.gergelyszaz.bGL.*;
 
 import java.util.*;
 
 public class GameFactory {
+
 	BGLUtil bglUtil = new BGLUtil();
 
 	public GameImpl CreateGame(Model model) throws IllegalAccessException {
@@ -67,14 +68,9 @@ public class GameFactory {
 			int generatedId = id + 1;
 			Player player = new Player(generatedId);
 			players.add(player);
-			for (SimpleAssignment variableModel : model.getPlayer()
-					.getVariables()) {
-				String variableName = variableModel.getName();
-				Object reference =
-						variableManager.getReference(
-								bglUtil.toString(variableModel.getAttribute()));
-				variableManager.store(player, variableName, reference);
-			}
+			model.getPlayer()
+					.getVariables()
+					.forEach(v -> _doSimpleAssignment(variableManager, player, v));
 		}
 		return players;
 	}
@@ -91,15 +87,9 @@ public class GameFactory {
 			Stack<Card> cardModels = new Stack<>();
 			for (hu.gergelyszaz.bGL.Card cardModel : deckModel.getCards()) {
 				Card card = new Card(variableManager, cardModel);
+				cardModel.getVariables().forEach(v->_doSimpleAssignment
+						(variableManager,card,v));
 				cardModels.add(card);
-				for (SimpleAssignment variable : cardModel.getVariables()) {
-					String variableName = variable.getName();
-					Object reference =
-							variableManager.getReference(bglUtil.toString(variable
-									.getAttribute()));
-					variableManager.store(card, variableName, reference);
-				}
-
 			}
 			Deck deck = new Deck(variableManager,
 					cardModels,
@@ -119,19 +109,12 @@ public class GameFactory {
 
 		List<Field> fields = model.getFields();
 
-		for (Field field : fields) {
-			variableManager.store(null, field.getName(), field);
-		}
+		fields.forEach(f -> variableManager.store(null, f.getName(), f));
 
 		for (Field field : fields) {
 			variableManager.store(field, "tokenCount", 0);
-			for (SimpleAssignment v : field.getVariables()) {
-				String variableName = v.getName();
-				Object reference = variableManager.getReference(bglUtil.toString(v
-						.getAttribute
-						()));
-				variableManager.store(field, variableName, reference);
-			}
+			field.getVariables()
+					.forEach(v -> _doSimpleAssignment(variableManager, field, v));
 		}
 		return fields;
 	}
@@ -142,8 +125,7 @@ public class GameFactory {
 											 List<Deck> decks)
 			throws IllegalAccessException {
 
-		for (hu.gergelyszaz.bGL.Deck deckModel : model.getPlayer()
-				.getDecks()) {
+		for (hu.gergelyszaz.bGL.Deck deckModel : model.getPlayer().getDecks()) {
 			for (Player player : players) {
 				Stack<Card> cards = new Stack<>();
 				for (hu.gergelyszaz.bGL.Card cardModel : deckModel.getCards()) {
@@ -151,9 +133,7 @@ public class GameFactory {
 					for (SimpleAssignment variable : cardModel.getVariables()) {
 						String variableName = variable.getName();
 						Object reference =
-								variableManager.getReference(bglUtil.toString(variable
-										.getAttribute
-										()));
+								variableManager.getReference(bglUtil.toString(variable.getAttribute()));
 						variableManager.store(cardModel, variableName, reference);
 					}
 				}
@@ -168,22 +148,34 @@ public class GameFactory {
 		}
 	}
 
+	private Object _resolveAttributeOrInt(VariableManager variableManager,
+													  AttributeOrInt attributeOrInt) {
+
+		if (attributeOrInt.getAttribute() == null) {
+			return attributeOrInt.getValue();
+		} else {
+			return variableManager.getReference(bglUtil.toString(attributeOrInt.getAttribute()));
+		}
+	}
+
+	private void _doSimpleAssignment(VariableManager variableManager,
+												Object parent,
+												SimpleAssignment assignment) {
+		String variableName = assignment.getName();
+		Object reference =
+				_resolveAttributeOrInt(variableManager, assignment.getAttribute());
+		variableManager.store(parent, variableName, reference);
+	}
+
 	private void _setupGlobalVariables(Model model,
 												  VariableManager variableManager)
 			throws IllegalAccessException {
 
 		variableManager.store(null, VariableManager.GLOBAL.NULL, null);
-		for (SimpleAssignment variable : model.getVariables()) {
-			String variableName = variable.getName();
-			Object reference =
-					variableManager.getReference(bglUtil.toString(variable
-							.getAttribute()));
-			variableManager.store(null, variableName, reference);
-		}
-
-		for (Field field : model.getFields()) {
-			variableManager.store(null, field.getName(), field);
-		}
+		model.getVariables()
+				.forEach(v -> _doSimpleAssignment(variableManager, null, v));
+		model.getFields()
+				.forEach(f -> variableManager.store(null, f.getName(), f));
 	}
 
 	private static void _setupPlayersStartRules(Model model,

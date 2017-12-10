@@ -1,17 +1,16 @@
 package hu.gergelyszaz.bgs.game;
 
 import com.google.common.collect.Lists;
+import hu.gergelyszaz.bGL.Field;
+import hu.gergelyszaz.bGL.*;
 import hu.gergelyszaz.bgs.action.ActionManager;
 import hu.gergelyszaz.bgs.action.impl.SelectAction;
 import hu.gergelyszaz.bgs.game.internal.Deck;
 import hu.gergelyszaz.bgs.game.internal.Player;
 import hu.gergelyszaz.bgs.game.internal.Token;
 import hu.gergelyszaz.bgs.state.*;
-import hu.gergelyszaz.bgs.state.GameState;
 import hu.gergelyszaz.bgs.state.util.StateStore;
 import hu.gergelyszaz.bgs.view.*;
-import hu.gergelyszaz.bGL.Field;
-import hu.gergelyszaz.bGL.*;
 
 import java.util.*;
 
@@ -157,7 +156,7 @@ public class GameImpl implements Controller, Game {
             internalManager.getSelectableManager().finishSelection();
             return true;
         } catch (IllegalAccessException e) {
-            System.out.println(variableManager.getVariables());
+            System.out.println(variableManager.listVariables());
             e.printStackTrace();
             return false;
         }

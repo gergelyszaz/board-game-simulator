@@ -2,8 +2,6 @@ package hu.gergelyszaz.bgs.game;
 
 import hu.gergelyszaz.bGL.*;
 
-import java.util.*;
-
 public class BGLUtil {
 	public String toString(AttributeOrInt attributeOrInt) {
 		if (attributeOrInt.getAttribute() == null) {
@@ -17,10 +15,12 @@ public class BGLUtil {
 		String variable = "";
 		AttributeName child = attributeName;
 		while (child != null) {
-			variable += child.getName() + '.';
+			variable += child.getName();
+			if (child.getChild() != null) {
+				variable += '.';
+			}
 			child = child.getChild();
 		}
 		return variable;
 	}
-
 }

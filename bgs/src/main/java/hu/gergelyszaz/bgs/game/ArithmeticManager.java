@@ -5,12 +5,22 @@ import hu.gergelyszaz.bGL.*;
 import java.util.Objects;
 
 public class ArithmeticManager {
+
 	private VariableManager variableManager;
 	private BGLUtil bglUtil = new BGLUtil();
 
 	public ArithmeticManager(VariableManager variableManager) {
 
 		this.variableManager = variableManager;
+	}
+
+	public Object resolveReference(AttributeOrInt attributeOrInt) {
+
+		if (attributeOrInt.getAttribute() == null) {
+			return attributeOrInt.getValue();
+		} else {
+			return variableManager.getReference(bglUtil.toString(attributeOrInt));
+		}
 	}
 
 	public boolean evaluate(OrExp exp) {
@@ -79,7 +89,6 @@ public class ArithmeticManager {
 				right = variableManager.getReference(rightText);
 			}
 
-			right = variableManager.getReference(bglUtil.toString(exp.getRight()));
 		}
 		catch (IllegalAccessError e) {
 			return false;

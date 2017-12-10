@@ -1,13 +1,11 @@
 package hu.gergelyszaz.bgs.action.impl;
 
+import hu.gergelyszaz.bGL.*;
+import hu.gergelyszaz.bGL.Field;
 import hu.gergelyszaz.bgs.action.AbstractAction;
 import hu.gergelyszaz.bgs.game.*;
 import hu.gergelyszaz.bgs.game.internal.Player;
 import hu.gergelyszaz.bgs.game.internal.Token;
-import hu.gergelyszaz.bGL.Action;
-import hu.gergelyszaz.bGL.AttributeName;
-import hu.gergelyszaz.bGL.Field;
-import hu.gergelyszaz.bGL.SimpleAssignment;
 
 import java.util.List;
 
@@ -49,8 +47,7 @@ public class SpawnAction extends AbstractAction {
 
 		for (SimpleAssignment a : variables) {
 			String variableName = a.getName();
-			Object reference = variableManager.getReference(bglUtil.toString(a
-					.getAttribute()));
+			Object reference = a.getAttribute().getValue();
 			variableManager.store(token, variableName, reference);
 		}
 		token.setOwner(

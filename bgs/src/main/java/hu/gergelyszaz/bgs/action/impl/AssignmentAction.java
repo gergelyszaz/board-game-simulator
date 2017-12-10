@@ -1,19 +1,21 @@
 package hu.gergelyszaz.bgs.action.impl;
 
+import hu.gergelyszaz.bGL.*;
 import hu.gergelyszaz.bgs.action.AbstractAction;
 import hu.gergelyszaz.bgs.game.*;
-import hu.gergelyszaz.bGL.*;
 
-import java.util.*;
+import java.util.List;
 
 /**
- * Created by gergely.szaz on 2016. 10. 16..
+ * Created by Gergely Száz
  */
 public class AssignmentAction extends AbstractAction {
-    BGLUtil bglUtil = new BGLUtil();
+    private BGLUtil bglUtil = new BGLUtil();
+    private ArithmeticManager arithmeticManager;
 
     public AssignmentAction(VariableManager variableManager, Action action) {
         super(variableManager, action);
+        arithmeticManager = new ArithmeticManager(variableManager);
     }
 
     @Override
@@ -33,16 +35,18 @@ public class AssignmentAction extends AbstractAction {
         return super.toString();
     }
 
-    public Object getReference(ArithmeticExp arithmeticExp)
+    private Object getReference(ArithmeticExp arithmeticExp)
     {
+        ArithmeticManager arithmeticManager = new ArithmeticManager(variableManager);
+
         //just a simple reference
         List<Expression> expressions =
               arithmeticExp.getExpressions();
-        if (expressions.size() == 1 && expressions.get(0).getAttributeOrInt()
-              !=null){
-            AttributeOrInt attributeOrInt = expressions.get(0).getAttributeOrInt();
-            return variableManager.getReference(bglUtil.toString
-                  (attributeOrInt));
+        if (expressions.size() == 1 &&
+              expressions.get(0).getAttributeOrInt() != null) {
+            AttributeOrInt attributeOrInt =
+                  expressions.get(0).getAttributeOrInt();
+            return arithmeticManager.resolveReference(attributeOrInt);
         }
 
         //an expression
@@ -62,19 +66,16 @@ public class AssignmentAction extends AbstractAction {
                 case "*":         value *= expressionValue;break;
                 case "/":         value /= expressionValue;break;
             }
-
-
-
         }
         return value;
     }
 
-    public int getReference(Expression expression)
+    private int getReference(Expression expression)
     {
         Object reference = null;
         if(expression.getAttributeOrInt()!=null) {
-            reference= variableManager.getReference(bglUtil.toString(expression
-                  .getAttributeOrInt()));
+            reference= arithmeticManager.resolveReference(expression
+                  .getAttributeOrInt());
         }
         if(expression.getArithmeticExp()!=null) {
             reference= getReference(expression

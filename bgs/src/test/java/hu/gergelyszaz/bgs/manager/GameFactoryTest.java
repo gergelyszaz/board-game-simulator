@@ -1,8 +1,8 @@
 package hu.gergelyszaz.bgs.manager;
 
+import hu.gergelyszaz.bGL.Model;
 import hu.gergelyszaz.bgs.game.*;
 import hu.gergelyszaz.bgs.util.FileUtil;
-import hu.gergelyszaz.bGL.Model;
 import org.junit.*;
 
 import java.util.Map;
@@ -30,9 +30,9 @@ public class GameFactoryTest {
 		GameImpl game = gameFactory.CreateGame(model);
 		VariableManager variableManager = game.getVariableManager();
 
-		Map variables = variableManager.getVariables(null);
+		Map variables = variableManager.listVariables(null);
 		assertEquals(2, variables.size());
-		assertTrue(variableManager.getVariables(null)
+		assertTrue(variableManager.listVariables(null)
 				.containsKey("currentPlayer"));
 	}
 
@@ -44,7 +44,7 @@ public class GameFactoryTest {
 		GameImpl game = gameFactory.CreateGame(model);
 		VariableManager variableManager = game.getVariableManager();
 
-		Map variables = variableManager.getVariables(null);
+		Map variables = variableManager.listVariables(null);
 		assertEquals(2, variables.size());
 		assertEquals(5,
 				variableManager.getReference(variableManager.getReference(null,
@@ -62,7 +62,7 @@ public class GameFactoryTest {
 		GameImpl game = gameFactory.CreateGame(model);
 		VariableManager variableManager = game.getVariableManager();
 
-		Map variables = variableManager.getVariables(null);
+		Map variables = variableManager.listVariables(null);
 		assertEquals(6,
 				variableManager.getReference(variableManager.getReference(null,
 						"currentPlayer"), "a"));

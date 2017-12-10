@@ -1,7 +1,5 @@
 package hu.gergelyszaz.bgs.game;
 
-import hu.gergelyszaz.bGL.*;
-
 import java.util.*;
 
 /**
@@ -13,7 +11,7 @@ public class VariableManager {
 	private Map<Object, Map<String, Object>> references = new HashMap<>();
 
 
-	public String getVariables() {
+	public String listVariables() {
 
 		StringBuilder stringBuilder = new StringBuilder();
 
@@ -32,7 +30,6 @@ public class VariableManager {
 	}
 
 	public int getValue(Object parent, String variableName) {
-
 		Object variable = getReference(parent, variableName);
 		if (!(variable instanceof Integer)) {
 			throw new IllegalAccessError(
@@ -43,15 +40,14 @@ public class VariableManager {
 
 	public Object getReference(Object parent, String variableName) {
 
-		if (!getVariables(parent).containsKey(variableName)) {
+		if (!listVariables(parent).containsKey(variableName)) {
 			throw new IllegalAccessError(parent + " has no " + variableName);
 		}
 
-		Object variable = getVariables(parent).get(variableName);
-		return variable;
+		return listVariables(parent).get(variableName);
 	}
 
-	public Map<String, Object> getVariables(Object parent) {
+	public Map<String, Object> listVariables(Object parent) {
 
 		Map<String, Object> variables = references.get(parent);
 		if (variables == null) {
