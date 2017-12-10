@@ -85,7 +85,7 @@ public class GameFactory {
 		for (hu.gergelyszaz.bGL.Deck deckModel : model.getDecks()) {
 			Stack<Card> cardModels = new Stack<>();
 			for (hu.gergelyszaz.bGL.Card cardModel : deckModel.getCards()) {
-				Card card = new Card(variableManager, cardModel);
+				Card card = new Card(variableManager, cardModel.getName());
 				cardModel.getVariables().forEach(v->_doSimpleAssignment
 						(variableManager,card,v));
 				cardModels.add(card);
@@ -128,7 +128,7 @@ public class GameFactory {
 			for (Player player : players) {
 				Stack<Card> cards = new Stack<>();
 				for (hu.gergelyszaz.bGL.Card cardModel : deckModel.getCards()) {
-					cards.add(new Card(variableManager, cardModel));
+					cards.add(new Card(variableManager, cardModel.getName()));
 					for (SimpleAssignment variable : cardModel.getVariables()) {
 						String variableName = variable.getName();
 						Object reference =

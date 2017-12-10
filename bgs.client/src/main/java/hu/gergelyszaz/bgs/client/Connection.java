@@ -1,19 +1,13 @@
 package hu.gergelyszaz.bgs.client;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import hu.gergelyszaz.bgs.state.GameState;
-import hu.gergelyszaz.bgs.state.util.GameStateValidator;
 import org.glassfish.tyrus.client.ClientManager;
 import org.json.JSONObject;
 
-import javax.websocket.DeploymentException;
-import javax.websocket.Session;
-import java.net.ConnectException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashSet;
-import java.util.Set;
+import javax.websocket.*;
+import java.net.*;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -110,8 +104,6 @@ public class Connection {
 		Gson gson = new Gson();
 		try {
 			GameState gameState = gson.fromJson(obj.toString(), GameState.class);
-			if (!GameStateValidator.isValid(gameState))
-				throw new JsonSyntaxException(obj.toString().concat(" not a valid GameState"));
 			stateListeners.forEach(stateListener -> stateListener.UpdateGameState(gameState));
 		} catch (JsonSyntaxException e) {
 			//don't do anything, invalid GameState object should not be handled

@@ -35,7 +35,7 @@ public class VariableManager {
 			throw new IllegalAccessError(
 					variableName + " of " + parent + " is not a number");
 		}
-		return (int) (Integer) variable;
+		return (int) variable;
 	}
 
 	public Object getReference(Object parent, String variableName) {

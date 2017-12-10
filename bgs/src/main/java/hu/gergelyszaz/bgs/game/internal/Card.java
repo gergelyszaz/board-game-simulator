@@ -3,25 +3,26 @@ package hu.gergelyszaz.bgs.game.internal;
 import hu.gergelyszaz.bgs.game.VariableManager;
 
 /**
- * Created by mad on 2016-03-19.
+ * Created by Gergely Száz
  */
 public class Card {
+
+	private final String cardType;
 	private VariableManager vm;
-	private hu.gergelyszaz.bGL.Card cardBase;
 	private Deck deck = null;
 
-	public Card(VariableManager variableManager, hu.gergelyszaz.bGL.Card cardBase) {
+	public Card(VariableManager variableManager, String cardType) {
 		vm = variableManager;
-		this.cardBase = cardBase;
+		this.cardType = cardType;
 	}
 
 	public String getType() {
-		return cardBase.getName();
+		return cardType;
 	}
 
 	public void SetDeck(Deck deck) {
 		this.deck = deck;
-		vm.store(this, "deck", deck);
+		vm.store(this, VariableManager.CARD.DECK, deck);
 	}
 
 	public void MoveTo(Deck toDeck) {
