@@ -14,7 +14,7 @@ import java.util.*;
 
 public class GameFactory {
 
-	BGLUtil bglUtil = new BGLUtil();
+	private BGLUtil bglUtil = new BGLUtil();
 
 	public GameImpl CreateGame(Model model) throws IllegalAccessException {
 
@@ -45,10 +45,9 @@ public class GameFactory {
 				internalManager,
 				idManager);
 
-		fields.forEach(field -> selectableManager.add(field));
-		decks.forEach(deck -> deck.cards.forEach(card -> selectableManager.add(
-				card)));
-		players.forEach(player -> selectableManager.add(player));
+		fields.forEach(selectableManager::add);
+		decks.forEach(deck -> deck.cards.forEach(selectableManager::add));
+		players.forEach(selectableManager::add);
 
 		GameImpl game = new GameImpl(variableManager,
 				actionManager,

@@ -94,7 +94,7 @@ public class ArithmeticManager {
 			return false;
 		}
 
-		boolean result = false;
+		boolean result;
 		switch (exp.getName()) {
 			case "===":
 			case "==":

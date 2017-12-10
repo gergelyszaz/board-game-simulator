@@ -52,9 +52,8 @@ public class WebSocketServer {
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, e.getMessage());
 			running = false;
-		} finally {
-			return running;
 		}
+		return running;
 	}
 
 	public static boolean isRunning() {

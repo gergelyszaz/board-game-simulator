@@ -1,9 +1,9 @@
 package hu.gergelyszaz.bgs.state;
 
 import com.google.common.collect.Lists;
+import hu.gergelyszaz.bGL.Field;
 import hu.gergelyszaz.bgs.game.InternalManager;
 import hu.gergelyszaz.bgs.game.internal.*;
-import hu.gergelyszaz.bGL.Field;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -78,11 +78,9 @@ public class GameStateFactory {
 			}
 		}
 
-		GameState state =
-			 new GameState(gameName, version,
-				  idManager.get(player), plist, flist, tlist,
-				  new ArrayList<>(selectables), winners, losers, deckstates, -1);
-		return state;
+		return new GameState(gameName, version,
+			 idManager.get(player), plist, flist, tlist,
+			 new ArrayList<>(selectables), winners, losers, deckstates, -1);
 	}
 
 	public static GameState createGameState(String name, IDManager idManager, int stateVersion, InternalManager internalManager) throws IllegalAccessException {

@@ -80,9 +80,9 @@ Send:
 }
 ```
 Response:
-```json
+
 TBW
-```
+
 ##### Make a move
 Send:
 ```json
@@ -92,15 +92,15 @@ Send:
 }
 ```
 Response:
-```json
+
 TBW
-```
+
 ##### Updating
 The server automatically sends updates about the state of the game
 Response:
-```json
+
 TBW
-```
+
 
 ### Client
 Contains communication logic using WebSockets.

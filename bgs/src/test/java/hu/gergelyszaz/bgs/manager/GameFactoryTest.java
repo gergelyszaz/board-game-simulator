@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
 
 public class GameFactoryTest {
 
-	GameFactory gameFactory;
-	ModelManager modelManager;
+	private GameFactory gameFactory;
+	private ModelManager modelManager;
 
 	@Before
 	public void setUp() throws Exception {

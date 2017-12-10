@@ -1,7 +1,6 @@
 package hu.gergelyszaz.bgs.state;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GameState {
 
@@ -34,8 +33,8 @@ public class GameState {
     }
 
     public static GameState emptyGameState() {
-        return new GameState("", -1, 0, new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(),
-                new ArrayList(), new ArrayList(), -1);
+        return new GameState("", -1, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+                new ArrayList<>(), new ArrayList<>(), -1);
     }
 
     public GameState getPublicState(int playerID) {

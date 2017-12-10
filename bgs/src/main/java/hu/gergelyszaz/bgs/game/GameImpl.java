@@ -16,13 +16,13 @@ import java.util.*;
 
 public class GameImpl implements Controller, Game {
 
-    String name;
-    VariableManager variableManager;
-    ActionManager actionManager;
-    IDManager idManager;
-    StateStore stateStore;
-    InternalManager internalManager;
-    Set<View> views = new HashSet<>();
+    private String name;
+    private VariableManager variableManager;
+    private ActionManager actionManager;
+    private IDManager idManager;
+    private StateStore stateStore;
+    private InternalManager internalManager;
+    private Set<View> views = new HashSet<>();
 
     public GameImpl(VariableManager variableManager, ActionManager actionManager,
                     IDManager idManager, StateStore stateStore,
@@ -97,20 +97,16 @@ public class GameImpl implements Controller, Game {
 
     @Override
     public boolean IsFinished() {
-        List<Player> winners=internalManager.getWinners();
-        List<Player> losers=internalManager.getLosers();
-        List<Player> players= Lists.newArrayList(internalManager.getPlayers());
 
-        players.removeAll(winners);
-        players.removeAll(losers);
-        if(players.size()>=2){
-            return false;
-        }
-        if(players.size()==1 && internalManager.getPlayers().size()==1){
-            return false;
-        }
-        return true;
-    }
+		 List<Player> winners = internalManager.getWinners();
+		 List<Player> losers = internalManager.getLosers();
+		 List<Player> players = Lists.newArrayList(internalManager.getPlayers());
+
+		 players.removeAll(winners);
+		 players.removeAll(losers);
+		 return players.size() < 2 &&
+				 !(players.size() == 1 && internalManager.getPlayers().size() == 1);
+	 }
 
     @Override
     public void AddView(View v) {
@@ -120,7 +116,8 @@ public class GameImpl implements Controller, Game {
     @Override
     public GameState getCurrentState(String sessionID) {
         GameState gs = stateStore.getCurrentState();
-        Player p = internalManager.getPlayers().stream().filter(player -> player.getSessionID() == sessionID).findFirst().get();
+        Player p = internalManager.getPlayers().stream().filter(player ->
+              player.getSessionID().equals(sessionID)).findFirst().get();
         return gs.getPublicState(idManager.get(p));
     }
 

@@ -10,7 +10,7 @@ import hu.gergelyszaz.bgs.game.internal.Token;
 import java.util.List;
 
 /**
- * Created by mad on 2016. 10. 12..
+ * Created by Gergely Száz
  */
 public class SpawnAction extends AbstractAction {
 
@@ -19,7 +19,7 @@ public class SpawnAction extends AbstractAction {
 	private final List<SimpleAssignment> variables;
 	private final AttributeName fieldName;
 	private final AttributeName tokenName;
-	BGLUtil bglUtil = new BGLUtil();
+	private BGLUtil bglUtil = new BGLUtil();
 
 	public SpawnAction(
             VariableManager variableManager, Action

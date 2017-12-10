@@ -1,14 +1,10 @@
 package hu.gergelyszaz.bgs.game;
 
 import hu.gergelyszaz.bGL.*;
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
-import org.junit.Before;
-import org.junit.Test;
+import org.eclipse.emf.common.util.*;
+import org.junit.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
