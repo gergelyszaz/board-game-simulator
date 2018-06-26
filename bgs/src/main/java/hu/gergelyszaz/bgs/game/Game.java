@@ -10,6 +10,8 @@ public interface Game extends Controller{
     boolean Join(String clientID) throws IllegalAccessException;
 
     boolean IsFull();
+    
+    boolean IsWaitingForInput();
 
     void Step() throws IllegalAccessException;
 

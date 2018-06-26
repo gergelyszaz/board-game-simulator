@@ -80,7 +80,7 @@ public class GameImpl implements Controller, Game {
 
     @Override
     public void Step() throws IllegalAccessException {
-        if (!internalManager.getSelectableManager().isSelectionDone() ||
+        if (!internalManager.getSelectableManager().notWaitingForSelection() ||
               IsFinished()) {
             return;
         }
@@ -159,9 +159,6 @@ public class GameImpl implements Controller, Game {
         }
     }
 
-
-
-
     private Player _getCurrentPlayer() throws IllegalAccessException {
 
         return (Player) variableManager
@@ -197,5 +194,10 @@ public class GameImpl implements Controller, Game {
 
         stateStore.addState(gameState);
     }
+
+	@Override
+	public boolean IsWaitingForInput() {
+		return !internalManager.getSelectableManager().notWaitingForSelection();
+	}
 
 }

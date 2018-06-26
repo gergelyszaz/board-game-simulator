@@ -42,7 +42,7 @@ public class SelectableManager {
 		return selectableName;
 	}
 
-	public boolean isSelectionDone() {
+	public boolean notWaitingForSelection() {
 		return isSelectionDone;
 	}
 

@@ -71,6 +71,7 @@ public class BGSServer implements View {
 				Controller c = (Controller) session.getUserProperties().get(GAME);
 				if (c.setSelected(session.getId(), selected)) {
 					status = "ok";
+					gm.Wake();
 				} else {
 					status = "error";
 				}

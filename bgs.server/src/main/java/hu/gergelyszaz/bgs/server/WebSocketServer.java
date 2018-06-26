@@ -1,11 +1,13 @@
 package hu.gergelyszaz.bgs.server;
 
 import hu.gergelyszaz.bgs.util.FileUtil;
-import org.glassfish.tyrus.server.Server;
+
 
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.*;
+
+import org.glassfish.tyrus.server.Server;
 
 public class WebSocketServer {
 
@@ -22,7 +24,7 @@ public class WebSocketServer {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		logger.log(Level.INFO, "Starting server");
 
 		int port = 8025;
@@ -30,17 +32,17 @@ public class WebSocketServer {
 		if (portString != null) {
 			port = Integer.parseInt(portString);
 		}
-		WebSocketServer.runServer("0.0.0.0", port, "websockets", "/config/games.properties");
-		logger.log(Level.INFO, "Server Started");
+		WebSocketServer.runServer("0.0.0.0", port, "", "/config/games.properties");
 		while (WebSocketServer.isRunning()) {
-			Thread.yield();
+			Thread.sleep(1000);
 		}
 	}
 
 	public static boolean runServer(String hostName, int port, String rootpath, String gamesPath) {
 		running = true;
 		try {
-			server = new Server(hostName, port, "/" + rootpath, null, BGSServer.class);
+			server = new Server(hostName, port, rootpath, null, BGSServer.class);
+			
 			InputStream input = WebSocketServer.class.getResourceAsStream(gamesPath);
 			configFile.load(input);
 			for (Object k : configFile.values()) {
@@ -53,6 +55,7 @@ public class WebSocketServer {
 			logger.log(Level.SEVERE, e.getMessage());
 			running = false;
 		}
+		logger.log(Level.INFO, "Server Started");
 		return running;
 	}
 

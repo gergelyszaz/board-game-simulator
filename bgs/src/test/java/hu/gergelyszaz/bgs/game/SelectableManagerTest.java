@@ -34,7 +34,7 @@ public class SelectableManagerTest {
         List<Object> selectables=selectableManager.getSelectableObjects();
         assertTrue(selectables.size()==1);
         assertTrue(selectables.contains(object));
-        assertFalse(selectableManager.isSelectionDone());
+        assertFalse(selectableManager.notWaitingForSelection());
     }
 
     @Test

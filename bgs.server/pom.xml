@@ -18,17 +18,17 @@
 		<dependency>
 			<groupId>org.glassfish.tyrus</groupId>
 			<artifactId>tyrus-server</artifactId>
-			<version>1.13</version>
+			<version>1.13.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.tyrus</groupId>
 			<artifactId>tyrus-client</artifactId>
-			<version>1.13</version>
+			<version>1.13.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.tyrus</groupId>
 			<artifactId>tyrus-container-grizzly-server</artifactId>
-			<version>1.13</version>
+			<version>1.13.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
@@ -40,11 +40,52 @@
 			<artifactId>gson</artifactId>
 			<version>1.7.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-websocket</artifactId>
+			<version>8.1.0.RC5</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>hu.gergelyszaz.bgs</groupId>
 			<artifactId>bgs</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<version>1.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-runner</artifactId>
+			<version>1.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.websocket</groupId>
+			<artifactId>websocket-client</artifactId>
+			<version>9.4.11.v20180605</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -79,19 +120,6 @@
 					<mainClass>
 						hu.gergelyszaz.bgs.server.WebSocketServer
 					</mainClass>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-maven-plugin</artifactId>
-				<version>1.1.3</version>
-				<configuration>
-					<appName>powerful-dusk-75224</appName>
-					<processTypes>
-						<web>java $JAVA_OPTS -cp
-							target/classes:target/dependency/*
-							hu.gergelyszaz.bgs.server.WebSocketServer</web>
-					</processTypes>
 				</configuration>
 			</plugin>
 		</plugins>
