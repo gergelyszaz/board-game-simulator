@@ -1,0 +1,7 @@
+{
+  "port": 8025,
+  "service": "server",
+  "command": [
+  	"ls -la"
+  ]
+}
