@@ -11,7 +11,7 @@ public interface Game extends Controller{
 
     boolean IsFull();
     
-    boolean IsWaitingForInput();
+    boolean IsNotWaitingForInput();
 
     void Step() throws IllegalAccessException;
 

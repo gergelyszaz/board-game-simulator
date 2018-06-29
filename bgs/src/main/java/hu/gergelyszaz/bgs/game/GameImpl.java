@@ -196,8 +196,8 @@ public class GameImpl implements Controller, Game {
     }
 
 	@Override
-	public boolean IsWaitingForInput() {
-		return !internalManager.getSelectableManager().notWaitingForSelection();
+	public boolean IsNotWaitingForInput() {
+		return internalManager.getSelectableManager().notWaitingForSelection();
 	}
 
 }

@@ -41,8 +41,9 @@ public class GameManager implements Runnable {
 				availableGames.remove(gameName);
 				game.Start();
 				runningGames.add(game);
-
+				
 			}
+			Wake();
 			return game;
 		}
 	}
@@ -51,7 +52,7 @@ public class GameManager implements Runnable {
 	public void run() {
 		while (true) {
 			Collection<Game> rg = new ArrayList<>();
-			rg = runningGames.stream().filter(Game::IsWaitingForInput).collect(Collectors.toList());
+			rg = runningGames.stream().filter(Game::IsNotWaitingForInput).collect(Collectors.toList());
 
 			if (rg.isEmpty()) {
 				Wait();
