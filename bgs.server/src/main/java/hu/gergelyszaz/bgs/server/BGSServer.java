@@ -41,6 +41,10 @@ public class BGSServer implements View {
 		switch (action) {
 
 			case "join":
+				if(isAlreadyJoined(session)) {
+					return ret.put(STATUS, "error").put("message", "Already joined a game").toString();
+				}
+				
 				String gameName = message.getString(PARAMETER);
 				try {
 					Controller c = gm.JoinGame(session.getId(), gameName);
@@ -79,6 +83,10 @@ public class BGSServer implements View {
 				return ret.toString();
 		}
 		return ret.put(STATUS, "error").put("message","Invalid action: " + action).toString();
+	}
+
+	private boolean isAlreadyJoined(Session session2) {
+		return session.getUserProperties().containsKey(GAME);		
 	}
 
 	@OnClose

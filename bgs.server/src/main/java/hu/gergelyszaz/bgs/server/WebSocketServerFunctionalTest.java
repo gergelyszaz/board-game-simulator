@@ -5,11 +5,9 @@ import static org.junit.Assert.fail;
 import java.io.Closeable;
 import java.net.URI;
 
-import javax.websocket.CloseReason.CloseCode;
 import javax.websocket.CloseReason.CloseCodes;
 
 import org.eclipse.jetty.websocket.WebSocket;
-import org.eclipse.jetty.websocket.WebSocketClient;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
 import org.json.JSONObject;
 import org.junit.Assert;
