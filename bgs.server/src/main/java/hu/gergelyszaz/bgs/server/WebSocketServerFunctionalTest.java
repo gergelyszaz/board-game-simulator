@@ -1,6 +1,6 @@
 package hu.gergelyszaz.bgs.server;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.Closeable;
 import java.net.URI;
@@ -10,7 +10,6 @@ import javax.websocket.CloseReason.CloseCodes;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
 import org.json.JSONObject;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,8 +48,8 @@ class WebSocketServerFunctionalTest {
 		try (Client client1 = createClient("C1")) {
 			JSONObject answer = client1.sendMessage("info", "");
 
-			Assert.assertEquals("ok", answer.getString("status"));
-			Assert.assertTrue(answer.has("games"));
+			assertEquals("ok", answer.getString("status"));
+			assertTrue(answer.has("games"));
 		}
 	}
 
@@ -60,10 +59,29 @@ class WebSocketServerFunctionalTest {
 			JSONObject answer1 = client1.sendMessage("join", "Mills");
 			JSONObject answer2 = client2.sendMessage("join", "Mills");
 
-			Assert.assertEquals("ok", answer1.getString("status"));
-			Assert.assertEquals("ok", answer2.getString("status"));
+			assertEquals("ok", answer1.getString("status"));
+			assertEquals("ok", answer2.getString("status"));
+		}
+	}
+	
+	@Test
+	void testUpdates() throws Exception {
+		try (Client client1 = createClient("C1"); Client client2 = createClient("C2")) {
+			client1.sendMessage("join", "Mills");
+			client2.sendMessage("join", "Mills");
 
-			answer2 = client2.sendMessage("update", "");
+			JSONObject message = new JSONObject(client1.waitForMessage());
+			
+			assertTrue(message.has("players"));
+			assertTrue(message.has("fields"));
+			assertTrue(message.has("selectables"));
+			assertTrue(message.has("tokens"));
+			assertTrue(message.has("playerID"));
+			assertTrue(message.has("name"));
+			assertTrue(message.has("winners"));
+			assertTrue(message.has("losers"));
+			assertTrue(message.has("decks"));
+			assertTrue(message.has("version"));
 		}
 	}
 
@@ -73,8 +91,8 @@ class WebSocketServerFunctionalTest {
 			JSONObject answer1 = client1.sendMessage("join", "Mills");
 			JSONObject answer2 = client1.sendMessage("join", "Mills");
 
-			Assert.assertEquals("ok", answer1.getString("status"));
-			Assert.assertEquals("error", answer2.getString("status"));
+			assertEquals("ok", answer1.getString("status"));
+			assertEquals("error", answer2.getString("status"));
 
 		}
 	}
@@ -84,7 +102,7 @@ class WebSocketServerFunctionalTest {
 			this.name = name;
 		}
 
-		Connection connection;
+		private Connection connection;
 		private String name;
 
 		public String lastReceivedMessage;
@@ -106,6 +124,17 @@ class WebSocketServerFunctionalTest {
 		public void onClose(int closeCode, String message) {
 			if (CloseCodes.getCloseCode(closeCode) != CloseCodes.NORMAL_CLOSURE)
 				fail("Connection should close normally");
+		}
+		
+		public String waitForMessage() throws Exception {
+			synchronized (connection) {
+				lastReceivedMessage = null;
+				connection.wait(2000);
+				if(lastReceivedMessage == null) { 
+					throw new Exception("No message received!");
+				}
+			}
+			return lastReceivedMessage;
 		}
 
 		@Override
