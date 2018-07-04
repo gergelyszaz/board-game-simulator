@@ -1,4 +1,5 @@
-# board-game-simulator
+# board-game-simulator [![Build Status](https://travis-ci.com/gergely-szaz/board-game-simulator.svg?branch=master)](https://travis-ci.com/gergely-szaz/board-game-simulator)
+
 The goal is to create a DSL capable of describing the mechanics of simple board games (like Mills, Snakes and Ladders) and sample applications to run the language.
 
 ### Software needed to build
