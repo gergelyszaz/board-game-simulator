@@ -32,7 +32,11 @@ public class WebSocketServer {
 		if (portString != null) {
 			port = Integer.parseInt(portString);
 		}
-		WebSocketServer.runServer("0.0.0.0", port, "", "/config/games.properties");
+		String hostName = "0.0.0.0";
+		if (System.getenv("HOSTNAME") != null) {
+			hostName = System.getenv("HOSTNAME");
+		}
+		WebSocketServer.runServer(hostName, port, null, "/config/games.properties");
 		while (WebSocketServer.isRunning()) {
 			Thread.sleep(1000);
 		}

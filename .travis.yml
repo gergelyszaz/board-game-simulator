@@ -1,1 +1,4 @@
 language: java
+deploy:
+  provider: script
+  script: mvn heroku:deploy -f bgs.server #HEROKU_API_KEY
