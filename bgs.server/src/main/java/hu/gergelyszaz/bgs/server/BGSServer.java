@@ -8,13 +8,14 @@ import hu.gergelyszaz.bgs.state.GameState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import javax.inject.Singleton;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 @ServerEndpoint(value = "/game")
-public class BGSServer implements View {
+public class BGSServer {
 
 	private static final String GAMESTATEVERSION = "gameStateVersion";
 	private static final String GAME = "game";
@@ -22,13 +23,12 @@ public class BGSServer implements View {
 	private static final String ACTION = "action";
 	private static final String STATUS = "status";
 
-	private GameManager gm = GameManagerSingleton.getGameManagerInstance();
+	public static GameManager gm;
 	private Logger log = Logger.getLogger(this.getClass().getName());
-	private Session session;
+
 
 	@OnOpen
 	public void onOpen(Session session) {
-		this.session = session;
 		log.info("Connected ... " + session.getId());
 	}
 
@@ -36,7 +36,7 @@ public class BGSServer implements View {
 	public String onMessage(String input, Session session) {
 		try {
 			log.info("Server received: " + input);
-			
+
 			JSONObject message = new JSONObject(input);
 			String param = message.has(PARAMETER) ? message.getString(PARAMETER) : "";
 
@@ -94,7 +94,12 @@ public class BGSServer implements View {
 
 		JSONObject ret = new JSONObject();
 		Controller c = gm.JoinGame(session.getId(), param);
-		c.AddView(this);
+		c.AddView(new View() {
+			@Override
+			public void Refresh() {
+				session.getAsyncRemote().sendText(new Gson().toJson(c.getCurrentState(session.getId())));
+			}
+		});
 		session.getUserProperties().put(GAME, c);
 		session.getUserProperties().put(GAMESTATEVERSION, -1);
 		return ret.put(STATUS, "ok").put("message", "Joined").toString();
@@ -113,22 +118,6 @@ public class BGSServer implements View {
 		log.info(String.format("Session %s closed because of %s", session.getId(), closeReason));
 	}
 
-	@Override
-	public void Refresh() {
-		try {
-			session.getBasicRemote().sendText(Update(session));
-		} catch (IOException e) {
-			log.info(e.getMessage());
-		}
-	}
 
-	private String Update(Session session) {
-		Controller c = (Controller) session.getUserProperties().get(GAME);
-		Gson gson = new Gson();
-
-		GameState gs = c.getCurrentState(session.getId());
-
-		return gson.toJson(gs);
-	}
 
 }

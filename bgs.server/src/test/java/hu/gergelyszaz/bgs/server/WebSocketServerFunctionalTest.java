@@ -7,6 +7,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.CloseReason;
 import javax.websocket.CloseReason.CloseCodes;
@@ -35,56 +36,42 @@ public class WebSocketServerFunctionalTest {
 		WebSocketServer.stopServer();
 	}
 
-	public static Session createClient(String name) throws Exception {
-
-		URI uri = new URI(WS_URI);
-		Session client;
-		synchronized (uri) {
-			client = ClientManager.createClient().connectToServer(Client.class, uri);
-
-			uri.wait();
-		}
-
-		return client;
-	}
-
 	@Test
 	public void testInfo() throws Exception {
 		try (Client client1 = new Client("C1")) {
 			client1.sendMessage("info", "");
 
-			client1.assertMessageReceived(m -> m.get("status").equals("ok") && m.has("games"));
+			client1.assertMessageReceived(m -> m.has("games"));
 		}
 	}
 
 	@Test
 	public void testJoinGame() throws Exception {
-		try (Client client1 = new Client("C1")) {
+		try (Client client1 = new Client("C2")) {
 			client1.sendMessage("join", "Mills");
 
-			Predicate<JSONObject> filterStatusOk = m -> m.get("status").equals("ok");
+			Predicate<JSONObject> filterStatusOk = m -> m.has("status") && m.get("status").equals("ok");
 			client1.assertMessageReceived(filterStatusOk);
 		}
 	}
 
 	@Test
 	public void testIncorrectMessage() throws Exception {
-		try (Client client1 = new Client("C1"); Client client2 = new Client("C2")) {
+		try (Client client1 = new Client("C3"); Client client2 = new Client("C4")) {
 			client1.session.getBasicRemote().sendText("INVALID MESSAGE");
 			client1.sendMessage("info", "");
-			client1.assertMessageReceived(m -> m.getString("status").equals("ok"));
+			client1.assertMessageReceived(m -> m.has("status") && m.getString("status").equals("ok"));
 		}
 	}
 
 
 	@Test
-	@Ignore
 	public void testUpdates() throws Exception {
-		try (Client client1 = new Client("C1"); Client client2 = new Client("C2")) {
+		try (Client client1 = new Client("C5"); Client client2 = new Client("C6")) {
 			client1.sendMessage("join", "Mills");
 			client2.sendMessage("join", "Mills");
 
-			Predicate<JSONObject> filterStatusOk = m -> m.get("status").equals("ok");
+			Predicate<JSONObject> filterStatusOk = m -> m.has("status") && m.get("status").equals("ok");
 			client1.assertMessageReceived(filterStatusOk);
 			client2.assertMessageReceived(filterStatusOk);
 
@@ -99,30 +86,26 @@ public class WebSocketServerFunctionalTest {
 
 	@Test
 	public void testMultipleJoins() throws Exception {
-		try (Client client1 = new Client("C1")) {
+		try (Client client1 = new Client("C7")) {
 			client1.sendMessage("join", "Mills");
 			client1.sendMessage("join", "Mills");
 
-			client1.assertMessageReceived(m -> m.get("status").equals("ok"));
-			client1.assertMessageReceived(m -> m.get("status").equals("error"));
+			client1.assertMessageReceived(m -> m.has("status") && m.get("status").equals("ok"));
+			client1.assertMessageReceived(m -> m.has("status") && m.get("status").equals("error"));
 		}
 	}
 
 	private static class Client implements Closeable {
+		public String name;
+
 		public Client(String name) throws Exception {
+			this.name = name;
 			session = ClientManager.createClient().connectToServer(ClientEnd.class, new URI(WS_URI));
 			session.getUserProperties().put("client", this);
 		}
 
 		@ClientEndpoint
 		public static class ClientEnd {
-
-			@OnOpen
-			public void onOpen(Session session) {
-				synchronized (this) {
-					this.notify();
-				}
-			}
 
 			@OnClose
 			public void onClose(Session session, CloseReason closeReason) {
@@ -132,11 +115,12 @@ public class WebSocketServerFunctionalTest {
 
 			@OnMessage
 			public void onMessage(String data, Session session) {
-				synchronized (session) {
-					Client client = (Client) session.getUserProperties().get("client");
+				Client client = (Client) session.getUserProperties().get("client");
+				synchronized (client) {
+					System.out.println(client.name + ": " + data);
 					JSONObject message = new JSONObject(data);
 					client.messageQueue.add(message);
-					session.notify();
+					client.notify();
 				}
 			}
 		}
@@ -146,21 +130,19 @@ public class WebSocketServerFunctionalTest {
 			session.close();
 		}
 
-		public void assertMessageReceived(Predicate<JSONObject> filter) throws Exception {
-			synchronized (session) {
-				if (messageQueue.removeIf(filter)) {
-					return;
-				}
+		public synchronized void assertMessageReceived(Predicate<JSONObject> filter) throws Exception {
+			if (!messageQueue.stream().anyMatch(filter)) {
+				this.wait(500);
+			}
 
-				session.wait(500);
-				if (!messageQueue.removeIf(filter)) {
-					fail();
-				}
+			if (!messageQueue.removeIf(filter)) {
+				fail();
 			}
 		}
 
-		public void sendMessage(String action, String parameter) throws Exception {
+		public synchronized void sendMessage(String action, String parameter) throws Exception {
 			session.getBasicRemote().sendText("{\"action\":\"" + action + "\",\"parameter\":\"" + parameter + "\"}");
+			this.wait(500);
 		}
 
 		private Session session;

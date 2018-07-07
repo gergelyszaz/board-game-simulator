@@ -1,12 +1,12 @@
 package hu.gergelyszaz.bgs.server;
 
+import hu.gergelyszaz.bgs.manager.GameFactory;
+import hu.gergelyszaz.bgs.manager.GameManager;
+import hu.gergelyszaz.bgs.manager.ModelManager;
 import hu.gergelyszaz.bgs.util.FileUtil;
-
-
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.*;
-
 import org.glassfish.tyrus.server.Server;
 
 public class WebSocketServer {
@@ -45,6 +45,7 @@ public class WebSocketServer {
 	public static boolean runServer(String hostName, int port, String rootpath, String gamesPath) {
 		running = true;
 		try {
+			BGSServer.gm = new GameManager(new GameFactory(), new ModelManager());
 			server = new Server(hostName, port, rootpath, null, BGSServer.class);
 
 			InputStream input = WebSocketServer.class.getResourceAsStream(gamesPath);
@@ -52,8 +53,11 @@ public class WebSocketServer {
 			for (Object k : configFile.values()) {
 				System.out.println((String) k);
 				String gameString = FileUtil.readFile((String) k);
-				GameManagerSingleton.getGameManagerInstance().modelManager.LoadModel(gameString);
+
+				BGSServer.gm.modelManager.LoadModel(gameString);
 			}
+
+			new Thread(BGSServer.gm).start();
 			server.start();
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, e.getMessage());
