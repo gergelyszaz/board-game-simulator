@@ -1,21 +1,18 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>hu.gergelyszaz.bgs</groupId>
 	<artifactId>bgs.server</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-
 	<properties>
 		<junitVersion>4.10</junitVersion>
 		<mainClass>hu.gergelyszaz.bgs.server.WebSocketServer</mainClass>
 		<javaVersion>1.8</javaVersion>
 		<appName>board-game-simulator</appName>
 	</properties>
-
 	<packaging>jar</packaging>
-
 	<dependencies>
 		<dependency>
 			<groupId>javax.websocket</groupId>
@@ -73,12 +70,10 @@
 				<configuration>
 					<appName>${appName}</appName>
 					<processTypes>
-						<web>java $JAVA_OPTS -cp target/classes:target/dependency/*
-							${mainClass}</web>
+						<web>java $JAVA_OPTS -cp target/classes:target/dependency/* ${mainClass}</web>
 					</processTypes>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -101,9 +96,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>
-						${mainClass}
-					</mainClass>
+					<mainClass>${mainClass}</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
