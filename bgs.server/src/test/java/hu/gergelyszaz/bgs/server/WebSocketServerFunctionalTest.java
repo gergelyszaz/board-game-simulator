@@ -3,11 +3,11 @@ package hu.gergelyszaz.bgs.server;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.URI;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.CloseReason;
 import javax.websocket.CloseReason.CloseCodes;
@@ -15,7 +15,6 @@ import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-
 import org.glassfish.tyrus.client.ClientManager;
 import org.json.JSONObject;
 import org.junit.After;
@@ -28,7 +27,7 @@ public class WebSocketServerFunctionalTest {
 
 	@Before
 	public void setUp() throws Exception {
-		WebSocketServer.runServer("0.0.0.0", 8025, "", "/config/games.properties");
+		WebSocketServer.runServer(null, 8025, null, "/config/games.properties");
 	}
 
 	@After
@@ -62,11 +61,9 @@ public class WebSocketServerFunctionalTest {
 	@Test
 	public void testJoinGame() throws Exception {
 		try (Client client1 = new Client("C1"); Client client2 = new Client("C2")) {
-			JSONObject answer1 = client1.sendMessage("join", "Mills");
-			JSONObject answer2 = client2.sendMessage("join", "Mills");
+			JSONObject answer = client1.sendMessage("join", "Mills");
 
-			assertEquals("ok", answer1.getString("status"));
-			assertEquals("ok", answer2.getString("status"));
+			assertEquals("ok", answer.getString("status"));
 		}
 	}
 
@@ -76,7 +73,8 @@ public class WebSocketServerFunctionalTest {
 			client1.sendMessage("join", "Mills");
 			client2.sendMessage("join", "Mills");
 
-			JSONObject message = new JSONObject(client1.waitForMessage());
+			client1.waitForMessages(1);
+			JSONObject message = new JSONObject(client1.messageQueue.get(0));
 
 			assertTrue(message.has("players"));
 			assertTrue(message.has("fields"));
@@ -99,20 +97,18 @@ public class WebSocketServerFunctionalTest {
 
 			assertEquals("ok", answer1.getString("status"));
 			assertEquals("error", answer2.getString("status"));
-
 		}
 	}
 
 	private static class Client implements Closeable {
 		public Client(String name) throws Exception {
-			this.name = name;
 			session = ClientManager.createClient().connectToServer(ClientEnd.class, new URI(WS_URI));
 			session.getUserProperties().put("client", this);
-
 		}
 
 		@ClientEndpoint
 		public static class ClientEnd {
+
 			@OnOpen
 			public void onOpen(Session session) {
 				synchronized (this) {
@@ -128,36 +124,39 @@ public class WebSocketServerFunctionalTest {
 
 			@OnMessage
 			public void onMessage(String data, Session session) {
-				synchronized (session) {
-					Client client = (Client) session.getUserProperties().get("client");
-
-					System.out.println(client.name + ":\t" + data);
-
-					client.lastReceivedMessage = data;
-					session.notify();
+				Client client = (Client) session.getUserProperties().get("client");
+				JSONObject message = new JSONObject(data);
+				if (message.has("status")) {
+					synchronized (session) {
+						client.answer = data;
+						session.notify();
+					}
+				} else {
+					synchronized (client.messageQueue) {
+						client.messageQueue.add(data);
+						client.messageQueue.notify();
+					}
 				}
+
 			}
 		}
-
-		private Session session;
-		private String name;
-
-		public String lastReceivedMessage;
 
 		@Override
 		public void close() throws IOException {
 			session.close();
 		}
 
-		public String waitForMessage() throws Exception {
-			synchronized (session) {
-				lastReceivedMessage = null;
-				session.wait(500);
-				if (lastReceivedMessage == null) {
+		public void waitForMessages(int totalNumber) throws Exception {
+			synchronized (messageQueue) {
+				int initialSize = messageQueue.size();
+				if (messageQueue.size() < totalNumber) {
+					messageQueue.wait(500);
+				}
+				if (messageQueue.size() == initialSize) {
 					throw new Exception("No message received!");
 				}
+
 			}
-			return lastReceivedMessage;
 		}
 
 		public JSONObject sendMessage(String action, String parameter) throws Exception {
@@ -166,7 +165,11 @@ public class WebSocketServerFunctionalTest {
 						.sendText("{\"action\":\"" + action + "\",\"parameter\":\"" + parameter + "\"}");
 				session.wait();
 			}
-			return new JSONObject(lastReceivedMessage);
+			return new JSONObject(answer);
 		}
+
+		private Session session;
+		private String answer;
+		public List<String> messageQueue = new ArrayList<>();
 	}
 }
