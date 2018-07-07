@@ -68,6 +68,16 @@ public class WebSocketServerFunctionalTest {
 	}
 
 	@Test
+	public void testIncorrectMessage() throws Exception {
+		try (Client client1 = new Client("C1"); Client client2 = new Client("C2")) {
+			client1.session.getBasicRemote().sendText("INVALID MESSAGE");
+			client1.sendMessage("info", "");
+			client1.assertMessageReceived(m -> m.getString("status").equals("ok"));
+		}
+	}
+
+
+	@Test
 	@Ignore
 	public void testUpdates() throws Exception {
 		try (Client client1 = new Client("C1"); Client client2 = new Client("C2")) {
