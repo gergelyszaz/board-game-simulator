@@ -88,4 +88,10 @@ public class GameManager implements Runnable {
 		
 	}
 
+	public void DisconnectPlayer(String id) {
+		Game game = playerConnections.remove(id);
+		game.Disconnect(id);
+		
+	}
+
 }

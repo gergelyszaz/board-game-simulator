@@ -32,6 +32,12 @@ public class BGSServer {
 		log.info("Connected ... " + session.getId());
 	}
 
+	@OnClose
+	public void onClose(Session session, CloseReason closeReason) {
+		Controller controller = (Controller) session.getUserProperties().get(GAME);
+		log.info(String.format("Session %s closed because of %s", session.getId(), closeReason));
+	}
+
 	@OnMessage
 	public String onMessage(String input, Session session) {
 		try {
@@ -112,12 +118,4 @@ public class BGSServer {
 	private boolean isAlreadyJoined(Session session) {
 		return session.getUserProperties().containsKey(GAME);
 	}
-
-	@OnClose
-	public void onClose(Session session, CloseReason closeReason) {
-		log.info(String.format("Session %s closed because of %s", session.getId(), closeReason));
-	}
-
-
-
 }

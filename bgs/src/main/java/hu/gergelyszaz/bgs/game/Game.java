@@ -18,4 +18,6 @@ public interface Game extends Controller{
     void Start() throws IllegalAccessException;
 
     boolean IsFinished();
+
+	void Disconnect(String clientID);
 }
