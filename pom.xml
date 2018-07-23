@@ -4,16 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>hu.gergelyszaz.bgs</groupId>
     <version>1.0.0-SNAPSHOT</version>
-    <artifactId>parent</artifactId>
+    <artifactId>board-game-simulator</artifactId>
     <packaging>pom</packaging>
 
     <modules>
         <module>bgl</module>
-        <module>state</module>
         <module>bgs</module>
         <module>bgs.server</module>
-        <module>bgs.client</module>
-        <module>bgs.application</module>
         <module>bgl.ide</module>
         <module>bgl.web</module>
     </modules>

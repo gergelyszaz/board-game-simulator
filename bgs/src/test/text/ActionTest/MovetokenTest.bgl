@@ -1,8 +1,0 @@
-GAME MovetokenTest
-PLAYERS 1
-FIELD field1
-FIELD field2
-RULES {
-    SPAWN token AS token TO field1
-    MOVE TOKEN token TO field2
-}

@@ -1,8 +1,0 @@
-GAME DestroyTest
-PLAYERS 1
-TOKEN token
-FIELD field
-RULES {
-    SPAWN token AS token TO field
-    DESTROY token
-}
