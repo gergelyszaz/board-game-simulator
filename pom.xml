@@ -8,11 +8,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>bgl</module>
-        <module>bgs</module>
-        <module>bgs.server</module>
-        <module>bgl.ide</module>
-        <module>bgl.web</module>
+        <module>board-game-language</module>
+        <module>board-game-engine</module>
+        <module>board-game-server</module>
     </modules>
 
 </project>

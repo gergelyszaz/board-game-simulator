@@ -1,18 +1,18 @@
 [submodule "bgs.server"]
-	path = bgs.server
+	path = board-game-server
 	url = https://github.com/gergely-szaz/board-game-server.git
 [submodule "bgl.ide"]
-	path = bgl.ide
+	path = board-game-ide
 	url = https://github.com/gergely-szaz/board-game-ide.git
 [submodule "bgl.web"]
-	path = bgl.web
+	path = board-game-ide-web
 	url = https://github.com/gergely-szaz/board-game-ide-web.git
 [submodule "bgs"]
-	path = bgs
+	path = board-game-engine
 	url = https://github.com/gergely-szaz/board-game-engine.git
 [submodule "bgl"]
-	path = bgl
+	path = board-game-language
 	url = https://github.com/gergely-szaz/board-game-language.git
 [submodule "bgl.games"]
-	path = bgl.games
+	path = board-game-examples
 	url = https://github.com/gergely-szaz/board-game-examples.git
