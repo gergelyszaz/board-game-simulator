@@ -1,4 +1,4 @@
 language: java
 deploy:
   provider: script
-  script: mvn heroku:deploy -f bgs.server #HEROKU_API_KEY
+  script: mvn heroku:deploy -f board-game-server #HEROKU_API_KEY
